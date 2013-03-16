@@ -1,0 +1,124 @@
+---
+layout: post
+title: Tweet to myself
+date: '2010-03-24T20:53:00.005+09:00'
+author: cat_in_136
+tags:
+- play alone by myself
+- twitter
+modified_time: '2010-03-27T00:14:48.902+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4074610320552522066
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/tweet-to-myself.html
+---
+
+<p>
+I thought up of Self-replying and Self-retweeting. Are there possible?
+</p>
+<dl>
+<dt>Self-replying</dt>
+<dd>To tweet in reply to <em>my</em> tweet</dd>
+<dt>Self-retweeting</dt>
+<dd>To retweet (RT) to <em>my</em> tweet</dd>
+
+</dl>
+
+<h4>Twitter API is easy-to-use</h4>
+<p>
+Twitter REST API is very, very simple. To tweet, Just only send a HTTP-POST request.
+If your system has <a href="http://curl.haxx.se/">curl</a>:
+</p>
+<ul>
+<li>To tweet (update your status), type <kbd>curl -u <i>username</i>:<i>password</i> -d "status=<i>your message</i>" http://api.twitter.com/1/statuses/update.json</kbd></li>
+
+<li>To retweet (RT), type <kbd>curl -u <i>username</i>:<i>password</i> -X POST http://api.twitter.com/1/statuses/retweet/<i>tweet_id</i>.json</kbd></li>
+</ul>
+<p>
+where <i>tweet_id</i> is numerical ID of the tweet you are retweeting.
+</p>
+
+<p>
+Do you want <a href="http://www.gnu.org/software/wget/">wget</a> better than curl?
+If so:
+</p>
+<ul>
+<li>To tweet (update your status), type <kbd>wget --user <i>username</i> --password <i>password</i> --post-data='status=<i>your message</i>' http://api.twitter.com/1/statuses/update.json</kbd></li>
+
+<li>To retweet (RT), type <kbd>wget --user <i>username</i> --password <i>password</i> --post-data='' http://api.twitter.com/1/statuses/retweet/<i>tweet_id</i>.json</kbd></li>
+</ul>
+
+<h4>How to tweet in reply to a tweet</h4>
+
+<p>
+
+If you send tweet with <code>in_reply_to_status_id</code> parameter set to tweet id, and if the tweet contains <kbd>@user</kbd>, then <samp>in reply to user</samp> is displayed on the Twitter user's profile. Example one-liners are as follows:
+</p>
+<ul>
+<li>type <kbd>curl -u <i>username</i>:<i>password</i> -d "status=@<i>username_you_reply_to</i>%20<i>your message</i>&amp;in_reply_to_status_id=<i>tweet_id</i>" http://api.twitter.com/1/statuses/update.json</kbd></li>
+
+<li>or <kbd>wget --user <i>username</i> --password <i>password</i> --post-data='status=@<i>username_you_reply_to</i>%20<i>your message</i>&amp;in_reply_to_status_id=<i>tweet_id</i>' http://api.twitter.com/1/statuses/update.json</kbd></li>
+</ul>
+<p>
+
+<kbd>@<i>username_you_reply_to</i></kbd> in tweet is important. API reference said as follows:
+</p>
+<blockquote cite="http://apiwiki.twitter.com/Twitter-REST-API-Method%3A-statuses%C2%A0update">
+<span style="font-family: courier new,monospace;">in_reply_to_status_id</span>.&nbsp; Optional. The ID of an existing status that the update is in reply to.
+<ul>
+<li>Note: This parameter will be ignored unless the author of the tweet this parameter references is mentioned within the status text. Therefore, you must include <span style="font-family: Courier New;">@username</span>, where <span style="font-family: Courier New;">username</span> is the author of the referenced tweet, within the update.</li>
+
+</ul>
+</blockquote>
+
+<h4>How to tweet in reply to <em>my</em> tweet</h4>
+
+<p>
+Self-replying is also easy. Self-replying is disabled on the Twitter web page, but you can self-tweet with Twitter API!
+The way is same as tweet:
+</p>
+<ul>
+<li>type <kbd>curl -u <i>username</i>:<i>password</i> -d "status=@<i>username</i>%20<i>your message</i>&amp;in_reply_to_status_id=<i>tweet_id</i>" http://api.twitter.com/1/statuses/update.json</kbd></li>
+
+<li>or <kbd>wget --user <i>username</i> --password <i>password</i> --post-data='status=@<i>username</i>%20<i>your message</i>&amp;in_reply_to_status_id=<i>tweet_id</i>' http://api.twitter.com/1/statuses/update.json</kbd></li>
+</ul>
+<p>
+
+Needless to say, <i>tweet_id</i> must be numerical ID of <em>my</em> tweet you reply to.
+</p>
+
+<h4>I wanna retweet (RT) <em>my</em> tweet</h4>
+
+<p>
+Unfortunately, I couldn't do 'self-retweet.' I typed <kbd>curl -u cat_in_136:<i>password</i> -X POST http://api.twitter.com/1/statuses/retweet/10864684596.json</kbd> (where <a href="http://twitter.com/cat_in_136/status/10864684596">10864684596</a> is my tweet), but following validation error was occurred:
+
+</p>
+<code><pre>% curl -u cat_in_136:password -X POST http://api.twitter.com/1/statuses/retweet/10864684596.json
+{"errors":"Share sharing is not permissable for this status (Share validations failed)"}
+</pre></code>
+<p>
+Self-retweeting doesn't seem to be permissable.
+</p>
+
+<h4>Conclusion</h4>
+
+<p>
+Self-replying is possible, but Self-retweeting is not possible.
+</p>
+<table>
+<caption>The Possibility of Tweeting to myself</caption>
+<thead>
+
+<tr><th>Type of tweeting</th><td>Possibility</td></tr>
+</thead>
+<tbody>
+<tr><th>Self-replying</th><td>O (<a href="http://twitter.com/cat_in_136/status/10864684596">Sample is here</a>)</td></tr>
+<tr><th>Self-retweeting</th><td>X (Error was occurred)</td></tr>
+</tbody>
+</table>
+
+<h4>See also</h4>
+<ul>
+
+<li><a href="http://apiwiki.twitter.com/Things-Every-Developer-Should-Know">Twitter API Wiki: Things Every Developer Should Know</a></li>
+<li><a href="http://apiwiki.twitter.com/Twitter-REST-API-Method%3A-statuses%C2%A0update">Twitter REST API Method: statuses update</a></li>
+<li><a href="http://apiwiki.twitter.com/Twitter-REST-API-Method%3A-statuses-retweet">Twitter REST API Method: statuses/retweet</a></li>
+</ul>

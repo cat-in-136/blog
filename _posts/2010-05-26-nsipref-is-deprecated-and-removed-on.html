@@ -1,0 +1,73 @@
+---
+layout: post
+title: nsIPref is deprecated and removed on Firefox 3.7
+date: '2010-05-26T23:50:00.002+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- mozilla
+modified_time: '2010-05-26T23:55:19.178+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4838127264400621350
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/nsipref-is-deprecated-and-removed-on.html
+---
+
+<p>On firefox 3.7a4, following code throws a exception:</p>
+
+<pre class="prettyprint"><code>Components.classes["@mozilla.org/preferences;1"]
+  .getService(Components.interfaces.nsIPref);
+</code></pre>
+
+<p>Thrown exception is:</p>
+
+<blockquote>
+Error: uncaught exception: [Exception... "Component returned failure code: 0x80570018 (NS_ERROR_XPC_BAD_IID) [nsIJSCID.getService]"  nsresult: "0x80570018 (NS_ERROR_XPC_BAD_IID)"  location: ...]
+</blockquote>
+
+<p><code>Components.interfaces.nsIPref</code> is <em>removed</em> on Firefox 3.7. And extension javascript code should use <a href="https://developer.mozilla.org/en/nsIPrefService"><code>nsIPrefService</code></a> and/or <a href="https://developer.mozilla.org/en/nsIPrefBranch"><code>nsIPrefBranch</code></a> instead of <code>nsIPref</code>. <code>nsIPref</code> methods are moved to <code>nsIPrefService</code> or <code>nsIPrefBranch</code>. There seems to be no method name change.</p>
+
+<p>Note: <code>nsIPrefService</code> and <code>nsIPrefBranch</code> is <strong><a href="https://developer.mozilla.org/en/Interfaces/About_Frozen_Interfaces">forzen</a></strong>.</p>
+
+<p>In addition, class <code>Components.classes["@mozilla.org/preferences;1"]</code> is also <em>deprecated</em>. <code>Components.classes["@mozilla.org/preferences-service;1"]</code> is preferred.</p>
+
+<p>I found this fact when I try to change User-Agent with Configuration Mania dialog on Firefox 3.7a4. Today this issue is fixed (<a href="http://bitbucket.org/cat_in_136/configuration-mania/changeset/d644b9eacaad">changeset:d644b9eacaad</a>).</p>
+
+<h4>Example#1</h4>
+
+<p><code>nsIPref#getBranch</code> -&gt; <code>nsIPrefService#getBranch</code></p>
+
+<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences;1"]
+  .getService(Components.interfaces.nsIPref);
+ var branch = pref.getBranch("browser");
+</code></pre>
+
+<p>shall be replaced with</p>
+
+<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences-service;1"]
+  .getService(Components.interfaces.nsIPrefService);
+ var branch = pref.getBranch("browser");
+</code></pre>
+
+<h4>Example#2</h4>
+
+<p><code>nsIPref#getBoolPref</code> -&gt; <code>nsIPrefBranch#getBoolPref</code></p>
+
+<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences;1"]
+  .getService(Components.interfaces.nsIPref);
+ var autoHide = pref.getBoolPref("browser.tabs.autoHide");
+</code></pre>
+
+<p>shall be replaced with</p>
+
+<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences-service;1"]
+  .getService(Components.interfaces.nsIPrefBranch);
+ var autoHide = pref.getBoolPref("browser.tabs.autoHide");
+</code></pre>
+
+<h4>See Also</h4>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en/Code_snippets/Preferences">Preferences</a> - MDC</li>
+<li><a href="https://dev.mozilla.jp/2010/03/nsipref/">
+nsIPrefはFirefox 3.7以降では利用できません</a> - Mozilla Developer Street (japanese)</li>
+<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=524449">Bug 524449 – Remove nsIPref from tree</a></li>
+</ul>

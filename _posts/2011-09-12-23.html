@@ -1,0 +1,223 @@
+---
+layout: post
+title: ポニーテールの揺れの定式化と考察 (2/3)
+date: '2011-09-12T06:00:00.009+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- ponytail
+modified_time: '2011-09-15T00:37:21.189+09:00'
+thumbnail: http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s72-c/pony_tail_model.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3458947176352735260
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/09/23.html
+---
+
+<div style="background: #ffd; border: solid 3px #ff8">
+このPostを読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です。
+もし数式部分が読めない場合は、
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<a href="javascript:(function%20hoge()%20%7Bvar%20lmath%20%3D%20document.body.getElementsByTagName(%22math%22)%3Bfor%20(var%20i%20%3D%200%3B%20i%20%3C%20lmath.length%3B%20i%2B%2B)%20%7Bif%20(lmath%5Bi%5D.getAttribute(%22title%22)%20!%3D%20%22%22%20%26%26%20!lmath%5Bi%5D.__converted)%20%7Bvar%20img%20%3D%20new%20Image%3Bimg.src%20%3D%20%22http%3A%2F%2Fchart.apis.google.com%2Fchart%3Fcht%3Dtx%26chl%3D%22%20%2B%20encodeURIComponent(lmath%5Bi%5D.getAttribute(%22title%22))%3Bimg.alt%20%3D%20lmath%5Bi%5D.getAttribute(%22title%22)%3Bimg.setAttribute(%22title%22%2C%20lmath%5Bi%5D.getAttribute(%22title%22))%3Bif%20(lmath%5Bi%5D.getAttribute(%22mode%22)%20%3D%3D%20%22display%22)%20%7Bimg.setAttribute(%22style%22%2C%20%22display%3A%20block%3B%20margin%3A%20auto%3B%20text-align%3A%20center%3B%22)%3B%7Dlmath%5Bi%5D.parentNode.insertBefore(img%2C%20lmath%5Bi%5D)%3Blmath%5Bi%5D.setAttribute(%22style%22%2C%20%22display%3A%20none%22)%3Blmath%5Bi%5D.__converted%20%3D%20true%3B%7D%7D%7D)();">MathMLの記述を画像に変換する</a>などをしてください。
+</div>
+
+<p>
+前回から引き続き、ポニーテール共振器の運動について考察していこう。
+</p>
+
+<h4>3. ポニーテール共振器の挙動</h4>
+
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s1600/pony_tail_model.png" ><img style="border: 0" height="255" width="230" src="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s320/pony_tail_model.png" /></a>
+</div>
+
+<p>
+前回、ポニーテール共振器の運動方程式を解いて微分方程式を得た。
+式(2.6)であったが、再掲する。
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\frac{d^2\theta}{dt^2}=-\frac{g}{l}\theta -\frac{1}{l} \frac{d^2 X{(t)}}{dt^2}">
+<mrow><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>&#x03b8;</mi><mo>-</mo><mfrac><mrow><mrow><mn>1</mn></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow>
+
+</math>
+</td><td>(2.6)</td></tr>
+</tbody></table>
+
+<p>
+(2.6)式について、強制振動の部分を展開する。
+（なお、前回の(2.0)式で強制振動の式を定義済み）すなわち、
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\frac{d^2 X{(t)}}{dt^2} = X \frac{d^2}{dt^2} \cos{\omega t} = - X\omega^2 \cos{\omega t}">
+<mrow><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>=</mo><mi>X</mi><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mi>cos</mi><mo>&#x2061;</mo><mrow><mi>&#x03c9;</mi><mo>&#x2062;</mo><mi>t</mi></mrow><mo>=</mo><mo>-</mo><mi>X</mi><msup><mi>&#x03c9;</mi><mn>2</mn></msup><mi>cos</mi><mo>&#x2061;</mo><mrow><mi>&#x03c9;</mi><mo>&#x2062;</mo><mi>t</mi></mrow></mrow>
+
+</math>
+</td><td>(3.1)</td></tr>
+</tbody></table>
+<p>
+を式(2.6)に代入する。
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\frac{d^2 \theta}{dt^2}=-\frac{g}{l}\theta - \frac{X\omega^2}{l}\cos{\omega t}">
+<mrow><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>&#x03b8;</mi><mo>-</mo><mfrac><mrow><mrow><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>cos</mi><mo>&#x2061;</mo><mrow><mi>&#x03c9;</mi><mi>t</mi></mrow></mrow>
+
+</math>
+</td><td>(3.2)</td></tr>
+</tbody></table>
+
+<p>
+さて、この式(3.2)の二階微分方程式を解けばいい訳だが、
+結構複雑で面倒なので計算機で算出させた。
+つまり Mathematica といったものに例えば以下のようにコマンドを打てばよい。
+</p>
+<pre><code>In[*]:= DSolve[x''[t]==-g/l x[t] + X omega^2/l cos[omega t], x[t], t]
+</code></pre>
+<p>
+もっとも、最近では
+<a href="http://www.wolframalpha.com/input/?i=DSolve%5Bx''%5Bt%5D%3D%3D-g%2Fl%20x%5Bt%5D%20%2B%20X%20omega%5E2%2Fl%20cos%5Bomega%20t%5D%2C%20x%5Bt%5D%2C%20t%5D">Wolfram|Alpha に式(3.2)を解かせる</a>
+こともできる。
+</p>
+
+<p>
+手段はともかくとして、式(3.2)の解は下記の式(3.3)のようになる。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta = C_1\cos{\sqrt{\frac{g}{l}}t} + C_2\sin{\sqrt{\frac{g}{l}}t} + \frac{X\omega^2 \cos{\omega t}}{g - l\omega^2}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><msub><mi>C</mi><mn>1</mn></msub><mo>&#x2062;</mo><mi>cos</mi><mo>&#x2061;</mo><mrow><msqrt><mrow><mrow><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac></mrow></mrow></msqrt><mo>&#x2062;</mo><mi>t</mi></mrow><mo>+</mo><msub><mi>C</mi><mn>2</mn></msub><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><msqrt><mrow><mrow><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac></mrow></mrow></msqrt><mo>&#x2062;</mo><mi>t</mi></mrow><mo>+</mo><mfrac><mrow><mrow><mi>X</mi><msup><mi>&#x03c9;</mi><mn>2</mn></msup><mi>cos</mi><mo>&#x2061;</mo><mrow><mi>&#x03c9;</mi><mo>&#x2062;</mo><mi>t</mi></mrow></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow>
+
+</math>
+</td><td>(3.3)</td></tr>
+</tbody></table>
+
+<p>
+この振り子であるが、最初は静止していて歩いたりすると振れるということであった。
+初期状態(<var>t</var>=0)では静止していて、そこから振り子の支点の強制振動による
+共振によって振り子が振れてくる。
+静止している状態では、重力の影響によって、振り子は真下に向くのであることも考え、
+初期状態の<var>&#x03b8;</var>について、以下の条件が成立する。
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\left[\theta\right]_{t=0}=0,\!\left[\frac{d\theta}{dt}\right]_{t=0}=0">
+<mrow><mo>[</mo><mi>&#x03b8;</mi><msub><mo>]</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow></msub><mo>=</mo><mn>0</mn><mo>,</mo><mspace width="-1.67pt"/><mo>[</mo><mfrac><mrow><mrow><mi>d</mi><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><mi>t</mi></mrow></mrow></mfrac><msub><mo>]</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow></msub><mo>=</mo><mn>0</mn></mrow>
+
+</math>
+</td><td>(3.4)</td></tr>
+</tbody></table>
+
+<p>
+(3.3)式に(3.4)式を代入すると、<var>C</var><sub>1</sub>,<var>C</var><sub>2</sub>は以下のように求まる。
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="C_1=\frac{-X\omega^2}{g-l\omega^2},\!C_2=0">
+<mrow><msub><mi>C</mi><mn>1</mn></msub><mo>=</mo><mfrac><mrow><mrow><mo>-</mo><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>,</mo><mspace width="-1.67pt"/><msub><mi>C</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow>
+
+</math>
+</td><td>(3.5)</td></tr>
+</tbody></table>
+<p>
+(3.3)式に(3.5)式を代入して、ポニーテール共振器の振り子の振動式が求まった。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta=\frac{X\omega^2}{g-l\omega^2}{\left(\cos{\omega t} - \cos{\sqrt{\frac{g}{l}}}\right)}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><mfrac><mrow><mrow><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>&#x2062;</mo><mrow><mo>(</mo><mi>cos</mi><mo>&#x2061;</mo><mrow><mi>&#x03c9;</mi><mo>&#x2062;</mo><mi>t</mi></mrow><mo>-</mo><mi>cos</mi><mo>&#x2061;</mo><mrow><msqrt><mrow><mrow><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac></mrow></mrow></msqrt><mi>t</mi></mrow><mo>)</mo></mrow></mrow>
+
+</math>
+</td><td>(3.6)</td></tr>
+</tbody></table>
+<p>
+式(3.6)の括弧で囲まれた部分は振動を表していて、その前は振幅を表している。
+括弧で囲まれた部分に三角関数の和積の公式を適用させると、すっきりとした式になる。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta=\frac{2X\omega^2}{g-l\omega^2}\sin{\frac{\sqrt{g/l}+\omega}{2}t}\sin{\frac{\sqrt{g/l}-\omega}{2}t}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><mfrac><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>+</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>-</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow></mrow>
+
+</math>
+</td><td>(3.7)</td></tr>
+</tbody></table>
+
+<p>
+この(3.7)式をみると、振り子の支点の強制振動振幅<var>X</var>に比例する。
+これは激しく体が揺れれば、ポニーテール（振り子）がより揺れる感覚は一致する。
+ただ、単なる比例係数であって、それ以上の効果はない。
+</p>
+<p>
+一方強制振動の各周波数<var>&#x03c9;</var>が与える影響はもっと複雑だ。
+振動項をみると
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\omega \rightarrow\sqrt{g/l}">
+<mrow><mi>&#x03c9;</mi><mo>&#x2192;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow>
+
+</math>
+とすれば、振動項がゼロとなるので振動しなくなるように思える。
+しかし、振幅部分は無限大に発散するので、いわゆる∞×0の不定形となるので、
+単純に議論できない。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\begin{array}{rcl}\frac{2X\omega^2}{g-l\omega^2}&amp;\rightarrow&amp;\frac{2Xg/l}{g-lg/l}=\frac{2Xg/l}{g-g}\rightarrow\infty \\ \sin{\frac{\sqrt{g/l}-\omega}{2}t}&amp;\rightarrow&amp;\sin{\frac{\sqrt{g/l}-\sqrt{g/l}}{2}t}=0\end{array}">
+<mrow><mtable><mtr><mtd columnalign="right"><mrow><mfrac><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow></mtd><mtd columnalign="center"><mrow><mo>&#x2192;</mo></mrow></mtd><mtd columnalign="left"><mrow><mfrac><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><mo>&#x2062;</mo><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><mo>&#x2062;</mo><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></mfrac><mo>=</mo><mfrac><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><mo>&#x2062;</mo><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>g</mi></mrow></mrow></mfrac><mo>&#x2192;</mo><mo>&#x221e;</mo></mrow></mtd></mtr><mtr><mtd columnalign="right"><mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>-</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow></mrow></mtd><mtd columnalign="center"><mrow><mo>&#x2192;</mo></mrow></mtd><mtd columnalign="left"><mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>-</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow><mo>=</mo><mn>0</mn></mrow></mtd></mtr></mtable></mrow>
+
+</math>
+</td><td>(3.8)</td></tr>
+</tbody></table>
+<p>
+この近傍は極限で求めなければならず、(3.7)式を<math xmlns="http://www.w3.org/1998/Math/MathML" title="\lim_{a\to 0}\frac{\sin a}{a}=1">
+<mrow><msub><mi>lim</mi><mrow><mi>a</mi><mo>&#x2192;</mo><mn>0</mn></mrow></msub><mfrac><mrow><mrow><mi>sin</mi><mo>&#x2061;</mo><mi>a</mi></mrow></mrow><mrow><mrow><mi>a</mi></mrow></mrow></mfrac><mo>=</mo><mn>1</mn></mrow>
+</math>
+
+の式を使える形に変形した上で極限を取らなければならないのである。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta=\cdots=\frac{2X\omega^2 t}{l{\left(\sqrt{g/l}+\omega\right)}{\left(\sqrt{g/l}-\omega\right)}t}\sin{\frac{\sqrt{g/l}+\omega}{2}t}\sin{\frac{\sqrt{g/l}-\omega}{2}t}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><mo>&#x00B7;&#x00B7;&#x00B7;</mo><mo>=</mo><mfrac><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup><mo>&#x2062;</mo><mi>t</mi></mrow></mrow><mrow><mrow><mi>l</mi><mo>&#x2062;</mo><mrow><mo>(</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>+</mo><mi>&#x03c9;</mi><mo>)</mo></mrow><mo>&#x2062;</mo><mrow><mo>(</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>-</mo><mi>&#x03c9;</mi><mo>)</mo></mrow><mo>&#x2062;</mo><mi>t</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>+</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>-</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow></mrow>
+
+</math>
+</td><td>(3.9)</td></tr>
+</tbody></table>
+<p>
+ここで
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\frac{\sqrt{g/l}-\omega}{2}t">
+<mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>-</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow>
+</math>
+は0に漸近するので、例の
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\lim_{a\to 0}\frac{\sin a}{a}=1">
+
+<mrow><msub><mi>lim</mi><mrow><mi>a</mi><mo>&#x2192;</mo><mn>0</mn></mrow></msub><mfrac><mrow><mrow><mi>sin</mi><mo>&#x2061;</mo><mi>a</mi></mrow></mrow><mrow><mrow><mi>a</mi></mrow></mrow></mfrac><mo>=</mo><mn>1</mn></mrow>
+</math>
+の公式が使えて、
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\lim_{\omega\to \sqrt{g/l}}\theta=\lim_{\omega\to \sqrt{g/l}}\frac{X\omega^2 t}{l{\left(\sqrt{g/l}+\omega\right)}}\sin{\frac{\sqrt{g/l}+\omega}{2}t}=\frac{X\sqrt{g/l}}{2l}t\sin{\sqrt{\frac{g}{l}}t}">
+<mrow><munder><mi>lim</mi><mrow><mi>&#x03c9;</mi><mo>&#x2192;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow></munder><mi>&#x03b8;</mi><mo>=</mo><munder><mi>lim</mi><mrow><mi>&#x03c9;</mi><mo>&#x2192;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow></munder><mfrac><mrow><mrow><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup><mo>&#x2062;</mo><mi>t</mi></mrow></mrow><mrow><mrow><mi>l</mi><mo>&#x2062;</mo><mrow><mo>(</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>+</mo><mi>&#x03c9;</mi><mo>)</mo></mrow></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></msqrt><mo>+</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow><mo>=</mo><mfrac><mrow><mrow><mi>X</mi><mo>&#x2062;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow></mrow><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><msqrt><mrow><mrow><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac></mrow></mrow></msqrt><mo>&#x2062;</mo><mi>t</mi></mrow></mrow>
+
+</math>
+</td><td>(3.10)</td></tr>
+</tbody></table>
+<p>
+を得る。時間に比例してに振幅が再現なく増幅・発散する式となった。
+ただ、<var>&#x03b8;</var>が十分小さい場合のみでしか運動方程式を解いていない
+ので、厳密に言えば、この式が使えない領域まで振幅が大きくなる、というのが正しい。
+</p>
+<p>
+以上より、ポニーテール共振器の挙動について
+（特異な状態をあらわした(3.10)式も含めて）数式で表すことができた。
+</p>
+
+<p>
+<a href="{{ site.baseurl }}{% post_url 2011-09-14-33 %}">次回</a>はこの式を元に考察する。
+</p>

@@ -1,0 +1,64 @@
+---
+layout: post
+title: サンマルクカフェのアキュート付きの"ェ"をUnicodeで再現しようとしたが失敗した
+date: '2011-08-20T11:50:00.003+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- unicode
+modified_time: '2011-08-28T23:56:50.378+09:00'
+thumbnail: http://1.bp.blogspot.com/-0HTjKHC_XLk/Tk8dqtpxG-I/AAAAAAAAAHg/aCSr_H1qvkI/s72-c/saint_marc_cafe.jpg
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5044026427133636
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/08/unicode.html
+---
+
+<p>
+最近、<a href="http://www.saint-marc-hd.com/cafe/">サンマルクカフェ</a>
+のロゴの"ェ"の上部にゴミみたいなのが付いていることに気づいた。
+これは、英語表記の"<span lang="en">Saint Marc Caf&#x00e9;</span>"の
+ "&#x00e9;" の、アキュート "&#x00b4;" であると考えられる。
+</p>
+<div class="separator" style="clear: both; margin: auto; text-align: center;">
+<a href="http://1.bp.blogspot.com/-0HTjKHC_XLk/Tk8dqtpxG-I/AAAAAAAAAHg/aCSr_H1qvkI/s1600/saint_marc_cafe.jpg" style="margin-left: 1em; margin-right: 1em;"><img src="http://1.bp.blogspot.com/-0HTjKHC_XLk/Tk8dqtpxG-I/AAAAAAAAAHg/aCSr_H1qvkI/s320/saint_marc_cafe.jpg" height="303" width="320" /></a></div>
+<p>
+Unicodeでは、"&#x00e9;"(<a href="http://unicode.org/cldr/utility/character.jsp?a=00e9">U+00E9 LATIN SMALL LETTER E WITH ACUTE</a>)
+のようなアキュート付きで文字登録されているものの他に、
+"&#x0301;"(<a href="http://unicode.org/cldr/utility/character.jsp?a=0301">U+0301 COMBINING ACUTE ACCENT</a>)
+という分解型のアキュート記号も用意されている。
+すなわち、U+0065 LATIN SMALL LETTER E + U+0301 COMBINING ACUTE ACCENT と
+分解した上で "<span lang="en">e&#x0301;</span>" と表記することも可能だ
+（正準分解; <span lang="en">Canonical Decomposition</span>）。
+</p>
+<p>
+というわけで、「ェ」にアキュート "&#x00b4;"を作用させて、
+U+30A7 KATAKANA LETTER SMALL E + U+0301 COMBINING ACUTE ACCENT
+の形にすれば、Unicode 的に理にかなった方法で
+サンマルクカフェをエンコードできるとおもいやってみた。
+</p>
+<pre class="prettyprint"><code>サンマルクカフェ&amp;#x0301; Saint Marc Cafe&amp;#x0301;</code></pre>
+<div style="background-color: #FBF1DC; color: #5D310B; border: solid 2px #EBDEC4;">
+サンマルクカフェ&#x0301; Saint Marc Cafe&#x0301;
+</div>
+<p>
+しかし、Firefoxでは正しく表示されず、"ェ" の右横に
+アキュートが表示されてしまった。
+さらに英語部分についても然り。
+どうやら言語を日本語以外にしないといけないらしい。
+</p>
+<pre class="prettyprint"><code>サンマルクカフ&lt;span lang="en"&gt;ェ&amp;#x0301;&lt;/span&gt; &lt;span lang="en"&gt;Saint Marc Cafe&amp;#x0301;&lt;/span&gt;</code></pre>
+<div style="background-color: #FBF1DC; color: #5D310B; border: solid 2px #EBDEC4;">
+サンマルクカフ<span lang="en">ェ&#x0301;</span> <span lang="en">Saint Marc Cafe&#x0301;</span>
+</div>
+<p>
+筆者の環境では、確かに"ェ"とアキュートの距離は近づいたが、
+サンマルクカフェのロゴのように"ェ"の真上にアキュートが付くところまではいかず、
+濁点半濁点のように右上にアキュートが添えられている。
+フォントの問題だろうが、日本語にアキュートというものはなく、
+濁点半濁点は右上に付くものなので、これはこれでしょうがないというべきだろう。
+</p>
+<div>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="clear: both; margin: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="http://4.bp.blogspot.com/-nMQIHa6ik_c/Tk8dp3aS0zI/AAAAAAAAAHc/gxjorlIIb9Y/s1600/accute_on_katakana_e.png" style="margin-left: auto; margin-right: auto;"><img src="http://4.bp.blogspot.com/-nMQIHa6ik_c/Tk8dp3aS0zI/AAAAAAAAAHc/gxjorlIIb9Y/s1600/accute_on_katakana_e.png" width="250" height="49" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">筆者環境のレンダリング結果。（"ェ"の右上にアキュートがある。）</td></tr>
+</tbody></table>
+</div>

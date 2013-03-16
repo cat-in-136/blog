@@ -1,0 +1,25 @@
+---
+layout: post
+title: Native base64 encoder/decoder
+date: '2010-01-31T23:50:00.012+09:00'
+author: cat_in_136
+tags:
+- javascript
+modified_time: '2010-02-20T11:41:27.133+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6910499631134900772
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/01/native-base64-encoderdecoder.html
+---
+
+<p>
+<code>window.atob()</code> decodes a base64-encoded string, and <code>window.btoa()</code> creates a base64-encoded string from binary data.
+<code>window.btoa()</code> is useful for creating <code>data:</code> URI.
+</p>
+<p>
+<code>atob()</code> and <code>btoa()</code> work on Firefox 2+, safari 3.1+, Opera and Google chrome.
+</p>
+<form onsubmit="return false;"><div>
+<fieldset><legend>Test</legend>
+<label for="btoa_test_input">Plain Text:</label><input type="text" id="btoa_test_input" onchange="document.getElementById('atob_test_input').value = btoa(this.value);" /><br />
+<label for="atob_test_input">Base64 Text:</label><input type="text" id="atob_test_input" onchange="document.getElementById('btoa_test_input').value = atob(this.value);" />
+</fieldset>
+</div></form>

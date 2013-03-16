@@ -1,0 +1,93 @@
+---
+layout: post
+title: '"U; " in UA-string and about:config pref "general.useragent.security" are
+  removed #firefox4'
+date: '2010-08-11T23:20:00.006+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- mozilla
+modified_time: '2010-08-11T23:20:00.376+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1162394586300012542
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/08/u-in-ua-string-and-aboutconfig-pref.html
+---
+
+"U; " in UA-string and about:config pref "general.useragent.security" are removed #firefox4
+
+<p>
+On Firefox 4.0 beta 2, User-agent is shortened as following:
+</p>
+<ul>
+<li><code>Mozilla/5.0 (Windows; <strong>U; </strong>Windows NT 6.1; <strong>en;</strong> rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8</code></li>
+<li><code>Mozilla/5.0 (Windows; Windows NT 6.1; rv:2.0b2) Gecko/20100720 Firefox/4.0b2</code></li>
+</ul>
+<p>
+On Windows, it will be more short : <code>Mozilla/5.0 (Windows NT 6.1; rv:2.0b2) Gecko/2010???? Firefox/4.0b?</code>, according to <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=581783">Bug581783</a>
+</p>
+<p>
+"<code>U; </code>" and "<code>en; </code>" are removed.
+"<code>en; </code>" describes localization information.
+"<code>U; </code>" describes security level of the browser.
+</p>
+<table summary="value of the security level">
+<caption>value of the security level</caption>
+<tbody>
+<tr><td>U</td><td>Strong security (Default)<br />
+the browser provides crypto support that is stronger than what the "international" builds
+of Netscape offered circa 1995.</td></tr>
+<tr><td>I</td><td>Weak security</td></tr>
+<tr><td>N</td><td>No security</td></tr>
+</tbody>
+</table>
+<p>
+Do you know <cite>what the "international" builds
+of Netscape offered circa 1995</cite>?
+</p>
+
+<h4>relation to about:config pref</h4>
+<p>
+You can change User-Agent token with about:config.
+(Note: to replace total User-Agent string, modify <code>general.useragent.override</code>)
+</p>
+<table summary="User-Agent token vs about:config pref">
+<caption>User-Agent token vs about:config pref</caption>
+<thead>
+<tr><td>Token Name</td><td>Example</td><td>about:config pref</td></tr>
+</thead>
+<tbody>
+<tr><td>Security level(*)</td><td><code>U</code></td><td><del><code>general.useragent.security</code></del></td></tr>
+<tr><td>Localization data(**)</td><td><code>en</code></td><td><code>general.useragent.locale</code></td></tr>
+<tr><td>Extra data for firefox</td><td><code>Firefox/4.0b2</code></td><td><code>general.useragent.extra.firefox</code></td></tr>
+</tbody>
+</table>
+<ul>
+<li>(*): Both User-Agent string and about:config pref is removed on Firefox 4.0b2</li>
+<li>(**): User-Agent string is removed on Firefox 4.0b2, about:config pref is still used.</li>
+</ul>
+<p>
+Note that pref "<code>general.useragent.security</code>" was also removed at <a href="http://hg.mozilla.org/mozilla-central/rev/22e19fe61752">Jul 02</a>.
+</p>
+
+<h4>Why Configuration Mania's User-Agent setting does not work on Firefox 4.0b2 even if "Addons"-&gt;"Do Not check add-on compatibility" is checked?</h4>
+<p>
+An error was occurs whenever the dialog initialized.
+Following code on Configuration Mania (version 1.12.2010071001) throws <code>NS_ERROR_UNEXPECTED</code> since <code>"general.useragent.security"</code> does not exist on Firefox 4.0b2.
+</p>
+<pre class="prettyprint"><code>     var mSecurity = prefBranch.getCharPref("general.useragent.security");
+</code></pre>
+<p>
+Fixed patch has been pushed on <a href="http://bitbucket.org/cat_in_136/configuration-mania/changesets">bitbucket's repository</a>.
+</p>
+
+<h4>See also</h4>
+<ul>
+<li><a href="https://developer.mozilla.org/en/User_Agent_Strings_Reference">User Agent Strings Reference - MDC</a></li>
+<li>Mozilla's Bugzilla, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=572650">Bug 572650 - (http-fingerprint) Reduce the amount of data and entropy sent out in HTTP requests</a></li>
+<li>Mozilla's Bugzilla, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=572668">Bug 572668 - Remove the crypto strength token from the UA string</a>
+<ul><li>mozilla-central's <a href="http://hg.mozilla.org/mozilla-central/rev/22e19fe61752">changeset:22e19fe61752 : Bug 572668. Don't send the useless crypto token in the UA string. r=bzbarsky</a> commited by Saint Wesonga</li></ul></li>
+<li>Mozilla's Bugzilla, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=572656">Bug 572656 - Remove the UI language from the UA string and navigator.appVersion</a>
+<ul><li>mozilla-central's <a href="http://hg.mozilla.org/mozilla-central/rev/7a07bba40e14">changeset:7a07bba40e14 Bug 572656 - Remove the UI language from the UA string and navigator.appVersion. r=bz </a> commited by Dão Gottwald</li></ul></li>
+<li>Mozilla's Bugzilla, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=581783">Bug 581783 - Remove "Windows;" from the UA string  </a>
+<ul><li>mozilla-central's <a href="http://hg.mozilla.org/mozilla-central/rev/35b64ad7910c">changeset:35b64ad7910c Bug 581783 - Remove "Windows;" from the UA string. r=bz</a> commited by Dão Gottwald</li></ul></li>
+<li>IE9 blog, <a href="http://blogs.msdn.com/b/ie/archive/2010/03/23/introducing-ie9-s-user-agent-string.aspx">Introducing IE9’s User Agent String</a>, 2010-03-23</li>
+</ul>

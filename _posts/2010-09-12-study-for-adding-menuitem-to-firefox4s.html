@@ -1,0 +1,50 @@
+---
+layout: post
+title: Study for adding a menuitem to Firefox4's "Firefox button" (#2)
+date: '2010-09-12T13:59:00.000+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- xul
+- mozilla
+modified_time: '2010-09-12T13:59:06.453+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/TIxcpvRYBaI/AAAAAAAAAEo/EAAtEX-nDT0/s72-c/cm-issue15.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1125875839741972743
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/09/study-for-adding-menuitem-to-firefox4s.html
+---
+
+<p>
+A few day ago, I received <a href="http://bitbucket.org/cat_in_136/configuration-mania/issue/15/config-mania-option-on-fx-40-new-menu">issue#15 Config mania option on Fx 4.0 new Menu button</a>. I found Firefox 4.0b5 new menu is changed to 2-column.
+</p>
+<pre class="prettyprint"><code>&lt;!-- Firefox 4.0b4 --&gt;
+ &lt;menupopup id="appmenu-popup" ... &gt;
+   ...
+ &lt;/menupopup&gt;
+</code></pre>
+<pre class="prettyprint"><code>&lt;!-- Firefox 4.0b5 --&gt;
+ &lt;menupopup id="appmenu-popup" ... &gt;
+   &lt;hbox&gt;
+     &lt;vbox id="appmenuPrimaryPane"&gt;
+       ...
+     &lt;/vbox&gt;
+     &lt;vbox id="appmenuSecondaryPane"&gt;
+       ...
+     &lt;/vbox&gt;
+   &lt;/hbox&gt;
+ &lt;/menupopup&gt;
+</code></pre>
+<p>
+Configuration Mania 1.12.2010082901 append "Configuration Mania" menu item is append on "<code>appmenu-popup</code>". On Firefox 4.0b5, it does not work well:
+</p>
+<div style="text-align: center;">
+<a href="http://1.bp.blogspot.com/_mg7ZLoSThok/TIxcpvRYBaI/AAAAAAAAAEo/EAAtEX-nDT0/s1600/cm-issue15.png" style="margin-left: auto; margin-right: auto;"><img src="http://1.bp.blogspot.com/_mg7ZLoSThok/TIxcpvRYBaI/AAAAAAAAAEo/EAAtEX-nDT0/s320/cm-issue15.png" /></a>
+</div>
+<p>
+For Firefox 4.0b5 2-column menu, menuitem shall be append to "<code>appmenuPrimaryPane</code>", "<code>appmenuSecondaryPane</code>", or their submenus.
+</p>
+<p>
+I moved "Configuration Mania" menuitem to Option submenu:
+</p>
+<div style="text-align: center;">
+<a href="http://3.bp.blogspot.com/_mg7ZLoSThok/TIxcq-hlo6I/AAAAAAAAAEw/Wrv-RcSRaUw/s1600/cm-issue15-fixed.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://3.bp.blogspot.com/_mg7ZLoSThok/TIxcq-hlo6I/AAAAAAAAAEw/Wrv-RcSRaUw/s320/cm-issue15-fixed.png" /></a>
+</div>

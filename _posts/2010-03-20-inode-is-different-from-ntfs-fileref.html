@@ -1,0 +1,84 @@
+---
+layout: post
+title: inode# is different from NTFS FileRef#
+date: '2010-03-20T11:16:00.009+09:00'
+author: cat_in_136
+tags:
+- windows
+modified_time: '2010-03-20T11:16:00.233+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8128995594284955978
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/inode-is-different-from-ntfs-fileref.html
+---
+
+<p>
+Each file is identified by an unique ID in the file system. On linux, this ID "inode number" can be obtained with <code>ls</code> command. To obtain inode number of "foobar.txt" (that reside at NTFS storage), type as follows:
+</p>
+<pre>$ ls -i /media/32C0C7B1C0C77A1D/foobar.txt
+35 foobar.txt
+$ 
+</pre>
+<p>
+You can see "35" is this file's inode number.
+</p>
+<p>
+On NTFS, the ID is called File reference number (FileRef#). To obtain FileRef# of "foobar.txt", type as follows:
+<pre>&gt; fsutil usn readdata f:\foobar.txt
+Major Version    : 0x2
+Minor Version    : 0x0
+FileRef#         : 0x0001000000000023
+Parent FileRef#  : 0x0005000000000005
+Usn              : 0x0000000000000000
+Time Stamp       : 0x0000000000000000 0:00:00 1601/01/01
+Reason           : 0x0
+Source Info      : 0x0
+Security Id      : 0x0
+File Attributes  : 0x20
+File Name Length : 0x14
+File Name Offset : 0x3c
+FileName         : foobar.txt
+</pre>
+<p>
+You can see "0x0001000000000023" is this file's FileRef#. Same FileRef# value was obtained by using <code>GetFileInformationByHandle()</code> function:
+</p>
+<pre class="prettyprint"><code>
+BY_HANDLE_FILE_INFORMATION fileInfo;
+HANDLE hFile;
+
+hFile = CreateFile(TEXT("f:\\foobar.txt"),
+                   GENERIC_READ,
+                   FILE_SHARE_READ,
+                   NULL,
+                   OPEN_EXISTING,
+                   FILE_FLAG_BACKUP_SEMANTICS | FILE_ATTRIBUTE_READONLY,
+                   NULL);
+GetFileInformationByHandle(hFile, &amp;fileInfo);
+fileID = (ULONGLONG)((fileInfo.nFileIndexLow) | (((ULONGLONG)fileInfo.nFileIndexHigh) << 32));
+</code></pre>
+<p>
+In addition, I obtained inode number with MSYS's ls command.
+</p>
+<pre>&gt; c:\msys\1.0\bin\ls.exe -i f:\foobar.txt
+65571 f:\foobar.txt
+&gt; 
+</pre>
+<p>
+I was surprised the inode number obtained by MSYS's ls is different from one obtained by Linux's ls. The above results were summarized as follows:
+</p>
+<table>
+<caption>inode# &amp; FileRef# of "foobar.txt" on NTFS storage</caption>
+<thead>
+<tr><th>Type of File ID</th><td>Decimal format</td><td>Hex format</td></tr>
+</thead>
+<tbody>
+<tr><th>inode# obtained by linux's ls</th><td>35</td><td>0x00000023</td></tr>
+<tr><th>inode# obtained by MSYS's ls</th><td>65571</td><td>0x00010023</td></tr>
+<tr><th>FileRef# obtained by fsutil command</th><td>281474976710691</td><td>0x0001000000000023</td></tr>
+</tbody>
+</table>
+
+<h4>See also</h4>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Inode">inode</a> wikipedia</li>
+<li><a href="http://technet.microsoft.com/ja-jp/library/cc788042%28WS.10%29.aspx">Fsutil usn</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/aa363788%28VS.85%29.aspx">BY_HANDLE_FILE_INFORMATION Structure</a> - MSDN</li>
+</ul>

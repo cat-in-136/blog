@@ -1,0 +1,34 @@
+---
+layout: post
+title: OOPP Setting on Configuration Mania
+date: '2010-05-04T22:10:00.001+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+modified_time: '2010-05-16T16:51:51.965+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/S9_zWauW5-I/AAAAAAAAACE/ulLzZjkgIfg/s72-c/screenshot1.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1960104260315171310
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/oopp-setting-on-configuration-mania.html
+---
+
+<p>Today, I added <abbr title="Out of Process plugins">OOPP</abbr> options for <a href="http://www.mozilla.com/en-US/firefox/3.6.4build1/releasenotes/">upcoming Firefox 3.6.4</a> to Configuration Mania. I uploaded the experimental version of Configuration Mania at the <a href="http://bitbucket.org/cat_in_136/configuration-mania/downloads">bitbucket's download page</a> : <code>confmania-experimental-2010050401-7bef5cf4911e.xpi</code>.</p>
+
+<p><a href="http://1.bp.blogspot.com/_mg7ZLoSThok/S9_zWauW5-I/AAAAAAAAACE/ulLzZjkgIfg/s1600/screenshot1.png"><img src="http://1.bp.blogspot.com/_mg7ZLoSThok/S9_zWauW5-I/AAAAAAAAACE/ulLzZjkgIfg/s400/screenshot1.png" alt="Configuration Mania OOPP Setting" title="Configuration Mania OOPP Setting" style="border: none; width: 400px; height:214px; text-align: center; margin: auto;" /></a></p>
+
+<p>The setting "Run browser plugins in a process thread separate from the main Firefox process (OOPP)" corresponds to <code>dom.ipc.plugins.enabled</code> on <code>about:config</code>.</p>
+
+<p>On current 1.6.4 preview release's default setting, only QuickTime, Flash, and Silverlight is running on the own process separate from the main process. You can disable or add OOPP for specific plugin (with <code>dom.ipc.plugins.enabled.<var>dllfilename.dll</var></code>). But Configuration Mania experimental release does not provide this plugin-specific setting UI.</p>
+
+<h4>Note</h4>
+
+<ul>
+<li>OOPP does not work on Firefox 3.6.4 <strong>Mac OS X</strong></li>
+<li>On default setting, Java is not OOPP.</li>
+</ul>
+
+<h4>See also</h4>
+
+<ul>
+<li><a href="http://mozillalinks.org/wp/2010/04/multi-process-firefox-lorentz-beta-now-available-for-download/">Multi-process Firefox Lorentz beta now available for download</a></li>
+<li><a href="https://developer.mozilla.org/devnews/index.php/2010/04/20/firefox-3-6-4-beta-available-for-download-and-testing/">Firefox 3.6.4 beta available for download and testing</a></li>
+</ul>

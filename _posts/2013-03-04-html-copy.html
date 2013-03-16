@@ -1,0 +1,107 @@
+---
+layout: post
+title: 'HTML の COPY 禁止をするにはどうすればいいですか? '
+date: '2013-03-04T07:00:00.000+09:00'
+author: cat_in_136
+tags:
+- html
+- css
+modified_time: '2013-03-04T07:00:00.910+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-2428345862398446500
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/html-copy.html
+---
+
+<p style="background-color: #eff; color: #000;  padding: 12px; border: solid 1px #08f; box-shadow: 5px 5px 0 #08f;">
+Q. HTML のコピー禁止をするにはどうすればいいですか?
+</p>
+
+<p>古典的な回答：</p>
+
+<pre class="prettyprint lang-html"><code>&lt;body oncopy="return false;"
+      oncontextmenu="return false;"&gt;
+</code></pre>
+
+<p>要するにコピーイベントおよびポップアップメニューを無効(<code>return false</code>)にしてしまう。
+なお、<code>div</code>要素など個別に指定もできるので、
+下記のように指定区域のみコピー禁止的なこともできる。</p>
+
+<div style="background-color: #fee; color: #800; padding: 12px; border: solid 1px #800;"
+     oncopy="return false;"
+     oncontextmenu="return false;">ここはコピーできない!?</div>
+
+<ul>
+<li><code>div</code>要素など一部分に指定した場合、それよりも外側を選択したらコピーできる。（イベントリスナが捕捉できないため。）</li>
+<li>Firefox だと Shift+右クリック でポップアップメニューを開けるのでコピー可能。</li>
+<li>unix/linux などの X window system だと選択した時点で領域選択が完了するので、マウスの中ボタンクリックでそのままペーストできてしまう。</li>
+<li>JavaScript を無効にするとコピー可能。</li>
+</ul>
+
+<p>というわけで、選択さえさせないということにしないというソリューションに発展していくこととなる。
+HTML 5 標準には含まれていないが、最近は <a href="https://developer.mozilla.org/en/docs/CSS/user-select"><code>user-select</code></a> なる CSS プロパティがある。
+<code>user-select</code> に対して <code>none</code> と指定すれば、そのまま選択不能となる。</p>
+
+<p>なお、下記の通り vender prefix が必要だ。</p>
+
+<table style="border: solid 1px #000; border-collapse: collapse">
+<col />
+<col />
+<thead>
+<tr>
+ <th style="border: solid 1px #000;">Browser</th>
+ <th style="border: solid 1px #000;">Property Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+ <td style="border: solid 1px #000;">Webkit (Safari/Chrome)</td>
+ <td style="border: solid 1px #000;"><code>-webkit-user-select</code></td>
+</tr>
+<tr>
+ <td style="border: solid 1px #000;">KHTML (Konqueror/Safari/Chrome)</td>
+ <td style="border: solid 1px #000;"><code>-khtml-user-select</code></td>
+</tr>
+<tr>
+ <td style="border: solid 1px #000;">Gecko (Firefox)</td>
+ <td style="border: solid 1px #000;"><code>-moz-user-select</code></td>
+</tr>
+<tr>
+ <td style="border: solid 1px #000;">Trident (Internet Explorer)</td>
+ <td style="border: solid 1px #000;"><code>-ms-user-select</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>なお、IE は IE10以降である。</p>
+
+<p>さらに IE9 以前には <code>selectstart</code> イベントが捕捉できるので、これをキャンセルすればよい。</p>
+
+<pre class="prettyprint lang-html"><code>&lt;body style="-webkit-user-select: none; -khtml-user-select: none; -ms-user-select: none; -moz-user-select: none; user-select: none;"
+      onselectstart="return false;"&gt;
+</code></pre>
+
+<p>なお、<code>onselectstart</code> の動作に目をつぶれば、 
+下記のように指定区域のみ禁止的なこともできる。</p>
+
+<div style="background-color: #fee; color: #800; padding: 12px; border: solid 1px #800; -webkit-user-select: none; -khtml-user-select: none; -ms-user-select: none; -moz-user-select: none; user-select: none;"
+     onselectionstart="return false;">ここはコピーできない!?</div>
+
+<p style="background-color: #eff; color: #000;  padding: 12px; border: solid 1px #08f; box-shadow: 5px 5px 0 #08f;">
+Q. `user-select: none` 指定されたテキストをコピーするにはどうすればいいですか?
+</p>
+
+<p>たとえば、Firefox だったら <a href="https://developer.mozilla.org/ja/docs/Tools/Web_Console">Web Console</a> なり <a href="https://developer.mozilla.org/ja/docs/Tools/Scratchpad">Scratch Pad</a> なりに
+以下を入力して実行。</p>
+
+<pre class="prettyprint lang-js"><code>Array.forEach(window.document.getElementsByTagName("*"), function(v){v.style.MozUserSelect="";}));
+</code></pre>
+
+<p>なにはともあれいかなる努力を持ってしても、
+ソースコードなりDOM 構文木にアクセスできる術があるので、
+コピーを本当の意味で無効にするのは無理である。
+（面倒にさせることはできる。）
+テキストに限ってコピペされたくないのなら、
+コピー禁止PDFにでもすればよいだろうし。</p>
+
+<p>どちらかというと、<code>user-select: none</code> は
+全体コピー禁止選択禁止とかではなく、
+小技的にコピペをより便利にするような目的で使うようになって欲しいものである。</p>

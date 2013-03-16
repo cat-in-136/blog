@@ -1,0 +1,93 @@
+---
+layout: post
+title: （チラシの裏）GR-SAKURA を linux で繋いで仮想COM(USB)通信時のおぼえがき
+date: '2012-09-23T00:27:00.000+09:00'
+author: cat_in_136
+tags:
+- linux
+- チラシの裏
+- gr-sakura
+modified_time: '2012-09-23T00:27:11.779+09:00'
+thumbnail: http://2.bp.blogspot.com/-rirKvZY3C1I/UF3XCVmJOxI/AAAAAAAAATI/RMr94iBkCp8/s72-c/GR-Sakura-Rx63NB.JPG
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7255231159585206736
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/09/gr-sakura-linux-comusb.html
+---
+
+<p>ありそうでない、GR-SAKURA を linux で繋いで仮想COM(USB)通信時のおぼえがき…</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://2.bp.blogspot.com/-rirKvZY3C1I/UF3XCVmJOxI/AAAAAAAAATI/RMr94iBkCp8/s1600/GR-Sakura-Rx63NB.JPG" style="margin-left:1em; margin-right:1em"><img height="225" width="400" src="http://2.bp.blogspot.com/-rirKvZY3C1I/UF3XCVmJOxI/AAAAAAAAATI/RMr94iBkCp8/s400/GR-Sakura-Rx63NB.JPG" style="border: 0;" /></a>
+<figcaption style="display: block;">そんなことよりも GR-SAKURA の基板がピンクで無駄にかわいい。それの中央にルネサスの RX63N が乗っている</figcaption>
+</figure>
+
+
+<p>単にシリアル出力するだけならばプログラム（スケッチ）はこんな程度のを書けば良い。</p>
+
+<pre class="prettyprint"><code>#include &lt;rxduino.h&gt;
+
+void setup() {
+    Serial.begin(38400, SCI_USB0);
+    Serial.println("Hello, world.");
+}
+void loop() {
+}
+</code></pre>
+
+<p style="font-size: x-large; font-weight: light;">でも、実はUSBで繋ぐだけ、設定しなくてもよい。</p>
+
+<p>USBケーブルで GR-SAKURA と繋ぐだけですぐに SAKURA として認識しつながった。
+しかも、シリアルデバイス <code>/dev/ttyACM0</code> ができている。</p>
+
+<pre style="background-color: #000; color: #fff; overflow: auto;"><code>% usb-devices
+...(略)...
+P:  Vendor=2129 ProdID=0531 Rev=01.00
+S:  Manufacturer=TOKUDEN
+S:  Product=Gadget Renesas SAKURA
+S:  SerialNumber=1.1
+C:  #Ifs= 2 Cfg#= 1 Atr=c0 MxPwr=100mA
+...(略)...
+% dmesg
+...(略)...
+[18628.698339] usb 3-2: new full-speed USB device number 6 using ohci_hcd
+[18628.854347] usb 3-2: New USB device found, idVendor=2129, idProduct=0531
+[18628.854358] usb 3-2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[18628.854365] usb 3-2: Product: Gadget Renesas SAKURA
+[18628.854371] usb 3-2: Manufacturer: TOKUDEN
+[18628.854375] usb 3-2: SerialNumber: 1.1
+[18628.856429] cdc_acm 3-2:1.0: This device cannot do calls on its own. It is not a modem.
+[18628.856470] cdc_acm 3-2:1.0: ttyACM0: USB ACM device
+% 
+</code></pre>
+
+<p>ちなみに、Manufacturer が Renesas ではなくて、TOKUDEN となっているのは、 GR-SAKURA が 特殊電子回路株式会社 の OEM 生産的なものであることを示しているのであろう。</p>
+
+<p>このデバイスは下記のような権限なので dialout グループの人か root でないと読み書きできない。</p>
+
+<pre style="background-color: #000; color: #fff; overflow: auto;"><code>% ls -l /dev/ttyACM*
+crw-rw----. 1 root dialout 166, 0  9月 22 23:29 /dev/ttyACM0
+% 
+</code></pre>
+
+<p>さらに、dmesg が仰っしゃるとおり、このデバイスはコールできい。モデムでない。
+となると、 dialout というグループは気持ち悪い。
+加えて <code>ttyACM0</code> という名前も気に食わない。
+そう思う人は以下のような udev スクリプトを作って、<code>/etc/udev/rules.d/51-gr-sakura.rules</code> に放り込んでやればよい。</p>
+
+<pre class="prettyprint"><code># Gadget Renesas SAKURA (idVendor=2129, idProduct=0531)
+KERNEL=="ttyACM[0-9]*", ATTRS{product}=="Gadget Renesas SAKURA", MODE="0660", GROUP="plugdev", SYMLINK+="ttyUSB-Sakura"
+</code></pre>
+
+<p>すると plugdev グループの人からアクセスできるようになる。
+また、<code>/dev/ttyUSB-Sakura</code> というわかりやすい名前のシンボリックリンクも貼られて気持ちイイ!</p>
+
+<pre style="background-color: #000; color: #fff; overflow: auto;"><code>% ls -l /dev/ttyUSB-Sakura /dev/ttyACM*
+crw-rw----. 1 root plugdev 166, 0  9月 22 23:39 /dev/ttyACM0
+lrwxrwxrwx. 1 root root         7  9月 22 23:39 /dev/ttyUSB-Sakura -&gt; ttyACM0
+</code></pre>
+
+<h4>参考文献♪</h4>
+
+<ul>
+<li><a href="http://japan.renesas.com/products/promotion/gr/index.jsp" title="がじぇっとるねさす">がじぇっとるねさす</a> ルネサステクノロジ</li>
+<li><a href="http://rx.tokudenkairo.co.jp/manual/classCSerial.html">RXduino: クラス CSerial</a> RXduinoマニュアル, 特殊電子回路株式会社</li>
+</ul>

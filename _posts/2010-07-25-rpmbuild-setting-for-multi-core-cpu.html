@@ -1,0 +1,35 @@
+---
+layout: post
+title: '[Updated] rpmbuild setting for multi core CPU'
+date: '2010-07-25T11:27:00.002+09:00'
+author: cat_in_136
+tags:
+- make
+modified_time: '2011-04-16T13:15:13.010+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7244169284373481435
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/07/rpmbuild-setting-for-multi-core-cpu.html
+---
+
+<p>
+<code>rpmbuild(8)</code> is a command to build a RPM file (binary software package.)
+Usually rpmbuild's build process is running with only one CPU.
+But it is possible to run with more than one CPU.
+To run with more than one CPU, edit <code>~/.rpmmacros</code> and add:
+</p>
+<code class="prettyprint"><pre>
+%__make         /usr/bin/make -j <var>6</var>
+</pre></code>
+<p>
+Specify <code>-j <em>6</em></code> if you have a hexa-core CPU. Specify <code>-j <em>4</em></code> if dual-core.
+<ins date="2011-04-16T04:08:18Z">Clearer advices that just only <code>-j</code> make to create as many threads as it feels like.</ins>
+</p>
+
+<ins date="2011-04-16T04:08:18Z"><p>To get the full story, follow <a href="{{ site.baseurl }}{% post_url 2010-07-31-rpmbuild-setting-for-multi-core-cpu-2 %}">the next article</a>.</p></ins>
+
+
+<h4>See also</h4>
+<ul>
+<li><a href="http://www.rpm.org/wiki/PackagerDocs/Macros#ConfigurationusingMacros">PackagerDocs/Macros ConfigurationusingMacros</a> - in <a href="http://www.rpm.org/">rpm.org</a> wiki</li>
+<li><a href="http://www.redhat.com/archives/rpm-list/2004-July/msg00004.html">Re: rpmbuild using more than one cpu</a> - redhat rpm-list, July 1, 2004</li>
+<li><code>man 1 make</code></li>
+</ul>

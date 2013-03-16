@@ -1,0 +1,99 @@
+---
+layout: post
+title: 'Study: multi-text vs single-text on XUL elements'
+date: '2010-06-22T22:38:00.087+09:00'
+author: cat_in_136
+tags:
+- xul
+- mozilla
+modified_time: '2010-06-22T23:49:12.699+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4802758408799829283
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/study-multi-text-vs-single-text-on-xul.html
+---
+
+<p>
+<code>&lt;description&gt;</code> is used to create a block of text. There are two ways:
+</p>
+
+<pre class="prettyprint"><code>&lt;description&gt;This text will word wrap when displayed.&lt;description&gt;
+&lt;description label="This text will not word wrap when displayed."/&gt;
+</code></pre>
+
+<p>
+It's simple. Text content will word wrap when displayed. Attribute will not.
+</p>
+
+<pre class="prettyprint"><code>&lt;label&gt;This text will word wrap when displayed.&lt;label&gt;
+&lt;label value="This text will not word wrap when displayed."/&gt;
+</code></pre>
+<pre class="prettyprint"><code>&lt;button&gt;This text will word wrap when displayed.&lt;button&gt;
+&lt;button label="This text will not word wrap when displayed."/&gt;
+</code></pre>
+
+<h3>
+Exception</h3>
+
+<p>
+e.g. <code>radio</code> element:</p>
+
+<pre class="prettyprint"><code>&lt;radio label="This text will word wrap when displayed."/&gt;
+</code></pre>
+
+<p>
+Why? Firefox expands this code to</p>
+
+<pre class="prettyprint"><code>&lt;xul:hbox class="radio-spacer-box"&gt;
+   &lt;!-- **snip** --&gt;
+&lt;/xul:hbox&gt;
+&lt;xul:hbox class="radio-label-center-box" flex="1"&gt;
+  &lt;xul:hbox class="radio-label-box"&gt;
+    &lt;xul:image class="radio-icon" src=""/&gt;
+    &lt;xul:label class="radio-label" flex="1"&gt;
+      <strong>This text will word wrap when displayed.</strong>
+    &lt;/xul:label&gt;
+  &lt;/xul:hbox&gt;
+&lt;/xul:hbox&gt;
+</code></pre>
+
+<p>
+The text "This text will word wrap when displayed." is expanded to text content (not attribute!) of <code>label</code> element.
+</p>
+
+<p>
+e.g. <code>richlistitem</code> element:</p>
+
+<pre class="prettyprint"><code>&lt;richlistitem&gt;This text will not word wrap when displayed."&lt;/richlistitem&gt;
+</code></pre>
+
+<p>
+I don't know why.</p>
+
+<h3>
+Effect of &lt;html:br/&gt;</h3>
+
+<p>
+(X)HTML's <code>br</code> element represents a line break. <code>html:br</code> element can be readily applied to XUL.</p>
+
+<pre class="prettyprint"><code>&lt;description&gt;This text is&lt;html:br/&gt; multiple line.&lt;description&gt;
+</code></pre>
+
+<p>
+<code>html:br</code> element can not be applied to attribute.</p>
+
+<ul>
+<li>this code is invalid.
+<pre class="prettyprint"><code>&lt;radio label="br can not be&lt;html:br/&gt; applied to attribute."/&gt;
+</code></pre>
+</li>
+<li>this radio button label is "br can not be&lt;html:br/&gt; applied to attribute."
+<pre class="prettyprint"><code>&lt;radio label="br can not be&amp;lt;html:br/&amp;gt; applied to attribute."/&gt;
+</code></pre>
+</li>
+</ul>
+
+<h4>
+See also</h4>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en/XUL/description">description</a> - MDC</li>
+</ul>

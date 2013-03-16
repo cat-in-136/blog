@@ -1,0 +1,97 @@
+---
+layout: post
+title: Hack Micropolis (a.k.a. SimCity) and get $2,147,483,647!
+date: '2010-08-08T00:35:00.018+09:00'
+author: cat_in_136
+tags:
+- simcity
+modified_time: '2010-08-08T00:35:00.139+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/TFmBNZK00-I/AAAAAAAAAEA/b42GlzHQXVw/s72-c/micropolis.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4667203927925551776
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/08/hack-micropolis-aka-simcity-and-get.html
+---
+
+<img src="http://1.bp.blogspot.com/_mg7ZLoSThok/TFmBNZK00-I/AAAAAAAAAEA/b42GlzHQXVw/s200/micropolis.png" style="width:200px; height:120px;float:right;"/>
+
+<p>
+Micropolis (The original SimCity) is old game (published in 1989) and newly freed game (released GPLv3 in 2008.)
+You can download the source code from <a href="http://www.donhopkins.com/home/micropolis/">Don Hopkins' Micropolis Downloads page</a>.
+<a href="http://git.zerfleddert.de/cgi-bin/gitweb.cgi/micropolis">Michael Gernoth's micropolis git repository</a> is also useful.
+</p>
+
+<h4>How To Get $2,147,483,647</h4>
+
+<p>
+The amount of funds is written in cty file at offset 0x0BA4.
+To get $2,147,483,647, follow these steps:
+</p>
+<ol>
+
+<li>Open the cty file with a hex editor.</li>
+<li>Jump to 0x0BA4, and</li>
+<li>Modify 0x7FFFFFFF (signed 4-bytes)</li>
+</ol>
+<pre><span style="text-decoration: underline">          0011 2233 4455 6677 8899 aabb ccdd eeff  0123456789abcdef</span>
+00000ba0: 0000 0000 <del>0000 893d</del> 0001 0001 0000 0001  .......=........
+|
+v
+00000ba0: 0000 0000 <ins>7fff ffff</ins> 0001 0001 0000 0001  ................
+</pre>
+<div>
+<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TFl_e2CfWpI/AAAAAAAAADw/A70UaWcJlt0/s1600/micropolis-2147483647.png">
+<img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TFl_e2CfWpI/AAAAAAAAADw/A70UaWcJlt0/s400/micropolis-2147483647.png" style="width:397px;height:221px;border:0 none;" />
+</a>
+</div>
+
+<h4>cty file format</h4>
+
+<p>
+Micropolis's cty file format is as following:
+</p>
+<pre class="prettyprint"><code>#define WORLD_X     120
+#define WORLD_Y     120
+#define HISTLEN     480
+#define MISCHISTLEN 240
+
+typedef struct {
+    short   ResHis[HISTLEN/2];
+    short   ComHis[HISTLEN/2];
+    short   IndHis[HISTLEN/2];
+    short   CrimeHis[HISTLEN/2];
+    short   PollutionHis[HISTLEN/2];
+    short   MoneyHis[HISTLEN/2];
+    short   MiscHis[MISCHISTLEN/2];
+    short   Map[WORLD_X * WORLD_Y];
+} CTY_DATA;
+</code></pre>
+<p>
+Note: <code>short</code> is a Big-Endian (signed) 16-bits number.
+</p>
+<p>
+For example, <code>Map</code> data is written in cty file at offset 0x0C30.
+(0x0C30 = 3120 = HISTLEN * 6 + MISCHISTLEN)
+</p>
+<p>
+Total funds is <code>MiscHis[50]</code> and <code>MiscHis[51]</code>
+as a signed 32-bit number. 
+<code>MiscHis[50]</code> is high-order word and <code>MiscHis[51]</code> is 
+low-order word.
+This is written at micropolis's source code
+(<code>src/sim/s_fileio.c#loadFile(char*)</code>) as follows:
+</p>
+<pre class="prettyprint"><code>
+   /* total funds is a long.....    MiscHis is array of shorts */
+   /* total funds is being put in the 50th &amp; 51th word of MiscHis */
+   /* find the address, cast the ptr to a lontPtr, take contents */
+ 
+   l = *(QUAD *)(MiscHis + 50);
+   HALF_SWAP_LONGS(&l, 1);
+   SetFunds(l);
+</code></pre>
+
+<h4>See also</h4>
+<ul>
+<li><a href="http://www.donhopkins.com/home/micropolis/">Don Hopkins' Micropolis Downloads page</a></li>
+<li><a href="http://www.linux.com/archive/feature/125797">The original SimCity is now the open source Micropolis</a> - Linux.com 2008-01-31</li>
+<li><a href="http://jaysonking.com/micropolis.php">Microplis hack : Unlimited city funds at 0xBA4 in Micropolis *.cty files.</a> - jaysonking.com</li>
+</ul>

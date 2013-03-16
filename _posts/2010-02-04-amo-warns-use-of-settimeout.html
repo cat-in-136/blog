@@ -1,0 +1,35 @@
+---
+layout: post
+title: AMO warns use of "setTimeout()"
+date: '2010-02-04T00:20:00.004+09:00'
+author: cat_in_136
+tags:
+- javascript
+- mozilla
+modified_time: '2010-02-20T12:07:11.623+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7052186460245008435
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/02/amo-warns-use-of-settimeout.html
+---
+
+<blockquote>
+Since these functions can be used in the same way as eval() to run code from a string, 
+</blockquote>
+<p>
+An example of usage to "run code from a string" is:
+</p>
+<pre class="prettyprint"><code>setTimeout("alert('foobar')", 1000);</code></pre>
+<p>
+It is recommended and secure that the first argument of <code>window.setTimeout()</code> is a function, not a string. You can use following sample code:
+</p>
+<pre class="prettyprint"><code>setTimeout(function(){alert('foobar');}, 1000);</code></pre>
+<p>
+On <a href="https://addons.mozilla.org/firefox/pages/validation#help-21">Mozilla add-on site AMO's security test</a>, <code>window.setTimeout()</code> is <strong>always</strong> flagged as insecure, regardless type of the first argument.
+</p>
+<p>
+So, for JavaScript codes on Firefox(and/or other Mozilla) extensions, <code>window.setTimeout()</code> shall be replaced with <code>nsITimer</code> as follows:
+</p>
+<pre class="prettyprint"><code>var timer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+ timer.initWithCallback({function(){
+   alert('foobar');
+ }}, 1000, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+</code></pre>

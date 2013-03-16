@@ -1,0 +1,38 @@
+---
+layout: post
+title: Diff of firefox 9-beta default preference and firefox 8
+date: '2011-12-03T23:23:00.000+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2011-12-03T23:23:37.407+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-2124102226049917241
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/12/diff-of-firefox-9-beta-default.html
+---
+
+<p>
+This is difference between the default preference of Firefox 9-beta and one of 8.
+</p>
+
+<dl>
+<dt>Default pref Javascript files:</dt>
+<dd>(omni.jar){/greprefs.js,/defaults/pref/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+</dl>
+
+<div>
+<table class="diff_firefox9_pref_diff">
+<thead><tr><td>Pref</td><td>Firefox 8</td><td>Firefox 9 beta 4</td></tr></thead>
+<tbody><tr><td>browser.<wbr />download.<wbr />saveLinkAsFilenameTimeout</td><td>1000</td><td>4000</td></tr><tr><td>browser.<wbr />overlink-<wbr />delay</td><td>70</td><td>80</td></tr><tr><td>devtools.<wbr />inspector.<wbr />enabled</td><td>true</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />styleinspector.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>extensions.<wbr />autoDisableScopes</td><td>10</td><td>15</td></tr><tr class="oldkey"><td>geo.<wbr />wifi.<wbr />protocol</td><td>0</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>geo.<wbr />wifi.<wbr />uri</td><td>https://www.google.com/loc/json</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>places.<wbr />database.<wbr />cache_<wbr />to_<wbr />memory_<wbr />percentage</td><td>6</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>services.<wbr />sync.<wbr />errorhandler.<wbr />networkFailureReportTimeout</td><td class="undefined">undefined</td><td>604800</td></tr><tr class="newkey"><td>services.<wbr />sync.<wbr />log.<wbr />appender.<wbr />file.<wbr />maxErrorAge</td><td class="undefined">undefined</td><td>864000</td></tr><tr><td>services.<wbr />sync.<wbr />scheduler.<wbr />activeInterval</td><td>300</td><td>600</td></tr><tr><td>services.<wbr />sync.<wbr />scheduler.<wbr />immediateInterval</td><td>60</td><td>90</td></tr><tr><td>services.<wbr />sync.<wbr />scheduler.<wbr />singleDeviceInterval</td><td>3600</td><td>86400</td></tr><tr><td>startup.<wbr />homepage_<wbr />override_<wbr />url</td><td></td><td>http://www.mozilla.com/%LOCALE%/%APP%/%VERSION%/whatsnew/</td></tr><tr class="newkey"><td>urlclassifier.<wbr />lookupcachemax</td><td class="undefined">undefined</td><td>1048576</td></tr><tr><td>urlclassifier.<wbr />updatecachemax</td><td>104857600</td><td>41943040</td></tr></tbody>
+</table>
+</div>
+
+<script type="text/javascript"><!-- /* --><![CDATA[ *///
+(function(){
+    var s = document.createElement("link");
+    s.rel = "stylesheet";
+    s.type = "text/css";
+    s.href = "data:text/css;base64,dGFibGUuZGlmZl9maXJlZm94OV9wcmVmX2RpZmYgeyBib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlOyBmb250LXNpemU6IHgtc21hbGw7IG92ZXJmbG93OiBhdXRvOyB9CnRhYmxlLmRpZmZfZmlyZWZveDlfcHJlZl9kaWZmIHRkIHsgYm9yZGVyOiAxcHggc29saWQgI2RkZDsgcGFkZGluZzogMXB4OyB2ZXJ0aWNhbC1hbGlnbjogdG9wOyB9CnRhYmxlLmRpZmZfZmlyZWZveDlfcHJlZl9kaWZmIHRoZWFkIHRkIHsgYmFja2dyb3VuZC1jb2xvcjogI2RkZDsgZm9udC13ZWlnaHQ6IGJvbGQ7IH0KdGFibGUuZGlmZl9maXJlZm94OV9wcmVmX2RpZmYgdGQudW5kZWZpbmVkIHsgY29sb3I6ICM4ODg7IGZvbnQtc3R5bGU6IGl0YWxpYzsgfQp0YWJsZS5kaWZmX2ZpcmVmb3g5X3ByZWZfZGlmZiB0ci5zYW1ldmFsIHRkOmZpcnN0LWNoaWxkIHsgY29sb3I6ICM0NDQ7IH0KdGFibGUuZGlmZl9maXJlZm94OV9wcmVmX2RpZmYgdHIubmV3a2V5ICB0ZDpmaXJzdC1jaGlsZCB7IHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lOyAgICB9CnRhYmxlLmRpZmZfZmlyZWZveDlfcHJlZl9kaWZmIHRyLm9sZGtleSAgdGQ6Zmlyc3QtY2hpbGQgeyB0ZXh0LWRlY29yYXRpb246IGxpbmUtdGhyb3VnaDsgfQoKdGFibGUuZGlmZl9maXJlZm94OV9wcmVmX2RpZmYgdGJvZHkgdHI6aG92ZXIgeyBiYWNrZ3JvdW5kLWNvbG9yOiAjZWVlOyB9CnRhYmxlLmRpZmZfZmlyZWZveDlfcHJlZl9kaWZmIHRib2R5IHRyIHsgLW1vei10cmFuc2l0aW9uOiBiYWNrZ3JvdW5kIDAuMTI1cyBlYXNlLWluLW91dCAwczsgfQo=";
+    document.getElementsByTagName("head")[0].appendChild(s);
+})();
+/* ]]><!-- */ --></script>

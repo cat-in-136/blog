@@ -1,0 +1,39 @@
+---
+layout: post
+title: 'Three JIT options on Firefox4 : jitprofiling, methodjit, and tracejit'
+date: '2010-12-13T23:56:00.000+09:00'
+author: cat_in_136
+tags:
+- javascript
+- チラシの裏
+- mozilla
+modified_time: '2010-12-13T23:56:48.822+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/TQYy5XjmqAI/AAAAAAAAAFo/hxwX1PJaFMM/s72-c/jitconfig.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-2530005762067768350
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/12/three-jit-options-on-firefox4.html
+---
+
+<p>
+On Firefox4, there are three <abbr title="Just-In-Time">JIT</abbr> options:
+</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/_mg7ZLoSThok/TQYy5XjmqAI/AAAAAAAAAFo/hxwX1PJaFMM/s1600/jitconfig.png" style="margin: 1ex;"><img src="http://1.bp.blogspot.com/_mg7ZLoSThok/TQYy5XjmqAI/AAAAAAAAAFo/hxwX1PJaFMM/s320/jitconfig.png" height="125" width="320" style="border: 0 none;" /></a>
+</div>
+
+<dl>
+<dt><code>javascript.options.jitprofiling.*</code></dt>
+<dd><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=580468" title="Bug#580468">Tuning JIT compiler heuristics</a>; Profile to decide using <em>tracegit</em> or using <em>methodjit</em>.</dd>
+<dt><code>javascript.options.methodjit.*</code></dt>
+<dd><a href="https://wiki.mozilla.org/JaegerMonkey" title="JagerMonkey">J&#228;gerMonkey</a>; Baseline JIT compiler.</dd>
+<dt><code>javascript.options.tracejit.*</code></dt>
+<dd><a href="https://wiki.mozilla.org/JavaScript:TraceMonkey">TraceMonkey</a>; native-code compilation.</dd>
+<dt><code>javascript.options.*.content</code></dt>
+<dd>Whether it apply to webpages or not</dd>
+<dt><code>javascript.options.*.chrome</code></dt>
+<dd>Whether it apply to firefox's interface (XUL) or not</dd>
+</dl>
+
+<p>
+Note: <code>javascript.options.jit.*</code> are replaced with <code>javascript.options.tracejit.*</code>.
+</p>

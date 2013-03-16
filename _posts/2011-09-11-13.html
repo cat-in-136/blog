@@ -1,0 +1,297 @@
+---
+layout: post
+title: ポニーテールの揺れの定式化と考察 (1/3)
+date: '2011-09-11T06:00:00.039+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- ponytail
+modified_time: '2011-09-13T07:46:30.571+09:00'
+thumbnail: http://1.bp.blogspot.com/-9Hql2Lfy3AM/TmugOh7JiHI/AAAAAAAAAKE/ZClTLgKQMh8/s72-c/simple_pendulum_.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7390676898124585907
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/09/13.html
+---
+
+<div style="background: #ffd; border: solid 3px #ff8">
+このPostを読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です。
+もし数式部分が読めない場合は、
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<a href="javascript:(function%20hoge()%20%7Bvar%20lmath%20%3D%20document.body.getElementsByTagName(%22math%22)%3Bfor%20(var%20i%20%3D%200%3B%20i%20%3C%20lmath.length%3B%20i%2B%2B)%20%7Bif%20(lmath%5Bi%5D.getAttribute(%22title%22)%20!%3D%20%22%22%20%26%26%20!lmath%5Bi%5D.__converted)%20%7Bvar%20img%20%3D%20new%20Image%3Bimg.src%20%3D%20%22http%3A%2F%2Fchart.apis.google.com%2Fchart%3Fcht%3Dtx%26chl%3D%22%20%2B%20encodeURIComponent(lmath%5Bi%5D.getAttribute(%22title%22))%3Bimg.alt%20%3D%20lmath%5Bi%5D.getAttribute(%22title%22)%3Bimg.setAttribute(%22title%22%2C%20lmath%5Bi%5D.getAttribute(%22title%22))%3Bif%20(lmath%5Bi%5D.getAttribute(%22mode%22)%20%3D%3D%20%22display%22)%20%7Bimg.setAttribute(%22style%22%2C%20%22display%3A%20block%3B%20margin%3A%20auto%3B%20text-align%3A%20center%3B%22)%3B%7Dlmath%5Bi%5D.parentNode.insertBefore(img%2C%20lmath%5Bi%5D)%3Blmath%5Bi%5D.setAttribute(%22style%22%2C%20%22display%3A%20none%22)%3Blmath%5Bi%5D.__converted%20%3D%20true%3B%7D%7D%7D)();">MathMLの記述を画像に変換する</a>などをしてください。
+</div>
+
+<blockquote cite="http://www.shizecon.net/sakuhin/49es_1.html">
+<p>
+ポニーテールを観察していると、その人がわざと揺らしているのではないかと思うほど、リズミカルに揺れています。その反面、あまり揺れていない人もいることに気づきました。どんな時によく揺れて、どんな風になるとあまり揺れないのでしょうか。そんな秘密を調べたい。
+</p>
+</blockquote>
+
+<p>
+<a href="http://www.shizecon.net/">シゼコン　自然科学観察コンクール</a>の
+2008年度の一等賞の研究「
+<a href="http://www.shizecon.net/sakuhin/49es_1.html">-ポニーテールはなぜ揺れる？- 振り子のふれ方の研究</a>
+」はテーマの選定もさることながら、内容も興味深い。
+内容としては、ポニーテールを振り子にモデル化したうえで、実際にポニーテール共振器と振れ幅測定ボードを作り、実験考察をしている。
+</p>
+<p>
+この研究の成果でもっとも重要なことは、以下の考察の部分であり、
+歩行のテンポと振り子リズムの共振の関係に言及していることだと思う。
+</p>
+<blockquote cite="http://www.shizecon.net/sakuhin/49es_1.html">
+<p>
+振り子と体の動きをよく観察すると、振り子リズムのポイントは「足のウラ」でした。右足が地面に着く時、わずかに右肩が下がり、振り子も右側に最大にふれます。反対に左足が着地した時は、自然と左肩が下がり、振り子も左側に最大にふれます。歩くという運動は、このような動きのくり返しです。
+</p>
+</blockquote>
+
+<p>
+というわけで、歩行のテンポと振り子リズムの関係について数式であらわせられないのか？
+数式化して、ポニーテールが揺れるための条件を明らかにしたい。
+</p>
+
+<hr />
+
+<h4>1. 補題：単振り子の挙動</h4>
+
+<p>
+まず簡単のため、また筆者の復習のため、単振り子の挙動を考察する。
+単純に質量<var>m</var>のおもりが長さ<var>l</var>の理想的な紐につながっている振り子を想定する。
+鉛直方向と紐がなす角が<var>&#x03b8;</var>であり、この角度の振る舞いをしらべる。
+</p>
+
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-9Hql2Lfy3AM/TmugOh7JiHI/AAAAAAAAAKE/ZClTLgKQMh8/s1600/simple_pendulum_.png"><img height="230" width="177" style="border: 0;" src="http://1.bp.blogspot.com/-9Hql2Lfy3AM/TmugOh7JiHI/AAAAAAAAAKE/ZClTLgKQMh8/s320/simple_pendulum_.png" /></a></div>
+
+
+
+<p>
+振り子のおもりに注目すると、運動方程式は、
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="m \frac{d^2}{dt^2} \left( \begin{array}{c}x\\y\end{array} \right) = m \left( \begin{array}{c}0\\-g\end{array} \right) - T \left( \begin{array}{c}- \sin \theta \\-\cos \theta\end{array} \right)">
+<mrow><mi>m</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>x</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>y</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mi>m</mi><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>g</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>-</mo><mi>T</mi><mo>&#x2062;</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>sin</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>cos</mi><mi>&#x03b8;</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+
+</math>
+</td><td>(1.1)</td></tr>
+</tbody></table>
+<p>
+また、振り子のひもの長さを<var>l</var>として、
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\left(\begin{array}{c}x\\y\end{array}\right) = \left(\begin{array}{c}l\sin \theta\\l\cos \theta\end{array}\right)">
+<mrow><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>x</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>y</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>l</mi><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>l</mi><mo>&#x2062;</mo><mi>cos</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+
+</math>
+</td><td>(1.2)</td></tr>
+</tbody></table>
+
+<p>
+さて、この単振り子の振れ幅は十分に小さいと仮定すると、
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\sin \theta = \theta">
+<mrow><mi>sin</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi><mo>=</mo><mi>&#x03b8;</mi></mrow>
+</math>
+であるので、(1.2)式は以下のように変形できる。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\left(\begin{array}{c}x\\y\end{array}\right) = \left(\begin{array}{c}l\theta\\l\end{array}\right)">
+
+<mrow><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>x</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>y</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>l</mi><mo>&#x2062;</mo><mi>&#x03b8;</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>l</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+</math>
+</td><td>(1.3)</td></tr>
+</tbody></table>
+<p>
+(1.3)式を(1.1)式に代入することにより
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\left(\begin{array}{c}ml\frac{d^2\theta}{dt^2}\\0\end{array}\right)=\left(\begin{array}{c}-T\theta\\mg - T\end{array}\right)">
+<mrow><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>m</mi><mo>&#x2062;</mo><mi>l</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mn>0</mn></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>T</mi><mi>&#x03b8;</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>m</mi><mo>&#x2062;</mo><mi>g</mi><mo>-</mo><mi>T</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+
+</math>
+</td><td>(1.4)</td></tr>
+</tbody></table>
+<p>
+鉛直成分から<math xmlns="http://www.w3.org/1998/Math/MathML" title="T=mg">
+<mrow><mi>T</mi><mo>=</mo><mi>m</mi><mo>&#x2062;</mo><mi>g</mi></mrow>
+</math>であるので、水平成分から
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="ml \frac{d^2\theta}{dt^2} = -mg\theta">
+
+<mrow><mi>m</mi><mo>&#x2062;</mo><mi>l</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>=</mo><mo>-</mo><mi>m</mi><mo>&#x2062;</mo><mi>g</mi><mo>&#x2062;</mo><mi>&#x03b8;</mi></mrow>
+</math>
+</td><td>(1.5)</td></tr>
+</tbody></table>
+<p>
+
+(1.5)式を整理すると、いわゆる振動方程式と呼ばれる二階微分方程式が得られる。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\frac{d^2\theta}{dt^2}=-\frac{g}{l}\theta">
+<mrow><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>&#x03b8;</mi></mrow>
+</math>
+</td><td>(1.6)</td></tr>
+
+</tbody></table>
+<p>
+(1.6)式の特殊解は<math xmlns="http://www.w3.org/1998/Math/MathML" title="\theta=e^{\pm i\sqrt{g/l}t}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><msup><mi>e</mi><mrow><mo>&#x00b1;</mo><mi>i</mi><mo>&#x2062;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>&#x2062;</mo><mi>t</mi></mrow></msup></mrow>
+</math>であるので、(1.6)式の一般解は任意定数<var>C</var><sub>1</sub>,<var>C</var><sub>2</sub>を用いて以下のようになる。
+
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta=C_1e^{i\sqrt{g/l}t} + C_2e^{-i\sqrt{g/l}t}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><msub><mi>C</mi><mn>1</mn></msub><mo>&#x2062;</mo><msup><mi>e</mi><mrow><mi>i</mi><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mi>t</mi></mrow></msup><mo>+</mo><msub><mi>C</mi><mn>2</mn></msub><mo>&#x2062;</mo><msup><mi>e</mi><mrow><mo>-</mo><mi>i</mi><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mi>t</mi></mrow></msup></mrow>
+
+</math>
+</td><td>(1.7)</td></tr>
+</tbody></table>
+<p>
+ここで、(1.7)式に<math xmlns="http://www.w3.org/1998/Math/MathML" title="C_1=\frac{A}{2} e^{i\phi},\,C_2=\frac{A}{2} e^{-i\phi}">
+<mrow><msub><mi>C</mi><mn>1</mn></msub><mo>=</mo><mfrac><mi>A</mi><mn>2</mn></mfrac><mo>&#x2062;</mo><msup><mi>e</mi><mrow><mi>i</mi><mi>&#x03c6;</mi></mrow></msup><mo>,</mo><mspace width="1.67pt"/><msub><mi>C</mi><mn>2</mn></msub><mo>=</mo><mfrac><mi>A</mi><mn>2</mn></mfrac><mo>&#x2062;</mo><msup><mi>e</mi><mrow><mo>-</mo><mi>i</mi><mi>&#x03c6;</mi></mrow></msup></mrow>
+
+</math>
+を代入することにより、
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta=\frac{A}{2}\left(e^{i\left(\sqrt{g/l}t+\phi\right)}+e^{-i\left(\sqrt{g/l}t+\phi\right)}\right)">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><mfrac><mrow><mrow><mi>A</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mo>(</mo><msup><mi>e</mi><mrow><mi>i</mi><mo>(</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mi>t</mi><mo>+</mo><mi>&#x03c6;</mi><mo>)</mo></mrow></msup><mo>+</mo><msup><mi>e</mi><mrow><mo>-</mo><mi>i</mi><mo>(</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mi>t</mi><mo>+</mo><mi>&#x03c6;</mi><mo>)</mo></mrow></msup><mo>)</mo></mrow>
+
+</math>
+</td><td>(1.8)</td></tr>
+</tbody></table>
+<p>
+したがって、よく知られた周期が
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="2\pi \sqrt{l/g}">
+<mrow><mn>2</mn><mo>&#x2062;</mo><mi>&#x03c0;</mi><mo>&#x2062;</mo><msqrt><mrow><mrow><mi>l</mi><mo>/</mo><mi>g</mi></mrow></mrow></msqrt></mrow>
+</math>
+である単振動の式(1.9)が得られる。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta=A\cos {\left(\sqrt{\frac{g}{l}}t+\phi\right)}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><mi>A</mi><mi>cos</mi><mo>&#x2061;</mo><mrow><mo>(</mo><msqrt><mrow><mrow><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac></mrow></mrow></msqrt><mo>&#x2062;</mo><mi>t</mi><mo>+</mo><mi>&#x03c6;</mi><mo>)</mo></mrow></mrow>
+</math>
+</td><td>(1.9)</td></tr>
+</tbody></table>
+
+<p>
+ただ、この単振り子は当然ながら、ポニーテールの振動を表現していない。
+次に、ポニーテール共振器の挙動について考察しよう。
+</p>
+
+<h4>2. ポニーテール共振器の振動</h4>
+
+<p>
+ポニーテール共振器自体は単純な振り子なので単振り子と見なせる。
+その振り子の支点が強制振動として動いているとみなす。
+</p>
+<p>
+なお強制振動は以下の式とする。
+</p>
+<table style="width: 100%">
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="X(t)=X\cos{\omega t}">
+<mrow><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mi>X</mi><mo>&#x2062;</mo><mi>cos</mi><mo>&#x2061;</mo><mrow><mi>&#x03c9;</mi><mo>&#x2062;</mo><mi>t</mi></mrow></mrow>
+
+</math>
+</td><td>(2.0)</td></tr>
+</tbody></table>
+<p>
+微積分学観点から取り扱いやすいcosをつかったのであり、人の振動と正弦波形との関係はここでは考察しない。
+また、<var>X</var>が紛らわしいとかあるがキニシナイ。
+</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s1600/pony_tail_model.png" ><img style="border: 0" height="255" width="230" src="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s320/pony_tail_model.png" /></a>
+</div>
+
+<p>
+振り子のおもりに注目すると、運動方程式は、(1.1)式と完全に一致となるが、
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="m \frac{d^2}{dt^2} \left( \begin{array}{c}x\\y\end{array} \right) = m \left( \begin{array}{c}0\\-g\end{array} \right) - T \left( \begin{array}{c}- \sin \theta \\-\cos \theta\end{array} \right)">
+<mrow><mi>m</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>x</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>y</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mi>m</mi><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mn>0</mn></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>g</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>-</mo><mi>T</mi><mo>&#x2062;</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>sin</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>cos</mi><mi>&#x03b8;</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+
+</math>
+</td><td>(2.1)</td></tr>
+</tbody></table>
+<p>
+また、振り子のひもの長さを<var>l</var>として、
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\left(\begin{array}{c}x\\y\end{array}\right) = \left(\begin{array}{c}l\sin\theta + X{(t)}\\l\cos\theta\end{array}\right)">
+<mrow><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>x</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>y</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>l</mi><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi><mo>+</mo><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>l</mi><mi>cos</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+
+</math>
+</td><td>(2.2)</td></tr>
+</tbody></table>
+
+<p>
+さて、この単振り子の振れ幅は十分に小さいと仮定すると、
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\sin \theta = \theta">
+<mrow><mi>sin</mi><mo>&#x2061;</mo><mi>&#x03b8;</mi><mo>=</mo><mi>&#x03b8;</mi></mrow>
+</math>
+であるので、(2.2)式は以下のように変形できる。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\left(\begin{array}{c}x\\y\end{array}\right) = \left(\begin{array}{c}l\theta+X{(t)}\\l\end{array}\right)">
+
+<mrow><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>x</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>y</mi></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>l</mi><mo>&#x2062;</mo><mi>&#x03b8;</mi><mo>+</mo><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>l</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+</math>
+</td><td>(2.3)</td></tr>
+
+</tbody></table>
+<p>
+(2.3)式を(2.1)式に代入することにより
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\left(\begin{array}{c}ml\frac{d^2\theta}{dt^2}+m\frac{d^2 X{(t)}}{dt^2}\\0\end{array}\right)=\left(\begin{array}{c}-T\theta\\mg - T\end{array}\right)">
+<mrow><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mi>m</mi><mo>&#x2062;</mo><mi>l</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>+</mo><mi>m</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mn>0</mn></mrow></mtd></mtr></mtable><mo>)</mo><mo>=</mo><mo>(</mo><mtable><mtr><mtd columnalign="center"><mrow><mo>-</mo><mi>T</mi><mi>&#x03b8;</mi></mrow></mtd></mtr><mtr><mtd columnalign="center"><mrow><mi>m</mi><mo>&#x2062;</mo><mi>g</mi><mo>-</mo><mi>T</mi></mrow></mtd></mtr></mtable><mo>)</mo></mrow>
+
+</math>
+</td><td>(2.4)</td></tr>
+</tbody></table>
+<p>
+鉛直成分から<math xmlns="http://www.w3.org/1998/Math/MathML" title="T=mg">
+<mrow><mi>T</mi><mo>=</mo><mi>m</mi><mo>&#x2062;</mo><mi>g</mi></mrow>
+</math>であるので、水平成分から
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="ml \frac{d^2\theta}{dt^2} = -mg\theta - m\frac{d^2 X{(t)}}{dt^2}">
+
+<mrow><mi>m</mi><mo>&#x2062;</mo><mi>l</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>=</mo><mo>-</mo><mi>m</mi><mo>&#x2062;</mo><mi>g</mi><mo>&#x2062;</mo><mi>&#x03b8;</mi><mo>-</mo><mi>m</mi><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow>
+
+</math>
+</td><td>(2.5)</td></tr>
+</tbody></table>
+<p>
+(2.5)式を整理して、振り子の関係を示した微分方程式が以下の式(2.6)である。
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\frac{d^2\theta}{dt^2}=-\frac{g}{l}\theta -\frac{1}{l} \frac{d^2 X{(t)}}{dt^2}">
+<mrow><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>&#x03b8;</mi></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mrow><mi>g</mi></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>&#x03b8;</mi><mo>-</mo><mfrac><mrow><mrow><mn>1</mn></mrow></mrow><mrow><mrow><mi>l</mi></mrow></mrow></mfrac><mo>&#x2062;</mo><mfrac><mrow><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>X</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></mrow><mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow>
+
+</math>
+</td><td>(2.6)</td></tr>
+</tbody></table>
+<p>
+微分方程式を解くのは<a href="{{ site.baseurl }}{% post_url 2011-09-12-23 %}">次回</a>で。
+</p>

@@ -1,0 +1,224 @@
+---
+layout: post
+title: JavaのGUIをベクトルデータとしてスクリーンショットを撮る
+date: '2012-01-15T19:59:00.003+09:00'
+author: cat_in_136
+tags:
+- java
+- swing
+- gui
+- postscript
+modified_time: '2013-03-04T20:42:54.150+09:00'
+thumbnail: http://4.bp.blogspot.com/-krBgrERBqNQ/TxJbkilJi5I/AAAAAAAAALw/bjo9dxED0Do/s72-c/swingset_java_ocean_gv.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3879640900698330637
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/01/javagui.html
+---
+
+<div id="javascreenshotps-ns">
+<style><!-- /* --><![CDATA[ /* */
+#javascreenshotps-ns .footnoteref{font-size:smaller;vertical-align: super;}
+#javascreenshotps-ns  .reversefootnote{padding-left: 1em; font-size: smaller;}
+/* ]]><!-- *//* --></style>
+
+<p>Mac OS X には、スクリーンショットの形式として PDF を選べる。
+さらに驚きなのは、Tiger より前の Mac では、それがデフォルトのファイル形式だったことだ。<span class="footnoteref">[<a href="#javascreenshotps-fn-javascreenshotps-mac-pdf" id="javascreenshotps-fnref-javascreenshotps-mac-pdf" class="footnote">1</a>]</span>
+実際にその PDF ファイルを見たことはないんだが、PDF とはいっても画像ファイルがあるだけでベクトルデータとしてスクリーンショットを撮っているという事はないと思う<span class="footnoteref">[要出典]</span>。</p>
+
+<p>それに発想を受けて、Java の API を見る限り、標準の機能のみで（=外部ライブラリを使わずに）、ベクトルデータとしてスクリーンショットを得られるんじゃないかと気づいたネタ。</p>
+
+<h4>Idea</h4>
+
+<ol>
+
+<li>Java の GUI 部品の基底となるクラス <code>java.awt.Component</code> には、
+部品を描画するメソッド<a href="http://java.sun.com/javase/ja/6/docs/ja/api/java/awt/Component.html#paint(java.awt.Graphics)"><code>paint()</code></a>
+があり、引数で任意のグラフィックコンテクストを渡すことができる。</li>
+<li>Java の印刷APIのひとつにグラフィックコンテクストを使ったものがある。</li>
+<li>Java の印刷APIではプリンタではなく、PostScriptファイル出力を選ぶこともできる。</li>
+</ol>
+
+<p>以上のAPIを組み合わせることで、Java の GUI 部品を PostScript としてベクトルデータとしてスクリーンショットをとれるのである。
+PDF へは直接出力する機能を Java の API は有していないため PDF として得られないのが残念であるが、acrobat または ghostscript を使って PostScript から PDF に変換すればよい。</p>
+
+<p>Java の印刷 API は歴史的事情でいくつか種類がある。
+今回使うのはJava 印刷サービス<span class="footnoteref">[<a href="#javascreenshotps-fn-java-print-service-api" id="javascreenshotps-fnref-java-print-service-api" class="footnote">2</a>]</span>であるが、詳細は「<a href="http://java.sun.com/javase/ja/6/docs/ja/technotes/guides/jps/spec/jpsOverview.fm.html" title="Java 印刷サービス API ユーザーガイド1 - 入門">ユーザズガイド</a>」を参照されたし。</p>
+
+<h4>Code</h4>
+
+<p>大枠は下記の通りで、
+<code>outputFile</code>に<code>createPrintable()</code>メソッド(後述)で得られた印刷ドキュメントをPostScript形式で書き込む。</p>
+
+<pre class="prettyprint"><code>final DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
+StreamPrintServiceFactory[] serviceFactories;
+PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+File outputFile = ...; // 保存先ファイル new File("….ps);
+
+FileOutputStream fos = null;
+try {
+    fos = new FileOutputStream(outputFile);
+    serviceFactories = StreamPrintServiceFactory
+        .lookupStreamPrintServiceFactories(flavor,
+                DocFlavor.BYTE_ARRAY.POSTSCRIPT.getMimeType());
+    if (serviceFactories != null &amp;&amp; serviceFactories.length &gt; 0) {
+        StreamPrintService service = serviceFactories[0]
+            .getPrintService(fos);
+        if (ServiceUI.printDialog(null, 0, 0,
+                new PrintService[] { service }, service, flavor, aset) != null) {
+            Doc doc = new SimpleDoc(createPrintable(), flavor, null);
+            DocPrintJob job = service.createPrintJob();
+            //job.addPrintJobListener(this); // お望みで（印刷状況が得られます）
+            job.print(doc, aset);
+            //job.removePrintJobListener(this); // お望みで
+        }
+    } else {
+        System.err.println("Print Service Not Found.");
+    }
+} catch (Exception e1) {
+    // 例外処理のため略記
+} finally {
+    try {
+        if (fos != null) {
+            fos.close();
+        }
+    } catch (IOException e1) {
+    }
+}
+</code></pre>
+
+<p>流れをざっと説明すると</p>
+
+<ol>
+<li>出力のファイルストリームを開く</li>
+<li><a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/print/StreamPrintServiceFactory.html"><code>StreamPrintServiceFactory</code></a> に対して PostScript 対応のサービスを問い合わせてひとつ得る。</li>
+
+<li>サービス情報を元にダイアログを表示する。(<a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/print/ServiceUI.html"><code>ServiceUI</code></a>クラスの提供によって、印刷ダイアログが表示される。)</li>
+<li><code>createPrintable()</code>メソッド(後述)で得られた印刷ドキュメント<code>doc</code>を得る。</li>
+<li>印刷サービスからプリンタジョブのインスタンスを得る。</li>
+<li>プリンタジョブに対して印刷ドキュメント<code>doc</code>を印刷するよう要求する（印刷だが、実際には PostScript 出力）。</li>
+</ol>
+
+<p><code>StreamPrintServiceFactory</code>クラスで印刷サービスを問い合わせているところで、
+PostScript(<code>DocFlavor.BYTE_ARRAY.POSTSCRIPT.getMimeType()</code>)を指定している。
+手元の OpenJDK 1.6 ではここで必ずサービスが一つ入った配列が戻ってきた。
+ここを<code>DocFlavor.BYTE_ARRAY.PDF.getMimeType()</code>と変えたら、PDF で出力できそうだがサービスが見つからないとなってしまった。
+（もっとも将来、あるいは Java 処理系の実装によってはできる環境があるかもしれないが）</p>
+
+<p>次は、<code>createPrintJob()</code>の中身を記載する。</p>
+
+<pre class="prettyprint"><code>private Printable createPrintable() {
+    Window[] windows = Window.getWindows();
+    ArrayList&lt;Component&gt; list = new ArrayList&lt;Component&gt;();
+    for (int i = 0; i &lt; windows.length; i++) {
+        if (windows[i].isVisible()) {
+            list.add(windows[i]);
+        }
+    }
+
+    return new ComponentPrintableWrapper(list.toArray(new Component[list.size()]));
+}
+
+</code></pre>
+
+<p><a href="http://java.sun.com/javase/ja/6/docs/ja/api/java/awt/Window.html#getWindows()"><code>Window.getWindows()</code></a>で、Java プログラムから開いたすべてのウィンドウの配列が得られる。
+これらのうち可視、すなわち<code>isVisible()</code>が真となるウィンドウをリストアップしていく。
+不可視状態のウィンドウを列挙していないのは、見えていないウィンドウはレイアウト（特にサイズ）が決まっていないことが多いため、描画することがそもそもできない、という理由のためである。</p>
+
+<p>このウィンドウの配列をそのまま印刷サービスに流し込めればいいのだが、印刷用のインスタンス<a href="http://java.sun.com/javase/ja/6/docs/ja/api/java/awt/print/Printable.html"><code>Printable</code></a>の形にしなければならない。
+であるので、<code>ComponentPrintableWrapper</code>クラスという<del datetime="2013-03-04T20:37:59+09:00">ワッパー</del><ins datetime="2013-03-04T20:37:59+09:00">ラッパー</ins>を作った。</p>
+
+<pre class="prettyprint"><code>import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+
+import javax.swing.RepaintManager;
+
+class ComponentPrintableWrapper implements Printable {
+    private Component[] component = null;
+
+    public ComponentPrintableWrapper(Component[] component) {
+        this.component = component;
+    }
+
+    @Override
+    public int print(Graphics g, PageFormat format, int pageIndex)
+            throws PrinterException {
+        Graphics2D g2 = (Graphics2D) g;
+
+        if (pageIndex &lt; component.length) {
+            Component paintComponent = component[pageIndex];
+
+            g2.translate(format.getImageableX(), format.getImageableY()); // 位置調整
+
+            RepaintManager.currentManager(paintComponent).setDoubleBufferingEnabled(false);
+            paintComponent.paint(g);
+            RepaintManager.currentManager(paintComponent).setDoubleBufferingEnabled(true);
+
+            return Printable.PAGE_EXISTS;
+        } else {
+            return Printable.NO_SUCH_PAGE;
+        }
+    }
+}
+
+</code></pre>
+
+<p>プリンタジョブへの印刷指示<code>job.print(doc, aset)</code>では、プリンタジョブから本クラスの<code>print()</code>メソッドが呼ばれる。
+ページ(<code>pageIndex</code>)が変わるごとに<code>print()</code>メソッドが呼ばれるので、このコードは1ページあたり1個のウィンドウが描き込まれる。</p>
+
+<p>ここで<code>RepaintManager.currentManager(paintComponent).setDoubleBufferingEnabled(false)</code>を呼んでいる箇所があるが、少し説明が必要であろう。
+これは Swing 部品の場合はダブルバッファをしているため、コンポーネントの描画をしても内部バッファのラスタ画像が描かれてしまう。
+そのため一旦ダブルバッファを無効にして直接描画してもらうようにしている。
+（パフォーマンスに影響が出るため、処理後に元に戻している。）
+逆に言うと、独自でダブルバッファ処理をしている場合は、そこのソースコードをいじることをしない限り、対処のしようがない。</p>
+
+<h4>Result</h4>
+
+<p>上のコードを実行している Java プログラムから SwingSet を呼び出してみるという芸当を使って、SwingSet の PostScript 出力をおこなってみた。</p>
+
+
+
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://4.bp.blogspot.com/-krBgrERBqNQ/TxJbkilJi5I/AAAAAAAAALw/bjo9dxED0Do/s1600/swingset_java_ocean_gv.png" imageanchor="1"><img border="0" height="305" src="http://4.bp.blogspot.com/-krBgrERBqNQ/TxJbkilJi5I/AAAAAAAAALw/bjo9dxED0Do/s400/swingset_java_ocean_gv.png" width="400" /></a></div>
+
+<p>注意する点は、グラデーション部などは画像となっているが、境界線(border)は線とベクトルデータのままになっている。
+テキストもベクトルデータのままだが、残念ながらアウトラインデータになっているのでテキスト改竄といったことを簡単にはできない。
+とはいえ、inkscape の PostScript 読み込み機能（内部的には一旦PDFに変換されている）を使って読み込んだ後、変形などをして編集することが可能だ。</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://3.bp.blogspot.com/-jWj1kjgtl_4/TxJbmIWgxoI/AAAAAAAAAL4/HAuvxlbKjIE/s1600/swingset_java_ocean_inkscape.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="296" src="http://3.bp.blogspot.com/-jWj1kjgtl_4/TxJbmIWgxoI/AAAAAAAAAL4/HAuvxlbKjIE/s400/swingset_java_ocean_inkscape.png" width="400" /></a></div>
+
+<p>いくつか Look And Feel (いわゆるテーマのようなもの) を変えていくつかとってみたが、Nimbus といった半透明を使ったものや、GTK+ といった外部レンダリングエンジンを使ったものは画像として書き出されてしまう。 
+後者はしょうがないが、半透明などは PostScript で表現できないからそうなっているんだろうか。
+（ただし、Adobe Acrobat / Distiller および Ghostscript には拡張命令の形で PDF 化の際に半透明にできる。<span class="footnoteref">[<a href="#javascreenshotps-fn-ps-transparent" id="javascreenshotps-fnref-ps-transparent" class="footnote">3</a>]</span>。）
+あと、ここには載せないが、Swing ではない AWT の GUI 部品は本手法を使ってベクトルデータを抜き出すことは出来なかった。</p>
+
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://3.bp.blogspot.com/-_x1FSAUiSJ8/TxJbnWo9P8I/AAAAAAAAAMA/vRre6mm_SsI/s1600/swingset_motif_inkscape.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="247" src="http://3.bp.blogspot.com/-_x1FSAUiSJ8/TxJbnWo9P8I/AAAAAAAAAMA/vRre6mm_SsI/s400/swingset_motif_inkscape.png" width="400" /></a></div>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-u_EUsgzRjHk/TxJboPJKAWI/AAAAAAAAAME/zmkT9QKEyXQ/s1600/swingset_nimbus_gv.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="327" src="http://1.bp.blogspot.com/-u_EUsgzRjHk/TxJboPJKAWI/AAAAAAAAAME/zmkT9QKEyXQ/s400/swingset_nimbus_gv.png" width="400" /></a></div>
+
+<h4>Conclusion</h4>
+
+<p>Java の GUI 部品を PostScript としてベクトルデータとしてスクリーンショットをとることは可能であった。
+しかし、AWT の GUI 部品ではないことと、半透明を含まない単純な描画であることなど条件は厳しい。
+また、ダブルバッファを有する場合それを無効にしなければならない。</p>
+
+<p>半透明などをベクトルデータとして出力できない問題を解決するには、グラフィックコンテクストの描画命令から SVG などの出力を行うものが必要となるだろう<span class="footnoteref">[<a href="#javascreenshotps-fn-apache-xml-transcoder" id="javascreenshotps-fnref-apache-xml-transcoder" class="footnote">4</a>]</span>。
+この技法によるベクトルデータ吸出しを防ぐ方法としてダブルバッファが有効であるだろう（とはいえ完全ではない）。</p>
+
+<h4>References</h4>
+
+<ol>
+<li id="javascreenshotps-fn-javascreenshotps-mac-pdf"><a href="http://docs.info.apple.com/article.html?artnum=61544-ja" title="Mac OS X: 画面を撮影するためのショートカット ">Mac OS X: 画面を撮影するためのショートカット </a><a href="#javascreenshotps-fnref-javascreenshotps-mac-pdf" class="reversefootnote">&#160;&#8617;</a></li>
+<li id="javascreenshotps-fn-java-print-service-api"><a href="http://java.sun.com/javase/ja/6/docs/ja/technotes/guides/jps/spec/jpsOverview.fm.html" title="Java 印刷サービス API ユーザーガイド1 - 入門">Java 印刷サービス API ユーザーガイド1 - 入門</a><a href="#javascreenshotps-fnref-java-print-service-api" class="reversefootnote">&#160;&#8617;</a></li>
+<li id="javascreenshotps-fn-ps-transparent">Adobe Solutions Network, <a href="http://kb2.adobe.com/jp/cps/511/511364/attachments/511364_pdfmarkReference.pdf" title="Adobe Acrobat 7.0 pdfmark Reference Manual">"Adobe Acrobat 7.0 pdfmark Reference Manual"(和文)</a>, 2004, pp.33-37<a href="#javascreenshotps-fnref-ps-transparent" class="reversefootnote">&#160;&#8617;</a></li>
+<li id="javascreenshotps-fn-apache-xml-transcoder"><a href="http://xmlgraphics.apache.org/batik/using/svg-generator.html" title="SVG Generator: SVGGraphics2D">SVG Generator: SVGGraphics2D</a>, The Apache Software Foundation<a href="#javascreenshotps-fnref-apache-xml-transcoder" class="reversefootnote">&#160;&#8617;</a></li>
+</ol>
+
+</div>

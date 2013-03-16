@@ -1,0 +1,66 @@
+---
+layout: post
+title: UAC shield icon incompatibility between Vista and 7
+date: '2010-03-06T12:23:00.002+09:00'
+author: cat_in_136
+tags:
+- windows
+modified_time: '2010-03-07T23:33:08.891+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/S5HP-daQ02I/AAAAAAAAAA4/R6UW6URystc/s72-c/uac_seven_vista.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-371106902812169757
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/uac-shield-icon-incompatibility-between.html
+---
+
+<a href="http://1.bp.blogspot.com/_mg7ZLoSThok/S5HP-daQ02I/AAAAAAAAAA4/R6UW6URystc/s1600-h/uac_seven_vista.png"><img style="width: 77px; height: 47px;" src="http://1.bp.blogspot.com/_mg7ZLoSThok/S5HP-daQ02I/AAAAAAAAAA4/R6UW6URystc/s320/uac_seven_vista.png"/></a>
+
+<p>
+UAC shield icon on Windows 7 is different from those on Vista. Those on 7 is colored with blue and yellow. Those on Vista is with the four colors (red, green, blue and yellow.) But any document associate with this fact is not found.
+</p>
+<p>
+So I think following program have version incompatibility:
+</p>
+<ol>
+<li>using the icon which is in your program's resource</li>
+<li>using <a href="http://msdn.microsoft.com/en-us/library/system.drawing.systemicons.shield.aspx"><code>SystemIcons.Shield</code></a> (.NET Framework)</li>
+</ol>
+<p>
+
+Why <code>SystemIcons.Shield</code> has incompatibility? <code>SystemIcons.Shield</code> yields an four-colors shield icon even if the program is running <em>on windows 7</em>. So, I think <code>SystemIcons.Shield</code> shall not be used for UAC.
+</p>
+<p>
+Using <a href="http://msdn.microsoft.com/en-us/library/bb762205(VS.85).aspx"><code>SHGetStockIconInfo()</code></a> with <code>SIID_SHIELD</code> seems to be a correct answer. This code return the UAC shield icon colored with blue and yellow on windows 7, and colored with four colors on Vista. Example code is as follows:
+
+</p>
+<pre class="prettyprint"><code>SHSTOCKICONINFO sii;
+sii.cbSize = sizeof(SHSTOCKICONINFO);
+SHGetStockIconInfo(SIID_SHIELD, SHGSI_ICON, &amp;sii);
+sii.hIcon; // this is a UAC shield icon handler!
+</code></pre>
+<p>
+If your program is a .NET Framework application, P/Invoke is required such as following code. Another example code is also available at <a href="http://www.codeproject.com/KB/vista-security/UAC__The_Definitive_Guide.aspx">CodeProject</a>.
+</p>
+<pre class="prettyprint"><code>[StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
+struct SHSTOCKICONINFO
+{
+    public Int32 cbSize;
+    public IntPtr hIcon;
+    public Int32 iSysImageIndex;
+    public Int32 iIcon;
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst=260)]
+    public string szPath;
+}
+
+[DllImport("shell32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
+static extern void SHGetStockIconInfo(UInt32 siid, UInt32 uFlags,
+                                      ref SHSTOCKICONINFO sii);
+</code></pre>
+<p>
+Note that SIID_SHIELD shall be used for UAC prompts only, which is written at <a href="http://msdn.microsoft.com/en-us/library/bb762542%28VS.85%29.aspx">SIID_SHIELD description at MSDN</a>.
+</p>
+<h4>See also</h4>
+
+<ul>
+<li><a href="http://blogs.msdn.com/yvesdolc/archive/2006/10/16/stockicons-for-windows-presentation-framework.aspx">StockIcons for Windows Presentation Framework?</a> Yves Dolce</li>
+<li><a href="http://msdn.microsoft.com/en-us/library/bb756990.aspx">Step 4: Redesign Your UI for UAC Compatibility</a> MSDN</li>
+<li>and API documents <a href="http://msdn.microsoft.com/en-us/library/bb759805%28VS.85%29.aspx">SHSTOCKICONINFO</a> and <a href="http://msdn.microsoft.com/en-us/library/bb762205%28v=VS.85%29.aspx">SHGetStockIconInfo()</a> on MSDN</li>
+</ul>

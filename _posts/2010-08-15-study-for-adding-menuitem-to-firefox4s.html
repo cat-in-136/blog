@@ -1,0 +1,110 @@
+---
+layout: post
+title: Study for adding a menuitem to Firefox4's "Firefox button"
+date: '2010-08-15T00:54:00.000+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- xul
+- mozilla
+modified_time: '2010-08-15T00:54:00.193+09:00'
+thumbnail: http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZfwzsGJI/AAAAAAAAAEQ/w3KlskddUpk/s72-c/fx_btn.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-708624088988421337
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/08/study-for-adding-menuitem-to-firefox4s.html
+---
+
+<p>
+On Windows Vista/7, the menu bar is replaced with the new "Firefox button."
+The old(legacy?) menu bar is shown when ALT-key is pressed and/or when "Menu Bar" option is enabled [<a href="http://www.tothepc.com/archives/switch-to-classic-menu-bar-in-firefox-4/" title="Switch to classic menu bar in Firefox 4">TOTHEPC</a>].
+</p>
+
+<div style="margin-left: auto; margin-right: auto; text-align: center;">
+<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZfwzsGJI/AAAAAAAAAEQ/w3KlskddUpk/s1600/fx_btn.png" style="margin-left: auto; margin-right: auto;"><img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZfwzsGJI/AAAAAAAAAEQ/w3KlskddUpk/s320/fx_btn.png" style="border: 0; width: 279px; height:79px;" /></a><br />
+"Firefox Button"
+</div>
+
+<h4>id of "Firefox button"</h4>
+
+<p>
+ID of "Firefox button" is "<code>appmenu-button</code>", and its <code>&lt;menupopup&gt;</code> is "<code>appmenu-popup</code>".
+</p>
+
+<div style="margin-left: auto; margin-right: auto; text-align: center;">
+<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZdO2_q7I/AAAAAAAAAEI/FoxJ5j4gU3o/s1600/domtree.png" style="margin-left: 1em; margin-right: 1em;"><img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZdO2_q7I/AAAAAAAAAEI/FoxJ5j4gU3o/s200/domtree.png" style="border:0;width:173px;height200px;" /></a>
+</div>
+
+
+<h4>Sample of overlay</h4>
+
+<p>
+To add a menuitem "<code>appmenu-foobar</code>", write the following overlay:
+</p>
+<pre class="prettyprint"><code>&lt;?xml version="1.0"?&gt;
+&lt;overlay id="foobarOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+  &lt;menupopup id="appmenu-popup"&gt;
+
+      &lt;menuitem id="appmenu_foobar" command="FooBarCmd"
+                label="Foobar"/&gt;
+  &lt;/menupopup&gt;
+&lt;/overlay&gt;
+</code></pre>
+
+<p>
+Note: if the browser does not have "Firefox Button" (e.g. older Firefox, current Firefox 4.0b3 build on Linux, etc...), this overlay is ignored and does not occur error.
+</p>
+
+<h4>Study for add "Configuration Mania" button to "Firefox Button"</h4>
+
+<ul>
+<li>Do not remove current menuitem code for menubar</li>
+<li>Add new menuitem code for "Firefox Button"
+<ul>
+<li>New menuitem "Configuration Mania" is added after "Preferences&#8230;" menu.</li>
+</ul>
+</li>
+<li>Two menuitems share a same command "<code>ConfMania:Open</code>".</li>
+</ul>
+
+<pre class="prettyprint"><code>&lt;overlay id="confmania-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+
+  &lt;script type="application/x-javascript" src="chrome://confmania/content/browser-Overlay.js"&gt;&lt;/script&gt;
+  &lt;commandset id="mainCommandSet"&gt;
+    &lt;command id="ConfMania:Open" oncommand="window['ConfMania'].open()"/&gt;
+  &lt;/commandset&gt;
+  &lt;menupopup id="menu_ToolsPopup"&gt;
+    &lt;menuitem id="confmania" command="ConfMania:Open"
+              label="&amp;confmania.label;" insertafter="menu_preferences"/&gt;
+
+  &lt;/menupopup&gt;
+
+<ins>  &lt;menupopup id="appmenu-popup"&gt;</ins>
+<ins>    &lt;menuitem id="appmenu_confmania" command="ConfMania:Open"</ins>
+<ins>              label="&amp;confmania.label;" insertafter="appmenu_preferences"/&gt;</ins>
+<ins>  &lt;/menupopup&gt;</ins>
+
+&lt;/overlay&gt;
+</code></pre>
+
+<ul>
+<li>"<code>menu_ToolsPopup</code>" is the "Tools" menupopup of the menubar.</li>
+<li>"<code>menu_preferences</code>" is "Tools"-&gt;"Preferences&#8230;" menuitem.</li>
+<li>"<code>appmenu_preferences</code>" is "Preferences&#8230;" menuitem of the "Firefox button".<br />
+
+(Pitfall: Use hyphen for "<code>appbtn<strong style="color:red;">-</strong>popup</code>", Use underscore for "<code>appmenu<strong style="color:red;">_</strong>preferences</code>")
+</li>
+</ul>
+
+<p>Result</p>
+
+<div style="margin-left: auto; margin-right: auto; text-align: center;">
+<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQaIpdN94I/AAAAAAAAAEY/5k2a_kiYnKw/s1600/fx_btn_cm.png"><img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQaIpdN94I/AAAAAAAAAEY/5k2a_kiYnKw/s320/fx_btn_cm.png" style="border: 0; width: 263px; height: 320px;" /></a>
+</div>
+
+<h4>See also</h4>
+
+<ul>
+<li>[TOTHEPC]: <a href="http://www.tothepc.com/archives/switch-to-classic-menu-bar-in-firefox-4/">Switch to classic menu bar in Firefox 4</a>, tothepc, 2010-07-07.
+<li><a href="https://wiki.mozilla.org/Menu_cleanup">Menu cleanup - MozillaWiki</a></li>
+<li><a href="https://developer.mozilla.org/en/xul_overlays">XUL Overlays - MDC</a></li>
+</ul>

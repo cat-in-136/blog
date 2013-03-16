@@ -1,0 +1,221 @@
+---
+layout: post
+title: ポニーテールの揺れの定式化と考察 (3/3)
+date: '2011-09-14T06:00:00.004+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- ponytail
+modified_time: '2011-09-14T06:00:02.915+09:00'
+thumbnail: http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s72-c/pony_tail_model.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7348762453449117794
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/09/33.html
+---
+
+<div style="background: #ffd; border: solid 3px #ff8">
+このPostを読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です。
+もし数式部分が読めない場合は、
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<a href="javascript:(function%20hoge()%20%7Bvar%20lmath%20%3D%20document.body.getElementsByTagName(%22math%22)%3Bfor%20(var%20i%20%3D%200%3B%20i%20%3C%20lmath.length%3B%20i%2B%2B)%20%7Bif%20(lmath%5Bi%5D.getAttribute(%22title%22)%20!%3D%20%22%22%20%26%26%20!lmath%5Bi%5D.__converted)%20%7Bvar%20img%20%3D%20new%20Image%3Bimg.src%20%3D%20%22http%3A%2F%2Fchart.apis.google.com%2Fchart%3Fcht%3Dtx%26chl%3D%22%20%2B%20encodeURIComponent(lmath%5Bi%5D.getAttribute(%22title%22))%3Bimg.alt%20%3D%20lmath%5Bi%5D.getAttribute(%22title%22)%3Bimg.setAttribute(%22title%22%2C%20lmath%5Bi%5D.getAttribute(%22title%22))%3Bif%20(lmath%5Bi%5D.getAttribute(%22mode%22)%20%3D%3D%20%22display%22)%20%7Bimg.setAttribute(%22style%22%2C%20%22display%3A%20block%3B%20margin%3A%20auto%3B%20text-align%3A%20center%3B%22)%3B%7Dlmath%5Bi%5D.parentNode.insertBefore(img%2C%20lmath%5Bi%5D)%3Blmath%5Bi%5D.setAttribute(%22style%22%2C%20%22display%3A%20none%22)%3Blmath%5Bi%5D.__converted%20%3D%20true%3B%7D%7D%7D)();">MathMLの記述を画像に変換する</a>などをしてください。
+</div>
+
+
+<h4>4. ポニーテール（振り子）の振れ方の考察</h4>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s1600/pony_tail_model.png" ><img style="border: 0" height="255" width="230" src="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s320/pony_tail_model.png" /></a>
+</div>
+
+<p>
+前回まででポニーテール共振器の挙動を定式化することができた。
+その成果である(3.7)式を再掲する。
+なお、
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\omega \rightarrow\sqrt{g/l}">
+<mrow><mi>&#x03c9;</mi><mo>&#x2192;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow>
+</math>
+近傍では時間に比例して振幅が増幅され、やがて<var>&#x03b8;</var>が微小という
+前提条件から外れてしまう。
+</p>
+
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\theta=\frac{2X\omega^2}{g-l\omega^2}\sin{\frac{\sqrt{g/l}+\omega}{2}t}\sin{\frac{\sqrt{g/l}-\omega}{2}t}">
+<mrow><mi>&#x03b8;</mi><mo>=</mo><mfrac><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><mo>&#x2062;</mo><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>+</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow><mo>&#x2062;</mo><mi>sin</mi><mo>&#x2061;</mo><mrow><mfrac><mrow><mrow><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt><mo>-</mo><mi>&#x03c9;</mi></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#x2062;</mo><mi>t</mi></mrow></mrow>
+
+</math>
+</td><td>(3.7)</td></tr>
+</tbody></table>
+
+<p>
+(3.7)式で表される振り子共鳴器の振動の振幅である
+</p>
+<table style="width: 100%"><tbody>
+<tr><td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display" title="\Theta=\frac{2X\omega^2}{g-l\omega^2}">
+<mrow><mi>&#x0398;</mi><mo>=</mo><mfrac><mrow><mrow><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow><mrow><mrow><mi>g</mi><mo>-</mo><mi>l</mi><msup><mi>&#x03c9;</mi><mn>2</mn></msup></mrow></mrow></mfrac></mrow>
+</math>
+</td><td>(4.1)</td></tr>
+</tbody></table>
+<p>
+に注目したい。この支点の振動振幅<var>X</var>は単なる比例定数としてしか
+作用しないのでここには特に注目する必要はない。
+（いっぱい揺らせば、それだけ揺れるだけということ。）
+</p>
+
+<p>
+(4.1)式の<var>&#x03c9;</var>に注目して傾向をみると、
+</p>
+<ul>
+<li><var>&#x03c9;</var>=0のとき、<var>&#x0398;</var>=0</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" title="0\leq \omega \leq \sqrt{g/l}">
+<mrow><mn>0</mn><mo>&#x2264;</mo><mi>&#x03c9;</mi><mo>&#x2264;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow>
+</math>のとき、<var>&#x0398;</var>は単調増加</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" title="\omega = \sqrt{g/l}">
+<mrow><mi>&#x03c9;</mi><mo>=</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow>
+</math>のとき、<var>&#x0398;</var>は正の無限方向に発散（もっとも(3.7)式自体が発散するので(4.1)式は適用できないが、前回検討したように振幅自体は発散しているので、これで良しとしよう。）</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" title="\omega \geq \sqrt{g/l}">
+<mrow><mi>&#x03c9;</mi><mo>&#x2265;</mo><msqrt><mrow><mrow><mi>g</mi><mo>/</mo><mi>l</mi></mrow></mrow></msqrt></mrow>
+</math>のとき、<var>&#x0398;</var>は負の無限から、単調増加して、</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" title="\omega \rightarrow \infty">
+<mrow><mi>&#x03c9;</mi><mo>&#x2192;</mo><mi>&#x221E;</mi></mrow>
+</math>のとき、<var>&#x0398;</var>は
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="-2X/l">
+<mrow><mo>-</mo><mn>2</mn><mo>&#x2062;</mo><mi>X</mi><mo>/</mo><mi>l</mi></mrow>
+</math>
+に漸近する</li>
+</ul>
+<p>
+のであるが、実際は増減がかなり激しいグラフとなる。
+参考までに、<var>l</var>=0.15[m]のときの
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\left| \Theta/X \right|">
+<mrow><mo>&#x007c;</mo><mi>&#x0398;</mi><mo>/</mo><mi>X</mi><mo>&#x007c;</mo>
+</mrow>
+</math>
+の関係を示す。なお縦軸は対数スケールであることに注意されたい。
+</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://4.bp.blogspot.com/-EB7-2vIZSlE/Tm-M7Key63I/AAAAAAAAAKk/Q1hnD4sy3c0/s1600/theta_graph.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="300" width="400" src="http://4.bp.blogspot.com/-EB7-2vIZSlE/Tm-M7Key63I/AAAAAAAAAKk/Q1hnD4sy3c0/s400/theta_graph.png" /></a></div>
+
+<p>
+さて、実際に「
+<a href="http://www.shizecon.net/sakuhin/49es_1.html">-ポニーテールはなぜ揺れる？- 振り子のふれ方の研究</a>
+」での実験1の結果と比較していく。
+以下「実験1の結果」といったように記載されているのは、
+すべてその文献に記載されている値である。
+</p>
+<p>
+実験1の方法に記述されている実験パラメータは以下の通り。
+</p>
+<blockquote cite="http://www.shizecon.net/sakuhin/49es_1.html">
+<p>糸の長さを変え（15㎝、30㎝、60㎝）、歩く速さを変えて（ゆっくり、普通、早足で）、６m歩いた時の振り子の往復回数をそれぞれ５回ずつ計る。おもりは50円玉１枚（＝４g）。</p>
+
+</blockquote>
+<p>
+糸の長さは<var>l</var>に対応するのは明らかだが、歩く速度は強制振動に対応するであろう。
+考察に書かれているように足の着地が振動の端っこになるので、
+10秒で10歩歩いた時は2秒周期の振動になる。
+</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-Wvl_sKd6zlU/TmulvUaq3MI/AAAAAAAAAKQ/lNpEjPw3afk/s1600/walking.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="150" width="400" src="http://1.bp.blogspot.com/-Wvl_sKd6zlU/TmulvUaq3MI/AAAAAAAAAKQ/lNpEjPw3afk/s400/walking.png" /></a></div>
+
+<p>
+歩くテンポ（速度）と<var>&#x03c9;</var>の関係は以下のようになる。
+</p>
+<table>
+<thead>
+<tr><td>テンポ</td><td>歩行間隔</td><td>周期</td><td><var>&#x03c9;</var></td></tr>
+
+</thead>
+<tbody>
+      <tr>
+        <td>ゆっくり歩いた</td>
+        <td>20歩で約20秒</td>
+        <td>2秒</td>
+        <td><var>&#x03c0;</var></td>
+      </tr>
+
+      <tr>
+        <td>普通に歩いた</td>
+        <td>20歩で約10秒</td>
+        <td>1秒</td>
+        <td>2<var>&#x03c0;</var></td>
+      </tr>
+      <tr>
+
+        <td>早足で歩いた</td>
+        <td>20歩で約5秒</td>
+        <td>0.5秒</td>
+        <td>4<var>&#x03c0;</var></td>
+      </tr>
+    </tbody>
+</table>
+<p>
+(4.1)式に実験1のパラメータを入れて計算をする。
+表中の値は<var>&#x0398;</var>/<var>X</var>であり、
+単位は[rad/m]である。
+</p>
+
+<table>
+<thead>
+<tr><th>振り子の長さ<var>l</var></th><td>0.15m</td><td>0.30m</td><td>0.60m</td></tr>
+
+</thead>
+<tbody>
+<tr><th>ゆっくり歩いた（20歩で約20秒）</th><td>2.37</td><td>2.89</td><td>5.09</td></tr>
+<tr><th>普通に歩いた（20歩で約10秒）</th><td>20.4</td><td>-38.6</td><td>-5.67</td></tr>
+<tr><th>早足で歩いた（20歩で約5秒）</th><td>-22.7</td><td>-8.41</td><td>-3.72</td></tr>
+
+</tbody>
+</table>
+
+<p>
+支点の振動振幅幅<var>X</var>で割っているので、数値の大小だけに注目してほしい。
+「ゆっくり歩いた」では60cmが最も揺れ、
+「普通に歩いた」や「早足で歩いた」では60cmは他と比べ揺れは小さい。
+</p>
+<p>
+この表中の値は<var>&#x0398;</var>/<var>X</var>と絶対値を敢えて外して書いた。
+こうすることで、正負の間に相当するところで発散する
+（もっともポニーテールが揺れる）
+パラメータが存在することが容易にわかるためだ。
+例えば長さ <var>l</var>=0.15 m でいえば、20歩で7.8秒（周期0.78秒）程度のところが
+発散するパラメータであり「普通に歩いた」と「早足で歩いた」の間である。
+また、普通に歩いた（20歩で約10秒）（周期1秒）でいえば、<var>l</var>=0.25 m
+のところが発散するパラメータである。
+</p>
+<p>
+この結果は、実験1の結果と
+「ゆっくり歩いた」と「普通に歩いた」では傾向とは一致した。
+しかし、「早足で歩いた」では実験では30cmが最も揺れるのに、
+この式での計算では15cmが最も揺れた。
+また、歩くスピードで比較しても実験結果と合わないが、
+こちらにかんしては振動振幅幅<var>X</var>が、
+歩くスピードで変わってしまう（速く歩くと揺れやすい）からではないか。
+</p>
+
+<h4>5. 考察と感想</h4>
+<p>
+
+ポニーテールをモデル化したポニーテール共振器の挙動について定式化をした。
+その結果、ポニーテールの長さと体の動き（横振れ周期）の関係が重要な
+影響があることがわかった。
+このモデルでは、ポニーテールを振り子とみなしたときの固有周期と
+ほぼ同じ周期で横揺れするような速度で歩いたときにポニーテールの振れ幅は大きくなる。
+</p>
+<p>
+一方で実験結果と一致しない点、特に体の動きのモデル化は不十分である
+ことがわかった。
+すなわち、早く歩いたときどのように体は揺れるかなどである。
+今回は理想的に一定の振幅の波形としたが、この場合に歩行速度で
+比べた振れ幅の比較ができなかった。
+今後、歩くときの振動についてよりよいモデル化が必要と思われる。
+</p>
+
+<h4>A. 参考文献</h4>
+<ol>
+<li>中村優里:「<a href="http://www.shizecon.net/sakuhin/49es_1.html">-ポニーテールはなぜ揺れる？- 振り子のふれ方の研究</a>」シゼコン　自然科学観察コンクール　第49回、2008年。</li>
+<li>三宅敏恒：『入門微分積分』培風館、1992年</li>
+</ol>

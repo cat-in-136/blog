@@ -1,0 +1,222 @@
+---
+layout: post
+title: LLVM-ClangのASTを解析するまっとうな方法について
+date: '2012-12-11T06:00:00.000+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- clang
+modified_time: '2012-12-11T06:00:01.177+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1361271518120904387
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/12/llvm-clangast.html
+---
+
+<blockquote cite="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf" style="padding: 1em; background-color: #eee; box-shadow: 3px 3px 10px #888;">
+  <p>Clang is not just a great compiler...</p>
+  <p style="text-align: right;">-- <a href="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf" title="libclang: Thinking Beyond the Compiler">Doug Gregor, <em style="font-weight: light; font-style: italic;">Apple Inc.</em></a></p>
+</blockquote>
+
+<p><a href="http://clang.llvm.org/" title="clang: a C language family frontend for LLVM">clang</a>は、モダンなコンパイラとして有名であるが、
+中間形式である AST を使ったりして静的解析の基板として使えるようにもなっている。
+実際に、Apple の Xcode では、Clang を使ってコード補完を実現しているそうだ。</p>
+
+<p>そんな、Clang 使って AST を覗く方法の話。</p>
+
+<h4>昔は XML で構文木を吐き出す機能があったらしい</h4>
+
+<pre style="color: #fff; background-color: #000;"><code>% clang -cc1 -ast-print-xml source.c
+</code></pre>
+
+<p>今のバージョンは <code>-ast-print-xml</code> オプションはない。
+<code>-emit-ast</code> で我慢しろ、らしい。</p>
+
+<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
+</code></pre>
+
+<p>これで生成される <code>source.ast</code> ファイルがバイナリ形式だから困ったものである。</p>
+
+<h4>AST を解析する方法</h4>
+
+<p>オープンソースなので、clang のソースに手を入れるとか
+手段はいくらでもあるのだろうけれど、
+正攻法は libclang を使ってアクセスするらしい。</p>
+
+<p>最も安直な構文のなぞり方は、下記のように
+<code>clang_visitChildren()</code> で各要素ごとにウォークスルーする。</p>
+
+<pre class="prettyprint"><code>#include &lt;stdio.h&gt;
+#include &lt;clang-c/Index.h&gt;
+
+CXChildVisitResult visitChildrenCallback(CXCursor cursor, CXCursor parent, CXClientData client_data)
+{
+  CXString usrStr  = clang_getCursorKindSpelling(clang_getCursorKind(cursor));
+
+  printf("%s\n", usrStr);
+
+  clang_disposeString(usrStr);
+
+  return CXChildVisit_Recursive;
+}
+
+int main(int argc, char *argv[])
+{
+  // create index w/ excludeDeclsFromPCH = 1, displayDiagnostics=1.
+  CXIndex index = clang_createIndex(1, 1);
+
+  // load a *.ast file.
+  CXTranslationUnit tu = clang_createTranslationUnit(index, argv[1]);
+  if (tu != NULL) {
+    clang_visitChildren(clang_getTranslationUnitCursor(tu),
+                        visitChildrenCallback,
+                        NULL);
+
+    clang_disposeTranslationUnit(tu);
+  }
+
+  clang_disposeIndex(index);
+}
+</code></pre>
+
+<p>なお、コンパイルは以下のように。
+(Clang でコンパイルしたかったが、なんかうまくリンクが通らなかったので GCC でやった。)</p>
+
+<pre style="color: #fff; background-color: #000;"><code>% g++ -o astana astana.cpp -L/usr/lib64/llvm -lclang
+</code></pre>
+
+<p>ちなみに使い方は、引数に ast ファイルを渡してやる。
+つまり、全体的な使い方としては以下のようになる。</p>
+
+<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
+% astana source.ast &gt; source.txt
+</code></pre>
+
+<h4>ちょっとした XML を吐こうとすると</h4>
+
+<p>XML 出力には libxml2 使って</p>
+
+<pre class="prettyprint"><code>#include &lt;clang-c/Index.h&gt;
+#include &lt;libxml/encoding.h&gt;
+#include &lt;libxml/xmlwriter.h&gt;
+#include &lt;stdio.h&gt;
+
+xmlChar *getLocationAsString(CXCursor cursor)
+{
+  xmlChar locStr[BUFSIZ];
+  xmlChar *ret = NULL;
+
+  // get filename, line # and column #.
+  CXSourceLocation loc = clang_getCursorLocation(cursor);
+  CXString filename;
+  unsigned lineno;
+  unsigned column;
+  clang_getPresumedLocation(loc, &amp;filename, &amp;lineno, &amp;column);
+
+  xmlStrPrintf(locStr, BUFSIZ-1,
+               BAD_CAST "%s:%d:%d",
+               clang_getCString(filename),
+               lineno,
+               column);
+  ret = xmlStrdup(locStr);
+
+  clang_disposeString(filename);
+
+  return ret;
+}
+
+CXChildVisitResult visitChildrenCallback(CXCursor cursor, CXCursor parent, CXClientData client_data)
+{
+  xmlTextWriterPtr xmlWriter = static_cast&lt;xmlTextWriterPtr&gt;(client_data);
+
+  CXString usrStr = clang_getCursorUSR(cursor);
+  CXString kindStr = clang_getCursorKindSpelling(clang_getCursorKind(cursor));
+  xmlChar *location = getLocationAsString(cursor);
+
+  xmlTextWriterStartElement(xmlWriter, BAD_CAST "entity");
+  xmlTextWriterWriteAttribute(xmlWriter,
+                              BAD_CAST "usr",
+                              BAD_CAST clang_getCString(usrStr));
+  xmlTextWriterWriteAttribute(xmlWriter,
+                              BAD_CAST "kind",
+                              BAD_CAST clang_getCString(kindStr));
+  xmlTextWriterWriteAttribute(xmlWriter,
+                              BAD_CAST "src",
+                              location);
+
+  clang_disposeString(usrStr);
+  clang_disposeString(kindStr);
+  free(location);
+
+  // visits children recursive.
+  clang_visitChildren(cursor,
+                      visitChildrenCallback,
+                      xmlWriter);
+
+  xmlTextWriterEndElement(xmlWriter); // entity
+
+  return CXChildVisit_Continue;
+}
+
+int main(int argc, char *argv[])
+{
+  // create index w/ excludeDeclsFromPCH = 1, displayDiagnostics=1.
+  CXIndex index = clang_createIndex(1, 1);
+
+  // load a *.ast file.
+  CXTranslationUnit tu = clang_createTranslationUnit(index, argv[1]);
+  if (tu != NULL) {
+    xmlBufferPtr xmlBuffer = xmlBufferCreate();
+    xmlTextWriterPtr xmlWriter = xmlNewTextWriterMemory(xmlBuffer, 1);
+
+    xmlTextWriterStartDocument(xmlWriter, NULL, "UTF-8", NULL);
+    xmlTextWriterStartElement(xmlWriter, BAD_CAST "ast");
+
+    clang_visitChildren(clang_getTranslationUnitCursor(tu),
+                        visitChildrenCallback,
+                        xmlWriter);
+
+    xmlTextWriterEndElement(xmlWriter); // ast
+    xmlTextWriterEndDocument(xmlWriter);
+    xmlFreeTextWriter(xmlWriter);
+
+    // print the XML text to the standard output.
+    xmlBufferDump(stdout, xmlBuffer);
+    xmlBufferFree(xmlBuffer);
+
+    clang_disposeTranslationUnit(tu);
+  } else {
+    fprintf(stderr, "Could not load \"%s\" as an AST file.\n", argv[1]);
+  }
+
+  clang_disposeIndex(index);
+
+  return 0;
+}
+</code></pre>
+
+<p>Makefile は、例えば、</p>
+
+<pre class="prettyprint"><code>CXX             = g++
+CXXFLAGS        = -O2 -g
+CLANGFLAGS      = -L/usr/lib64/llvm -lclang
+LIBXML2FLAGS    = `pkg-config --libs --cflags libxml-2.0`
+
+astana: astana.cpp
+    $(CXX) $(CXXFLAGS) -o $@ $^ $(CLANGFLAGS) $(LIBXML2FLAGS)
+</code></pre>
+
+<p>使い方は、前のと同じく</p>
+
+<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
+% astana source.ast &gt; source.xml
+</code></pre>
+
+<p>しかし、さすがに自力で XML を吐こうとするとメンドイ。
+これでも表示項目足りないくらいだし。</p>
+
+<h4>References</h4>
+
+<ul>
+<li>Doug Gregor, "<a href="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf" title="libclang: Thinking Beyond the Compiler">libclang: Thinking Beyond the Compiler</a>", 2010 LLVM Developers Meeting, Nov 4, 2010</li>
+<li><a href="http://stackoverflow.com/questions/5309405/can-i-get-an-xml-ast-dump-of-c-c-code-with-clang-without-using-the-compiler">Can I get an XML AST dump of C/C++ code with clang without using the compiler?</a> - Stack Overflow</li>
+<li><a href="https://github.com/llvm-mirror/clang/blob/master/include/clang-c/Index.h"><code>/usr/include/clang-c/Index.h</code></a> - Clang</li>
+</ul>

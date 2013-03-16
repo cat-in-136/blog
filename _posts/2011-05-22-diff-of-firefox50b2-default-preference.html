@@ -1,0 +1,35 @@
+---
+layout: post
+title: Diff of firefox5.0b2 default preference and firefox4.0.1
+date: '2011-05-22T11:25:00.002+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2011-05-22T11:27:26.305+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-312453009291343166
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/05/diff-of-firefox50b2-default-preference.html
+---
+
+<p>
+This is difference between the default preference of Firefox 4.0.1 and one of 5.0b2. Unlike <a href="{{ site.baseurl }}{% post_url 2010-12-12-diff-of-firefox40b7-default-preference %}" title="Diff of firefox4.0b7 default preference and firefox3.6">3.6 and 4.0</a>, only a few of preferences are changed. 
+</p>
+
+<dl>
+<dt>Default pref Javascript files:</dt>
+<dd>(omni.jar){/greprefs.js,/defaults/pref/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+</dl>
+
+<div>
+<table class="diff_firefox4_pref_diff"><thead><tr><td></td><td>4.0.1</td><td>5.0b2</td></tr></thead><tbody><tr><td>accessibility.<wbr>typeaheadfind.<wbr>enablesound</td><td>true</td><td>false</td></tr><tr class="oldkey"><td>browser.<wbr>panorama.<wbr>welcome_<wbr>url</td><td>http://www.mozilla.com/firefox/panorama/</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>custtoolbar.<wbr>personal_<wbr>toolbar_<wbr>folder</td><td></td><td class="undefined">undefined</td></tr><tr class="newkey"><td>dom.<wbr>min_<wbr>background_<wbr>timeout_<wbr>value</td><td class="undefined">undefined</td><td>1000</td></tr><tr><td>dom.<wbr>min_<wbr>timeout_<wbr>value</td><td>10</td><td>4</td></tr><tr class="oldkey"><td>general.<wbr>startup.<wbr>browser</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>gfx.<wbr>font_<wbr>rendering.<wbr>harfbuzz.<wbr>level</td><td>2</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>gfx.<wbr>font_<wbr>rendering.<wbr>harfbuzz.<wbr>scripts</td><td class="undefined">undefined</td><td>3</td></tr><tr><td>intl.<wbr>charsetmenu.<wbr>browser.<wbr>more3</td><td>GB2312, x-gbk, gb18030, HZ-GB-2312, ISO-2022-CN, Big5, Big5-HKSCS, x-euc-tw, EUC-JP, ISO-2022-JP, Shift_JIS, EUC-KR, x-windows-949, x-johab, ISO-2022-KR</td><td>GB2312, gbk, gb18030, HZ-GB-2312, ISO-2022-CN, Big5, Big5-HKSCS, x-euc-tw, EUC-JP, ISO-2022-JP, Shift_JIS, EUC-KR, x-windows-949, x-johab, ISO-2022-KR</td></tr><tr><td>intl.<wbr>charsetmenu.<wbr>browser.<wbr>unicode</td><td>UTF-8, UTF-16LE, UTF-16BE, UTF-32, UTF-32LE, UTF-32BE</td><td>UTF-8, UTF-16LE, UTF-16BE</td></tr><tr class="oldkey"><td>profile.<wbr>allow_<wbr>automigration</td><td>false</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>sendVersionInfo</td><td class="undefined">undefined</td><td>true</td></tr><tr class="oldkey"><td>services.<wbr>sync.<wbr>storageAPI</td><td>1.0</td><td class="undefined">undefined</td></tr></tbody></table>
+</div>
+
+<script type="text/javascript" defer="defer"><!-- /* --><![CDATA[ *///
+(function(){
+    var s = document.createElement("link");
+    s.rel = "stylesheet";
+    s.type = "text/css";
+    s.href = "data:text/css;base64,dGFibGUuZGlmZl9maXJlZm94NF9wcmVmX2RpZmYgeyBib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlOyBmb250LXNpemU6IHgtc21hbGw7IG92ZXJmbG93OiBhdXRvOyB9CnRhYmxlLmRpZmZfZmlyZWZveDRfcHJlZl9kaWZmIHRkIHsgYm9yZGVyOiAxcHggc29saWQgI2RkZDsgcGFkZGluZzogMXB4OyB2ZXJ0aWNhbC1hbGlnbjogdG9wOyB9CnRhYmxlLmRpZmZfZmlyZWZveDRfcHJlZl9kaWZmIHRkLnVuZGVmaW5lZCB7IGNvbG9yOiAjODg4OyBmb250LXN0eWxlOiBpdGFsaWM7IH0KdGFibGUuZGlmZl9maXJlZm94NF9wcmVmX2RpZmYgdHIuc2FtZXZhbCB0ZDpmaXJzdC1jaGlsZCB7IGNvbG9yOiAjNDQ0OyB9CnRhYmxlLmRpZmZfZmlyZWZveDRfcHJlZl9kaWZmIHRyLm5ld2tleSAgdGQ6Zmlyc3QtY2hpbGQgeyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgICAgfQp0YWJsZS5kaWZmX2ZpcmVmb3g0X3ByZWZfZGlmZiB0ci5vbGRrZXkgIHRkOmZpcnN0LWNoaWxkIHsgdGV4dC1kZWNvcmF0aW9uOiBsaW5lLXRocm91Z2g7IH0KCnRhYmxlLmRpZmZfZmlyZWZveDRfcHJlZl9kaWZmIHRyOmhvdmVyIHsgYmFja2dyb3VuZC1jb2xvcjogI2VlZTsgfQp0YWJsZS5kaWZmX2ZpcmVmb3g0X3ByZWZfZGlmZiB0ciB7IC1tb3otdHJhbnNpdGlvbjogYmFja2dyb3VuZCAwLjEyNXMgZWFzZS1pbi1vdXQgMHM7IH0K";
+    document.getElementsByTagName("head")[0].appendChild(s);
+})();
+/* ]]><!-- */ --></script>

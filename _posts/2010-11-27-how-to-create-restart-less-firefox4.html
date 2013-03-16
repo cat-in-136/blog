@@ -1,0 +1,124 @@
+---
+layout: post
+title: 'How to create restart-less #Firefox4 extension *WITHOUT* Jetpack'
+date: '2010-11-27T00:31:00.143+09:00'
+author: cat_in_136
+tags:
+- mozilla
+modified_time: '2010-11-27T00:31:00.708+09:00'
+thumbnail: http://2.bp.blogspot.com/_mg7ZLoSThok/TOk9ofIUVbI/AAAAAAAAAFg/qr-r129nfKQ/s72-c/traditional-addons-are-required-browser-restart.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-331318788672446259
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/11/how-to-create-restart-less-firefox4.html
+---
+
+<p>
+On Firefox 4, users can install and uninstall <em>Jetpack</em> extensions <strong>without a browser restart</strong>. The traditional extensions are needed for a browser restart.
+</p>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TOk9ofIUVbI/AAAAAAAAAFg/qr-r129nfKQ/s1600/traditional-addons-are-required-browser-restart.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="74" src="http://2.bp.blogspot.com/_mg7ZLoSThok/TOk9ofIUVbI/AAAAAAAAAFg/qr-r129nfKQ/s320/traditional-addons-are-required-browser-restart.png" width="320" alt="Screenshot: DOM Inspector will be disabled after you restart Firefox." /></a><br />
+Traditional extensions will be disabled after you restart Firefox.
+</div>
+
+<h4>Jetpack is <em>not</em> required</h4>
+<p>
+Jetpack itself does not provide the restart-less feature.
+Jetpack SDK is a rich development environment for 
+Restart-less extensions (which are called by <a href="https://developer.mozilla.org/en/Extensions/Bootstrapped_extensions">Bootstrapped extensions</a>).
+</p>
+<p>
+To make a bootstrapped extension, you need:
+</p>
+<ol>
+<li>add the <code>em:bootstrap="true"</code> in install.rdf; and</li>
+<li>add bootstrap.js</li>
+</ol>
+
+<h4>Hello world of bootstrapped extensions</h4>
+
+<h5>Step1. Write install.rdf with <code>em:bootstrap="true"</code></h5>
+
+<p>
+There is no difference from traditional extensions... Only one exception is to add <code>em:bootstrap="true"</code>.
+</p>
+<pre class="prettyprint"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#"&gt;
+  &lt;Description about="urn:mozilla:install-manifest"&gt;
+     &lt;em:id&gt;bootstraptest@cat-in-136.blogspot.com&lt;/em:id&gt;
+     &lt;em:version&gt;1.0&lt;/em:version&gt;
+     &lt;em:type&gt;2&lt;/em:type&gt;&lt;!-- extension! --&gt;
+<span style="background:#ff0">     &lt;em:bootstrap&gt;true&lt;/em:bootstrap&gt;</span>
+
+     &lt;!-- Firefox --&gt;
+     &lt;em:targetApplication&gt;
+        &lt;Description&gt;
+            &lt;em:id&gt;{ec8030f7-c20a-464f-9b0e-13a3a9e97384}&lt;/em:id&gt;
+            &lt;em:minVersion&gt;4.0b5&lt;/em:minVersion&gt;
+            &lt;em:maxVersion&gt;4.0&lt;/em:maxVersion&gt;
+        &lt;/Description&gt;
+     &lt;/em:targetApplication&gt;
+
+     &lt;em:name&gt;bootstraptest&lt;/em:name&gt;
+     &lt;em:description&gt;bootstraptest&lt;/em:description&gt;
+     &lt;em:creator&gt;@cat_in_136&lt;/em:creater&gt;
+     &lt;em:iconURL/&gt;
+     &lt;em:optionsURL/&gt;
+  &lt;/Description&gt;
+&lt;/RDF&gt;</code></pre>
+
+<h5>Step2. Write bootstrap.js</h5>
+
+<p>
+This file shall contains entry point functions : <code>install(data,reason)</code>, <code>startup(data,reason)</code>, <code>shutdown(data,reason)</code> and <code>uninstall(data,reason)</code>.
+</p>
+<pre class="prettyprint"><code>unction install(data, reason) {
+}
+
+function startup(data, reason) {
+    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                    .getService(Components.interfaces.nsIPromptService);
+    prompts.alert(null,
+                  "Startup!",
+                  "Hello world.");
+}
+
+function shutdown(data, reason) {
+    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                    .getService(Components.interfaces.nsIPromptService);
+    prompts.alert(null,
+                  "Shutdown!",
+                  "Good bye.");
+}
+
+function uninstall(data, reason) {
+}
+</code></pre>
+<p>
+This extension says "Hello world." after it is installed and/or enabled, and "Good bye." after it is uninstalled and/or disabled.
+</p>
+<p>
+Above code is very very simple. bootstrap.js in the general bootstrapped extensions (for example Jetpack) are complexity.
+</p>
+
+<h5>Step3. Packaging</h5>
+
+<p>
+All you have to do is compress the files.
+</p>
+<pre style="background-color: #000; color: #fff">% zip -9r ../bootstraptest.xpi *
+  adding: bootstrap.js (deflated 66%)
+  adding: install.rdf (deflated 54%)
+% </pre>
+<p>
+Open the XPI file to install. As soon as it is installed, a following dialog is displayed.
+</p>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://4.bp.blogspot.com/_mg7ZLoSThok/TOlKNoTXw8I/AAAAAAAAAFk/RnXyI_MvNFI/s1600/Screenshot-Startup.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="109" src="http://4.bp.blogspot.com/_mg7ZLoSThok/TOlKNoTXw8I/AAAAAAAAAFk/RnXyI_MvNFI/s320/Screenshot-Startup.png" alt="alert message : 'Hello world.'" width="320" /></a>
+</div>
+
+<h4>See also</h4>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en/Extensions/Bootstrapped_extensions">Bootstrapped extensions</a> - MDC</li>
+<li><a href="https://jetpack.mozillalabs.com/">Jetpack Official site</a></li>
+</ul>

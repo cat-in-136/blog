@@ -1,0 +1,47 @@
+---
+layout: post
+title: IE6 died, but IE doesn't yet support addEventListener...
+date: '2010-03-10T23:58:00.000+09:00'
+author: cat_in_136
+tags:
+- javascript
+- windows
+modified_time: '2010-03-10T23:58:00.300+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3772487473544942491
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/ie6-died-but-ie-doesnt-yet-support.html
+---
+
+<p>
+Last Thursday, <a href="http://ie6funeral.com/">Aten Design Group held a funeral for IE6</a>.
+</p>
+<blockquote cite="http://ie6funeral.com/">
+Internet Explorer Six, resident of the interwebs for over 8 years, died the morning of March 1, 2010 in Mountain View, California, as a result of <a href="http://googleenterprise.blogspot.com/2010/01/modern-browsers-for-modern-applications.html">a workplace injury sustained at the headquarters of Google, Inc</a>.
+</blockquote>
+<p>
+As you know, IE6 does not support many JavaScript functions such as <a href="http://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-Registration-interfaces"><code>addEventListener</code></a>. So JavaScript programmers must write wrapper-functions code. For example, <a href="http://www.prototypejs.org/api/event/observe"><code>Event.observe</code></a> calls <code>attachEvent</code> on IE6 but <code>addEventListener</code> on any other modern browsers. JavaScript libraries is IE-wrapper-function collections in a sense.
+</p>
+<p>
+His son IE7 and his grand-daughter IE8 also don't support <code>addEventListener</code>. Following table is a very, very simple unit test :
+</p>
+<table id="still_attach_event_alive_table">
+<tbody>
+<tr>
+<td><code>window.addEventListener("load", ...)</code></td>
+<td id="still_attach_event_alive_test" style="background-color: #f00; color: #fff;">NG</td>
+</tr>
+</tbody>
+</table>
+<script type="text/javascript"><!-- /* --><![CDATA[ /* */
+try {
+  window.addEventListener("load", function() {
+    var td = document.getElementById("still_attach_event_alive_test");
+    td.style.backgroundColor = "#080";
+    td.style.color = "#fff";
+    td.innerHTML = "OK";
+  }, false);
+} catch (e) {
+}
+/* ]]><!-- */// --></script>
+<p>
+I don't know if IE9 pass this test or not.
+</p>

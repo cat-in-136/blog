@@ -1,0 +1,41 @@
+---
+layout: post
+title: JavaScript Typed Array use native endian
+date: '2011-03-19T00:23:00.004+09:00'
+author: cat_in_136
+tags:
+- javascript
+modified_time: '2011-03-19T00:23:00.150+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3899080383903385747
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/03/javascript-typed-array-use-native.html
+---
+
+<div>
+<pre class="prettyprint"><code id="js_uint8_array_test_code">var a = new Uint8Array([0x12, 0x34]);
+var b = new Uint16Array(a.buffer);
+alert("0x" + (b[0]).toString(16)); // #=> 0x3412 or 0x1234 ?
+</code></pre>
+<button onclick="eval(document.getElementById('js_uint8_array_test_code').textContent); void(0);">Run above code (for Modern browser : Firefox4, Chrome10...)</button>
+</div>
+
+<div>
+The following buffer is created:
+<table style="border: solid 1px #aaa; border-collapse: collapse;"><tbody>
+<tr><td style="border: solid 1px #aaa">12</td><td style="border: solid 1px #aaa">34</td></tr>
+<tr><td style="border: solid 1px #aaa"><code>a[0]</code></td><td style="border: solid 1px #aaa"><code>a[1]</code></td></tr>
+<tr><td colspan="2" style="border: solid 1px #aaa"><code>b[0]</code></td></tr>
+</tbody></table>
+</div>
+
+<p>
+Uint16Array, Uint32Array, Int16Array, and Int32Array (JavaScript Typed Array) seem to use native endian.
+If you use little endian machine (e.g. x86, x64), <code>b[0]</code> is <code>0x3412</code>.
+If you use big endian machine (e.g. Sun SPARC, PowerPC), <code>b[0]</code> is <code>0x1234</code>. (But I did not check since I have <em>no</em> big endian machine.)
+</p>
+
+<h4>See also</h4>
+
+<ul>
+<li><a href="http://www.khronos.org/registry/typedarray/specs/latest/">Typed Array Specification</a></li>
+<li><a href="http://lists.w3.org/Archives/Public/public-script-coord/2010AprJun/0048.html">Re: Adoption of the Typed Array Specification</a> (public-script-coord at w3.org) </li>
+</ul>

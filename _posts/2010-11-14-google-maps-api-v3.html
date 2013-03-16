@@ -1,0 +1,122 @@
+---
+layout: post
+title: Google Maps API v3 で鉄道網のみを表示する
+date: '2010-11-14T20:55:00.002+09:00'
+author: cat_in_136
+tags:
+- web application
+- train and rails
+- google maps
+modified_time: '2012-12-23T12:15:51.418+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8084181071021489035
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/11/google-maps-api-v3.html
+---
+
+<p>
+GoogleマップAPI(v3)には地図レイヤーの表示項目を細かく選べる<a href="http://code.google.com/apis/maps/documentation/javascript/overlays.html#StyledMaps">スタイル付き地図</a>がサポートされている。
+<a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#MapTypeStyleFeatureType"><code>MapTypeStyleFeatureType</code> リファレンス</a>にあるリストにある個々の対象物にたいして色や表示するかなどを設定できる。
+</p>
+<p>
+その対象物のリストのうち鉄道網に関連するのは下記の二つである。
+</p>
+<ul>
+<li><code>transit.line</code> : 交通機関の路線</li>
+<li><code>transit.station.rail</code> : 鉄道駅</li>
+</ul>
+<p>
+上の2つ以外の対象物を非表示とすることで鉄道網の地図が得られる。
+なお、<code>transit.line</code>については航路も表示されるようである。その次善策として水域(<code>water</code>)を航路と近い色で塗ることとした。
+</p>
+
+<div id="google_rails_only_map_canvas" style="width: 100%; height: 480px; border: solid thin #000;"></div>
+<script src="http://maps.google.com/maps/api/js?sensor=false&amp;lang=ja"></script>
+<script defer="defer" async="async" id="google_rails_only_map_script">
+(function () {
+        var tokyo = new google.maps.LatLng(35.681283, 139.750042);
+
+        var map = new google.maps.Map(document.getElementById("google_rails_only_map_canvas"), {
+          zoom: 12,
+          center: tokyo,
+          mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, "rails"]
+          }
+        });
+
+        var railsStyles = [
+          {
+            featureType: "all",
+            elementType: "all",
+            stylers: [{visibility: "off"}]
+          },
+          {
+            featureType: "water",
+            elementType: "geometry",
+            stylers: [
+              { hue: "#8899CC" }, // 航路の線と色相を合わせて目立たなくする
+              { visibility: "simplifed" }
+            ]
+          },
+          {
+            featureType: "transit.line",// 交通機関の路線
+            elementType: "all", // ラベルを含めてすべて
+            stylers: [
+              { visibility: "on" }
+            ]
+          },
+          {
+            featureType: "transit.station.rail",// 電車の駅
+            elementType: "all", // ラベルを含めてすべて
+            stylers: [
+              { visibility: "on" }
+            ]
+          }
+        ];
+
+        var railsMapType = new google.maps.StyledMapType(railsStyles, {name: "鉄道網"});
+        map.mapTypes.set("rails", railsMapType);// 登録
+        map.setMapTypeId("rails");
+})();
+</script>
+
+<p>
+ソースコードのうち鉄道網表示に関係する箇所は下記の通りである。上述の表示・非表示を設定した<code>railsStyles</code>を元にして<code>StyledMapType</code>を作って、それを<code>Map</code>インスタンスである<code>map</code>に登録するのみである。
+</p>
+<pre class="prettyprint"><code>var railsStyles = [
+  {
+    featureType: "all",
+    elementType: "all",
+    stylers: [{visibility: "off"}]
+  },
+  {
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [
+      { hue: "#8899CC" }, // 航路の線と色相を合わせて目立たなくする
+      { visibility: "simplifed" }
+    ]
+  },
+  {
+    featureType: "transit.line",// 交通機関の路線
+    elementType: "all", // ラベルを含めてすべて
+    stylers: [
+      { visibility: "on" }
+    ]
+  },
+  {
+    featureType: "transit.station.rail",// 電車の駅
+    elementType: "all", // ラベルを含めてすべて
+    stylers: [
+      { visibility: "on" }
+    ]
+  }
+];
+
+var railsMapType = new google.maps.StyledMapType(railsStyles, {name: "鉄道網"});
+map.mapTypes.set("rails", railsMapType);// 登録
+map.setMapTypeId("rails");</code></pre>
+<p>
+問題点としては、路線ごとに色がついていたりしないので、特に東京をはじめとする鉄道網が複雑なところでは、路線図としての利用はできないことがある。
+</p>
+<p>
+なお、上述の内容を他の対象物にすることで道路網だけを表示したり、水域だけを表示（=白地図的利用）をしたりする利用法も可能であろう。
+</p>

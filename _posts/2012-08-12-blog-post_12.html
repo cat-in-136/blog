@@ -1,0 +1,44 @@
+---
+layout: post
+title: デジタルサイネージ型次世代飲料自販機のカメラに顔を撮られないようにして、商品を購入する方法の一考察
+date: '2012-08-12T19:00:00.028+09:00'
+author: cat_in_136
+tags:
+- train and rails
+- チラシの裏
+- ポイント
+- big data
+modified_time: '2012-12-23T12:17:44.514+09:00'
+thumbnail: http://1.bp.blogspot.com/-t-rdOq-Ynsk/UCaDrrnuElI/AAAAAAAAAR0/XDk3pk47bSw/s72-c/acure-ng.jpg
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4605654134925455499
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/08/blog-post_12.html
+---
+
+<p>前回のポイントカードの考察（<a href="{{ site.baseurl }}{% post_url 2012-08-05-blog-post %}">ポイントカードもしくはそれに類するシステムの分類を考えたほうがいいのではないか</a>） のための調査の一環として、(株)JR東日本ウォータービジネスについて調べた。 その時に浮かんだのが、<a href="http://www.acure-fun.net/innovation/index.html">次世代型飲料自販機</a> は何かしらの（個人情報とは見なされないが）個人に関する情報を 提供しないと買えないのではないか?という疑問だ。</p><h4>次世代飲料自販機</h4><figure style="display: block; margin: 1em; font-size: smaller;"> <a href="http://1.bp.blogspot.com/-t-rdOq-Ynsk/UCaDrrnuElI/AAAAAAAAAR0/XDk3pk47bSw/s1600/acure-ng.jpg" style="margin-left:1em; margin-right:1em"><img style="border: 0;" height="320" width="180" src="http://1.bp.blogspot.com/-t-rdOq-Ynsk/UCaDrrnuElI/AAAAAAAAAR0/XDk3pk47bSw/s320/acure-ng.jpg" /></a> <figcaption style="display: block;">次世代飲料自販機</figcaption> </figure>  <p>2010年8月から展開されているデジタルサイネージ型次世代飲料自販機は 大型タッチパネルディスプレイにどうしても目がいってしまうが、 いったい何が画期的・先進的なのか。 <a href="http://www.jre-water.com/pdf/100810jisedai-jihanki.pdf" title="夢の飲料自販機 エキナカ本格展開へ ～ マーケティング頭脳を搭載した次世代自販機 ～">導入当時のプレスリリース</a>によると、 次世代飲料自販機の特徴は下記の通りと記載してある。</p><ol><li>大型タッチパネルディスプレイ</li>
+<li>高度なマーケティング頭脳</li>
+<li>デジタルサイネージ・ネットワーク</li>
+<li>未来感のあるデザイン</li>
+</ol><p>本稿では、「（個人情報とは見なされないが）個人に関する情報」 に注目したいので、「高度なマーケティング頭脳」のみ触れるものとする。 なお、本稿で触れない項目もいずれも興味深いので、 少しでも気になった方は、 ぜひとも<a href="http://www.jre-water.com/pdf/100810jisedai-jihanki.pdf" title="夢の飲料自販機 エキナカ本格展開へ ～ マーケティング頭脳を搭載した次世代自販機 ～">導入当時のプレスリリース</a>を読んでいただきたい。</p><h4>自販機でマーケティング</h4><p>飲料自販機には、顧客からのインプットとして基本的に以下がある。</p><ul><li>お金（紙幣・硬貨）</li>
+<li>ボタン（商品選択）</li>
+</ul><p>（返却レバーは本質的な内容から外れるので除外。）</p><p>次世代型飲料自販機には、下記の通りとなる。</p><ul><li><strong>属性判定センサ・人感センサ</strong></li>
+<li>タッチパネル入力（商品選択・キャンセル）</li>
+<li>お金（紙幣・硬貨）</li>
+<li><strong>Suica（PASMOなどでも可）</strong></li>
+</ul><p>属性判定センサというのは、オムロン製の <a href="http://www.omron.co.jp/r_d/technology_segment.html" title="セグメントセンサ（性別・年代分析システム）：オムロンの技術紹介 | 技術情報 | オムロン">セグメントセンサ（性別・年代分析システム）</a> と同等のものであると思われる。 自販機上部に埋め込まれているカメラで、自販機の前に立っている人の 年代・性別を判定し、それに基づいたおすすめ商品を表示するという。 具体的には、年代・性別の他に時間帯などに応じて「おすすめ」マークを 表示したり、商品の並びを変えて表示したりする。</p><p>なお、属性判定センサをずっと動かすのは無駄が多いので 人感センサをつけているのであって、人感センサにマーケティング能力は まず期待はしていないのではないか。</p><p>Suicaの入力は、単なる電子マネーに過ぎないといいたいところだが異なる。 SuicaにはIDが振られており（厳密にはFeliCaにIDが振られており）、 これが一種のリピート率判定に使える。 (株)JR東日本ウォータービジネスはこれを積極的に使っており、 例えば、以下に掲げる「○本購入すると1本無料」というキャンペーンを 行なっていた。</p><ul><li><a href="http://www.jre-water.com/20120403aquapointprogram.pdf">「フロムアクア」新生活応援キャンペーン</a> (2012/04/05〜2012/04/25)</li>
+<li><a href="http://www.jre-water.com/20120717jisedaipoint2.pdf">SuicaでチョコラBBスパークリングを5本買うと1本プレゼントキャンペーン</a> (2012/07/18〜2012/08/14)</li>
+</ul><p>つまるところ、Suicaで商品を購入すると、 <strong>Suicaの ID と商品購入履歴の組の情報がサーバ（と思われる何処か）に送信</strong>されるのだ。 そして、例えば、その購入履歴（例えばチョコラBBスパークリングを何本買ったか）を 元にキャンペーン（チョコラBBスパークリングをプレゼントする）を実施している。</p><p>加えて<a href="http://www.jreast.co.jp/suicapoint/index.html">Suicaポイントクラブ</a> に参加している場合、正確な年齢や住所がSuicaのIDからわかる。 （<a href="http://www.jreast.co.jp/suicapoint/rule/">Suicaポイントクラブ会員規約</a>の 第16条の(4)のク・ケを読むとそれができる規約のように読める（2012年08月現在）） ただし、<a href="http://www.itmedia.co.jp/enterprise/articles/1205/07/news013.html">JR東日本ウォータービジネスのマーケティング事例</a> によると、使っている情報を性別年代と郵便番号にとどめているようである （<strong>詳細未調査のため要注意</strong>）。</p><h4>個人に関わる情報を全く渡さずに買えるのかという考察</h4><p>次世代型飲料自販機は主に3段階の 個人に関わる情報を取得する能力を持っていると考えられる。 そして、それぞれの回避方法は下記の通りであると考えた。</p><figure style="display: block; margin: 1em; font-size: smaller;"> <figcaption style="display: block;">次世代型飲料自販機の個人に関わる情報の取得防御策</figcaption> <table><col /> <col /> <thead>
+<tr>  <th>項目</th>  <th>回避方法</th> </tr>
+</thead> <tbody>
+<tr>  <td>年代・性別</td>  <td>カメラに写らないようにする???</td> </tr>
+<tr>  <td>Suica ID</td>  <td>電子マネーを使わないで購入する</td> </tr>
+<tr>  <td>正確な年代・性別など、上記以上の情報</td>  <td>Suicaポイントクラブに入会<strong>しない</strong></td> </tr>
+</tbody> </table></figure>  <p>問題は、カメラに写らないように飲料自販機に接近できるのか? ということである。</p><p>最初考えたのはカメラを隠すということである。</p><figure style="display: block; margin: 1em; font-size: smaller;"> <a href="http://3.bp.blogspot.com/-yaC_BfsMCo0/UCaEUWu9KmI/AAAAAAAAASA/4Kq7Xdo4RZU/s1600/how_to_hide.png" style="margin-left:1em; margin-right:1em"><img style="border: 0;" height="400" width="218" src="http://3.bp.blogspot.com/-yaC_BfsMCo0/UCaEUWu9KmI/AAAAAAAAASA/4Kq7Xdo4RZU/s400/how_to_hide.png" /></a> <figcaption style="display: block;">次世代型飲料自販機のカメラを隠して商品を買う方法（未検証）</figcaption> </figure>  <ol><li>カメラ隠し係が、カメラに写らないよう横から接近</li>
+<li>カメラ隠し係が、カメラを何かで隠す</li>
+<li>その後、購入係が硬貨で商品を購入する。</li>
+<li>購入係が去ったら、カメラ隠し係も去る。</li>
+</ol><p>しかし、これは以下の問題があるため、実施・検証していない。 （筆者はチキンである。）</p><ul><li>どう考えても不審人物</li>
+<li>2人必要</li>
+<li>人間の存在を感知できないので、商品選択画面に遷移できないのではないかという疑念（未検証）</li>
+</ul><p>次に考えたのは、仮面を付けて購入するということである。 もっと本格的に異性装といった変装でもよい。</p><figure style="display: block; margin: 1em; font-size: smaller;"> <a href="http://4.bp.blogspot.com/-2__GyPfPy00/UCaE4nGh56I/AAAAAAAAASM/aoYxxCGLptQ/s1600/Anonymous%2Bis%2BGuy%2BFawkes.jpg" style="margin-left:1em; margin-right:1em"><img style="border: 0;" height="163" width="225" src="http://4.bp.blogspot.com/-2__GyPfPy00/UCaE4nGh56I/AAAAAAAAASM/aoYxxCGLptQ/s400/Anonymous%2Bis%2BGuy%2BFawkes.jpg" alt="Anonymousがよく使うGuy Fawkesの仮面の絵" /></a> <figcaption style="display: block;">Anonymousがよく使うGuy Fawkesの仮面をかぶるのもよい</figcaption> </figure>  <p>ただし、これは年代・性別の隠蔽というよりはむしろ、偽装である。 偽装した年代・性別という個人に関わる情報を提供しているのではないか。</p><h4>乱暴な結論</h4><p>年代・性別情報は保持していないという(株)JR東日本ウォータービジネスの 言葉を信じて次世代飲料自販機を使う場合は顔は晒すのを前提として 使う、でいいのではないか。 （顔を晒すのが嫌ならば、次世代飲料自販機の使用を控える）</p><h4>参考文献</h4><ul><li>「<a href="http://www.jre-water.com/pdf/100810jisedai-jihanki.pdf" title="夢の飲料自販機 エキナカ本格展開へ ～ マーケティング頭脳を搭載した次世代自販機 ～">夢の飲料自販機 エキナカ本格展開へ ～ マーケティング頭脳を搭載した次世代自販機 ～</a>」(株)JR東日本ウォータービジネス プレスリリース, 2010年08月10日</li>
+<li>『<a href="http://www.itmedia.co.jp/enterprise/articles/1205/07/news013.html">自販機ビジネスでは珍しいデータ活用で新境地開く　JR東日本ウォータービジネス</a>』 ITMedia, 2012年05月07日</li>
+</ul>

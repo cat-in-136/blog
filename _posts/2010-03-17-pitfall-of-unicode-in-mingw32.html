@@ -1,0 +1,100 @@
+---
+layout: post
+title: Pitfall of "Unicode in Mingw32"
+date: '2010-03-17T23:30:00.001+09:00'
+author: cat_in_136
+tags:
+- mingw
+- windows
+modified_time: '2010-03-17T23:30:00.201+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3569146321114098915
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/pitfall-of-unicode-in-mingw32.html
+---
+
+<p>
+Mingw32 (version 3.15) does not fully support Unicode. There are a few all-too-common pitfalls.
+</p>
+
+<h4><code>wWinMain</code> shall not be used</h4>
+<pre class="prettyprint"><code>// NG:
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
+{
+//...
+
+// OK:
+int main(int argc, char** argv)
+{
+//...
+</code></pre>
+<p>
+On Mingw32, <code>wWinMain</code> function is not supported. <code>wmain</code> function is also not supported. So, the entry function must be <code>main</code> function in Unicode.
+
+</p>
+<p>
+In addition, <code>_tWinMain</code> and <code>_tmain</code> function are only available in Multibyte (not Unicode.) These are mapped to <code>WinMain</code> and <code>main</code> in Multibyte.
+</p>
+
+<h5>How to get <code>hInstance</code> from main function?</h5>
+<pre class="prettyprint"><code>HINSTANCE hInstance;
+
+hInstance = GetModuleHandle(NULL);
+</code></pre>
+<p>
+Note that <code>hPrevInstance</code> of <code>wWinMain</code> arguments is always <code>NULL</code> on Win32.
+
+</p>
+
+<h5>How to get <code>lpCmdLine</code> from main function?</h5>
+<p>
+Use <code>GetCommandLine()</code> function. Unlike <code>lpCmdLine</code>, the return value of <code>GetCommandLine()</code> is entire command line, including the program name.
+
+</p>
+
+<h4><code>__wargv</code> shall not be used</h4>
+<pre class="prettyprint"><code>// NG:
+for (i = 0; i &lt; __argc; i++) {
+    arg = __wargv[i];
+    //...
+}
+
+// OK:
+INT argc;
+WCHAR **argv;
+wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+for (i = 0; i &lt; argc; i++) {
+    arg = wargv[i];
+    //...
+}
+LocalFree(wargv);
+</code></pre>
+<p>
+<code>__wargv</code> is also not supported. To get argument list, use <code>CommandLineToArgvW</code> and <code>GetCommandLineW</code> function. Note that <code>CommandLineToArgv<strong>A</strong></code> is not defined on win32api.
+
+</p>
+
+<h4>My solution of above pitfalls</h4>
+<pre class="prettyprint"><code>int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+{
+    // ...
+}
+
+#ifdef _UNICODE
+#ifndef _tWinMain // Mingw32 does not implement wide startup module
+int main(int argc, char **argv)
+{
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    int retval = 0;
+
+    retval = _tWinMain(hInstance, NULL, _T("") /* lpCmdLine is not available*/, SW_SHOW);
+
+    return retval;
+}
+#endif
+#endif /* _UNICODE */
+</code></pre>
+
+<h4>See also</h4>
+<ul>
+<li><a href="http://demosten-eng.blogspot.com/2008/08/mingw-and-unicode-support.html">MinGW and Unicode support?</a></li>
+<li><a href="http://lists-archives.org/mingw-users/07124-link-error-when-using-_tmain.html"> Re: [Mingw-users] link error when using _tmain</a></li>
+</ul>

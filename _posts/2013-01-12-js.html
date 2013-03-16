@@ -1,0 +1,134 @@
+---
+layout: post
+title: 「JSエンジンを公開日順に並べ直しなさい」について調べてみた。
+date: '2013-01-12T10:00:00.000+09:00'
+author: cat_in_136
+tags:
+- javascript
+modified_time: '2013-02-20T23:45:05.928+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-2196457181361520726
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/01/js.html
+---
+
+<blockquote class="twitter-tweet"><p>Q: JSエンジンを公開日順に並べ直しなさい: IonMonkey, JägerMonkey, JavaScriptCore, SpiderMonkey, SquirrelFish, SquirrelFish Extreme, Tamarin, TraceMonkey, V8</p>&mdash; dynamis (でゅなみす) (@dynamitter) <a href="https://twitter.com/dynamitter/status/288872844677496832" data-datetime="2013-01-09T05:00:27+00:00">January 9, 2013</a></blockquote>
+
+<script async="async" defer="defer" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>調べてみた。
+なお、実際には安定リリースのブラウザで一般的なユーザは恩恵を受けると思われる
+のでそのブラウザのリリース日も参考のため書いてある。</p>
+
+<table class="jsengine-sort-table">
+<col />
+<col />
+<col />
+<col />
+<thead>
+<tr>
+ <th>JavaScript Engine</th>
+ <th>Announce At</th>
+ <th>Browser (Stable release)</th>
+ <th>Browser Release Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+ <td>Spider Monkey</td>
+ <td>?</td>
+ <td>Netscape Navigator 2.0</td>
+ <td>1996-03-12</td>
+</tr>
+<tr>
+ <td>JavaScriptCore</td>
+ <td>2003-01-07 <a href="#jsengine-sort-fn:1" id="jsengine-sort-fnref:1" class="jsengine-sort-footnote">1</a></td>
+ <td>Safari 1.0</td>
+ <td>2003-06-23</td>
+</tr>
+<tr>
+ <td>Tamarin</td>
+ <td>2006-11-07 <a href="#jsengine-sort-fn:2" id="jsengine-sort-fnref:2" class="jsengine-sort-footnote">2</a></td>
+ <td>-</td>
+</tr>
+<tr>
+ <td>SquirrelFish</td>
+ <td>2008-06-02 <a href="#jsengine-sort-fn:3" id="jsengine-sort-fnref:3" class="jsengine-sort-footnote">3</a></td>
+ <td>Safari 4.0</td>
+ <td>2009-06-08</td>
+</tr>
+<tr>
+ <td>TraceMonkey</td>
+ <td>2008-08-22 <a href="#jsengine-sort-fn:4" id="jsengine-sort-fnref:4" class="jsengine-sort-footnote">4</a></td>
+ <td>Firefox 3.5</td>
+ <td>2009-06-30</td>
+</tr>
+<tr>
+ <td>V8</td>
+ <td>2008-09-02 <a href="#jsengine-sort-fn:5" id="jsengine-sort-fnref:5" class="jsengine-sort-footnote">5</a></td>
+ <td>Google Chrome 1.0.154</td>
+ <td>2008-12-11</td>
+</tr>
+<tr>
+ <td>SquirrelFish Extreme (Nitro)</td>
+ <td>2008-09-18 <a href="#jsengine-sort-fn:6" id="jsengine-sort-fnref:6" class="jsengine-sort-footnote">6</a></td>
+ <td>Safari 4.0</td>
+ <td>2009-06-08</td>
+</tr>
+<tr>
+ <td>JägerMonkey</td>
+ <td>2010-02-26 <a href="#jsengine-sort-fn:7" id="jsengine-sort-fnref:7" class="jsengine-sort-footnote">7</a></td>
+ <td>Firefox 4</td>
+ <td>2011-03-22</td>
+</tr>
+<tr>
+ <td>IonMonkey</td>
+ <td>2012-09-12 <a href="#jsengine-sort-fn:8" id="jsengine-sort-fnref:8" class="jsengine-sort-footnote">8</a></td>
+ <td>Firefox 18</td>
+ <td>2013-01-08</td>
+</tr>
+</tbody>
+</table>
+
+<div class="jsengine-sort-footnotes">
+<ol>
+
+<li id="jsengine-sort-fn:1"><a href="http://lists.kde.org/?l=kfm-devel&amp;m=104197092318639&amp;w=2">Greetings from the Safari team at Apple Computer</a> kfm-devel<a href="#jsengine-sort-fnref:1" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+<li id="jsengine-sort-fn:2"><a href="http://www.mozilla.org/en-US/press/mozilla-2006-11-07.html">Adobe and Mozilla Foundation to Open Source Flash Player Scripting Engine</a> Mozilla press release<a href="#jsengine-sort-fnref:2" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+<li id="jsengine-sort-fn:3"><a href="https://www.webkit.org/blog/189/announcing-squirrelfish/">Announcing SquirrelFish</a> Surfin Safari<a href="#jsengine-sort-fnref:3" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+<li id="jsengine-sort-fn:4"><a href="http://andreasgal.com/2008/08/22/tracing-the-web/">Tracing the Web</a> Andreas Gal<a href="#jsengine-sort-fnref:4" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+<li id="jsengine-sort-fn:5"><a href="http://googleblog.blogspot.com/2008/09/fresh-take-on-browser.html">A fresh take on the browser</a> Official Google Blog<a href="#jsengine-sort-fnref:5" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+<li id="jsengine-sort-fn:6"><a href="https://www.webkit.org/blog/214/introducing-squirrelfish-extreme/">Introducing SquirrelFish Extreme</a> Surfin Safari<a href="#jsengine-sort-fnref:6" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+<li id="jsengine-sort-fn:7"><a href="https://blog.mozilla.org/dmandelin/2010/02/26/starting-jagermonkey/">Starting JägerMonkey</a> David Mandelin blog<a href="#jsengine-sort-fnref:7" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+<li id="jsengine-sort-fn:8"><a href="https://blog.mozilla.org/javascript/2012/09/12/ionmonkey-in-firefox-18/">IonMonkey in Firefox 18</a> The Mozilla Blog<a href="#jsengine-sort-fnref:8" class="jsengine-sort-reversefootnote">&#160;&#8617;</a></li>
+
+</ol>
+</div>
+
+<ul>
+<li>発表時期より前に実装が始まっていることが多いので、発表時期はあまり意味はない。</li>
+<li>2008年は SquirrelFish(/Extreme),TraceMonkey,V8 はあまりにも発表時期が
+近いので資料を探せば順番が変わることは大いにあるであろう。
+<del datetime="2013-02-20 23:38:01+09:00">というわけで、上は<strong>確証のある正解ではない</strong>。</del>
+<ins datetime="2013-02-20 23:38:01+09:00"><a href="http://cat-in-136.blogspot.com/2013/01/js.html?showComment=1358379856739#c797339895230778028">dynamis (でゅなみす)さんからのコメント</a>で正しいとの回答を頂いています。(2012-02-20追記)</ins>
+</li>
+<li>V8は発表からブラウザ正式版への長さが非常に短い。</li>
+<li>ブラウザへの反映順序（安定版）では、SquirrelFish(/Extreme),TraceMonkey,V8の順序が
+V8→TraceMonkey→SquirrelFish Extremeとなる。
+なお、SquirrelFishはすぐにSquirrelFish Extreme (Nitro) に進化したので
+SquirrelFishだがSquirrelFish ExtremeではないSafari（正式版）はないものと思われる。</li>
+</ul>
+
+<p><style type="text/css">
+table.jsengine-sort-table { border: solid 1px #aaa; border-collapse: collapse; }
+table.jsengine-sort-table td, table.jsengine-sort-table th { border: solid 1px #aaa; }
+table.jsengine-sort-table th { background-color: #eee; }
+.jsengine-sort-footnote { font-size: xx-small; vertical-align: top; }
+.jsengine-sort-footnotes { font-size: smaller; border-left: solid 1px #aaa; margin-left: 2em; }
+.jsengine-sort-footnotes *:target { text-shadow: 0 0 10px #08f; }
+</style></p>

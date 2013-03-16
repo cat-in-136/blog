@@ -1,0 +1,96 @@
+---
+layout: post
+title: Lissajous curve in HTML5 cakejs
+date: '2010-07-19T01:50:00.001+09:00'
+author: cat_in_136
+tags:
+- javascript
+- web application
+modified_time: '2010-07-19T01:52:05.853+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-147570924746950314
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/07/lissajous-curve-in-html5-cakejs.html
+---
+
+<p>
+Here, I show you a Lissajous curve with HTML 5 canvas. (No flash use!)
+</p>
+<div>
+<canvas id="lissajous_canvas" width="300" height="250"></canvas>
+<script type="text/javascript" src="http://cakejs.googlecode.com/svn/trunk/src/cake.js"></script>
+<script type="text/javascript"><!-- /* --><![CDATA[ /* */
+(function () {
+    var c = document.getElementById("lissajous_canvas", {fill: "white"});
+    c.style.background = "#00000";
+    var canvas = new Canvas(c);
+    canvas.getContext().fillRect(0, 0, canvas.width, canvas.height);
+    canvas.fill = [0, 0, 0, 0.01];
+
+    var rect = new Rectangle(20, 20, {centered: true});
+    var g = new Gradient({
+        type: "radial",
+        endRadius: rect.width / 2,
+        colorStops: [[0, "rgba(240,240,240,100)"], [0.1, "rgba(0,240,100,50)"], [1, "rgba(0,240,100,0)"]]
+    });
+    rect.fill = g;
+    var phase = Math.PI * 0.5;
+    rect.addFrameListener(function(t, dt) {
+        var cx = canvas.width  * 0.5;
+        var cy = canvas.height * 0.5;
+        var a = Math.min(cx, cy) - rect.width * 0.5;
+
+        rect.x = cx + a * Math.sin((5) * t * 0.0005);
+        rect.y = cy + a * Math.sin((6) * t * 0.0005 + phase);
+    });
+
+    canvas.append(rect);
+
+    var pause = document.createElement("input");
+    pause.type = "button";
+    pause.value = "Pause";
+    pause.onclick = function () {
+      if (canvas.isPlaying) {
+          canvas.stop();
+      } else {
+          canvas.play();
+      }
+    };
+    c.parentNode.insertBefore(pause, c);
+    c.parentNode.insertBefore(document.createElement("br"), c);
+
+})();
+// ]]><!-- --></script>
+</div>
+<p>
+This program use <a href="http://code.google.com/p/cakejs/">cakejs</a> (2D scene graph library.)
+</p>
+<p>
+Source code is straightforward. A object with radial gradient moves along the curve. Frequency ratio is 5:6.
+</p>
+<pre class="prettyprint"><code>
+    var rect = new Rectangle(20, 20, {centered: true});
+    var g = new Gradient({
+        type: "radial",
+        endRadius: rect.width / 2,
+        colorStops: [[0, "rgba(240,240,240,100)"], [0.1, "rgba(0,240,100,50)"], [1, "rgba(0,240,100,0)"]]
+    });
+    rect.fill = g;
+    var phase = Math.PI * 0.5;
+    rect.addFrameListener(function(t, dt) {
+        var cx = canvas.width  * 0.5;
+        var cy = canvas.height * 0.5;
+        var a = Math.min(cx, cy) - rect.width * 0.5;
+
+        rect.x = cx + a * Math.sin((5) * t * 0.0005);
+        rect.y = cy + a * Math.sin((6) * t * 0.0005 + phase);
+    });
+</code></pre>
+<p>
+Cakejs's demo is very very cool. I like <a href="http://glimr.rubyforge.org/cake/missile_fleet.html">Missile Fleet</a> game demo.
+</p>
+
+<h4>See also</h4>
+<ul>
+<li><a href="http://code.google.com/p/cakejs/">cakejs project page</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Lissajous_curve">Lissajous curve</a> - wikipedia</li>
+<li>Japanese:<a href="http://www.ip.uec.ac.jp/ipo/archive/logo.html">電気通信大学校章(リサジュー図形)</a></li>
+</ul>

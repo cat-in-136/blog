@@ -1,0 +1,139 @@
+---
+layout: post
+title: 水平線から上がった初日の出のアレをPOV-Rayで再現したい
+date: '2011-01-03T20:10:00.002+09:00'
+author: cat_in_136
+tags:
+- povray
+- optics
+modified_time: '2011-01-03T20:26:40.339+09:00'
+thumbnail: http://farm4.static.flickr.com/3121/3154885486_a20fd385a3_t.jpg
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8659010404186861422
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/01/pov-ray.html
+---
+
+<div class="separator" style="clear: left; float: left; margin-right: 1em; text-align: center;">
+<a href="http://www.flickr.com/photos/toyohara/3154885486/" title="初日の出 by toyohara, on Flickr"><img src="http://farm4.static.flickr.com/3121/3154885486_a20fd385a3_t.jpg" style="width:100px;height:75px" alt="初日の出" /></a>
+</div>
+
+<p>
+新年といえば初日の出を観に行った人もいると思われるが、初日の出のイメージといえば
+やはり水平線から出る太陽だ。
+このとき、海面に反射して映る太陽は水平線からまっすぐとした線状となる。
+</p>
+
+<p>
+これについて<a href="http://www.hirax.net/dekirukana9/two_suns/">hirax.net::「海面に写る太陽」の不思議</a>にて、
+解説されている。そのページによると原因として以下のように3点挙げられている。
+</p>
+<blockquote cite="http://www.hirax.net/dekirukana9/two_suns/">
+<p>
+「海面が波立っていること」「太陽に対する（微小）海面の向き」「海面でのフレネル反射率」が原因だということがわかってきた。 
+</p>
+</blockquote>
+
+<p>
+これらは古典的な幾何光学で説明されていて、海面の法線と反射だけをうまく設定してやれば
+コンピュータ上で再現できそうなことに気づいた。
+</p>
+
+<h4>CG実験</h4>
+
+<p>そこで、水面と照明からなる簡単なCGをつくってみた。レンダラーは<a href="http://www.povray.org/">POV-Ray</a> 3.7.0.beta.41を使用した。ソースコードは下に示してある。</p>
+
+<p>画面中央に光源（太陽）があるようにするため、カメラは太陽方向を向く設定にした。そして、光源はカメラの場所から十分離れた白色点光源で実現した。写真で水面に映る太陽の部分は飽和しており、このような写真を得るために光の強さはかなり強くした。それが光源の色の設定を使用して<code>White*10</code>と設定している箇所である。また、光源形状として球(sphere)を指定して太陽の形状を模した。</p>
+
+<p>水面は真っ平らな無限平面(plane)で実現した。水面の傾きを実現するためには法線ベクトルを設定する方法を使った。それが<code>#if Wavelet</code>〜<code>#end</code>で囲った部分である。その他肝心のフレネル反射をするようにも設定した(<code>fresnel on</code>の箇所)。</p>
+
+<pre class="prettyprint"><code>#include "colors.inc"
+
+global_settings {
+    charset utf8
+}
+
+#declare Wavelet=no;
+#declare SunPlace=&lt;0,20000,100000&gt;;
+
+camera {
+    location &lt;0, 0.5, 0&gt;
+    look_at SunPlace
+}
+
+// 光源（太陽の代わり）
+light_source {
+    SunPlace White*10
+    looks_like {
+        sphere {
+            SunPlace,10000
+            pigment {
+                color White
+            }
+            finish {
+                diffuse 1.0
+            }
+        }
+    }
+}
+
+sky_sphere {
+    pigment {
+        color rgb &lt;0.7, 0.8, 1.0&gt;
+    }
+}
+
+// 水面
+plane {
+    y, 0
+
+    pigment {
+        rgbf &lt;0.0, 0.0, 1, 0&gt;
+    }
+
+    texture {
+#if (Wavelet)
+        normal {
+            bozo
+            scale &lt;0.05, 0.25, 0.05&gt;
+        }
+#end
+        finish {
+            diffuse 1.0
+            ambient 0.0
+
+            reflection {
+                0.9
+                fresnel on
+            }
+        }
+    }
+    interior { ior 1.33 }
+}
+</code></pre>
+
+<h4>結果</h4>
+
+<p>
+以下がPOV-Rayにレンダリングをさせて得られた画像である。水面の法線ベクトルが実際の水面をうまく再現できていないらしくやや不自然なところもあるが、理論通り線状に太陽が映っていることがわかる。
+</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://3.bp.blogspot.com/_mg7ZLoSThok/TSGuQjM-6JI/AAAAAAAAAF0/OLlx349X2u8/s1600/sun_reflect.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="150" src="http://3.bp.blogspot.com/_mg7ZLoSThok/TSGuQjM-6JI/AAAAAAAAAF0/OLlx349X2u8/s200/sun_reflect.png" style="width:200px;height:150px;" /></a>
+</div>
+
+<p>
+次に、ソースコードを<code>#declare Wavelet=no;</code>と変更し、水面のさざなみをなくした環境下での画像が以下である。教科書通りの上下逆さまの鏡面反射になった。
+</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/_mg7ZLoSThok/TSGuRmWCs2I/AAAAAAAAAF4/D5UbG3F0_QU/s1600/sun_reflect_mirror.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="150" src="http://1.bp.blogspot.com/_mg7ZLoSThok/TSGuRmWCs2I/AAAAAAAAAF4/D5UbG3F0_QU/s200/sun_reflect_mirror.png" style="width:200px;height:150px;" /></a>
+</div>
+
+<h4>まとめ</h4>
+
+<p>
+以上より水平線から上がった太陽の反射像を工夫すればPOV-Rayで再現できることがわかった。加えて、水面の極小な傾きよって太陽の反射像が線状になることを確認できた。
+</p>
+
+<div>
+なお、最初の写真は<a href="http://www.flickr.com/photos/toyohara/3154885486/" rel="nofollow">toyohara氏による2009年の初日の出</a>の写真。
+</div>

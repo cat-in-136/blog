@@ -1,0 +1,84 @@
+---
+layout: post
+title: How to Launch "Application in Terminal" from (your) GTK Application
+date: '2010-05-02T00:27:00.001+09:00'
+author: cat_in_136
+tags:
+- gtk
+modified_time: '2010-05-02T00:28:24.498+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8522212336019034338
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/how-to-launch-application-in-terminal.html
+---
+
+<p><code>system(3)</code> executes an external command. This is an example that the external command is a CUI application.</p>
+
+<pre class="prettyprint"><code>int ret;
+ret = system("/path/to/shellscript.sh");
+</code></pre>
+
+<p>If <code>system(3)</code> is called from CUI application, standard output can be write to the <em>terminal</em> and standard input can be read from the <em>terminal</em>. But GTK+ applications (or any other typical GUI application) don't have the <em>terminal</em>.</p>
+
+<p>For GTK+ application (without the terminal), the external command must be launch with terminal emulator.</p>
+
+<p>Here is a simple example of launching <code>/path/to/shellscript.sh</code> with terminal emulator.</p>
+
+<pre class="prettyprint"><code>int ret;
+ret = system("xterm -e /path/to/shellscript.sh");
+</code></pre>
+
+<p>It's simple. But hard-coding <code>"xterm -e "</code> is not smart.</p>
+
+<p>Following example is depends on User's terminal emulator preference (e.g. <a href="http://library.gnome.org/users/user-guide/2.27/prefs-preferredapps.html.en">Gnome Preferred Applications preference tool</a>):</p>
+
+<pre class="prettyprint"><code>GAppInfo *appinfo = NULL;
+gboolean ret = FALSE;
+
+appinfo = g_app_info_create_from_commandline("/path/to/shellscript.sh",
+                                             NULL,
+                                             G_APP_INFO_CREATE_NEEDS_TERMINAL,
+                                             NULL);
+g_assert(appinfo != NULL); // TODO error handling is not implemented.
+
+ret = g_app_info_launch(appinfo, NULL, NULL, NULL);
+g_assert(ret == TRUE); // TODO error handling is not implemented.
+</code></pre>
+
+<p>Note that:</p>
+<ul>
+<li>In this way, external application execute background. (<code>system(3)</code> function is foreground)</li>
+<li>On my environment, following code does not work (segmentation fault at calling <code>g_app_info_create_from_commandline()</code>). GTK seems to be required.</li>
+</ul>
+
+<pre class="prettyprint"><code>#include &lt;glib.h&gt;
+#include &lt;gio/gio.h&gt;
+//#include &lt;gtk/gtk.h&gt;// !! HERE is required!
+
+static const gchar *SCRIPT_PATH = "/path/to/shellscript.sh";
+
+int main(int argc, char *argv[])
+{
+    GAppInfo *appinfo = NULL;
+    gboolean ret = FALSE;
+
+    //gtk_init(&amp;argc, &amp;argv);// !! HERE is required!
+
+    appinfo = g_app_info_create_from_commandline(SCRIPT_PATH,
+                                                 NULL,
+                                                 G_APP_INFO_CREATE_NEEDS_TERMINAL,
+                                                 NULL);
+    g_assert(appinfo != NULL); // TODO error handling is not implemented.
+    ret = g_app_info_launch(appinfo,
+                            NULL,
+                            NULL,
+                            NULL);
+    g_assert(ret == TRUE); // TODO error handling is not implemented.
+
+    return 0;
+}
+</code></pre>
+
+<h4>See also</h4>
+<ul>
+<li><a href="http://library.gnome.org/devel/gio/stable/GAppInfo.html">GAppInfo - GIO Reference Manual</a></li>
+<li><a href="http://git.gnome.org/browse/gtk+/tree/gtk/gtkshow.c?h=gtk-2-18#n58"><code>gtk_show_uri</code> implementation</a></li>
+</ul>

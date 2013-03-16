@@ -1,0 +1,110 @@
+---
+layout: post
+title: メモ：V-high/モバキャス/ISDB-Tmm/mmbi/nottv の言葉が意味不明だったから調べてみた
+date: '2012-02-18T16:55:00.008+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+modified_time: '2012-02-18T17:01:33.225+09:00'
+thumbnail: http://1.bp.blogspot.com/-gMlO_wARsCQ/Tz9XXvQmL2I/AAAAAAAAANY/u3G09VOMrUI/s72-c/mobacas-protocol-stack.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-9126546521278990755
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/02/v-highisdb-tmmmmbinottv.html
+---
+
+<p style="font-size: x-large; padding: 1em;">ケータイ向け放送と呼ぶには、複雑すぎる。</p>
+
+<p>あまりにも複雑なので間違っているかもしれない。
+いや、<strong>どこかしら間違っているに違いない</strong>。
+きちんと理解したい方は、いろいろ資料をあたって欲しい。</p>
+
+<dl>
+<dt>V-High帯</dt>
+<dd>
+日本における、旧アナログテレビ(VHS)帯域のうち4〜12chの周波数帯域。
+</dd>
+
+<dt>モバキャス</dt>
+<dd>
+V-High帯域での携帯端末向けマルチメディア放送の総称。
+株式会社ジャパン・モバイルキャスティングの商標。
+</dd>
+
+<dt>ISDB-Tmm</dt>
+<dd>
+モバイルマルチメディア放送方式の一つ。モバキャスに使用される。
+</dd>
+
+<dt>mmbi</dt>
+<dd>
+株式会社mmbi。委託放送事業会社。（委託先が株式会社ジャパン・モバイルキャスティング）
+かつては、株式会社マルチメディア放送、マルチメディア放送企画LLC合同会社と呼んでいた。
+</dd>
+
+<dt>NOTTV</dt>
+<dd>
+mmbiの放送局の名称。
+株式会社mmbiの登録商標。
+</dd>
+
+</dl>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-gMlO_wARsCQ/Tz9XXvQmL2I/AAAAAAAAANY/u3G09VOMrUI/s1600/mobacas-protocol-stack.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="205" src="http://1.bp.blogspot.com/-gMlO_wARsCQ/Tz9XXvQmL2I/AAAAAAAAANY/u3G09VOMrUI/s400/mobacas-protocol-stack.png" width="400" /></a><br />
+ISDB-Tmm におけるプロトコルスタック （文献「携帯端末向けマルチメディア放送システム ISDB-Tmm の概要」から）</div>
+
+<h4>100%双方向のソーシャルなTV</h4>
+
+<ul>
+<li>ISDB-Tmm 物理層は下り方向の通信しか提供しない。</li>
+<li>双方向性機能にはHTTP(S)を用いて通信を行う。</li>
+</ul>
+
+<p>ISDB-TmmはISDBファミリの一種である。
+つまり地デジやワンセグの仲間の規格。
+だから当たり前ながら上り方向の通信路を提供しない。</p>
+
+<p>これを解決するのが「放送と通信のイイトコどり」。
+上りにはHTTP網を使う。
+「スマホ向け放送局」であるNOTTVの場合、視聴者はスマホから3G/4G網（もしくはWiFi経由のインターネット網）を介して、
+NOTTVのHTTPサーバにつながるものと思われる。
+乱暴に言えば、NOTTVは物理レイヤにISDB-Tmm以外に携帯電話網やWiFiを使用する。</p>
+
+<h4>スマホを使った新しい放送の仕組み</h4>
+
+<p>ISDB-Tmmは地デジ等と同じくセグメントと呼ばれる単位で伝送路符号化される。
+207.5-222MHzの間の14.5MHzの帯域幅を33セグメントに分割して送信することになる。
+セグメントが映像を送信するとき、地デジないしワンセグと互換性を持つ。
+（しかし周波数帯域が異なるため既存の受信機器ではNOTTVが視聴できない。）</p>
+
+<p>ISDB-Tと最も異なるところは、データパケットも載せられるようになっている。
+（<abbr title="File Delivery over Unidirectional Transport">FLUTE</abbr>/UDP/IP/<abbr title="Unidirectional Lightweight Encapsulation">ULE</abbr>/MPEG-2 TS
+といったプロトコルスタックになっている。）
+よってデジタルコンテンツ（DIME電子版・東京ウォーカー電子版）の配信が
+技術的な意味で「新しい放送の仕組み」を使っていることになる。</p>
+
+<p>もっともこれは技術に注目した場合での話である。
+サービスとしての差は4月以降にお手並み拝見ということになる。</p>
+
+<h4>ジャパン・モバイルキャスティングとmmbi</h4>
+
+<p>いろいろな意味で、
+株式会社mmbiの会社の下に株式会社ジャパン・モバイルキャスティングがある。</p>
+
+<ul>
+<li>株式会社ジャパン・モバイルキャスティングは株式会社mmbiの子会社である。</li>
+<li>株式会社ジャパン・モバイルキャスティングが放送免許などを持っていて、株式会社mmbiはコンテンツやサービスの会社。
+株式会社mmbiが上位レイヤで株式会社ジャパン・モバイルキャスティングが下位レイヤ。</li>
+<li>両方ともミッドタウンタワーに入居しているが、株式会社mmbiが38階、そこから1階下りた37階に株式会社ジャパン・モバイルキャスティングがある。</li>
+</ul>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://www.soumu.go.jp/main_sosiki/joho_tsusin/policyreports/joho_tsusin/housou_system/pdf/081128_1_si16-3-1.pdf">携帯端末向けマルチメディア放送システム ISDB-Tmm の概要</a> - 情報通信審議会放送システム委員会マルチメディア放送システム作業班アドホックグループ1 (総務省)</li>
+<li><a href="http://mmbi.co.jp/news/">スマートフォン向け放送局「ＮＯＴＴＶ」開局</a> - 株式会社mmbiニュースリリース 2012.02.16</li>
+<li><a href="http://mmbi.co.jp/nottv/">NOTTVとは</a> - mmbi</li>
+<li><a href="http://www.j-mobilecasting.com/roadmap/">放送開始までのロードマップ</a> - 株式会社ジャパン・モバイルキャスティング</li>
+<li><a href="http://mmbi.co.jp/news/upload/%E5%88%A5%E7%B4%99%EF%BC%92_%EF%BC%94%E6%9C%88%E4%BB%A5%E9%99%8D%E3%81%AE%E4%B8%BB%E3%81%AA%E7%95%AA%E7%B5%84%E3%83%BB%E3%83%87%E3%82%B8%E3%82%BF%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84.pdf">別紙２：４月以降の主な番組・デジタルコンテンツ</a> - nottv</li>
+<li><a href="http://www.j-mobilecasting.com/company/outline.html">株式会社ジャパン・モバイルキャスティング 会社概要</a></li>
+<li><a href="http://mmbi.co.jp/company_info/outline/">株式会社mmbi 会社概要</a></li>
+</ul>

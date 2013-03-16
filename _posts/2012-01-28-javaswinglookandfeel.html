@@ -1,0 +1,92 @@
+---
+layout: post
+title: JavaのSwingの自作LookAndFeelをそれなりに実現してしまった超最小限のコード
+date: '2012-01-28T19:15:00.020+09:00'
+author: cat_in_136
+tags:
+- java
+- swing
+- チラシの裏
+- gui
+modified_time: '2012-01-28T19:15:57.073+09:00'
+thumbnail: http://1.bp.blogspot.com/-eKkyeVWK6gA/TyPIyofn42I/AAAAAAAAAMo/IBTxlqBnujk/s72-c/VerySimpleLAFSwingSet2.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5562774790032011102
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/01/javaswinglookandfeel.html
+---
+
+<p>先日こんなJavaソースコードのファイルを自分のHDDもといSSDの中から発掘した。
+それなりにおもしろい内容になりそうだったのでここに書いておく。</p>
+
+<pre class="prettyprint"><code>import javax.swing.plaf.basic.BasicLookAndFeel;
+
+public class VerySimpleLookAndFeel extends BasicLookAndFeel {
+
+    public String getDescription() {
+        return "This is " + getName();
+    }
+
+    public String getID() {
+        return "VerySimpleLookAndFeel";
+    }
+
+    public String getName() {
+        return "Very Simple Look &amp; Feel";
+    }
+
+    public boolean isNativeLookAndFeel() {
+        return false;
+    }
+
+    public boolean isSupportedLookAndFeel() {
+        return true;
+    }
+}
+</code></pre>
+
+<p>このクラスは <a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicLookAndFeel.html" title="javax.swing.plaf.BasicLookAndFeel"><code>BasicLookAndFeel</code></a> クラスの派生クラスになっていて、
+オーバライドすべきメソッドだけをオーバライドしたものになっている。</p>
+
+<p><a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicLookAndFeel.html" title="javax.swing.plaf.BasicLookAndFeel"><code>BasicLookAndFeel</code></a>クラスは抽象クラス（abstract class）であるため、
+これをJFC/SwingのLook And Feelとして使用することはできない。
+しかし、派生クラスを上のようにつくってやれば、実はまあまあ動作する。
+チェックボタンの絵がないのでチェックされたどうかわからない、
+といったところや、<code>JFileChooser</code> を開こうとするとエラーが
+出るので実用にはさすがに向かないだろう。
+外見は Windows のクラシックモードに似ている。</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-eKkyeVWK6gA/TyPIyofn42I/AAAAAAAAAMo/IBTxlqBnujk/s1600/VerySimpleLAFSwingSet2.png" style="margin-left: 1em; margin-right: 1em;"><img height="304" src="http://1.bp.blogspot.com/-eKkyeVWK6gA/TyPIyofn42I/AAAAAAAAAMo/IBTxlqBnujk/s320/VerySimpleLAFSwingSet2.png" width="320" style="border: 0;" /></a></div>
+
+<p>これは <code>BasicLookAndFeel</code> クラスが抽象クラスとはいえ、
+Look And Feels の動作に必要な殆どの処理が入っているからできるのである。
+もう少し具体的に言えば、<code>BasicLookAndFeel</code> クラスは Factory Method パターン
+のような構成になっていて、ボタンをどのように描画するかといった詳細の処理は
+別クラスで行なっている。
+それが、例えば <a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicButtonUI.html" title="javax.swing.plaf.BasicButtonUI"><code>BasicButtonUI</code></a>クラスである。
+<code>BasicLookAndFeel</code> の派生クラスを作れば、内部で <a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicButtonUI.html" title="javax.swing.plaf.BasicButtonUI"><code>BasicButtonUI</code></a> を参照して動作するという仕組みだ。</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://2.bp.blogspot.com/-LN5jfyyoax4/TyPIO76zLzI/AAAAAAAAAMY/Px4aRXlxPs0/s1600/Laf_Class_dia.png" style="margin-left: 1em; margin-right: 1em;"><img height="230" src="http://2.bp.blogspot.com/-LN5jfyyoax4/TyPIO76zLzI/AAAAAAAAAMY/Px4aRXlxPs0/s320/Laf_Class_dia.png" width="320" style="border: 0;" /></a></div>
+
+<p>ただ、すべてが動作するわけではなく <code>JFileChooser</code> などが動作しない
+わけだが、これはさらにそのエラーを対処すれば動作するだろう、が試してはいない。</p>
+
+<p>このような小細工は非Windowsプラットフォーム上で <code>WindowsLookAndFeel</code>
+を動かすのにも使える。
+こちらは Windows 以外では <code>isSupportedLookAndFeel()</code> メソッドが
+<code>false</code> を返すようになっているので、それをちょろまかせばよい。
+だからといって、Windows 上の <code>WindowsLookAndFeel</code> のように完全に
+動くわけではないのであくまで参考までに。</p>
+
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://4.bp.blogspot.com/-kruJq2Dv3Wo/TyPIxDVwTXI/AAAAAAAAAMg/q0bakwzAsvI/s1600/RedmondLAFSwingSet2.png" style="margin-left: 1em; margin-right: 1em;"><img height="304" src="http://4.bp.blogspot.com/-kruJq2Dv3Wo/TyPIxDVwTXI/AAAAAAAAAMg/q0bakwzAsvI/s320/RedmondLAFSwingSet2.png" width="320" style="border: 0;" /></a></div>
+
+<h3 id="reference">Reference</h3>
+
+<ul>
+<li><a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicLookAndFeel.html" title="javax.swing.plaf.BasicLookAndFeel">クラス <code>BasicLookAndFeel</code></a> - Java Platform, Standard Edition 6 API 仕様 </li>
+<li><a href="http://hg.openjdk.java.net/jdk7/jsn/jdk/file/tip/src/share/classes/javax/swing/plaf/basic/BasicLookAndFeel.java" title="src/share/classes/javax/swing/plaf/basic/BasicLookAndFeel.java"><code>BasicLookAndFeel.java</code></a> - OpenJDK JDK7 Source code.</li>
+<li><a href="http://hg.openjdk.java.net/jdk7/jsn/jdk/file/tip/src/share/classes/com/sun/java/swing/plaf/windows/WindowsLookAndFeel.java" title="src/share/classes/com/sun/java/swing/plaf/windows/WindowsLookAndFeel.java"><code>WindowsLookAndFeel.java</code></a> - OpenJDK JDK7 Source code.</li>
+<li><a href="https://gist.github.com/1693524">https://gist.github.com/1693524</a> - 本稿で使用したソース一式</li>
+</ul>

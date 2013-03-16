@@ -1,0 +1,82 @@
+---
+layout: post
+title: Google Maps API v3 で地下鉄路線図を表示する
+date: '2010-11-23T22:38:00.001+09:00'
+author: cat_in_136
+tags:
+- web application
+- train and rails
+- google maps
+modified_time: '2012-12-23T12:15:36.726+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6091809471896729897
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/11/google-maps-api-v3_23.html
+---
+
+<div id="google_metro_only_map_canvas" style="width: 100%; height: 280px; border: solid thin #000;">読み込み中です。しばらくお待ち下さい。</div>
+<script src="http://maps.google.com/maps/api/js?sensor=false&amp;lang=ja"></script>
+<script defer="defer" async="async" id="google_metro_only_map_script">
+(function () {
+    var tokyo = new google.maps.LatLng(35.681283, 139.750042);
+
+    var mapdiv = document.getElementById("google_metro_only_map_canvas");
+    var map = new google.maps.Map(mapdiv, {
+      zoom: 11,
+      center: tokyo,
+      mapTypeControlOptions: {
+        mapTypeIds: [google.maps.MapTypeId.ROADMAP, "subway"]
+      }
+    });
+
+    var subwayMapType = new google.maps.ImageMapType({
+        name: "地下鉄", alt: "地下鉄を見る",
+        tileSize: new google.maps.Size(256,256),
+        isPng: true,
+        maxZoom: 22,
+        minZoom: 10,
+        getTileUrl: function(coord, zoom) {
+            var mt = ((coord.y & 0x1 == 0)? 0 : 2) | (coord.x & 0x1);
+            var url = "http://mt%m.google.com/mapslt?lyrs=transit&x=%x&y=%y&z=%z&w=256&h=256&style=1"
+              .replace("%m", mt)
+              .replace("%x", coord.x).replace("%y", coord.y)
+              .replace("%z", zoom);
+            return url;
+        }
+    });
+    map.mapTypes.set("subway", subwayMapType);
+    map.setMapTypeId("subway");
+})();
+</script>
+
+<p>
+日本のGoogleマップでは、地下鉄の駅検索などをしたときに地下鉄の路線が強調表示される。
+これはGoogleがそういうマップ画像を保持しているからできるのだが、現状Google Maps APIのいずれのバージョンも提供していない。
+</p>
+<p>
+Googleマップでのその画像は"<code>http://mt0.google.com/mapslt?lyrs=transit&amp;x=?&amp;y=?&amp;z=?</code>"として、取得している。<code>x,y,z</code>はそれぞれ<a href="http://code.google.com/intl/ja/apis/maps/documentation/javascript/overlays.html#MapCoordinates">Google Maps API の地図の座標</a>で述べられる<code>x,y</code>およびズーム値である。
+というわけで、結局以下のとおりカスタムマップを使って、地下鉄の路線図を簡単に利用することができる。
+
+</p>
+<pre class="prettyprint"><code>    var subwayMapType = new google.maps.ImageMapType({
+        name: "地下鉄", alt: "地下鉄を見る",
+        tileSize: new google.maps.Size(256,256),
+        isPng: true,
+        maxZoom: 22,
+        minZoom: 10,
+        getTileUrl: function(coord, zoom) {
+            var mt = ((coord.y &amp; 0x1 == 0)? 0 : 2) | (coord.x &amp; 0x1);
+            var url = "http://mt%m.google.com/mapslt?lyrs=transit&amp;x=%x&amp;y=%y&amp;z=%z&amp;w=256&amp;h=256&amp;style=1"
+              .replace("%m", mt)
+              .replace("%x", coord.x).replace("%y", coord.y)
+              .replace("%z", zoom);
+            return url;
+        }
+    });
+    map.overlayMapTypes.insertAt(0, subwayMapType); // オーバーレイ表示するときの例
+</code></pre>
+<p>
+なお、このコードでは画像をダウンロードするURLにおいて、ドメイン名を<code>mt0</code>～<code>mt3</code>まで分散する仕掛けを入れてある。これはGoogleのサーバのロードバランスや画像ファイルのダウンロードの速度の向上に役に立つはずだが、検証はしていない。
+
+</p>
+<p>
+残念なのは、<del datetime="2010-12-31T18:08Z">日本の地下鉄しかサポートされていないこと、</del>著作権表示の設定ができないため路線図のみ表示するとこの記事の冒頭に示したように著作権表示ができないことである。
+</p>

@@ -1,0 +1,111 @@
+---
+layout: post
+title: 美女Linuxがコマンドから呼び出せないと不便なのでbijoコマンドを作ってみたお .@bijolinux
+date: '2011-10-26T23:01:00.082+09:00'
+author: cat_in_136
+tags:
+- linux
+- cui
+modified_time: '2012-02-18T18:01:08.198+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-635593662476936159
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/10/linuxbijo-bijolinux.html
+---
+
+<div style="float: left; width: 180px; height: 280px;">
+<script type="text/javascript"><!-- /* --><![CDATA[ /* */
+var oStyle = document.createElement("link");
+oStyle.setAttribute("rel", "stylesheet");
+oStyle.setAttribute("type", "text/css");
+oStyle.setAttribute("href", "data:text/css;base64,I2Jpam8tZnJhbWVCaWpvTGludXgwOSB7YmFja2dyb3VuZDogdHJhbnNwYXJlbnQgISBpbXBvcnRhbnQ7fQ==");
+document.getElementsByTagName("head")[0].appendChild(oStyle);
+// ]]><!-- --></script>
+<script src="http://bijo-linux.com/bp/js/bijo-0.9.js"></script>
+</div>
+<p>
+<a href="http://bijo-linux.com/">美女Linux</a>というLinuxのコマンドを女の子の画像付きで紹介するサイトがある。
+久しぶりに見たら<a href="http://bijo-linux.com/girls/">対応コマンド数は400程度もあり</a>、普通に使えるレベルになりつつある。
+</p>
+<p>
+しかしながら、美女Linuxをコマンドリファレンスとして使用するには不便であり、ブラウザから該当ページをたどっていくか、あるいは、"<code>http://bijo-linux.com/girls/<strong>display</strong></code>" といった風に直接URLを入れなければならない。
+これは非常に不便であり、コマンドラインで例えば <code>man display</code> とだけば打てば良い、<a href="http://bijo-linux.com/girls/man/"><code>man</code>コマンド</a> と比べて遥かに使いづらい。
+</p>
+<p>
+というわけで、美女Linuxを使いやすくすることを目的として <code>bijo</code> コマンドの製作を行った。
+使い方は極めてシンプルで、例えば
+</p>
+<pre style="background-color: #000; color: #fff;"><code>% bijo display</code></pre>
+<p>
+と打てば、Firefox が立ち上がり <a href="http://bijo-linux.com/girls/display/"><code>display</code> コマンド</a>の説明を参照することが可能だ。
+</p>
+<p>
+ソースコードは下記の通り。実行には ruby が必要。
+</p>
+
+<ins style="text-decoration: none;">
+<div style="background-color: #fee; border: #f00 solid 1px; box-shadow: 0 0 5px #f00; padding: 5px; color: #f00;">
+（追記2012/02/18）以下に示したソースコードでは現状の美女Linuxにアクセスできなくなっています。
+とりあえず<a href="https://gist.github.com/1858211/">https://gist.github.com/1858211/</a>にて
+なるべく使えるコードをおいておこうと思います。
+（が、無保証なので、いつかメンテナンスがされなくなったり動作しなくなることありえますのでご了承ください。）
+</div>
+</ins>
+
+<pre class="prettyprint" style="clear: both;"><code>#!/bin/env ruby
+# Copyright (C) 2011 by cat_in_136
+#  
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the &quot;Software&quot;), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+require &quot;optparse&quot;
+
+config = {
+  :place =&gt; :tokyo,
+  :app   =&gt; 'firefox',
+}
+
+opts = OptionParser.new
+opts.version = &quot;0.1&quot;
+opts.banner = &quot;Usage: #{$0} [options] COMMAND&quot;
+opts.on('-p', '--place=WHERE', [:tokyo, :kobe], 'Which do you like, tokyo or kobe?') do |w|
+  config[:place] = w
+end
+opts.on('--browser=BROWSER', 'browser command to open the page.') do |browser|
+  config[:app] = browser
+end
+opts.parse!(ARGV)
+
+
+if ARGV.length != 0
+  command = ARGV.shift
+  url = &quot;http://bijo-linux.com/girls/#{command}/&quot;
+  if config[:place] == :kobe
+    url = &quot;http://kobe.bijo-linux.com/girls/#{command}/&quot;
+  end
+else
+  url = &quot;http://bijo-linux.com/&quot;
+  if config[:place] == :kobe
+    url = &quot;http://kobe.bijo-linux.com/&quot;
+  end
+end
+
+exec(config[:app], url)
+</code></pre>
+
+<p>
+なお、美女Linuxには神戸版の<a href="http://kobe.bijo-linux.com/">神戸美女Linux</a>もあるが、<code>-p kobe</code>というオプションをつけると神戸美女Linuxになるようにした。
+</p>

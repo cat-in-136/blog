@@ -1,0 +1,27 @@
+---
+layout: post
+title: If all HTTP setting are removed from Configuration Mania...
+date: '2010-11-09T01:14:00.001+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- security
+- mozilla
+modified_time: '2010-11-09T01:14:00.506+09:00'
+thumbnail: http://3.bp.blogspot.com/_mg7ZLoSThok/TNbQ9z_FwzI/AAAAAAAAAFY/44Z8ouFPtOM/s72-c/CM.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8162162537510126623
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/11/if-all-http-setting-are-removed-from.html
+---
+
+<p>
+I tried removing all HTTP setting from Configuration Mania (ref <a href="{{ site.baseurl }}{% post_url 2010-10-03-mozilla-add-on-validation-system-says %}">Mozilla Add-on validation system says HTTP setting is generally not allowed.</a>). I remove "HTTP Network" setting panel and Security-&gt;Referrer.
+</p>
+
+<div class="separator" style="text-align: center;">
+<a href="http://3.bp.blogspot.com/_mg7ZLoSThok/TNbQ9z_FwzI/AAAAAAAAAFY/44Z8ouFPtOM/s1600/CM.png" style="margin: 1ex;"><img src="http://3.bp.blogspot.com/_mg7ZLoSThok/TNbQ9z_FwzI/AAAAAAAAAFY/44Z8ouFPtOM/s320/CM.png" style="border: 0 none;" /><br />BEFORE</a></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://3.bp.blogspot.com/_mg7ZLoSThok/TNbQ-cW3d3I/AAAAAAAAAFc/MBRgD86mXN4/s1600/CM_HTTP_DELETED.png" style="margin: 1ex;"><img src="http://3.bp.blogspot.com/_mg7ZLoSThok/TNbQ-cW3d3I/AAAAAAAAAFc/MBRgD86mXN4/s320/CM_HTTP_DELETED.png" style="border: 0 none;" /><br />AFTER</a></div>
+
+<p>
+I commit <a href="http://bitbucket.org/cat_in_136/configuration-mania/changeset/ab2047b19771">new branch "http_setting_deleted"</a>. You can download the experimental XPI file <code>configuration_mania_-TEST-http_setting_deleted-1.12.2010100811-ab2047b19771.xpi</code> from <a href="http://bitbucket.org/cat_in_136/configuration-mania/downloads">the download page</a>. If you wanna configure unsafe HTTP settings, you SHOULD NOT install this XPI.
+</p>

@@ -1,0 +1,102 @@
+---
+layout: post
+title: NerineをFirefox4で動くよう改造してみる
+date: '2010-09-15T22:51:00.006+09:00'
+author: cat_in_136
+tags:
+- javascript
+- web application
+- html
+- mozilla
+modified_time: '2010-09-15T22:51:00.599+09:00'
+thumbnail: http://2.bp.blogspot.com/_mg7ZLoSThok/TIypGOeft4I/AAAAAAAAAE4/TTq4iC5lqK0/s72-c/screenshot1.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-9098721483293027716
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/09/nerinefirefox4.html
+---
+
+<p>
+<a href="http://www.aduca.org/nerine/">Nerine</a>はHTML5/JavaScript製のプレゼンテーションソフトであるが、Webkitでしか動作しない構造となっている。Firefox4(Beta)でCSS3 transitionsに対応する機会に、<a href="http://github.com/cat-in-136/Nerine">Firefox4対応用にgithub上でフォーク</a>した。
+基本的に行ったのは以下の2つの対策。
+</p>
+
+<h4>対策 : CSS zoom → CSS3 transform</h4>
+<p>
+Firefox(やOpera)はCSS zoom 対応していない。そのためindex表示（↑キーを押す）すると、縮小されずにクリッピングされた形になってしまう。
+</p>
+
+<div style="text-align: center;">
+<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TIypGOeft4I/AAAAAAAAAE4/TTq4iC5lqK0/s1600/screenshot1.png" style="margin-left: auto; margin-right: auto;"><img style="border: 0" src="http://2.bp.blogspot.com/_mg7ZLoSThok/TIypGOeft4I/AAAAAAAAAE4/TTq4iC5lqK0/s320/screenshot1.png" /></a><br />
+Firefox4.0b5による、オリジナルのNerineのindex表示
+</div>
+
+<p>
+CSS zoomをCSS3 transformの<code>scale()</code>関数に置き換える。IE&amp;Webkit独自機能であるCSS zoomと違って、CSS3 transformはCSS3規格であるので、これに対応すれば現代のモダンなブラウザで正しく表示される。
+</p>
+
+<h4>対策 : CSS vender-specific extension</h4>
+
+<p>
+多くのCSS3は、まだ規格策定(Working)のため、正式ではない。そのため多くのウェブブラウザの実装では <a href="http://www.w3.org/TR/CSS21/syndata.html#vendor-keywords">vender-specific extension</a> (vender prefix) なる接頭辞をつけて使っている。オリジナルの Nerine では、<code>-webkit-</code>しか付けていない。
+</p>
+
+<div>
+<table>
+<caption>主な vender-specific extension</caption>
+<thead>
+<tr><td>接頭辞</td><td>対象ブラウザ</td><td>備考</td></tr>
+</thead>
+<tbody>
+<tr><td><code>-webkit-</code></td><td>Webkit (Safari,Chrome)</td><td><a href="http://qooxdoo.org/documentation/general/webkit_css_styles">Webkit CSS styles</a></td></tr>
+<tr><td><code>-moz-</code></td><td>Mozilla (Firefox)</td><td><a href="http://developer.mozilla.org/en/docs/CSS_Reference:Mozilla_Extensions">CSS_Reference:Mozilla_Extensions</a></td></tr>
+<tr><td><code>-ms-</code></td><td>IE9</td><td></td></tr>
+<tr><td><code>-o-</code></td><td>Opera</td><td><a href="http://www.opera.com/docs/specs/presto23/#css">Web specifications supported in Opera Presto 2.3</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+このようなものに他の各種ブラウザの vender prefix をつけた。なお、使用しているブラウザ以外の vender prefix は無視されるので、何も考えずに追記すればよい。
+</p>
+
+<pre class="prettyprint"><code>  -webkit-transition: opacity 0.5s linear;
+<ins>  -moz-transition: opacity 0.5s linear;</ins>
+<ins>  -ms-transition: opacity 0.5s linear;</ins>
+<ins>  -o-transition: opacity 0.5s linear;</ins>
+}
+</code></pre>
+
+<p>
+なお、JavaScriptでアクセスする場合はラクダ文字(camelCase)にしなければならないが、このときは<code>WebkitTransition</code>,<code>MozTransition</code>と書く。以上を踏まえるとCSS zoomをJavaScriptで設定しているコードは下記のようになった：
+</p>
+
+<pre class="prettyprint"><code><ins>    var transform = ["scale(", (scale-4)/100.0, ",", (scale-4)/100.0, ")"].join('');</ins>
+    $('article > section').css({
+<del>      width: [scale-2, '%'].join(''),</del>
+<del>      height: [scale-2, '%'].join(''),</del>
+<del>      zoom: [scale-4, '%'].join(''),</del>
+<ins>      WebkitTransform: transform,</ins>
+<ins>      MozTransform: transform,</ins>
+<ins>      MsTransform: transform,</ins>
+<ins>      OTransform: transform,</ins>
+<ins>      transform: transform,</ins>
+<ins>      WebkitTransformOrigin: "0 0",</ins>
+<ins>      MozTransformOrigin: "0 0",</ins>
+<ins>      MsTransformOrigin: "0 0",</ins>
+<ins>      OTransformOrigin: "0 0",</ins>
+<ins>      transformOrigin: transform,</ins>
+      margin: '2%',
+      padding: 0
+});
+</code></pre>
+
+<h4>その他・課題</h4>
+
+<p>
+エフェクトを定義するPetalについては大幅に書き直したが、やはり上の対策を注意すればいいだけである。ただ、今のところ一部Firefox4.0b5でしか動かないエフェクトなどがあるため、今後対策が必要になってくると思われる。
+</p>
+
+<h4>参考文献</h4>
+<ul>
+<li><a href="http://www.aduca.org/nerine/">Nerine - Simple HTML5 Presentation Tool</a></li>
+<li><a href="https://developer.mozilla.org/en/CSS/CSS_transitions">CSS transitions</a> - MDC</li>
+</ul>

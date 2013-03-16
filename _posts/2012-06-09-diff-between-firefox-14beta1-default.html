@@ -1,0 +1,42 @@
+---
+layout: post
+title: Diff between firefox 14beta1 default preference and firefox 13.0
+date: '2012-06-09T10:45:00.002+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2012-06-09T10:48:44.183+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-9131063858545680925
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/06/diff-between-firefox-14beta1-default.html
+---
+
+<p>
+This is difference between the default preference of Firefox 14beta1 and one of 13.0.
+</p>
+
+
+<dl><dt>Default pref Javascript files (Firefox 13.0 for linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+<dt>Default pref Javascript files (Firefox 14beta1 for linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+</dl>
+
+
+<table class="diff_firefox14b_pref_diff">
+<thead><tr><td>Pref</td><td>Firefox 13.0</td><td>Firefox 14 beta 1</td></tr></thead>
+<tbody><tr class="newkey"><td>browser.<wbr />download.<wbr />panel.<wbr />removeFinishedDownloads</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>browser.<wbr />download.<wbr />useToolkitUI</td><td class="undefined">undefined</td><td>true</td></tr><tr><td>browser.<wbr />identity.<wbr />ssl_<wbr />domain_<wbr />display</td><td>1</td><td>0</td></tr><tr><td>browser.<wbr />urlbar.<wbr />autoFill</td><td>false</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />layoutview.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />layoutview.<wbr />open</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>dom.<wbr />mozSettings.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>dom.<wbr />paris_<wbr />bindings</td><td class="undefined">undefined</td><td>true</td></tr><tr><td>editor.<wbr />use_<wbr />css</td><td>true</td><td>false</td></tr><tr class="newkey"><td>font.<wbr />size.<wbr />inflation.<wbr />lineThreshold</td><td class="undefined">undefined</td><td>400</td></tr><tr class="newkey"><td>full-<wbr />screen-<wbr />api.<wbr />pointer-<wbr />lock.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>gfx.<wbr />filter.<wbr />nearest.<wbr />force-<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="oldkey"><td>gfx.<wbr />show_<wbr />checkerboard_<wbr />pattern</td><td>true</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>gfx.<wbr />work-<wbr />around-<wbr />driver-<wbr />bugs</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>image.<wbr />mem.<wbr />max_<wbr />decoded_<wbr />image_<wbr />kb</td><td class="undefined">undefined</td><td>256000</td></tr><tr class="newkey"><td>memory.<wbr />ghost_<wbr />window_<wbr />timeout_<wbr />seconds</td><td class="undefined">undefined</td><td>60</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />assoc-<wbr />req.<wbr />enforce</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />pipelining.<wbr />aggressive</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />pipelining.<wbr />max-<wbr />optimistic-<wbr />requests</td><td class="undefined">undefined</td><td>4</td></tr><tr><td>network.<wbr />http.<wbr />pipelining.<wbr />maxrequests</td><td>4</td><td>32</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />pipelining.<wbr />maxsize</td><td class="undefined">undefined</td><td>300000</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />pipelining.<wbr />read-<wbr />timeout</td><td class="undefined">undefined</td><td>30000</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />pipelining.<wbr />reschedule-<wbr />on-<wbr />timeout</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />pipelining.<wbr />reschedule-<wbr />timeout</td><td class="undefined">undefined</td><td>1500</td></tr><tr class="oldkey"><td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />browser.<wbr />newtabpage.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />browser.<wbr />urlbar.<wbr />autoFill</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />general.<wbr />smoothScroll</td><td>true</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>toolkit.<wbr />telemetry.<wbr />debugSlowSql</td><td class="undefined">undefined</td><td>false</td></tr></tbody></table>
+
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox14b_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox14b_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox14b_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox14b_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox14b_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox14b_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox14b_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+
+table.diff_firefox14b_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox14b_pref_diff tbody tr { -moz-transition: background 0.125s ease-in-out 0s; -webkit-transition: background 0.125s ease-in-out 0s; -o-transition: background 0.125s ease-in-out 0s; transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>

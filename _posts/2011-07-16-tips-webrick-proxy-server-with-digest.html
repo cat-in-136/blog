@@ -1,0 +1,60 @@
+---
+layout: post
+title: '[TIPS] WEBrick proxy server with Digest Auth'
+date: '2011-07-16T21:30:00.001+09:00'
+author: cat_in_136
+tags:
+- ruby
+- チラシの裏
+modified_time: '2011-07-16T21:30:11.017+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6417009018966815378
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/07/tips-webrick-proxy-server-with-digest.html
+---
+
+<p>
+Well-known WEBrick proxy server with BASIC auth is as following:
+</p>
+<code><pre class="prettyprint lang-ruby">auth_proc = Proc.new do |req,res|
+  WEBrick::HTTPAuth.proxy_basic_auth(req,res,'proxy') do |user,pass|
+    user == "user" &amp;&amp; pass == "pass"
+  end
+end
+server = WEBrick::HTTPProxyServer.new({
+  :Port => 8080,
+  :ProxyAuthProcess =&gt; auth_proc
+})
+Signal.trap("INT") do server.shutdown end
+server.start
+</pre></code>
+<p>
+But There is not a DIGEST version of <code>proxy_basic_auth()</code> method...
+</p>
+<p>
+Solution: Use <code class="prettyprint lang-ruby">WEBrick::HTTPAuth::ProxyDigestAuth</code>:
+</p>
+<code><pre class="prettyprint lang-ruby">require "webrick"
+require "webrick/httpproxy"
+require "webrick/httpauth/digestauth"
+require "webrick/httpauth/basicauth"
+require "webrick/httpauth/userdb"
+
+userdb = Hash.new
+userdb.extend(WEBrick::HTTPAuth::UserDB)
+userdb.auth_type = WEBrick::HTTPAuth::ProxyDigestAuth # or WEBrick::HTTPAuth::ProxyBasicAuth
+userdb.set_passwd("realm", "user", "pass")
+authenticator = userdb.auth_type.new({
+     :Realm =&gt; "realm",
+     :UserDB =&gt; userdb,
+     :Algorithm =&gt; "MD5",
+})
+
+auth_proc = Proc.new do |req,res|
+    authenticator.authenticate(req, res)
+end
+server = WEBrick::HTTPProxyServer.new({
+  :Port => 8080,
+  :ProxyAuthProcess =&gt; auth_proc
+})
+Signal.trap("INT") do server.shutdown end
+server.start
+</pre></code>

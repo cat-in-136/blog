@@ -1,0 +1,39 @@
+---
+layout: post
+title: 'Tip: JavaScript Operators for Obfuscation'
+date: '2011-01-25T00:13:00.001+09:00'
+author: cat_in_136
+tags:
+- javascript
+- チラシの裏
+modified_time: '2011-01-25T01:23:07.649+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4779060717054605881
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/01/tip-javascript-operators-for.html
+---
+
+<dl>
+<dt><code>!!<var>arg</var></code></dt>
+<dd>Return <code>true</code> when <var>arg</var> is defined, <code>false</code> when undefined.</dd>
+<dt><code>+!!<var>arg</var></code></dt>
+<dd>Same as <code>!!<var>arg</var></code>, but returns 1 or 0.</dd>
+<dt><code>[]+<var>arg</var></code></dt>
+<dd>Convert <var>arg</var> into a string.</dd>
+<dt><code><var>arg</var>|0</code></dt>
+<dt><code><var>arg</var>&gt;&gt;0</code></dt>
+<dt><code>~~<var>arg</var></code></dt>
+<dd>Convert <var>arg</var> into an integer. (e.g. <code>~~-2.5</code> makes <code>-2</code>.) Important thing is dislike <code>parseInt(null)</code> makes <code>NaN</code>, <code>null|0</code>, <code>null&gt;&gt;0</code> and <code>~~null</code> make 0.</dd>
+<dt><code>-~<var>arg</var></code></dt>
+<dd>Return the next number of <var>arg</var>. This technique is based on <a href="http://en.wikipedia.org/wiki/Two%27s_complement">Two's complement</a>.</dd>
+<dt><code>!{}</code></dt>
+<dt><code>![]</code></dt>
+<dd><code>false</code>.</dd>
+<dt><code>!!{}</code></dt>
+<dt><code>!![]</code></dt>
+<dd><code>true</code>.</dd>
+</dl>
+
+<h4>Reference</h4>
+<ul>
+<li><a href="http://utf-8.jp/public/jsfuck.html">JSF*ck</a></li>
+<li><a href="http://jsdo.it/uupaa/9YFT">jsのオレオレ演算子</a></li>
+</ul>

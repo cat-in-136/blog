@@ -1,0 +1,71 @@
+---
+layout: post
+title: Components.utils.reportError() is easy to use for debugging
+date: '2010-04-15T00:29:00.003+09:00'
+author: cat_in_136
+tags:
+- mozilla
+modified_time: '2010-04-15T00:29:00.812+09:00'
+thumbnail: http://3.bp.blogspot.com/_mg7ZLoSThok/S8Hsq604JwI/AAAAAAAAABk/EyuMlSXUDsI/s72-c/screenshot1.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-938299526229607144
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/04/componentsutilsreporterror-is-easy-to.html
+---
+
+<p>
+Firefox 3.0+ supports <code>Components.utils.reportError()</code>. This function send a debugging message to the Error Console.
+</p>
+<p>
+<code>Components.utils.reportError("a debugging message");
+</code>yields following message to the Error Console:
+</p>
+<img style="display:block; margin:0px auto 10px; text-align:center;width: 566px; height: 55px;" src="http://3.bp.blogspot.com/_mg7ZLoSThok/S8Hsq604JwI/AAAAAAAAABk/EyuMlSXUDsI/s1600/screenshot1.png" />
+<p>
+If you don't hope debugging message displayed as a error, <a href="https://developer.mozilla.org/en/nsIConsoleService#logStringMessage()">nsIConsoleService#logStringMessage()</a> is better.
+</p>
+<pre class="prettyprint"><code>Components.classes["@mozilla.org/consoleservice;1"]
+ .getService(Components.interfaces.nsIConsoleService)
+ .logStringMessage("a debugging message");
+</code></pre>
+<p>
+yields following message to the Error Console:
+</p>
+<img style="display:block; margin:0px auto 10px; text-align:center;width: 347px; height: 32px;" src="http://1.bp.blogspot.com/_mg7ZLoSThok/S8Ht-eoowiI/AAAAAAAAABs/DjQFsHCaC8w/s400/screenshot2.png" />
+<p>
+This way is too long to write!
+</p>
+<p>
+Use of <a href="https://developer.mozilla.org/en/DOM/window.dump"><code>dump()</code></a> is shortest, but you need to run firefox <em>with terminal (command prompt)</em>.
+</p>
+
+<h4>Conclusion</h4>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>reportError()</th>
+<th>logStringMessage()</th>
+<th>dump()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Output</th>
+<td>Error Console as a error message</td>
+<td>Error Console as a plain message</td>
+<td>Terminal (Command prompt)</td>
+</tr>
+<tr>
+<th>Length of code</th>
+<td>Not long</td>
+<td>Long</td>
+<td>Very short</td>
+</tr>
+</tbody>
+</table>
+
+<h4>See also</h4>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en/Components.utils.reportError">Components.utils.reportError - MDC</a></li>
+</ul>

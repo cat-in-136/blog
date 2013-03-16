@@ -1,0 +1,43 @@
+---
+layout: post
+title: Diff between firefox 15.0beta2 default preference and firefox 14.0.1
+date: '2012-07-28T12:19:00.003+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2012-07-28T12:25:39.579+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3451229570654563797
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/07/diff-between-firefox-150beta2-default.html
+---
+
+<p>
+This is difference between the default preference of Firefox 15.0 beta2 and one of 14.0.1.
+</p>
+
+
+<dl><dt>Default pref Javascript files (Firefox 14.0.1 for linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+<dt>Default pref Javascript files (Firefox 15.0 beta2 for linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+</dl>
+
+
+<table class="diff_firefox15b_pref_diff">
+<thead><tr><td>Pref</td><td>Firefox 14.0.1</td><td>Firefox 15.0 beta 2</td></tr></thead>
+<tbody><tr class="newkey"><td>app.<wbr />update.<wbr />stage.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="oldkey"><td>browser.<wbr />identity.<wbr />ssl_<wbr />domain_<wbr />display</td><td>0</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>browser.<wbr />preferences.<wbr />inContent</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>device.<wbr />storage.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />chrome-<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>devtools.<wbr />debugger.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />force-<wbr />local</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />remote-<wbr />autoconnect</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />remote-<wbr />connection-<wbr />retries</td><td class="undefined">undefined</td><td>3</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />remote-<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />remote-<wbr />host</td><td class="undefined">undefined</td><td>localhost</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />remote-<wbr />port</td><td class="undefined">undefined</td><td>6000</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />remote-<wbr />timeout</td><td class="undefined">undefined</td><td>3000</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />ui.<wbr />remote-<wbr />win.<wbr />height</td><td class="undefined">undefined</td><td>400</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />ui.<wbr />remote-<wbr />win.<wbr />width</td><td class="undefined">undefined</td><td>900</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />ui.<wbr />stackframes-<wbr />width</td><td class="undefined">undefined</td><td>200</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />ui.<wbr />variables-<wbr />width</td><td class="undefined">undefined</td><td>300</td></tr><tr class="newkey"><td>devtools.<wbr />gcli.<wbr />allowSet</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />gcli.<wbr />eagerHelper</td><td class="undefined">undefined</td><td>2</td></tr><tr class="oldkey"><td>devtools.<wbr />gcli.<wbr />enable</td><td>false</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>devtools.<wbr />gcli.<wbr />hideIntro</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />inspector.<wbr />highlighterShowInfobar</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />inspector.<wbr />highlighterShowVeil</td><td class="undefined">undefined</td><td>true</td></tr><tr><td>devtools.<wbr />layoutview.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />responsiveUI.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />toolbar.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>dom.<wbr />experimental_<wbr />bindings</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>dom.<wbr />ipc.<wbr />plugins.<wbr />flash.<wbr />subprocess.<wbr />crashreporter.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="oldkey"><td>dom.<wbr />paris_<wbr />bindings</td><td>true</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>full-<wbr />screen-<wbr />api.<wbr />approval-<wbr />required</td><td class="undefined">undefined</td><td>true</td></tr><tr class="oldkey"><td>full-<wbr />screen-<wbr />api.<wbr />key-<wbr />input-<wbr />restricted</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>full-<wbr />screen-<wbr />api.<wbr />warning.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>gfx.<wbr />prefer-<wbr />mesa-<wbr />llvmpipe</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>gfx.<wbr />xrender.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="oldkey"><td>layers.<wbr />offmainthreadcomposition.<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>media.<wbr />opus.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />diagnostics</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />spdy.<wbr />enabled.<wbr />v2</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />spdy.<wbr />enabled.<wbr />v3</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>pdfjs.<wbr />disabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>pdfjs.<wbr />firstRun</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>pdfjs.<wbr />previousHandler.<wbr />alwaysAskBeforeHandling</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>pdfjs.<wbr />previousHandler.<wbr />preferredAction</td><td class="undefined">undefined</td><td>0</td></tr><tr><td>plugins.<wbr />update.<wbr />url</td><td>https://www.<wbr />mozilla.<wbr />com/%LOCALE%/plugincheck/</td><td>https://www.<wbr />mozilla.<wbr />org/%LOCALE%/plugincheck/</td></tr><tr class="oldkey"><td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />browser.<wbr />tabs.<wbr />onTop</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>toolkit.<wbr />startup.<wbr />max_<wbr />resumed_<wbr />crashes</td><td>2</td><td>3</td></tr><tr class="oldkey"><td>webgl.<wbr />verbose</td><td>false</td><td class="undefined">undefined</td></tr></tbody></table>
+
+
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox15b_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox15b_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox15b_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox15b_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox15b_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox15b_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox15b_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+
+table.diff_firefox15b_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox15b_pref_diff tbody tr { -moz-transition: background 0.125s ease-in-out 0s; -webkit-transition: background 0.125s ease-in-out 0s; -o-transition: background 0.125s ease-in-out 0s; transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>

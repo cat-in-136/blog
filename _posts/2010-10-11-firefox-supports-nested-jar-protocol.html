@@ -1,0 +1,52 @@
+---
+layout: post
+title: 'Firefox supports Nested jar: Protocol!'
+date: '2010-10-11T23:48:00.001+09:00'
+author: cat_in_136
+tags:
+- mozilla
+modified_time: '2010-10-11T23:48:00.250+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-2765943908214931359
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/10/firefox-supports-nested-jar-protocol.html
+---
+
+<p>
+<code>jar:</code> protocol refer to a file compressed in a <abbr title="Java ARchive">JAR</abbr> (or ZIP) file. Syntax is as following:
+</p>
+<div>
+<code>jar:<var style="background-color:#fdd;color:#000;">url</var>!/<var style="background-color:#dfd;color:#000;">entry</var></code>
+</div>
+<p>
+This URL points to a file <var style="background-color:#dfd;color:#000;">entry</var> in archive file <var style="background-color:#fdd;color:#000;">url</var>. <var style="background-color:#fdd;color:#000;">url</var> can be <em>any</em> protocol, for example, <code>http:</code>, <code>ftp:</code>, <code>file:</code>, etc.
+</p>
+<div>
+<code>jar:<span style="background-color:#fdd;color:#000;">http://example.com/foobar.jar</span>!/<span style="background-color:#dfd;color:#000;">path/to/foobar.txt</span></code>
+</div>
+<p>
+</p>
+
+<h4>Nested <code>jar:</code></h4>
+
+<p>
+So, I thought <var style="background-color:#fdd;color:#000;">url</var> can be <code>jar:</code> protocol and I'll call it "Nested <code>jar:</code> protocol."
+</p>
+<div>
+<code>jar:<span style="background-color:#fdd;color:#000;">jar:<var style="border: #f00 solid 1px;">url</var>!/<var style="border: #080 solid 1px;">entry</var></span>!/<var style="background-color:#dfd;color:#000;">entry</var></code>
+</div>
+<p>
+This nested-<code>jar:</code>-protocol URL points to a file <var style="background-color:#dfd;color:#000;">entry</var> in a JAR file <var style="border: #080 solid 1px;">entry</var> in a JAR file <var style="border: #f00 solid 1px;">url</var>.
+</p>
+<p>
+This nested <code>jar:</code> protocol is supported on Firefox (and maybe all of Mozilla/Gecko based applications.)
+</p>
+<p>
+Note that Java does not treat nested <code>jar:</code> protocol. When open the URL, <code>MalformedURLException</code> was thrown.
+</p>
+<pre class="prettyprint"><code>URL url = new URL("jar:jar:file:///tmp/test.jar.jar!/test.jar!/test.txt");
+InputStream is = url.openStream(); # throws MalformedURLException : "no !/ in spec"
+</code></pre>
+
+<h4>Reference</h4>
+<ul>
+<li><a href="http://docs.sun.com/source/819-0913/author/jar.html#jarprotocol">JAR Files - The JAR: Protocol</a></li>
+</ul>

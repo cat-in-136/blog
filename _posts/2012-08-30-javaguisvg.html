@@ -1,0 +1,68 @@
+---
+layout: post
+title: JavaのGUIをベクトルデータとしてスクリーンショットを撮る〜SVG編〜
+date: '2012-08-30T23:47:00.002+09:00'
+author: cat_in_136
+tags:
+- java
+- svg
+- swing
+- gui
+modified_time: '2012-08-30T23:47:00.832+09:00'
+thumbnail: http://4.bp.blogspot.com/-umMYxERWlfo/UDo_t78g3YI/AAAAAAAAASo/pWnQKLo6OoM/s72-c/foobar.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3519524004402435399
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/08/javaguisvg.html
+---
+
+<p>かつて<a href="{{ site.baseurl }}{% post_url 2012-01-15-javagui %}" title="JavaのGUIをベクトルデータとしてスクリーンショットを撮る">JavaのGUIをベクトルデータとしてスクリーンショットを撮る</a>
+と題して、JavaといってもSwing GUI限定ではあるが、
+スクリーンショットを PostScript で出力するアイデアを紹介した。
+しかし、実際に実装するとテキストがパス化されていたりなど、
+細かい点で問題が残った。</p>
+
+<p>その結論で、<a href="http://xmlgraphics.apache.org/batik/">Batik</a>を使ってよりよい出力ができるのではないかと示唆した。</p>
+
+<blockquote cite="http://cat-in-136.blogspot.com/2012/01/javagui.html">
+  <p>半透明などをベクトルデータとして出力できない問題を解決するには、グラフィックコンテクストの描画命令から SVG などの出力を行うものが必要となるだろう。[4]</p>
+  <p>[4] <a href="http://xmlgraphics.apache.org/batik/using/svg-generator.html">SVG Generator: SVGGraphics2D</a>, The Apache Software Foundation</p>
+</blockquote>
+
+<p>というわけで、Batik の <a href="http://xmlgraphics.apache.org/batik/using/svg-generator.html#howToUse">How to use SVGGraphics2D</a> というページを参考にして作ってみた。</p>
+
+<p>つまり、前回のソースに対して、以下のような document に描画情報を出力した後ファイル出力するコードをねじ込んだ。</p>
+
+<pre class="prettyprint"><code>DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+DocumentBuilder builder = factory.newDocumentBuilder();
+Document document = builder.getDOMImplementation().createDocument("http://www.w3.org/2000/svg", "svg", null);
+SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
+Printable printable = createPrintable();
+PageFormat pagefmt = new PageFormat();
+for (int i = 0; printable.print((Graphics)svgGenerator, pagefmt, i) == Printable.PAGE_EXISTS; i++) {
+    // do nothing
+}
+svgGenerator.stream(filewriter, true);
+</code></pre>
+
+<p>これはなかなか強力で、テキストがテキストのままで出力された。
+テキスト描画がそのまま<text>要素でSVGに変換されていた。</p>
+
+<figure style="display: block; margin: 1em; font-size: smaller;">
+<a href="http://4.bp.blogspot.com/-umMYxERWlfo/UDo_t78g3YI/AAAAAAAAASo/pWnQKLo6OoM/s1600/foobar.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="252" width="400" src="http://4.bp.blogspot.com/-umMYxERWlfo/UDo_t78g3YI/AAAAAAAAASo/pWnQKLo6OoM/s400/foobar.png" /></a>
+
+<figcaption style="display: block;">SwingSet2 のSVGスクリーンショットを inkscape で開いたところ。テキスト選択可能。</figcaption> </figure>
+
+
+<p>しかし、問題もかなりあって、Exception が出て出力できないことが
+しばしばある。
+しかも
+<code>org.apache.batik.ext.awt.image.codec.png.PNGImageEncoder.encode</code>
+で<code>RuntimeException</code>とか一筋縄で行かなさそう。
+（そして筆者はそれ以上の原因追求はおこなっていない）</p>
+
+<p>さらに、そもそもの問題であるが、Batik は 2008年 にリリースされた
+バージョン 1.7 から安定バージョンが出ていない。
+つまりメンテナンスが積極的に行われていない感が拭えない。
+もっとも、開発レポジトリ(subversion) http://svn.apache.org/repos/asf/xmlgraphics/batik/trunk/ 
+のログを見るとまだ手を入れられているので、
+<code>trunk</code>から落としてきて最新trunkビルドで試したほうがよかったかもしれない。
+（が、ビルドが面倒なので確認していない。）</p>

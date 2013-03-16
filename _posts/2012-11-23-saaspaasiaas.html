@@ -1,0 +1,101 @@
+---
+layout: post
+title: SaaS/PaaS/IaaS判定法（案）
+date: '2012-11-23T14:30:00.000+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- cloud computing
+modified_time: '2012-11-23T14:33:07.559+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6751210804873465266
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/11/saaspaasiaas.html
+---
+
+<p>Misty sky じゃない方の クラウド (Cloud computing)について。</p>
+
+<p>クラウドのサービスモデルには、主に以下の3つがある。</p>
+
+<ul>
+<li>SaaS (Software as a Service)</li>
+<li>PaaS (Platform as a Service) </li>
+<li>IaaS (Infrastructure as a Service) </li>
+</ul>
+
+<p>Software(Application), Platform, Infrastructure はそれぞれレイヤと扱っていいと
+考えている。</p>
+
+<table summary="XaaS のレイヤのスタック構造">
+<col />
+<thead>
+<tr>
+ <th>service layers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+ <td>Application</td>
+</tr>
+<tr>
+ <td>Platform</td>
+</tr>
+<tr>
+ <td>Infrastructure</td>
+</tr>
+</tbody>
+</table>
+
+<p>Infrastructure は最も下層で基本的なコンピューティング環境、
+Application は最も上の層でソフトウェアパッケージを意味する。
+つまり、IaaSの利用者は Application と Platform を自分で用意するが、
+PaaSの利用者は Application を用意する必要がある。
+そして、SaaSの利用者は、利用するだけだ。</p>
+
+<h4>SaaS/PaaS/IaaS判定法（案）</h4>
+
+<p>これを踏まえて SaaS/PaaS/IaaS 判定法（案）は下記の通り：</p>
+
+<ul>
+<li>利用できるソフトウェアが特定化されている（自由に追加できない）のならば、それは SaaS である。</li>
+<li>ネットワーク設定・OS変更させてくれない（または隠蔽されている）ならば、それは PaaS である。</li>
+<li>ネットワーク設定・OS変更などをさせてくれるならば、それは IaaS である。</li>
+</ul>
+
+<h4>例題</h4>
+
+<div style="padding: 1ex; border: double 5px #888;">
+<p>問：以下を SaaS/PaaS/IaaS に分類しなさい。</p>
+
+<ol>
+<li>Amazon EC2</li>
+<li>Google App Engine</li>
+<li>Google Apps</li>
+<li>Amazon S3</li>
+<li>Github</li>
+<li>ウイルスバスター クラウド</li>
+</ol>
+</div>
+
+<p>解</p>
+
+<ol>
+<li><a href="http://aws.amazon.com/ec2/" title="Amazon Elastic Compute Cloud" rel="nofollow">Amazon EC2</a> は、 Xen 上で動く OS を選べるので、 IaaS である。</li>
+<li><a href="https://developers.google.com/appengine/" title="Google App Engine" rel="nofollow">Google App Engine</a> は、OS などは隠蔽されているので、 PaaS である。</li>
+<li><a href="https://www.google.com/enterprise/apps/" title="Google Apps" rel="nofollow">Google Apps</a> は、Google が提供する Gmail やカレンダーなどのソフトウェアに特定されるので、 SaaS である。</li>
+<li><a href="http://aws.amazon.com/s3/" title="Amazon Simple Storage Service" rel="nofollow">Amazon S3</a> は、ストレージに特定されているので、 SaaS と言える。
+しかし、ストレージそのものは最終製品ではなく、
+また Dropbox や iCloud と違ってストレージそのものを売り物としていないので、
+作るアプリケーションは特定化されていないが OS などは隠蔽されているので、
+PaaS とも言える。</li>
+<li><a href="https://github.com/" title="Github" rel="nofollow">Github</a> は、（格納できるソフトウェアソースは任意性があるが、）
+ソフト開発プロジェクトのためのホスティングサービス
+（ハードウェアやドキュメント執筆目的などでもよいが）に特定化されているので、
+SaaS である。</li>
+<li><a href="http://safe.trendmicro.jp/purchase/vb.aspx" title="ウイルスバスター クラウド" rel="nofollow">ウイルスバスター クラウド</a> は、「あとは楽しむだけ」であるので、 SaaS である。
+(ウイルス対策ソフトに特定化されているので SaaS である。)</li>
+</ol>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf" title="NIST SP 800-145, The NIST Definition of Cloud Computing">NIST SP 800-145, The NIST Definition of Cloud Computing</a></li>
+</ul>

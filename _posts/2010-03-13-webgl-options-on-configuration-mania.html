@@ -1,0 +1,43 @@
+---
+layout: post
+title: WebGL options on Configuration Mania
+date: '2010-03-13T22:50:00.003+09:00'
+author: cat_in_136
+tags:
+- javascript
+- configuration mania
+- mozilla
+modified_time: '2010-04-11T00:34:44.870+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6409853645096085160
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/webgl-options-on-configuration-mania.html
+---
+
+<p>
+Last Sat Mar 3, I added three WebGL options for <a href="http://www.mozilla.org/projects/firefox/3.7a2/releasenotes/">Firefox 3.7a2</a> to Configuration Mania. <del datetime="2010-04-10T15:30:02Z">I uploaded the experimental version of Configuration Mania <a href="http://bitbucket.org/cat_in_136/configuration-mania/downloads/">at the bitbucket's download page</a>.</del><ins datetime="2010-04-10T15:30:02Z">This function is captured in current release of Configuration Mania.</ins>
+</p>
+<p>
+By the way, Most of WebGL demo (e.g. <a href="http://people.mozilla.com/~vladimir/webgl/spore/sporeview.html">Spore Creature View</a>) on the web doesn't work on <strong>my</strong> Firefox 3.7a2.  Configuration Mania's behavior is evil? WebGL behavior on Firefox 3.7a2 is unstable? I don't yet identify which cause WebGL errors.
+</p>
+<h3>How to enable WebGL with Configuration Mania</h3>
+<p>
+If you have a video-card with OpenGL <em>2.0</em>,
+</p>
+<ol>
+<li>Click "Tools"-&gt;"Configuration Mania" menu, and then open "Configuration Mania" dialog</li>
+<li>Click "Browser" tab</li>
+<li>Click "Page control", and then expand its settings.</li>
+<li>Check "Enable WebGL".</li>
+<li>Click "OK" button. ("Close" button on Mac or Linux)</li>
+<li>Restart Firefox</li>
+</ol>
+<p>
+If you don't have a video-card with OpenGL <em>2.0</em> (e.g. you have an old video-card), Just try software rendering with OSMesaLib. To get <code>OSMESA32.dll</code> and configure, follow these steps:
+</p>
+<ol>
+<li>Go to <a href="http://blog.vlad1.com/2009/09/21/webgl-samples/">http://blog.vlad1.com/2009/09/21/webgl-samples/</a>.</li>
+<li>Download <code>webgl-mesa-751.zip</code></li>
+<li>Extract it, then a single file <code>OSMESA32.DLL</code> is extracted.</li>
+<li>Check "Browser"-&gt;"Page controls"-&gt;"Enable WebGL"</li>
+<li>Check "Browser"-&gt;"Page controls"-&gt;"Use software rendering"</li>
+<li>Put path to <code>OSMESA32.DLL</code> in "Browser"-&gt;"Page controls"-&gt;"OSMesaLib path"</li>
+</ol>

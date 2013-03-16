@@ -1,0 +1,36 @@
+---
+layout: post
+title: 'Tip: How to convert from GNU-Arch to Mercurial repository'
+date: '2011-02-05T23:48:00.000+09:00'
+author: cat_in_136
+tags: 
+modified_time: '2011-02-05T23:48:00.252+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-2935568666694581080
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/02/tip-how-to-convert-from-gnu-arch-to.html
+---
+
+<h4>Step 1: Construct a GNU-Arch project tree.</h4>
+
+<p>Execute following commands.
+Note that you must register archive before getting the tree.</p>
+
+<pre style="background-color: #000; color: #eee;">% cd <var>working_directory</var>
+% tla register-archive http://url/to/archarchives/somebody@example.org--FOOBAR/
+% tla get -A somebody@example.org--FOOBAR FOOBAR--main
+</pre>
+
+<p>Above commands generate <code><var>working_directory</var>/FOOBAR--main--patch-XX</code> directory.</p>
+
+<h4>Step 2: Convert from the GNU-Arch's tree to Mercurial repository.</h4>
+
+<p>Remember to enable the Mercurial convert extension.
+To enable, add following lines to your .hgrc:</p>
+
+<pre style="border: solid 1px #888;"><code>[extensions]
+hgext.convert =
+</code></pre>
+
+<p>Run hg convert...</p>
+
+<pre style="background-color: #000; color: #eee;">% hg convert <var>working_directory</var>/FOOBAR--main--patch-XX
+</pre>

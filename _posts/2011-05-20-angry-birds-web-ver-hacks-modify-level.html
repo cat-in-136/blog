@@ -1,0 +1,233 @@
+---
+layout: post
+title: 'Angry Birds (Web ver.) Hacks: Modify the Level Data!'
+date: '2011-05-20T22:01:00.105+09:00'
+author: cat_in_136
+tags:
+- javascript
+- angry birds
+modified_time: '2011-05-30T21:18:59.595+09:00'
+thumbnail: http://3.bp.blogspot.com/-vNiapZ_Mefo/TdU9hQ6KwyI/AAAAAAAAAHM/HbPO6qb0WGc/s72-c/VerySimpleLevelExample.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4959450488205663636
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/05/angry-birds-web-ver-hacks-modify-level.html
+---
+
+<h3>An example : ADD 10 MORE BLACK BIRDS!</h3>
+
+<ol>
+<li>Bookmark following bookmarklet.
+<div>
+Bookmarklet:
+<a href="javascript:(function%20()%20{var%20RealXMLHttpRequest%20=%20XMLHttpRequest;var%20FakeXMLHttpRequest%20=%20function%20()%20{this._req%20=%20new%20RealXMLHttpRequest;};FakeXMLHttpRequest.prototype%20=%20{abort:%20function%20()%20{this._req.abort.apply(this._req,%20arguments);},%20getAllResponseHeaders:%20function%20()%20{return%20this._req.getAllResponseHeaders.apply(this._req,%20arguments);},%20open:%20function%20()%20{this._url%20=%20arguments[1];this._req.open.apply(this._req,%20arguments);},%20overrideMimeType:%20function%20()%20{this._req.overrideMimeType.apply(this._req,%20arguments);},%20send:%20function%20()%20{this._req.send.apply(this._req,%20arguments);},%20sendAsBinary:%20function%20()%20{this._req.sendAsBinary.apply(this._req,%20arguments);},%20setRequestHeader:%20function%20()%20{this._req.setRequestHeader.apply(this._req,%20arguments);},%20get%20multipart()%20{return%20this._req.multipart;},%20set%20multipart(value)%20{this._req.multipart%20=%20value;},%20get%20onreadystatechange()%20{return%20this._req.onreadystatechange;},%20set%20onreadystatechange(value)%20{this._req.onreadystatechange%20=%20value;},%20get%20readyState()%20{return%20this._req.readyState;},%20get%20response()%20{return%20this._req.response;},%20get%20responseText()%20{return%20this._hookResponseText(this._req.responseText);},%20get%20responseXML()%20{return%20this._req.responseXML;},%20get%20status()%20{return%20this._req.status;},%20get%20statusText()%20{return%20this._req.statusText;},%20get%20upload()%20{return%20this._req.upload;},%20get%20withCredentials()%20{return%20this._req.withCredentials;},%20_hookResponseText:%20function%20(responseText)%20{try%20{if%20(/Level[0-9]+.json$/.test(this._url))%20{var%20jsonData%20=%20JSON.parse(responseText);jsonData%20=%20this._modifyAngryBirdLevel(jsonData);responseText%20=%20JSON.stringify(jsonData);}}%20catch%20(ex)%20{}return%20responseText;},%20_modifyAngryBirdLevel:%20function%20(jsonData)%20{for%20(var%20i%20=%200;%20i%20&lt;%2010;%20i++)%20{jsonData.counts.birds++;jsonData.world[&quot;bird_&quot;%20+%20jsonData.counts.birds]%20=%20{angle:%200,%20id:%20&quot;BIRD_BLACK&quot;,%20x:%20jsonData.world.bird_1.x,%20y:%20jsonData.world.bird_1.y};}return%20jsonData;},%20dummy:%20null};window.XMLHttpRequest%20=%20FakeXMLHttpRequest;})();">Add more 10 black birds</a>
+</div>
+</li>
+<li>Go to http://chrome.angrybirds.com/</li>
+<li>Wait for loading page. (Do not select a level here...)</li>
+<li>Click the bookmarklet from your Bookmarks.</li>
+<li>Select a level to play!</li>
+</ol>
+
+<h3>Original source code</h3>
+
+<code><pre class="prettyprint">
+(function () {
+    var RealXMLHttpRequest = XMLHttpRequest;
+    var FakeXMLHttpRequest = function () {
+        this._req = new RealXMLHttpRequest();
+    };
+    FakeXMLHttpRequest.prototype = {
+        abort: function () {
+            this._req.abort.apply(this._req, arguments);
+        },
+        getAllResponseHeaders: function () {
+            return this._req.getAllResponseHeaders.apply(this._req, arguments);
+        },
+        open: function () {
+            this._url = arguments[1];
+            this._req.open.apply(this._req, arguments);
+        },
+        overrideMimeType: function () {
+            this._req.overrideMimeType.apply(this._req, arguments);
+        },
+        send: function () {
+            this._req.send.apply(this._req, arguments);
+        },
+        sendAsBinary: function () {
+            this._req.sendAsBinary.apply(this._req, arguments);
+        },
+        setRequestHeader: function () {
+            this._req.setRequestHeader.apply(this._req, arguments);
+        },
+
+        get multipart() {
+            return this._req.multipart;
+        },
+        set multipart(value) {
+            this._req.multipart = value;
+        },
+        get onreadystatechange() {
+            return this._req.onreadystatechange;
+        },
+        set onreadystatechange(value) {
+            this._req.onreadystatechange = value;
+        },
+        get readyState() {
+            return this._req.readyState;
+        },
+        get response() {
+            return this._req.response;
+        },
+        get responseText() {
+            return this._hookResponseText(this._req.responseText);
+        },
+        get responseXML() {
+            return this._req.responseXML;
+        },
+        get status() {
+            return this._req.status;
+        },
+        get statusText() {
+            return this._req.statusText;
+        },
+        get upload() {
+            return this._req.upload;
+        },
+        get withCredentials() {
+            return this._req.withCredentials;
+        },
+
+        _hookResponseText: function (responseText) {
+            try {
+                if (/Level[0-9]+.json$/.test(this._url)) {
+                    var jsonData = JSON.parse(responseText);
+                    jsonData = this._modifyAngryBirdLevel(jsonData);
+                    responseText = JSON.stringify(jsonData);
+                }
+            } catch (ex) {
+            }
+            return responseText;
+        },
+        _modifyAngryBirdLevel: function(jsonData) {
+            // Add 10 more BIRD_BLACK.
+            for (var i = 0; i &lt; 10; i++) {
+                jsonData.counts.birds ++;
+                jsonData.world[&quot;bird_&quot; + jsonData.counts.birds] = {
+                    &quot;angle&quot;: 0,
+                    &quot;id&quot;: &quot;BIRD_BLACK&quot;,
+                    &quot;x&quot;: jsonData.world[&quot;bird_1&quot;].x,
+                    &quot;y&quot;: jsonData.world[&quot;bird_1&quot;].y
+                };
+            }
+            return jsonData;
+        },
+
+        dummy: null
+    };
+    window.XMLHttpRequest = FakeXMLHttpRequest;
+})();
+</pre></code>
+
+<h3>Principle: Hooking XMLHttpRequest</h3>
+
+<p>
+Angry Birds levels (Stage data) are defined with JSON file.
+For example, "http://chrome.angrybirds.com/angrybirds/json/Level47.json"
+</p>
+<p>
+The web app loads the JSON file when you start playing a level.
+<code>XMLHttpRequest</code> is used for loading the JSON file.
+</p>
+<p>
+So, I hooked <code>XMLHttpRequest</code> class to modify the level data.
+<code>XMLHttpRequest#responseText</code> returns modified JSON text data by my "<strong><code>_modifyAngryBirdLevel()</code></strong>" method.
+</p>
+
+<h3>Recipes</h3>
+
+<p>
+You can also modify blocks. Following example converts stone and wood blocks to ice blocks.
+</p>
+
+<code><pre class="prettyprint">
+        _modifyAngryBirdLevel: function(jsonData) {
+            // ...
+            
+            // Add 10 more BIRD_BLACK.
+            for (var i = 1; i &lt; jsonData.counts.blocks; i++) {
+                jsonData.world[&quot;block_&quot; + i].id = jsonData.world[&quot;block_&quot; + i].id.replace(/(STONE|WOOD)_BLOCK/, "ICE_BLOCK");
+            }
+            return jsonData;
+        },
+</pre></code>
+
+<p>
+You can also make your <em>own</em> custom levels!!
+</p>
+
+<code><pre class="prettyprint">
+        _modifyAngryBirdLevel: function(jsonData) {
+            // A very very simple level: 1 black bird vs 1 pig.
+            return {
+              "camera": [
+                 {
+                    "bottom": -45,
+                    "id": "Slingshot",
+                    "left": -60,
+                    "right": 4,
+                    "top": -45,
+                    "x": 30,
+                    "y": -4
+                 },
+                 {
+                    "bottom": -45,
+                    "id": "Castle",
+                    "left": 10,
+                    "right": 60,
+                    "top": -45,
+                    "x": 30,
+                    "y": -4
+                 }
+              ],
+              "counts": {
+                 "birds": 1,
+                 "blocks": 1
+              },
+              "id": jsonData.id,
+              "scoreEagle": 40000,
+              "scoreGold": 60000,
+              "scoreSilver": 50000,
+              "theme": "BACKGROUND_BLUE_GRASS",
+              "world": {
+                "bird_1": {
+                  "angle": 0,
+                  "id": "BIRD_BLACK",
+                  "x": 10,
+                  "y": -1
+                },
+                "block_1": {
+                  "angle": 0,
+                  "id": "PIG_BASIC_MEDIUM",
+                  "x": 50,
+                  "y": -1
+                }
+              }
+            };
+        },
+</pre></code>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://3.bp.blogspot.com/-vNiapZ_Mefo/TdU9hQ6KwyI/AAAAAAAAAHM/HbPO6qb0WGc/s1600/VerySimpleLevelExample.png" style="margin:0"><img height="242" width="320" src="http://3.bp.blogspot.com/-vNiapZ_Mefo/TdU9hQ6KwyI/AAAAAAAAAHM/HbPO6qb0WGc/s320/VerySimpleLevelExample.png" style="border: 0 none; width: 320px; height: 242px;" /></a></div>
+
+<h3>Note</h3>
+
+<p>
+I think ROVIO will encrypt all level files to avoid this hack ...
+</p>
+
+<h3>See also</h3>
+
+<ul>
+<li><a href="http://chrome.angrybirds.com/?version=sd">Angry birds</a></li>
+<li><a href="http://www.rovio.com/index.php?page=angry-birds">ROVIO - Angry birds</a></li>
+<li><a href="https://developer.mozilla.org/en/XMLHttpRequest">XMLHttpRequest</a> - MDC Docs</li>
+</ul>

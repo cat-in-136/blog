@@ -1,0 +1,34 @@
+---
+layout: post
+title: fontforge script to merge and replace font glyphs
+date: '2010-02-19T23:58:00.003+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- font
+modified_time: '2010-03-03T23:31:08.642+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4725055015439286180
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/02/fontforge-script-to-merge-and-replace.html
+---
+
+<p>
+Use <code>MergeFonts()</code> function to merge font glyphs.
+The following example shows how to merge A.ttf to B.ttf and generate C.ttf.
+</p>
+<pre class="prettyprint"><code>Open("A.ttf");
+MergeFonts("B.ttf");
+SetFontNames("Font-Family-Regular", "Font Name", "Font Family Regular", "Regular", ""/*copyright notice*/);
+Generate("C.ttf", "", 4/* remove bitmap */);
+</code></pre>
+<p>
+I want to replace also some A.ttf's glyphs with B.ttf's glyphs.
+Before <code>MergeFonts()</code> function called, remove the glyphs I want to replace.
+The following example shows how to do it.
+</p>
+<pre class="prettyprint"><code>Open("A.ttf");
+<strong>Select(0u0020, 0u00FF);
+Cut(); # delete all of latin-1 chars</strong>
+MergeFonts("B.ttf");
+SetFontNames("Font-Family-Regular", "Font Name", "Font Family Regular", "Regular", ""/*copyright notice*/);
+Generate("C.ttf", "", 4/* remove bitmap */);
+</code></pre>

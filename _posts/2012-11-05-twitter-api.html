@@ -1,0 +1,116 @@
+---
+layout: post
+title: 「このツイートをサイトに埋め込む」のための隠し Twitter API の存在
+date: '2012-11-05T06:30:00.000+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- web api
+- twitter
+modified_time: '2012-11-05T06:30:01.367+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1988041811715876401
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/11/twitter-api.html
+---
+
+<p>Twitter の標準機能として、<a href="https://dev.twitter.com/docs/embedded-tweets" title="Embedded Tweets | Twitter Developers">Tweet を埋め込む機能</a>がある。
+ツイートの詳細画面で「このツイートをサイトに埋め込む」をクリックして、HTML のコードをコピペするだけ、と非常に簡単につかえる。</p>
+
+<blockquote class="twitter-tweet"><p>プライバシー等の問題を抜きにしてもビッグデータのビジネスは日本（特に大手企業）からは生まれなさそうだ。何らかのサービスを提供する手段であるはずが目的になってしまっている。 <a href="https://twitter.com/search/%23ビッグデータ">#ビッグデータ</a> <a href="http://t.co/yl6s6sma" title="http://twitter.com/cat_in_136/status/176199889313734657/photo/1">twitter.com/cat_in_136/sta…</a></p>&mdash; cat_in_136 (@cat_in_136) <a href="https://twitter.com/cat_in_136/status/176199889313734657" data-datetime="2012-03-04T06:58:22+00:00">March 4, 2012</a></blockquote>
+<script src="//platform.twitter.com/widgets.js" charset="utf-8" defer="defer"></script>
+
+<h4>HTMLコード</h4>
+
+<p>これはフォローボタンや必要あれば画像などを含んだリッチな表示がなされるが、 http://platform.twitter.com/widgets.js (埋め込んだサイトが https ならば https://platform.twitter.com/widgets.js になる。ローカル(file)ならば呼び出しに失敗するはず。) による動的生成でつくられている。
+ただ、JavaScript が動かなくともツイートのテキストを含めるような仕組みになっている。
+以下にソースコードの例を示す（読みやすさのためにインデントと改行を挿入してある）。</p>
+
+<pre class="prettyprint"><code>&lt;blockquote class="twitter-tweet"&gt;
+  &lt;p&gt;
+    プライバシー等の問題を抜きにしてもビッグデータのビジネスは日本（特に大手企業）からは生まれなさそうだ。何らかのサービスを提供する手段であるはずが目的になってしまっている。 
+    &lt;a href="https://twitter.com/search/%23ビッグデータ"&gt;
+      #ビッグデータ
+    &lt;/a&gt;
+    &lt;a href="http://t.co/yl6s6sma" title="http://twitter.com/cat_in_136/status/176199889313734657/photo/1"&gt;
+      twitter.com/cat_in_136/sta…
+    &lt;/a&gt;
+  &lt;/p&gt;
+  &amp;mdash; cat_in_136 (@cat_in_136) 
+  &lt;a href="https://twitter.com/cat_in_136/status/176199889313734657" data-datetime="2012-03-04T06:58:22+00:00"&gt;
+    March 4, 2012
+  &lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>なお、JavaScript が無効にした場合やソースコードを貼りつけた場合、<a href="https://dev.twitter.com/terms/display-requirements" title="Developer Display Requirements | Twitter Developers">Developer Display Requirements</a>の下記に違反することとなってしまうが、Twitter 標準機能がそうなっているんだからしょうがない。</p>
+
+<ul>
+<li>1.d. The avatar, name, and @username must all link to the user’s Twitter profile
+<ul>
+<li>name と @username がリンクされていない。（加えて、非モバイル環境下ではアバターの非表示はガイドライン 1.a. に違反するように読める）</li>
+</ul></li>
+<li>2.a. Tweet text must be displayed on a line below the author’s name and @username, and may not be altered or modified in any way except as outlined in these requirements.
+<ul>
+<li>ツイートテキストがツイートした人の name と @username の上にかかれてしまっている。ただし、"outlined in these requirements" の例外事項に入っているのかも??? </li>
+</ul></li>
+<li>3.a. Reply, Retweet, and Favorite action icons must always be visible for the user to interact with the Tweet. These actions must be implemented using Web Intents or with the authenticated Twitter API.
+<ul>
+<li>返事を書く、リツイート、お気に入り のいずれのボタンも表示されない。</li>
+</ul></li>
+<li>6.b. The Twitter logo or Follow button for the Tweet author must always be displayed.
+<ul>
+<li>Twitter ロゴもフォローボタンも表示されていない。</li>
+</ul></li>
+</ul>
+
+<h4>cdn.api.twitter.com/1/statuses/show.json</h4>
+
+<p>&lt;blockquote&gt;〜&lt;/blockquote&gt;の中に、ツイートにかんするすべての情報が入っているわけではない。
+platform.twitter.com/widgets.js から以下のリクエストを出して、ツイートをリッチに表示するための情報を収集しているのである。</p>
+
+<p style="border: solid thin #aaa;"><code>http://cdn.api.twitter.com/1/statuses/show.json?id=176199889313734657&amp;include_entities=true&amp;callback=twttr.tfw.callbacks.cb0&amp;suppress_response_codes=true</code></p>
+
+<p>id=で指定している数字はツイートIDであり、埋め込むツイートがかわるとここが変わる。
+さらにおもしろいことにcallback=でJavaScriptのコールバック関数を指定しており（<a href="http://ja.wikipedia.org/wiki/JSONP"><abbr title="JSON with Padding">JSONP</abbr></a>）、この引数をなくすと純粋なJSONとしてツイート情報が取得できる。</p>
+
+<p style="border: solid thin #aaa;"><code>http://cdn.api.twitter.com/1/statuses/show.json?id=176199889313734657&amp;include_entities=true&amp;suppress_response_codes=true</code></p>
+
+<p>ツイートが何のアプリケーションから投稿されたか、ツイート時刻（秒単位）といったツイートの詳細情報はもちろん、ツイートした人の情報（アカウント作成日時、使用言語、タイムゾーン）もレスポンスの中身に確認できる。
+つまり、ツイートの表示されている以上の情報量があるのだ。</p>
+
+<h4>Twitter API v1.0 -> 1.1</h4>
+
+<p>実は Twitter API にも同じようなツイート情報取得用の API endpoint があるが、上述のとちがって簡単には使えない。</p>
+
+<ul>
+<li><code>http://api.twitter.com/1/statuses/show.json?id=176199889313734657&amp;include_entities=true</code>
+<ul>
+<li>ただし、2013-03-05 以降はアクセス不能（Twitter API v1.0 廃止のため）</li>
+</ul></li>
+<li><code>https://api.twitter.com/1.1/statuses/show.json?id=176199889313734657&amp;include_entities=true</code>
+<ul>
+<li>ただし、OAuth でのアクセストークンをもってアクセスしなければならない。</li>
+</ul></li>
+</ul>
+
+<p>Twitter API 的には認証が必要な流れになっている（認証不要な Twitter API v1.0 は廃止される）のに対して、cdn.api.twitter.com は認証が不要である。
+一方で、ツイートの埋め込みは認証がなくとも動かなければならないので、ツイート情報を認証なしで取得する手段はなくすことはできない。
+仮に、ツイートの埋め込みのコードが全く異なる仕組みのもの（例えば IFRAME 使用とか）にしたとしても、現状のツイートの埋め込みのコードが動いたままにしなければならない。</p>
+
+<p>以上の理由から、ツイート情報を認証なしで取得す るcdn.api.twitter.com による endpoint はなくならないと、筆者は考えている。
+もっとも、文書化されていない隠し API に相当するので、細かい仕様の変更はあり得る。</p>
+
+<p>ただ、Twitter API v1.1 で全 API endpoint に認証を必要とする理由に、<a href="https://dev.twitter.com/blog/changes-coming-to-twitter-api" title="Changes coming in Version 1.1 of the Twitter API | Twitter Developers">高頻度で Twitter API にアクセスするボットのようなアプリケーションを把握することを挙げている</a>（下記引用）。
+cdn.api.twitter.com の隠し API endpoint はそういったボットのようなアプリケーションの抜け道に使用される可能性があり得ると思うのだが、そこのところはどうなるのだろうか楽しみだ。</p>
+
+<blockquote cite="https://dev.twitter.com/blog/changes-coming-to-twitter-api"><p>
+For example, there are many applications that are pulling data from the Twitter API at very high rates (scraping, bots, etc.) where we only know the IP address of the applications. To prevent malicious use of the Twitter API and gain an understanding of what types of applications are accessing the API in order to evolve it to meet the needs of developers, it&apos;s important to have visibility into the activity on the Twitter API and the applications using the platform.
+</p></blockquote>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="https://dev.twitter.com/docs/embedded-tweets" title="Embedded Tweets | Twitter Developers">Embedded Tweets</a>, Twitter Developers</li>
+<li><a href="https://dev.twitter.com/terms/display-requirements" title="Developer Display Requirements | Twitter Developers">Developer Display Requirements</a>, Twitter Developers</li>
+<li>Michael Sippey @<a href="https://twitter.com/intent/user?screen_name=sippey">sippey</a>, <a href="https://dev.twitter.com/blog/changes-coming-to-twitter-api" title="Changes coming in Version 1.1 of the Twitter API | Twitter Developers">Changes coming in Version 1.1 of the Twitter API</a>, Twitter Developers Blog</li>
+</ul>

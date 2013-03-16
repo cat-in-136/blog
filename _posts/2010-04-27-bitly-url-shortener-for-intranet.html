@@ -1,0 +1,50 @@
+---
+layout: post
+title: bit.ly URL shortener for intranet
+date: '2010-04-27T00:22:00.001+09:00'
+author: cat_in_136
+tags:
+- web application
+modified_time: '2010-04-28T00:21:34.339+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5635080303829604874
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/04/bitly-url-shortener-for-intranet.html
+---
+
+<p>
+<a href="http://bit.ly/">bit.ly</a> is the most famous URL shortener service. BTW, bit.ly also accept private-URL:
+</p>
+<table>
+<tbody>
+<tr>
+<td>http://bit.ly/424F8W</td>
+<td>-&gt; http://localhost/</td>
+</tr>
+<tr>
+<td>http://bit.ly/lERx</td>
+<td>-&gt; http://127.0.0.1/</td>
+</tr>
+<tr>
+<td>http://bit.ly/EQw4S</td>
+<td>-&gt; ftp://127.0.0.1/</td>
+</tr>
+</tbody>
+</table>
+<p>
+If your <em>intra</em>net have <code>foobar.intranet</code> domain, it is also applicable: 
+</p>
+
+<table>
+<tbody>
+<tr>
+<td>http://bit.ly/cJAIZi</td>
+<td>-&gt; http://foobar.intranet/</td>
+</tr>
+<tr>
+<td>http://bit.ly/bBjLVl</td>
+<td>-&gt; http://foobar.intranet/some/what/path</td>
+</tr>
+</tbody>
+</table>
+<p>
+But I think it is <strong>not good idea for using bit.ly to intranet</strong>. Because private <em>intra</em>net address data is transmitted over public <em>inter</em>net.
+</p>

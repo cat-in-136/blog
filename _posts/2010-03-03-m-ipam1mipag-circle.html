@@ -1,0 +1,121 @@
+---
+layout: post
+title: 「M+ と IPAフォントの合成フォント」のM+1M+IPAG circleを自作したい
+date: '2010-03-03T23:27:00.002+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- font
+modified_time: '2010-03-03T23:47:17.697+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/S39Fz8hgxbI/AAAAAAAAAAw/VDXLlBRPj4o/s72-c/M%2B1x%2BIPAG-circle.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1954848270555881399
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/m-ipam1mipag-circle.html
+---
+
+<p>
+M+1M+IPAG circle（M+1M + IPAゴシック を、濁点と半濁点を判別しやすくしたもの）の組み合わせのものが<a href="http://mix-mplus-ipa.sourceforge.jp/">M+ と IPAフォントの合成フォントのサイト</a>で提供されていなかったので、作りたかったのでござる。なお、以下linux前提で書き記す。
+</p>
+<h2>最終的にできるもの</h2>
+<ul>
+<li>M+1M+IPAG-circle.ttf</li>
+<li>M+1P+IPAG-circle.ttf</li>
+<li>M+1VM+IPAG-circle.ttf</li>
+</ul>
+<p>
+M+1P+IPAG-circle.ttf, M+1VM+IPAG-circle.ttf はM+ と IPAフォントの合成フォントのサイトで配布されているので、普通の人にとってはやる意味は無い。また、M+ と IPAフォントの合成フォントのサイトで配布されているのは古めのM+フォントおよびIPAフォントなので、現在配布されている新しいフォント若干異なるものができるはず。
+</p>
+<h2>準備するもの</h2>
+<p>
+まず<a href="http://fontforge.sourceforge.net/">pdfforge</a>を取得する。（apt/yum/PackageKit etc...などでどうぞ）
+</p>
+<p>
+<a href="http://mplus-fonts.sourceforge.jp/">M+フォント</a>と<a href="http://ossipedia.ipa.go.jp/ipafont/">IPAフォント</a>をダウンロードしてきて、そのなかの以下のファイルを取り出す。半濁点巨大化処理したひらがなカタカナを持ってくるために使う「M+1P+IPAG-circle.ttf」「M+1VM+IPAG-circle.ttf」は<a href="http://mix-mplus-ipa.sourceforge.jp/">M+ と IPAフォントの合成フォントのサイト</a>から持ってくる。
+</p>
+<ul>
+<li>mplus-1p-regular.ttf</li>
+<li>mplus-1m-regular.ttf</li>
+<li>ipag.otf</li>
+<li>M+P+IPAG-circle.ttf</li>
+<li>M+1VM+IPAG-circle.ttf</li>
+</ul>
+<h2>方法</h2>
+<ol>
+<li>上述のフォントファイル(*.ttf,*.otf)をすべてを適当なフォルダに置く</li>
+<li>フォルダ"out"を作る（ここにフォルダが生成される）</li>
+<li>下に示すスクリプトファイルを作って"m++ipa-maru.pe"とかいう名前で、フォントファイルを置いたフォルダに置く</li>
+<li>コマンド以下のコマンドを打つ。ここで、カレントディレクトリはフォントファイルを置いたフォルダに設定されているものとする。<br>
+<code>$ fontforge -script m++ipa-maru.pe</code></li>
+</ol>
+<h3>m++ipa-maru.peの中身</h3>
+<pre class="prettyprint"><code># Note that following 4 files are required.
+Mplus1p = "mplus-1p-regular.ttf";
+Mplus1m = "mplus-1m-regular.ttf";
+KanjiFont = "ipag.otf";
+MaruFont = "M+1VM+IPAG-circle.ttf";
+MaruPFont = "M+1P+IPAG-circle.ttf";
+
+Mplus1p_kanji = "M+1P+IPAG";
+Mplus1p_kanji_circle      = Mplus1p_kanji + "-circle";
+Mplus1p_kanji_circle_name = Mplus1p_kanji + " circle";
+Mplus1m_kanji = "M+1M+IPAG";
+Mplus1m_kanji_circle      = Mplus1m_kanji + "-circle";
+Mplus1m_kanji_circle_name = Mplus1m_kanji + " circle";
+Mplus1vm_kanji = "M+1VM+IPAG";
+Mplus1vm_kanji_circle      = Mplus1vm_kanji + "-circle";
+Mplus1vm_kanji_circle_name = Mplus1vm_kanji + " circle";
+
+copyright_mplus = "Copyright(c) 2009 M+ FONTS PROJECT\n";
+copyright_marufix = "Copyright(c) 2006 itouhiro (itouh)\n";
+copyright_ipa = "Copyright(c) Information-technology Promotion Agency, Japan (IPA), 2003-2009. You must accept \"http://ipafont.ipa.go.jp/ipa_font_license_v1.html\" to use this product.\n";
+copyright_bitstream = "Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved.\n";
+
+family = Mplus1p_kanji_circle;
+family_name = Mplus1p_kanji_circle_name;
+copyright_notice = copyright_mplus + copyright_marufix + copyright_ipa;
+Open(Mplus1p);
+## Mplus1p + MaruP + IPA
+MergeFonts(KanjiFont);
+Select(0u3041, 0u309F, 0u30A0, 0u30FF);
+Cut(); # delete all of HIRAGANA and KATAKANA
+MergeFonts(MaruPFont);
+SetFontNames(family + "-Regular", family_name, family_name + " Regular", "Regular", copyright_notice);
+Generate("out/" + family + ".ttf", "", 4);
+
+## Mplus1p + Maru + IPA + Vera
+family = Mplus1vm_kanji_circle;
+family_name = Mplus1vm_kanji_circle_name;
+copyright_notice += copyright_bitstream;
+Select(0u0020, 0u00FF);
+Cut(); # delete all of latin-1 chars
+MergeFonts(MaruFont);
+SetFontNames(family + "-Regular", family_name, family_name + " Regular", "Regular", copyright_notice);
+Generate("out/" + family + ".ttf", "", 4);
+
+Close();
+
+
+family = Mplus1m_kanji_circle;
+family_name = Mplus1m_kanji_circle_name;
+copyright_notice = copyright_mplus + copyright_marufix + copyright_ipa;
+Open(Mplus1m);
+## Mplus1m + Maru + IPA
+MergeFonts(KanjiFont);
+Select(0u3041, 0u309F, 0u30A0, 0u30FF);
+Cut(); # delete all of HIRAGANA and KATAKANA
+MergeFonts(MaruFont);
+SetFontNames(family + "-Regular", family_name, family_name + " Regular", "Regular", copyright_notice);
+Generate("out/" + family + ".ttf", "", 4);
+Close();
+</code></pre>
+<h3>完成品</h3>
+<div>
+<a href="http://1.bp.blogspot.com/_mg7ZLoSThok/S39Fz8hgxbI/AAAAAAAAAAw/VDXLlBRPj4o/s1600-h/M%2B1x%2BIPAG-circle.png"><img style="display:block; margin:0px auto 10px; text-align:center;width: 320px; height: 187px;" src="http://1.bp.blogspot.com/_mg7ZLoSThok/S39Fz8hgxbI/AAAAAAAAAAw/VDXLlBRPj4o/s320/M%2B1x%2BIPAG-circle.png" /></a>
+</div>
+<h2>参考文献</h2>
+<ul>
+<li><a href="http://mplus-fonts.sourceforge.jp/mplus-outline-fonts/download/#ipag">IPA フォントとの合成</a>@M+ outline font</li>
+<li><a href="http://mix-mplus-ipa.sourceforge.jp/">M+ と IPAフォントの合成フォント</a></li>
+<li><a href="http://sourceforge.jp/cvs/view/mplus-fonts/mplus_outline_fonts/release/m%2B%2Bipa.pe?view=markup">/mplus-fonts/mplus_outline_fonts/release/m++ipa.pe</a> (mplus-fonts CVS repository)</li>
+<li><a href="http://fontforge.sourceforge.net/ja/scripting.html">FontForge でフォントを変更するためのスクリプトの書き方</a></li>
+<li>その他<a href="/search/label/font">このブログのフォント関連記事</a></li>
+</ul>

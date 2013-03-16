@@ -1,0 +1,42 @@
+---
+layout: post
+title: Diff between firefox 16.0beta3 default preference and firefox 15.0.1
+date: '2012-09-17T11:15:00.000+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2012-09-17T11:15:40.655+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7070662395972789265
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/09/diff-between-firefox-160beta3-default.html
+---
+
+<p>This is difference between the default preference of Firefox 16.0 beta3 and one of 15.0.1.</p>
+
+<dl>
+<dt>Default pref Javascript files (Firefox 15.0.1 for linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js,services-aitc.js}}</dd>
+<dt>Default pref Javascript files (Firefox 16.0 beta3 for linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js,services-aitc.js}}</dd>
+</dl>
+
+<table class="diff_firefox16b_pref_diff">
+<thead>
+<tr><td>Pref</td><td>Firefox 15.0.1</td><td>Firefox 16.0 beta 3</td></tr>
+</thead>
+<tbody><tr class="newkey"><td>accessibility.<wbr />force_<wbr />disabled</td><td class="undefined">undefined</td><td>0</td></tr><tr class="oldkey"><td>accessibility.<wbr />win32.<wbr />force_<wbr />disabled</td><td>false</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>devtools.<wbr />commands.<wbr />dir</td><td class="undefined">undefined</td><td></td></tr><tr class="newkey"><td>devtools.<wbr />scratchpad.<wbr />recentFilesMax</td><td class="undefined">undefined</td><td>10</td></tr><tr><td>devtools.<wbr />toolbar.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />toolbar.<wbr />visible</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>devtools.<wbr />webconsole.<wbr />position</td><td>above</td><td>below</td></tr><tr class="newkey"><td>dom.<wbr />experimental_<wbr />forms</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>dom.<wbr />idle-<wbr />observers-<wbr />api.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>dom.<wbr />mozAlarms.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>dom.<wbr />mozApps.<wbr />used</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />dynamic_<wbr />heap_<wbr />growth</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />dynamic_<wbr />mark_<wbr />slice</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />high_<wbr />frequency_<wbr />heap_<wbr />growth_<wbr />max</td><td class="undefined">undefined</td><td>300</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />high_<wbr />frequency_<wbr />heap_<wbr />growth_<wbr />min</td><td class="undefined">undefined</td><td>150</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />high_<wbr />frequency_<wbr />high_<wbr />limit_<wbr />mb</td><td class="undefined">undefined</td><td>500</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />high_<wbr />frequency_<wbr />low_<wbr />limit_<wbr />mb</td><td class="undefined">undefined</td><td>100</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />high_<wbr />frequency_<wbr />time_<wbr />limit_<wbr />ms</td><td class="undefined">undefined</td><td>1000</td></tr><tr><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />incremental</td><td>false</td><td>true</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />low_<wbr />frequency_<wbr />heap_<wbr />growth</td><td class="undefined">undefined</td><td>150</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />notify</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />xml.<wbr />chrome</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>javascript.<wbr />options.<wbr />xml.<wbr />content</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>layers.<wbr />async-<wbr />video.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>network.<wbr />http.<wbr />connection-<wbr />timeout</td><td class="undefined">undefined</td><td>90</td></tr><tr><td>network.<wbr />http.<wbr />spdy.<wbr />enabled.<wbr />v3</td><td>false</td><td>true</td></tr><tr class="newkey"><td>network.<wbr />websocket.<wbr />delay-<wbr />failed-<wbr />reconnects</td><td class="undefined">undefined</td><td>true</td></tr><tr><td>security.<wbr />enable_<wbr />md5_<wbr />signatures</td><td>true</td><td>false</td></tr><tr><td>services.<wbr />aitc.<wbr />browserid.<wbr />url</td><td>https://browserid.org/sign_in</td><td>https://login.persona.org/sign_in</td></tr><tr class="newkey"><td>services.<wbr />aitc.<wbr />log.<wbr />dump</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>services.<wbr />aitc.<wbr />log.<wbr />level</td><td class="undefined">undefined</td><td>All</td></tr><tr class="newkey"><td>social.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>social.<wbr />manifest.<wbr />motown</td><td class="undefined">undefined</td><td>{"origin":"https://motown-dev.mozillalabs.com",<wbr />"name":"MoTown",<wbr />"workerURL":"https://motown-dev.mozillalabs.com<wbr />/social/worker.js",<wbr />"iconURL":"https://motown-dev.mozillalabs.com<wbr />/images<wbr />/motown-icon.png"}</td></tr><tr class="newkey"><td>toolkit.<wbr />identity.<wbr />debug</td><td class="undefined">undefined</td><td>false</td></tr></tbody></table>
+
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox16b_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox16b_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox16b_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox16b_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox16b_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox16b_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox16b_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+
+table.diff_firefox16b_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox16b_pref_diff tbody tr { -moz-transition: background 0.125s ease-in-out 0s; -webkit-transition: background 0.125s ease-in-out 0s; -o-transition: background 0.125s ease-in-out 0s; transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
+

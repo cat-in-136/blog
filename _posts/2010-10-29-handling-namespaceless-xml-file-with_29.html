@@ -1,0 +1,59 @@
+---
+layout: post
+title: Handling namespaceless XML file with SAX (2)
+date: '2010-10-29T23:44:00.045+09:00'
+author: cat_in_136
+tags:
+- java
+- xml
+modified_time: '2010-10-29T23:44:00.970+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8883996247715067831
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/10/handling-namespaceless-xml-file-with_29.html
+---
+
+<p>
+After last post, I found SAX namespace handling method can be changed with <a href="http://download.oracle.com/javase/6/docs/api/javax/xml/parsers/SAXParserFactory.html#setNamespaceAware%28boolean%29"><code>SAXParserFactory#setNamespaceAware()</code> function</a>.
+</p>
+<pre class="prettyprint"><code>    SAXParserFactory factory = SAXParserFactory.newInstance();
+<em style="font-style:normal; background-color: #ff0;">    factory.setNamespaceAware(true);</em>
+    SAXParser parser = factory.newSAXParser();
+</code></pre>
+<p>
+This setting specify whether the parser supports XML namespaces or not and default value is <code>false</code>.
+</p>
+<p>
+Following table is the result of namespace-less <code>"&lt;test&gt;"</code> tag.
+</p>
+<div>
+<table>
+<thead>
+<tr>
+<th>NamespaceAware</th>
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>uri</th>
+<td><code>""</code></td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<th>localName</th>
+<td><code>""</code></td>
+<td><code>"test"</code></td>
+</tr>
+
+<tr>
+<th>qName</th>
+<td><code>"test"</code></td>
+<td><code>"test"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>
+Note that: On Android <em>1.5</em>, calling <code>SAXParserFactory#setNamespaceAware()</code> throws <code>SAXNotSupportedException</code> "The 'namespace-prefix' feature is not supported while the 'namespaces' feature is enabled.". We SHOULD USE newer Android OS.
+</p>

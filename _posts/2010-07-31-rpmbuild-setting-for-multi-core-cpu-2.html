@@ -1,0 +1,33 @@
+---
+layout: post
+title: rpmbuild setting for multi core CPU (2)
+date: '2010-07-31T01:03:00.000+09:00'
+author: cat_in_136
+tags:
+- make
+modified_time: '2010-07-31T01:04:07.129+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4846329791405479747
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/07/rpmbuild-setting-for-multi-core-cpu-2.html
+---
+
+<p>
+According to <a href="http://fedoraproject.org/wiki/Packaging/Guidelines">Fedora Project's Package Guideline</a>, <code>%{?_smp_mflags}</code> seems to be the recommended way.
+</p>
+<blockquote cite="http://fedoraproject.org/wiki/Packaging/Guidelines#Parallel_make">
+<p>Whenever possible, invocations of <code>make</code> should be done as
+</p>
+<pre class="prettyprint">make&nbsp;%{?_smp_mflags}
+</pre>
+<p>This generally speeds up builds and especially on SMP machines.
+</p><p>Do make sure, however, that the package builds cleanly this way as some make files do not support parallel building. Therefore you should consider adding
+</p>
+
+<pre class="prettyprint">%_smp_mflags -j3
+</pre>
+<p>to your <code>~/.rpmmacros</code> file -- even on UP machines -- as this will expose most of these errors.
+</p>
+</blockquote>
+
+<p>
+Today, however, most of packages do not use <code>make&nbsp;%{?_smp_mflags}</code>.<a href="{{ site.baseurl }}{% post_url 2010-07-25-rpmbuild-setting-for-multi-core-cpu %}"> The <code>%__make /usr/bin/make -j 6</code> hack I wrote in this blog</a> is tentative.
+</p

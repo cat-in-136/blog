@@ -1,0 +1,30 @@
+---
+layout: post
+title: （メモ）platex+dvipdfmxをfedora13で使う方法
+date: '2010-08-06T23:10:00.000+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+modified_time: '2010-08-06T23:10:00.361+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8409313616413345968
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/08/platexdvipdfmxfedora13.html
+---
+
+<h4>インストール</h4>
+
+<ol>
+<li>texlive-texmfやtexlive-texmf-east-asian、texlive-texmf-errata-east-asianなどをyum/PackageKitでインストールする。依存関係はyum/PackageKitが解決してくれる。
+</li>
+<li>pxdviを必要とする場合、xdvik, sazanami-gothic-fonts, sazanami-mincho-fontsをインストールする（pxdviでは日本語表示用フォントとしてさざなみフォントを使用するため）</li>
+<li>dvipdfmxを必要とする場合、dvipdfmx をインストールする</li>
+</ol>
+
+<h4>後工程</h4>
+
+<p>
+/usr/share/texmf/web2c/texmf.cnf のパラメータ CMAPFONTS の設定を下記の通り修正する。
+</p>
+<pre><code>CMAPFONTS = .;$TEXMF/fonts/cmap//;/usr/share/ghostscript/<em>8.70</em>/Resource/CMap/
+↓
+CMAPFONTS = .;$TEXMF/fonts/cmap//;/usr/share/ghostscript/<em>8.71</em>/Resource/CMap/
+</code></pre>

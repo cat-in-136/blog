@@ -1,0 +1,178 @@
+---
+layout: post
+title: How to inject some XUL-elements to browser windows in restart-less addon **WITHOUT**
+  Jetpack
+date: '2011-12-24T18:00:00.000+09:00'
+author: cat_in_136
+tags:
+- mozilla
+modified_time: '2011-12-24T18:35:35.255+09:00'
+thumbnail: http://3.bp.blogspot.com/-BkoEzqIhB10/TvVCVEa_frI/AAAAAAAAALc/oNGFq_oB2gw/s72-c/Do_you_want_to_wait_for_restart_firefox.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5151921295060240246
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/12/how-to-inject-some-xul-elements-to.html
+---
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://3.bp.blogspot.com/-BkoEzqIhB10/TvVCVEa_frI/AAAAAAAAALc/oNGFq_oB2gw/s1600/Do_you_want_to_wait_for_restart_firefox.png" style="margin-left:1em; margin-right:1em"><img style="border:0;width:400px;height:50px;" height="50" width="400" src="http://3.bp.blogspot.com/-BkoEzqIhB10/TvVCVEa_frI/AAAAAAAAALc/oNGFq_oB2gw/s400/Do_you_want_to_wait_for_restart_firefox.png" /></a><br />Do you want to wait for restart?</div>
+
+<p>See also: <a href="{{ site.baseurl }}{% post_url 2010-11-27-how-to-create-restart-less-firefox4 %}">How to create restart-less #Firefox4 extension <em>WITHOUT</em> Jetpack</a></p>
+
+<p>XUL-overlay is unusable for restart-less extensions.
+If you want to inject some XUL-elements (and scripts) to Firefox browser window, you need to write some codes in <code>bootstrap.js</code>. </p>
+
+<h4>1. Browser observer</h4>
+
+<p>When a browser window is opened, I want to inject some XUL-elements(, scripts, and so on) to the browser window.
+When a browser window is closed, everything injected shall be removed.</p>
+
+<p><code>BrowserWindowObserver</code> class I wrote do the following things:</p>
+
+<ul>
+<li>When a browser window is opened, a function <code>handlers.onStartup(aWindow)</code> is called.</li>
+<li>When a browser window is closed, a function <code>handlers.onShutdown(aWindow)</code> is called.</li>
+<li><code>handler</code> shall be set in the constructor.</li>
+</ul>
+
+<p>Source code:</p>
+
+<pre class="prettyprint"><code>function BrowserWindowObserver(handlers) {
+    this.handlers = handlers;
+}
+BrowserWindowObserver.prototype = {
+    observe: function (aSubject, aTopic, aData) {
+        if (aTopic == "domwindowopened") {
+            // Let this notified when DOM content loaded.
+            aSubject.QueryInterface(Ci.nsIDOMWindow)
+              .addEventListener("DOMContentLoaded", this, false);
+        } else if (aTopic == "domwindowclosed") {
+            if (aSubject.document.documentElement.getAttribute("windowtype") == "navigator:browser") {
+                this.handlers.onShutdown(aSubject);
+            }
+        }
+    },
+    handleEvent: function(aEvent) {
+        let aWindow = aEvent.currentTarget;
+        aWindow.removeEventListener(aEvent.type, this, false);
+
+        if (aWindow.document.documentElement.getAttribute("windowtype") == "navigator:browser") {
+            this.handlers.onStartup(aWindow);
+        }
+    }
+};
+</code></pre>
+
+<p>Note that:</p>
+
+<ul>
+<li>Firefox browser windows' type is <code>"navigator:browser"</code>.</li>
+<li>When <code>observe()</code> is called with <code>aTopic</code>=<code>"domwindowopened"</code>, the DOM tree is not generated and the browser type is not specified. So, an event listener is required so to wait for <code>"DOMContentLoaded"</code> (refer to following sequence diagram.)</li>
+</ul>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-0xfE-14SW6M/TvVMHRFEqmI/AAAAAAAAALo/aFotNwrdLtQ/s1600/restart-less%2Baddon.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="292" width="400" src="http://1.bp.blogspot.com/-0xfE-14SW6M/TvVMHRFEqmI/AAAAAAAAALo/aFotNwrdLtQ/s400/restart-less%2Baddon.png" /></a></div>
+
+
+
+<h4>2. startup()</h4>
+
+<p>When the add-on is activated, ...</p>
+
+<ul>
+<li>create and register a new instance of <code>BrowserWindowObserver</code>; and</li>
+<li>call a startup function for each the opened browser windows.</li>
+</ul>
+
+<p>Source code:</p>
+
+<pre class="prettyprint"><code>var _gWindowListener = null;
+
+function startup(params, aReason) {
+    // do something...
+
+    let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
+      .getService(Ci.nsIWindowWatcher);
+    let wm = Cc["@mozilla.org/appshell/window-mediator;1"]
+      .getService(Ci.nsIWindowMediator);
+
+    // create and register a browser window observer.
+    _gWindowListener = new BrowserWindowObserver({
+        onStartup: browserWindowStartupFunc,
+        onShutdown: browserWindowShutdownFunc
+    });
+    ww.registerNotification(_gWindowListener);
+
+    // call startup function for each the browser windows.
+    let winenu = wm.getEnumerator("navigator:browser");
+    while (winenu.hasMoreElements()) {
+        browserWindowShutdownFunc(winenu.getNext());
+    }
+}
+</code></pre>
+
+<p>Note that:</p>
+
+<ul>
+<li>Register a browser window observer to <a href="https://developer.mozilla.org/en/nsIWindowWatcher"><code>nsIWindowWatcher</code></a> service.</li>
+<li>Use <a href="https://developer.mozilla.org/en/nsIWindowMediator"><code>nsIWindowMediator</code></a> service for enumerating browser windows.</li>
+</ul>
+
+<h4>3. shutdown()</h4>
+
+<p>When the add-on is deactivated, ...</p>
+
+<ul>
+<li>unregister the browser window observer; and</li>
+<li>call a shutdown function for each the browser windows.</li>
+</ul>
+
+<p>Source code:</p>
+
+<pre class="prettyprint"><code>function shutdown(params, aReason) {
+    // do something ...
+
+    let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
+      .getService(Ci.nsIWindowWatcher);
+    let wm = Cc["@mozilla.org/appshell/window-mediator;1"]
+      .getService(Ci.nsIWindowMediator);
+    // unregister a browser window observer.
+    ww.unregisterNotification(_gWindowListener);
+    _gWindowListener = null;
+
+    // call shutdown function for each the browser windows.
+    let winenu = wm.getEnumerator("navigator:browser");
+    while (winenu.hasMoreElements()) {
+        browserWindowShutdownFunc(winenu.getNext());
+    }
+}
+</code></pre>
+
+<h4>4. inject and remove</h4>
+
+<p>Injection and Removal of XUL-elements is straight forward!</p>
+
+<p>Source code:</p>
+
+<pre class="prettyprint"><code>function browserWindowStartupFunc(aWindow) {
+    let contextMenu = aWindow.document.getElementById("contentAreaContextMenu");
+    let menuitem = aWindow.document.createElement("menuitem");
+    menuitem.label = "Foobar";
+    menuitem.id = "foobar_menuitem";
+    contextMenu.appendChild(menuitem);
+}
+
+function browserWindowShutdownFunc(aWindow) {
+    let contextMenu = aWindow.document.getElementById("contentAreaContextMenu");
+    let menuitem = aWindow.document.getElementById("foobar_menuitem");
+    contextMenu.removeChild(menuitem);
+}
+</code></pre>
+
+<h4>References</h4>
+
+<ul>
+<li><a href="{{ site.baseurl }}{% post_url 2010-11-27-how-to-create-restart-less-firefox4 %}">How to create restart-less #Firefox4 extension <em>WITHOUT</em> Jetpack</a> - My Blog Post</li>
+<li><a href="https://developer.mozilla.org/en/Extensions/Bootstrapped_extensions">Bootstrapped extensions</a> - MDN Docs</li>
+<li><a href="https://developer.mozilla.org/en/nsIWindowWatcher">nsIWindowWatcher</a> - MDN XPCOM Interface Reference</li>
+<li><a href="https://developer.mozilla.org/en/nsIWindowMediator">nsIWindowMediator</a> - MDN XPCOM Interface Reference</li>
+<li><a href="https://developer.mozilla.org/en/Gecko-Specific_DOM_Events#DOMContentLoaded">DOMContentLoaded (Gecko-Specific DOM Events)</a> - MDN Docs</li>
+</ul>

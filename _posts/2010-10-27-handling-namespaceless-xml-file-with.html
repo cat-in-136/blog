@@ -1,0 +1,113 @@
+---
+layout: post
+title: Handling namespaceless XML file with SAX
+date: '2010-10-27T22:51:00.008+09:00'
+author: cat_in_136
+tags:
+- java
+- xml
+modified_time: '2010-10-27T22:51:00.956+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7756162740145150128
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/10/handling-namespaceless-xml-file-with.html
+---
+
+<p>
+On the <abbr title="Simple API for XML">SAX</abbr> handlers' function, 3 element name present:
+</p>
+<pre class="prettyprint"><code>void startElement(<strong>String uri</strong>,
+                  <strong>String localName</strong>,
+                  <strong>String qName</strong>,
+                  Attributes atts)
+                  throws SAXException</code></pre>
+<p>
+For example, when <code>&lt;foobar:test xmlns:foobar="http://example.com/foobar"&gt;</code> tag is seeked, SAX call <code>startElement</code> function with following parameters:
+
+</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>uri</th>
+<td><code>"http://example.com/foobar"</code></td>
+</tr>
+<tr>
+<th>localName</th>
+<td><code>"test"</code></td>
+</tr>
+<tr>
+
+<th>qName</th>
+<td><code>"foobar:test"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>
+When handling the Namespaceless XML documents, only <var>qName</var> seems to be used. But old Java Runtime such as Android 1.5(?), only <var>localName</var> seems to be used.
+
+</p>
+<div>
+<table>
+<thead>
+<tr>
+<th></th>
+<td>J2SE 6</td>
+<td>Android 2.2</td>
+<td>Android 1.5</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>uri</th>
+
+<td><code>""</code></td>
+<td><code>""</code></td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<th>localName</th>
+<td><code>""</code></td>
+<td><code>""</code></td>
+<td><code>"test"</code></td>
+</tr>
+
+<tr>
+<th>qName</th>
+<td><code>"test"</code></td>
+<td><code>"test"</code></td>
+<td><code>""</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+Sourcecode for Android 2.2/1.5 is as following:
+</p>
+<pre class="prettyprint"><code>public void testSAX() throws Exception {
+    final TextView tv = new TextView(this);
+
+    ByteArrayInputStream input = new ByteArrayInputStream("&lt;test&gt;&lt;/test&gt;".getBytes());
+
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    SAXParser parser = factory.newSAXParser();
+    parser.parse(input, new DefaultHandler() {
+        @Override
+        public void startElement(String uri, String localName,
+                String qName, Attributes attributes) throws SAXException {
+            System.out.println("uri: " + uri);
+            System.out.println("localName: " + localName);
+            System.out.println("qName: " + qName);
+     
+            tv.setText(
+                "uri: " + uri + "\n" +
+                "localName: " + localName + "\n" +
+                "test: " + qName
+            );
+
+            super.startElement(uri, localName, qName, attributes);
+        }
+    });
+
+    setContentView(tv);
+}</code></pre>

@@ -1,0 +1,72 @@
+---
+layout: post
+title: '"View Page Source" in browser tabs without any addons'
+date: '2010-02-27T22:52:00.006+09:00'
+author: cat_in_136
+tags:
+- javascript
+modified_time: '2010-02-28T14:21:01.046+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8902741609998688899
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/02/view-page-source-in-browser-tabs.html
+---
+
+<p>
+Drag following bookmarklet to your bookmarks toolbar, then click it.
+</p>
+<ul>
+<li><a href="javascript:(function(){location.href = 'view-source:'+location.href})();">View Page Source in the current tab</a></li>
+<li><a href="javascript:(function(){window.open('view-source:'+location.href,'_blank');})();">View Page Source in a new tab</a></li>
+</ul>
+<p>
+NOTE: If "Tabs"-&gt;"Open new windows in a new tab instead" on the Firefox Preference is not checked, the bookmarklet "View Page Source in a new tab" does not work (view page source in a new <em>window</em>.)
+</p>
+
+<h3>Supported browser</h3>
+<p>
+These bookmarklets work with not only Firefox but also Safari and Google Chrome.
+These do not work with IE and Opera because they do not support "view-source:" URI scheme.
+</p>
+<p>
+"view-source:" URI scheme refer to source-code for a given URI. This bookmarklet generate and open "view-source:" URI.
+</p>
+
+<h3>Extra edition</h3>
+
+<p>
+On firefox, "view-source:" scheme is also applicable to "data:" scheme. Following bookmarklet is the demo to show source code of JavaScript-generated partial html code.
+</p>
+
+<ul>
+
+<li><a href="javascript:(function(){var a=window.getSelection();var b=location.href;if(a.rangeCount!=0){var c=a.getRangeAt(0);if(!c.collapsed){var d=document.createElement('div');d.appendChild(c.cloneContents());b='data:text/html;base64,'+btoa(d.innerHTML)}}window.open('view-source:'+b,'_blank')})();">View Page/Selection Source in a new tab</a> : If some text is selected, then view selection source. If no text is selected, then view page source.</li>
+</ul>
+<p>
+These bookmarklets work with only Firefox.
+</p>
+
+<p>
+Original code of this bookmarklet is as follows
+</p>
+<pre class="prettyprint"><code>
+javascript:(function() {
+  var selection = window.getSelection();
+  var url = location.href;
+  if (selection.rangeCount != 0) {
+    var range = selection.getRangeAt(0);
+    if (! range.collapsed) {
+      var div = document.createElement("div");
+      div.appendChild(range.cloneContents());
+      url = "data:text/html;base64," + btoa(div.innerHTML);
+    }
+  }
+  window.open("view-source:" + url, "_blank");
+})();
+</code></pre>
+
+<h3>See also</h3>
+
+<ul>
+<li><a href="https://wiki.mozilla.org/Firefox/Projects/View_Source_in_Tab">View Source in Tab</a> : a proposal of changing "View Page Source" behaviour</li>
+<li><a href="http://piro.sakura.ne.jp/xul/_viewsourceintab.html.en">Source Viewer Tab</a> : a famous addon for this purpose, but full of future is available</li>
+<li><a href="http://en.wikipedia.org/wiki/View-source_URI_scheme">View-source URI scheme</a> (wikipedia)</li>
+</ul>

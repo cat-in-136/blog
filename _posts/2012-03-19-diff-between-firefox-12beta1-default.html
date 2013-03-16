@@ -1,0 +1,36 @@
+---
+layout: post
+title: Diff between firefox 12beta1 default preference and firefox 11
+date: '2012-03-19T23:34:00.019+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2012-03-19T23:34:00.113+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4632027663711822703
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/03/diff-between-firefox-12beta1-default.html
+---
+
+<p>This is difference between the default preference of Firefox 12-beta1 and one of 11.0.<br />
+</p>
+<dl><dt>Default pref Javascript files:</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+</dl>
+<table class="diff_firefox12b_pref_diff"><thead><tr><td>Pref</td><td>Firefox 11.0</td><td>Firefox 12 beta 1</td></tr></thead>
+<tbody><tr><td>app.<wbr />support.<wbr />baseURL</td><td>http://support.mozilla.com<wbr />/<wbr />1/firefox/%VERSION%/%OS%/%LOCALE%/</td><td>http://support.mozilla.org<wbr />/<wbr />1/firefox/%VERSION%/%OS%/%LOCALE%/</td></tr><tr class="newkey"><td>browser.<wbr />newtab.<wbr />url</td><td class="undefined">undefined</td><td>about:blank</td></tr><tr class="newkey"><td>browser.<wbr />newtabpage.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>browser.<wbr />sessionstore.<wbr />restore_<wbr />pinned_<wbr />tabs_<wbr />on_<wbr />demand</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>browser.<wbr />tabs.<wbr />onTop</td><td class="undefined">undefined</td><td>true</td></tr><tr><td>capability.<wbr />policy.<wbr />default.<wbr />History.<wbr />current</td><td>UniversalBrowserRead</td><td>UniversalXPConnect</td></tr><tr><td>capability.<wbr />policy.<wbr />default.<wbr />History.<wbr />item</td><td>UniversalBrowserRead</td><td>UniversalXPConnect</td></tr><tr><td>capability.<wbr />policy.<wbr />default.<wbr />History.<wbr />next</td><td>UniversalBrowserRead</td><td>UniversalXPConnect</td></tr><tr><td>capability.<wbr />policy.<wbr />default.<wbr />History.<wbr />previous</td><td>UniversalBrowserRead</td><td>UniversalXPConnect</td></tr><tr><td>capability.<wbr />policy.<wbr />default.<wbr />History.<wbr />toString</td><td>UniversalBrowserRead</td><td>UniversalXPConnect</td></tr><tr class="newkey"><td>devtools.<wbr />styleeditor.<wbr />transitions</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />tilt.<wbr />intro_<wbr />transition</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />tilt.<wbr />outro_<wbr />transition</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>dom.<wbr />network.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>dom.<wbr />network.<wbr />metered</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>extensions.<wbr />webservice.<wbr />discoverURL</td><td>https://services.addons.mozilla.org/%LOCALE%/firefox/discovery/pane/%VERSION%/%OS%</td><td>https://services.addons.mozilla.org/%LOCALE%/firefox/discovery/pane/%VERSION%/%OS%/%COMPATIBILITY_MODE%</td></tr><tr><td>intl.<wbr />charsetmenu.<wbr />browser.<wbr />more4</td><td>armscii-8, GEOSTD8, TIS-620, ISO-8859-11, windows-874, IBM857, ISO-8859-9, x-mac-turkish, windows-1254, x-viet-tcvn5712, VISCII, x-viet-vps, windows-1258, x-mac-devanagari, x-mac-gujarati, x-mac-gurmukhi</td><td>armscii-8, TIS-620, ISO-8859-11, windows-874, IBM857, ISO-8859-9, x-mac-turkish, windows-1254, x-viet-tcvn5712, VISCII, x-viet-vps, windows-1258, x-mac-devanagari, x-mac-gujarati, x-mac-gurmukhi</td></tr><tr class="newkey"><td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />browser.<wbr />tabs.<wbr />onTop</td><td class="undefined">undefined</td><td>true</td></tr></tbody></table>
+
+
+<style type="text/css"><!--
+table.diff_firefox12b_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox12b_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox12b_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox12b_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox12b_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox12b_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox12b_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+
+table.diff_firefox12b_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox12b_pref_diff tbody tr { -moz-transition: background 0.125s ease-in-out 0s; }
+
+})();
+--></style>

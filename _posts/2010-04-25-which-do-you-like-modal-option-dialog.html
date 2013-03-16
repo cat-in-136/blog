@@ -1,0 +1,46 @@
+---
+layout: post
+title: Which do you like modal option dialog or instant apply?
+date: '2010-04-25T23:56:00.002+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- windows
+- mozilla
+modified_time: '2012-07-08T15:10:59.805+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/S9RRtXLB6JI/AAAAAAAAAB0/d_i9GXVyeu0/s72-c/diff.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6874237184630274321
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/04/which-do-you-like-modal-option-dialog.html
+---
+
+<img style="width:299px; height:150px;" src="http://1.bp.blogspot.com/_mg7ZLoSThok/S9RRtXLB6JI/AAAAAAAAAB0/d_i9GXVyeu0/s1600/diff.png" />
+<p>
+The option dialog of typical windows applications is a modal dialog. Until you click OK button, the change of setting is not apply. If you click Cancel button, the change is omitted. So option dialogs have "OK" and "Cancel" button.
+</p>
+<p>
+But option dialog of Linux(Gnome) (and Mac OS X?) is different form that of windows. Option dialog is not modal and does not usually have "Close" button. If you change setting on the dialog, the change applies immediately.
+</p>
+
+<h3>Change option dialog mode on Firefox</h3>
+<p>
+Firefox has cool preference <code>browser.preferences.instantApply</code>.
+</p>
+<dl>
+<dt><code>true</code></dt>
+<dd>The change in option dialog applies immediately. (Non-Windows Default)</dd>
+<dt><code>false</code></dt>
+<dd>The change in option dialog applies when the user click "OK" button. (Windows Default)</dd>
+</dl>
+<p>
+Note that This preference is applicable to any platform. If you installed Configuration Mania, it is easy to change the mode. Just click "UI"-&gt;"Others"-&gt;"Accept instance (likely Mac or Gnome)":
+</p>
+<a href="http://4.bp.blogspot.com/_mg7ZLoSThok/S9RX3F9hTPI/AAAAAAAAAB8/ef5YnxydOm8/s1600/cm.png"><img style="display:block; margin:0px auto 10px; text-align:center;width: 400px; height: 123px;" src="http://4.bp.blogspot.com/_mg7ZLoSThok/S9RX3F9hTPI/AAAAAAAAAB8/ef5YnxydOm8/s400/cm.png" /></a>
+<ins datetime="2012-07-08" style="color: red;">Note that: <p>"Accept instance (likely Mac or Gnome)" is now "Apply instance and the dialog is modeless (likely Mac or Gnome)".</p></ins>
+<p>
+I like instance-apply mode better than Windows default. Instance-apply mode can quickly change setting. How about you?
+</p>
+
+<h3>See also</h3>
+<ul>
+<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=302509">Bug 302509  - widgets/preferences.xml depends on (browser) preferences</a></li>
+</ul>

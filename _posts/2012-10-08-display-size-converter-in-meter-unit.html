@@ -1,0 +1,172 @@
+---
+layout: post
+title: 画面サイズ換算器 - Display Size Converter in meter unit
+date: '2012-10-08T11:18:00.001+09:00'
+author: cat_in_136
+tags:
+- web application
+- チラシの裏
+- display
+- math
+modified_time: '2012-10-13T00:23:48.296+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4697871144780631362
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/10/display-size-converter-in-meter-unit.html
+---
+
+<p>
+ありそうでない、メートル単位の画面サイズ換算。毎回電卓叩くの面倒なので作ってみた。
+</p>
+
+<style><!-- /* --><![CDATA[ /*  */
+#proj_size_conv_board {
+  display: table;
+}
+#proj_size_conv_board > div {
+  display: table-row;
+}
+#proj_size_conv_board > div > * {
+  display: table-cell;
+  margin: 2px;
+}
+#proj_size_conv_board input:focus,
+#proj_size_conv_board select:focus {
+  outline: solid 3px #fa0;
+}
+/* ]]><!-- */ --></style>
+
+<div id="proj_size_conv_board">
+  <div>
+    <label for="proj_size_conv_size_inch">Display Size:</label>
+    <input type="number" id="proj_size_conv_size_inch" min="0" />
+    <span>in</span>
+  </div>
+  <div>
+    <label for="proj_size_conv_size_meter"></label>
+    <input type="number" id="proj_size_conv_size_meter" min="0" />
+    <span>m</span>
+  </div>
+  <div>
+    <label for="proj_size_conv_width_meter">Width:</label>
+    <input type="number" id="proj_size_conv_width_meter" min="0" />
+    <span>m</span>
+  </div>
+  <div>
+    <label for="proj_size_conv_height_meter">Height:</label>
+    <input type="number" id="proj_size_conv_height_meter" min="0" />
+    <span>m</span>
+  </div>
+  <div>
+    <label for="proj_size_conv_dar"><abbr title="Display Aspect Ratio">DAR</abbr>:</label>
+    <select id="proj_size_conv_dar">
+      <option value="16:9" selected="selected">HD video standard (16:9)</option>
+      <option value="4:3">4:3</option>
+    </select>
+  </div>
+</div>
+
+<script><!-- // --><![CDATA[
+document.getElementById("proj_size_conv_board").style.opacity = "0.5";
+window.addEventListener("load", function () {
+  document.getElementById("proj_size_conv_board").style.opacity = "inherit";
+  var oSizeIn   = document.getElementById("proj_size_conv_size_inch");
+  var oSizeM    = document.getElementById("proj_size_conv_size_meter");
+  var oWidthM   = document.getElementById("proj_size_conv_width_meter");
+  var oHeightM  = document.getElementById("proj_size_conv_height_meter");
+  var oDAR      = document.getElementById("proj_size_conv_dar");
+
+  function getTheta() {
+    try {
+      return Math.atan2(
+        parseFloat(oDAR.value.toString().split(":", 2)[1]),
+        parseFloat(oDAR.value.toString().split(":", 2)[0])
+      );
+    } catch (e) {
+      return Math.atan2(9, 16);
+    }
+  }
+  function onSizeInChanged() {
+    try {
+      var theta   = getTheta();
+      var sizeIn  = parseFloat(oSizeIn.value);
+      var sizeM   = sizeIn * 0.0254;
+      var widthM  = sizeM  * Math.cos(theta);
+      var heightM = sizeM  * Math.sin(theta);
+
+      oSizeIn.value   = sizeIn;
+      oSizeM.value    = sizeM;
+      oWidthM.value   = widthM;
+      oHeightM.value  = heightM;
+    } catch (e) {
+    }
+  }
+  function onSizeMChanged() {
+    try {
+      var theta   = getTheta();
+      var sizeM   = parseFloat(oSizeM.value);
+      var sizeIn  = sizeM  * 39.37;
+      var widthM  = sizeM  * Math.cos(theta);
+      var heightM = sizeM  * Math.sin(theta);
+
+      oSizeIn.value   = sizeIn;
+      oSizeM.value    = sizeM;
+      oWidthM.value   = widthM;
+      oHeightM.value  = heightM;
+    } catch (e) {
+    }
+  }
+  function onWidthMChanged() {
+    try {
+      var theta   = getTheta();
+      var widthM  = parseFloat(oWidthM.value);
+      var heightM = widthM * Math.tan(theta);
+      var sizeM   = widthM / Math.cos(theta);
+      var sizeIn  = sizeM  * 39.37;
+
+      oSizeIn.value   = sizeIn;
+      oSizeM.value    = sizeM;
+      oWidthM.value   = widthM;
+      oHeightM.value  = heightM;
+    } catch (e) {
+    }
+  }
+  function onHeightMChanged() {
+    try {
+      var theta   = getTheta();
+      var heightM = parseFloat(oHeightM.value);
+      var widthM  = heightM / Math.tan(theta);
+      var sizeM   = heightM / Math.sin(theta);
+      var sizeIn  = sizeM  * 39.37;
+
+      oSizeIn.value   = sizeIn;
+      oSizeM.value    = sizeM;
+      oWidthM.value   = widthM;
+      oHeightM.value  = heightM;
+    } catch (e) {
+    }
+  }
+
+  // set initial value.
+  (function () {
+    oSizeIn.value   = 100;
+    onSizeInChanged();
+  })();
+
+  oSizeIn.addEventListener("change", function (event) {
+    onSizeInChanged();
+  }, false);
+  oSizeM.addEventListener("change", function (event) {
+    onSizeMChanged();
+  }, false);
+  oWidthM.addEventListener("change", function (event) {
+    onWidthMChanged();
+  }, false);
+  oHeightM.addEventListener("change", function (event) {
+    onHeightMChanged();
+  }, false);
+  oDAR.addEventListener("change", function (event) {
+    onSizeInChanged();
+  }, false);
+}, false);
+// ]]><!-- --></script>
+
+

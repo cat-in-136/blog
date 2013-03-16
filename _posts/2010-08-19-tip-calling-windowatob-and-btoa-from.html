@@ -1,0 +1,41 @@
+---
+layout: post
+title: 'Tip: Calling window.atob() and btoa() from Jetpack-SDK'
+date: '2010-08-19T23:53:00.047+09:00'
+author: cat_in_136
+tags:
+- javascript
+- チラシの裏
+- jetpack
+- mozilla
+modified_time: '2010-08-19T23:53:00.200+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5172901955311542083
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/08/tip-calling-windowatob-and-btoa-from.html
+---
+
+<p>
+<code>window.atob()</code> decodes Base64 string, and <code>window.btoa()</code> encodes to Base64 string. These functions are not global functions but DOM Window's methods.
+</p>
+<p>
+MDC page said as follows:
+</p>
+<blockquote cite="https://developer.mozilla.org/en/DOM/window.atob">
+atob() is also available to XPCOM components implemented in JavaScript, even though window is not the global object in components. 
+</blockquote>
+<p>
+But <code>atob()</code> seems to be implemented in <em>only</em> <a href="https://developer.mozilla.org/en/nsIDOMWindowInternal"><code>nsIDOMWindowInternal</code></a> (i.e. DOM Window.) I <a href="http://mxr.mozilla.org/mozilla-central/ident?i=atob&amp;filter=">could not find for <code>atob()</code> function</a> in any other XPCOM components.
+</p>
+
+<p>
+I think a certain DOM Window instance <em>must</em> be required. So I write following code for encode/decode Base64 text from Jetpack-SDK:
+</p>
+<pre class="prettyprint"><code>
+let win = require("window-utils").windowIterator().next());
+let {Cc, Ci} = require("chrome");
+let atob = win.QueryInterface(Ci.nsIDOMWindowInternal).atob;
+
+return atob(v);
+</code></pre>
+<p>
+Note that <code>require("window-utils").windowIterator()</code> returns a iterator and calling <code>next()</code> function returns first element (window instance) of the iterator.
+</p>

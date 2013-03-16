@@ -1,0 +1,56 @@
+---
+layout: post
+title: 日本の携帯・PHSメールのSPF(送信ドメイン認証)対応状況のメモ
+date: '2010-02-07T11:58:00.006+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+modified_time: '2010-02-07T12:16:00.348+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-9066317055092668805
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/02/phsspf.html
+---
+
+<p>もし調査に抜けがなく下記の通りならば、明らかにWillcomは迷惑メール対策が遅れているとしかいわざるを得ない。</p>
+
+<table>
+<thead>
+<tr><th>キャリア</th><td>受信拒否設定の可否</td><td>送信の対応(*1)</td></tr>
+</thead>
+<tbody>
+<tr><th>NTT docomo</th><td>OK</td><td>OK</td></tr>
+<tr><th>au by KDDI</th><td>OK</td><td>OK</td></tr>
+<tr><th>Softbank Mobile</th><td>OK</td><td>OK</td></tr>
+<tr><th>E-Mobile</th><td>OK</td><td>OK</td></tr>
+<tr><th>Willcom (PHS)</th><td>?</td><td>OK</td></tr>
+</tbody>
+</table>
+
+<p>
+*1…DNSのTXTレコードに登録されているか否か。
+</p>
+
+<h3>参考文献</h3>
+<ul>
+<li>NTT docomo
+<ul>
+<li><a href="http://www.nttdocomo.co.jp/service/communication/imode_mail/notice/sender_id/">http://www.nttdocomo.co.jp/service/communication/imode_mail/notice/sender_id/</a></li>
+</ul></li>
+<li>au by KDDI
+<ul>
+<li><a href="http://www.au.kddi.com/service/email/support/meiwaku/email_boshi/filter/domain_ninsho/">http://www.au.kddi.com/service/email/support/meiwaku/email_boshi/filter/domain_ninsho/</a></li>
+<li><a href="http://www.au.kddi.com/service/email/support/chui/shiyo/">http://www.au.kddi.com/service/email/support/chui/shiyo/</a></li>
+</ul></li>
+<li>Softbank Mobile
+<ul>
+<li><a href="https://www.email.softbank.ne.jp/help/j/antispoof.html">https://www.email.softbank.ne.jp/help/j/antispoof.html</a></li>
+<li><a href="http://creation.mb.softbank.jp/mail/mail_attention.html">http://creation.mb.softbank.jp/mail/mail_attention.html</a></li>
+</ul></li>
+<li>E-mobile
+<ul>
+<li><a href="http://emobile.jp/service/mailsettei.html">http://emobile.jp/service/mailsettei.html</a></li>
+</ul></li>
+<li>Willcom
+<ul>
+<li><a href="http://www.willcom-inc.com/ja/corporate/press/2006/03/14/index.html">http://www.willcom-inc.com/ja/corporate/press/2006/03/14/index.html</a></li>
+</ul></li>
+</ul>

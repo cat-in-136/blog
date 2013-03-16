@@ -1,0 +1,66 @@
+---
+layout: post
+title: Which is faster eval() or JSON.parse()
+date: '2010-05-20T00:41:00.001+09:00'
+author: cat_in_136
+tags:
+- javascript
+- チラシの裏
+modified_time: '2010-05-20T00:45:07.963+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-209186480312001263
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/which-is-faster-eval-or-jsonparse.html
+---
+
+<p>
+On my Firefox, speed of parsing JSON using <code>eval()</code> is not always slower than <code>JSON.parse()</code>. WTF?
+</p>
+
+<div>
+<label for="json-speed-num-of-obj"># of obj</label>
+<input id="json-speed-num-of-obj" type="text" value="100000" />
+<input id="json-speed-run" type="button" value="Run!" />
+<div id="json-speed-result"></div>
+<script type="text/javascript"><!-- /* --><![CDATA[ // */
+if (JSON.parse) {
+  var oBtn = document.getElementById("json-speed-run");
+  oBtn.onclick = function() {
+    oBtn.readonly = true;
+    var oResult = document.getElementById("json-speed-result");
+    oResult.innerHTML = "";
+
+    var time = new Date();
+    var jsonstr = "["
+    var numOfLen = 1;
+    try {
+      numOfLen = Math.abs(parseInt(document.getElementById("json-speed-num-of-obj").value));
+    } catch (e) {
+      alert("# of obj is invalid");
+    }
+    for (var i = 0; i < (numOfLen-1); i++) {
+      jsonstr += "null,";
+    }
+    jsonstr += "null]";
+
+    time = new Date();
+    JSON.parse(jsonstr);
+    oResult.innerHTML += "JSON.parse(): " + ((new Date()).getTime() - time.getTime()) + "<br />";
+
+    time = new Date();
+    JSON.parse(jsonstr);
+    oResult.innerHTML += "JSON.parse(): " + ((new Date()).getTime() - time.getTime()) + "<br />";
+
+    var evalstring = "("+jsonstr+")";
+
+    time = new Date();
+    eval(evalstring);
+    oResult.innerHTML += "eval(): " + ((new Date()).getTime() - time.getTime()) + "<br />";
+
+    time = new Date();
+    eval(evalstring);
+    oResult.innerHTML += "eval(): " + ((new Date()).getTime() - time.getTime()) + "<br />";
+
+    oBtn.readonly = false;
+  };
+}
+/* ]]><!-- */// --></script>
+</div>

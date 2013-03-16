@@ -1,0 +1,54 @@
+---
+layout: post
+title: 'Study for "Browser" panel issue and "Animate fade-in" #2'
+date: '2010-06-26T22:47:00.025+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- xul
+modified_time: '2010-06-27T10:23:32.059+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/TCXp2T3IhsI/AAAAAAAAADY/N6Jmy4MY33Q/s72-c/conf-mania-mac-ng.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8033904602266410658
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/study-for-browser-panel-issue-and_26.html
+---
+
+<p>I made an experimental release for this issue. You can download experimental release <code>confmania-experimental-mac_issue_9-1.13.2010062601.xpi</code> at <a href="http://bitbucket.org/cat_in_136/configuration-mania/downloads">bitbucket's download page</a></p>
+
+<h4>New "Browser" panel</h4>
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/_mg7ZLoSThok/TCXp2T3IhsI/AAAAAAAAADY/N6Jmy4MY33Q/s1600/conf-mania-mac-ng.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img src="http://1.bp.blogspot.com/_mg7ZLoSThok/TCXp2T3IhsI/AAAAAAAAADY/N6Jmy4MY33Q/s320/conf-mania-mac-ng.png" style="width: 320px; height: 268px; border:0;" /></a></div>
+
+<h4>Solution for this issue</h4>
+
+<p>If <code>browser.preferences.animateFadeIn</code> is set <code>true</code>, "Browser" panel is <em>fixed</em> height.</p>
+
+<pre class="prettyprint"><code>prefwindow[animated="true"] #paneBrowserBoxContainer .subtabpanel {
+    /* For animated or Mac, specify fixed height */
+    max-height: 390px;
+    min-height: 390px;
+
+    /* *snip* */
+}
+</code></pre>
+
+<ul>
+<li>Flexible panel height make the window too big or too small vertically.</li>
+<li>Preference window calculate height of the content. This procedure fails for flexible-height content.</li>
+<li>For Mac OS X, Preference window (incl. Configuration Mania window) is not resizable, <a href="http://bitbucket.org/cat_in_136/configuration-mania/issue/9/window-size-too-small">Anonymous issue#9 reporter</a> said.
+<ul><li>For Windows and Linux, Configuration Mania window is resizable.</li>
+<li><code>browser.preferences.animateFadeIn</code> function well on Windows and Linux, but I think it is not count for much.</li></ul></li>
+<li>This is the reason of <a href="http://bitbucket.org/cat_in_136/configuration-mania/issue/9/window-size-too-small">issue#9 - Window size too small</a>.</li>
+</ul>
+
+<h4>Flexible height panel for non-Mac</h4>
+
+<p>If <code>browser.preferences.animateFadeIn</code> is set to <code>false</code>, "Browser" panel is flexible height.</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TCXrptuYvLI/AAAAAAAAADg/XfmTvRrF_fw/s1600/cm_resizable.png" style="width: 309px; height: 224px; border:0;" /></div>
+
+<ul>
+<li>The "Browser" panel fit the Configuration Mania window.</li>
+<li>It is resizable.</li>
+</ul>

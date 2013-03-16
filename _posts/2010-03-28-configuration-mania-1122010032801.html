@@ -1,0 +1,52 @@
+---
+layout: post
+title: 'UPDATE#2: Configuration Mania 1.12.2010032801: Hardware accelerated browsing
+  settings for Fx3.7'
+date: '2010-03-28T23:35:00.010+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+modified_time: '2010-04-03T10:51:51.892+09:00'
+thumbnail: http://3.bp.blogspot.com/_mg7ZLoSThok/S69uLwZ2tlI/AAAAAAAAABA/OBNnrNbIFa4/s72-c/try_direct2d.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5185290465358397289
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/configuration-mania-1122010032801.html
+---
+
+<p style="color:red">
+version 1.12.2010032801 does not works Hardware accelerated browsing settings correctly. Fixed version is 
+<a href="https://addons.mozilla.org/ja/firefox/addons/versions/4420#version-1.12.2010033101">1.12.2010033101</a>.
+<strong>1.12.2010033101 was not uploaded correctly, 1.12.2010033101 is uploaded just now. (see <a href="http://bitbucket.org/cat_in_136/configuration-mania/issue/5/1122010033101-cannot-download">issue#5</a>)</strong>
+</p>
+
+<p>
+<a href="https://addons.mozilla.org/ja/firefox/addons/versions/4420#version-1.12.2010032801">Configuration Mania 1.12.2010032801</a> is released now. It's in the sandbox now (i.e. waiting for review).
+</p>
+
+<ul>
+<li>compatible Firefox 3.7a3</li>
+<li>add WebGL setting (Browser-&gt;Page control)</li>
+<li>add Browser-&gt;Location Bar-&gt;Wait time of starting to autocomplete</li>
+<li>fix "Reset setting to the default value" behaviour</li>
+<li>add Browser->Paint&amp;Rendering-&gt;Hardware acceleration (for Firefox 3.7a3 on windows)</li>
+<li>extract Security-&gt;Referrer from Network-&gt;Network-&gt;Referer</li>
+<li>extract UI-&gt;Bidi from UI-&gt;i18n</li>
+<li>extract addons setting from debug panel</li>
+</ul>
+
+<p>
+This release contains new setting for <a href="http://www.mozilla.org/projects/devpreview/releasenotes/">Firefox 3.7a3</a> -- <a href="http://hacks.mozilla.org/2009/12/webgl-draft-released-today/">WebGL</a> and <a href="http://www.basschouten.com/blog1.php/2010/03/02/presenting-direct2d-hardware-acceleratio">Hardware accelerated rendering (Direct2D rendering)</a>.
+For example, to enable hardware accelerated rendering, follow these steps:
+</p>
+<ol>
+<li>Install <a href="https://addons.mozilla.org/ja/firefox/addons/versions/4420#version-1.12.2010032801">Configuration Mania 1.12.2010032801</a></li>
+<li>Restart firefox 3.7a3</li>
+<li>Check "Browser"->"Paint&amp;Rendering"-&gt;"Hardware acceleration"-&gt;"Enable Direct2D" and "Enable DirectWrite"</li>
+<li>Restart firefox 3.7a3 again</li>
+<li>Enjoy more faster browsing!</li>
+</ol>
+<div>
+<a href="http://3.bp.blogspot.com/_mg7ZLoSThok/S69uLwZ2tlI/AAAAAAAAABA/OBNnrNbIFa4/s1600/try_direct2d.png"><img style="width: 320px; height: 120px;" src="http://3.bp.blogspot.com/_mg7ZLoSThok/S69uLwZ2tlI/AAAAAAAAABA/OBNnrNbIFa4/s320/try_direct2d.png" /></a>
+</div>
+<p>
+By the way, Direct2D rendering seems to applicable to not only web page but also chrome (browser GUI).
+</p>

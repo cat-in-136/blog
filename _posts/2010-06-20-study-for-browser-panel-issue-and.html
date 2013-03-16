@@ -1,0 +1,34 @@
+---
+layout: post
+title: Study for "Browser" panel issue and "Animate fade-in"
+date: '2010-06-20T22:32:00.001+09:00'
+author: cat_in_136
+tags:
+- configuration mania
+- xul
+modified_time: '2010-06-20T22:33:42.250+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3676827425520552726
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/study-for-browser-panel-issue-and.html
+---
+
+<p>
+For Firefox on Mac OS X, <code>browser.preferences.animateFadeIn</code> is <a href="http://hg.mozilla.org/releases/mozilla-1.9.2/file/37f5a4a97d26/browser/app/profile/firefox.js#l587">enabled</a>. When switching panels, fade in/out and change the height of the window.
+</p>
+<p>
+This seems to be the reason why Configuration Mania "Browser" panel height is <a href="http://bitbucket.org/cat_in_136/configuration-mania/issue/9/">too small or large</a> on Mac.
+</p>
+<p>
+I found:
+</p>
+<ul>
+<li><code>browser.preferences.animateFadeIn</code> can be enabled and can work on non-Mac.</li>
+<li>Attribute <code>animated="true"</code> and internal flag <code>_shouldAnimate=true</code> is set on <code>prefwindow</code> element when the option is enabled.</li>
+<li>If <code>_shouldAnimate</code> is true and prefpane is changed, the <code>prefpane</code>'s <code>flex</code> attribute is removed. So we cannot use <code>flex</code> for <code>prefpane</code>!!</li>
+</ul>
+<pre class="prettyprint"><code>if (aPaneElement.hasAttribute("flex") &amp;&amp; this._shouldAnimate &amp;&amp;
+  prefpanes.length &gt; 1)
+  aPaneElement.removeAttribute("flex");
+</code></pre>
+<p>
+<code>_selectPane()</code> removes <code>flex</code> attribute so as to calculate size of contents.
+</p>

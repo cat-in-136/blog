@@ -1,0 +1,38 @@
+---
+layout: post
+title: No XUL <expander> element is used on current mozilla.
+date: '2010-06-30T23:23:00.002+09:00'
+author: cat_in_136
+tags:
+- xul
+- mozilla
+modified_time: '2011-12-24T18:37:48.558+09:00'
+thumbnail: http://4.bp.blogspot.com/_mg7ZLoSThok/TCao7jLFGFI/AAAAAAAAADo/IMbD2aWK_p0/s72-c/firefox1.0-expander.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7348589402732373239
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/no-xul-element-is-used-on-current.html
+---
+
+<p>
+XUL &lt;expander&gt; had been used for the Preference window on Firefox <em>1.0</em>. Since Firefox <em>1.5</em>, it have not been used.
+</p>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://4.bp.blogspot.com/_mg7ZLoSThok/TCao7jLFGFI/AAAAAAAAADo/IMbD2aWK_p0/s1600/firefox1.0-expander.png" style="display: block"><img src="http://4.bp.blogspot.com/_mg7ZLoSThok/TCao7jLFGFI/AAAAAAAAADo/IMbD2aWK_p0/s320/firefox1.0-expander.png" style="border: medium none; height: 249px; width: 320px;" /></a>
+Firefox 1.0's Preference Window (Prefwindow IV)
+</div>
+<p>
+&lt;expander&gt; element still exist at <code>chrome://global/content/xul.css</code> in Firefox 3.7a5. We seem to continue to use it.
+</p>
+<pre class="prettyprint"><code>expander {
+  -moz-binding: url("chrome://global/content/bindings/expander.xml#expander");
+  -moz-box-orient: vertical;
+}
+</code></pre>
+<p>
+But today <em>no</em> &lt;expander&gt; is used on mozilla-central (firefox main stream). I searched for "&lt;expander" on MXR [<a href="http://mxr.mozilla.org/mozilla-central/search?string=%3Cexpander">*</a>], and no result found.
+</p>
+<p>
+In addition, &lt;expander&gt; element is not listed at <a href="https://developer.mozilla.org/en/XUL_Reference">"XUL Reference" page at MDC</a>.
+</p>
+<p>
+So I'm scheduled to remove &lt;expander&gt; from Configuration Mania in the next release.
+</p>

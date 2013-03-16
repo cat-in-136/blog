@@ -1,0 +1,31 @@
+---
+layout: post
+title: XMLSerializer().serializeToString() is a simple useful HTML2XML Converter.
+date: '2010-12-23T00:08:00.000+09:00'
+author: cat_in_136
+tags:
+- javascript
+- xml
+- html
+modified_time: '2010-12-23T00:08:18.988+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8933621847387289711
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/12/xmlserializerserializetostring-is.html
+---
+
+<p>
+<code><a href="https://developer.mozilla.org/en/XMLSerializer">XMLSerializer</a>().serializeToString()</code> method converts DOM tree to text.
+</p>
+
+<div>
+<pre class="prettyprint"><code>(new XMLSerializer()).serializeToString(document.documentElement)
+</code></pre>
+<a href="javascript:(function(){prompt('', (new XMLSerializer()).serializeToString(document.documentElement))})();">bookmarklet</a>
+</div>
+
+<p>
+On <em>Firefox</em>, the output text is well-formed <em>XML</em> source code.
+The source DOM tree can be <em>HTML</em>.
+If <code>XMLSerializer().serializeToString()</code> is applied to a HTML document,
+it returns a XML-converted source code.
+For example, <code>img</code> elements ("<code>&lt;img ...&gt;</code>") are converted to <a href="http://www.w3.org/TR/2008/REC-xml-20081126/#NT-EmptyElemTag">the XML's empty-element tag form</a> : "<code>&lt;img ... <strong style="background-color: #ff0;">/</strong>&gt;</code>"
+</p>

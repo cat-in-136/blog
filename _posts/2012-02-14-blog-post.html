@@ -1,0 +1,147 @@
+---
+layout: post
+title: バレンタインデーのチョコレートとグラフ理論
+date: '2012-02-14T06:00:00.028+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- math
+modified_time: '2012-02-14T22:08:45.546+09:00'
+thumbnail: http://2.bp.blogspot.com/-LDuydg-J-MM/TzdPIGU-DQI/AAAAAAAAAM4/eyChjkv5hTE/s72-c/digraph-cjsvm.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8288068409188819293
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/02/blog-post.html
+---
+
+<p><a href="http://metropolis.co.jp/" title="Metropolis Magazine | Japan's Number 1 English Magazine">メトロポリス（Metropolis）</a>という英字フリーペーパー（オンラインでも見れる）に、<em>日本の</em>バレンタインデーのマーケティング戦略について、興味深い言及がなされているのを見つけた。</p>
+
+<blockquote cite="http://metropolis.co.jp/features/advertorial/chocco-terminology/">
+  <p>Japanese chocco companies' marketing technique can't be faulted, with every human relationship now requiring some kind of sugary gift on February 14.</p>
+</blockquote>
+
+<p>和訳すると以下のような感じだろうか（もうちょっとマトモな和訳はできないものかのぅ）。</p>
+
+<blockquote>
+  <p>日本のチョコレート菓子メーカのマーケティングとして、
+  すべての人間関係について2/14になんらかの甘いお菓子の贈り物が必要ということにするのに失敗できない。</p>
+</blockquote>
+
+<p>2000年ごろから、 <em>愛する男の人</em>にチョコレートを贈るだったものから、贈る相手が広がっり昔と異なる様相になって来ているようだ。
+それをメトロポリス誌の記事では、人間関係（human relationship）に注目している。
+様々な人間関係があるが、それら全てにsome kind of sugary giftを関連付けようとしている、と。
+そのような点で「今年も女の子からチョコレートを貰えなかった」という台詞のは、もはやバレンタインデー市場のトレンドに即していないと言えるのではないか。</p>
+
+<p>普通市場規模というと単価×人数で計算するが、バレンタインデーの場合は人数じゃなくて人間関係なのだ、となると非常に興味深い。</p>
+
+<h4>古典的なチョコレートのプレゼントとグラフ理論</h4>
+
+<p>古典的な日本のバレンタインデーは「愛する男の人にチョコレートを贈る」ものである。
+男女それぞれ5人の閉じられたコミュニティがあるとき、古典的日本的バレンタインデーの市場規模は高々5人(×単価)である。</p>
+
+<p><em>高々</em>5人と高々という語を使ったのは、「愛する男の人がいない女の人」の存在や「バレンタインデーに参加する気がない女の人」の存在のためである。</p>
+
+<p>古典的日本的バレンタインデーのモデル(Classical Japanese St. Valentine day Model; CJSVMと以下略す)でチョコレートの受け渡し関係を図にすると、シンプルな有向グラフ(digraph; directed graph)になることがわかる。
+女の人の集合を<var>F</var>、男の人の集合を<var>M</var>と表すと、CJSVMの有向グラフは以下の特徴を持つ。</p>
+
+<ol>
+<li>頂点(vertex)集合<var>V</var>は、<var>F</var>と<var>M</var>の直和である。
+<var>V</var>=<var>F</var>+<var>M</var>.</li>
+<li>弧(arc)集合<var>A</var>は、<var>F</var>×<var>M</var>の部分集合である。
+<var>A</var>&#8838;<var>F</var>×<var>M</var>.</li>
+<li><var>F</var>のおのおのの要素について、出次数(outdegree)は0または1である。</li>
+<li><var>M</var>のおのおのの要素について、入次数(indegree)は0であること<strong>も</strong>ある。</li>
+</ol>
+
+<div class="separator" style="clear: both; text-align: center;">
+<img src="http://2.bp.blogspot.com/-LDuydg-J-MM/TzdPIGU-DQI/AAAAAAAAAM4/eyChjkv5hTE/s1600/digraph-cjsvm.png" alt="#F=#M=5のCJSVMの例" title="#F=#M=5のCJSVMの例" width="145" height="176" />
+</div>
+
+<p>上の図では1人の男の人にチョコレートが集中し、3人がチョコレートが貰えないという図を描いた。
+人間関係は次数分布がべき乗に従うスケールフリー性があると言われており、それに準じたためである。
+ただ、弧の本数の引き方（誰がチョコレートをもらうか、もらえないか）については複雑ネットワーク（complex network）の理論が必要であるため、本稿で細かく議論する気はない。</p>
+
+<p>CJSVMの枠組みで市場を広げるには、</p>
+
+<ul>
+<li>単価を増やす（チョコレートの高級化）</li>
+<li>チョコレートを渡す文化の普及（参加人数の割合を増やす）</li>
+</ul>
+
+<p>である。そしてこれは自ずと限界があるのが直感的にわかる。</p>
+
+<h4>義理チョコのグラフ理論</h4>
+
+<p>義理チョコ（Giri choco）というのは、本命チョコと対照的に説明される。
+シンプルに言えば、「愛する人」でない男の人にもチョコレートを渡そうということである。</p>
+
+<p>義理チョコを何も考えずに図に起こすと以下のような感じになる。</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<img src="http://2.bp.blogspot.com/-yCeyHaHW8T4/TzdPJXXrfgI/AAAAAAAAANA/YA9LePOPZZ4/s1600/digraph-gcbm.png" alt="#F=#M=5のGCBMの例" title="#F=#M=5のGCBMの例" width="145" height="176" />
+</div>
+
+<p>義理チョコはコミュニティー内の男の人にとにかく渡すので、義理チョコブロードキャストだ。
+この義理チョコブロードキャストモデル（Giri-Choco Broadcasting Model; 以下GCBMと略す）は以下の特徴を持つ。</p>
+
+<ol>
+<li>頂点集合<var>V</var>は、<var>F</var>と<var>M</var>の直和である。
+<var>V</var>=<var>F</var>+<var>M</var>.</li>
+<li>弧集合<var>A</var>は、<var>F</var>×<var>M</var>からCJSVMの弧集合(本命)を引いたものである。
+<var>A</var>=<var>F</var>×<var>M</var> - <var>A</var><sub>CJSVM</sub>.</li>
+<li><var>F</var>のおのおのの要素について、出次数は#Mまたは(#M-1)である。</li>
+</ol>
+
+<p>ただ、義理チョコは単価が安いし、女の人の負担も大きい（<var>F</var>のおのおのの要素について出次数が大きい）ため今日では減少傾向であるらしい。</p>
+
+<h4>友チョコのグラフ理論</h4>
+
+<p>CJSVMやGCBMの中では、あくまで渡す人を増やす、渡される人を増やすという人の数という古典的なマーケティング手法がとられる。
+しかし、ある時からそれ異なるバレンタインデーのマーケティングが始まることになったと思う。
+それが友チョコ（Tomo choco）だ。</p>
+
+<p>友チョコというのは、主に女性たちの間で友人どうしで受け渡しするチョコレート。
+ここで注目するのは人の数に注目したのではなく、人間関係に注目したことである。</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<img src="http://3.bp.blogspot.com/-yldQAIwOO9s/TzdPKqpSomI/AAAAAAAAANI/aV4-8hxIg10/s1600/digraph-tcem.png" alt="#T=5のTCEMの例" title="#T=5のTCEMの例" width="145" height="176" />
+</div>
+
+<p>友チョコの交換のモデル（Tomo-Choco Exchange Model; 以下TCEMと略す）の特徴は以下の通り。</p>
+
+<ol>
+<li>頂点集合<var>V</var>は、友達クラスターの頂点集合<var>T</var>に等しい。また、大抵の場合<var>T</var>は<var>F</var>の部分集合である。
+<var>V</var>=<var>T</var>.</li>
+<li>弧集合<var>A</var>は、頂点集合<var>V</var>=<var>T</var>の完全グラフの弧集合に等しい。。</li>
+<li><var>T</var>のおのおのの要素について、出次数・入次数ともに(#T-1)である。</li>
+</ol>
+
+<p>これまでのCJSVMやGCBMのモデルと以下の点で根本的に異なっている。</p>
+
+<ul>
+<li>チョコレートをプレゼントする頂点部分集合とプレゼントされる頂点部分集合の2つに分けることができなくなった。（CJSVMやGCBMでは出次数が0か、または入次数が0であった）</li>
+<li>チョコレートを渡す人は受け取る人でもある。（弧について、始点と終点を逆にした弧もまた弧集合に含まれる）</li>
+</ul>
+
+<p>弧集合の数は#A=#T(#T-1)であり、
+友チョコ交換の参加人数(#T)が少なくても弧集合の数(#A)は大きい。
+これは消費者の数が増えなくとも、人間関係（弧集合の数）に注目すれば市場が飛躍的に拡大する潜在性があるということを示唆しており非常に面白い。</p>
+
+<h4>補足：自分用チョコのグラフ理論</h4>
+
+<p>自分用にチョコレートを買った場合は、グラフ理論的に説明できないだろうと思いきや、説明できる。
+自分へのご褒美（）というぐらいなので自己ループだ。</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+<img src="http://2.bp.blogspot.com/-AbLi-FEPgMI/TzdPHV95z-I/AAAAAAAAAMw/7nZlZzWxtCY/s1600/digraph-c4s.png" alt="自分用チョコの例" title="自分用チョコの例" width="145" height="176" />
+</div>
+
+<p>皮肉れた見方をすれば友チョコの自己完結版と言うべきかもしれない。
+自分自身がチョコレートを渡す人でも受け取る人でもあるから。</p>
+
+<h4>Reference</h4>
+
+<ul>
+<li><a href="http://metropolis.co.jp/features/advertorial/chocco-terminology/" title="Metropolis - News &amp; Features | Shot Through the Heart…">Shot Through the Heart… Choco terminology plus other Valentine treats</a>, <a href="http://metropolis.co.jp/files/2012/02/932-Web-issue-complete.pdf">Metropolis Magazine #932</a> p10</li>
+<li><a href="http://www.nikkeibp.co.jp/archives/228/228743.html" title="「本命」「義理」だけじゃないバレンタインチョコ - ニュース - nikkei BPnet">「本命」「義理」だけじゃないバレンタインチョコ</a>, nikkei BPnet, Feb 2 2003</li>
+<li>A.Barabasi, and E.Bonabeau, <a href="http://www.barabasilab.com/pubs/CCNR-ALB_Publications/200305-01_SciAmer-ScaleFree/200305-01_SciAmer-ScaleFree.pdf" title="Scale-Free Networks">Scale-Free Networks</a>, Scientific American, May 2003, pp50-59 
+(和文：「<a href="https://nikkeibook.com/science/page/magazine/0309/network.html">世界の“なぜ”を読み解く　スケールフリーネットワーク</a>」日経サイエンス2003年9月号)</li>
+</ul>

@@ -1,0 +1,204 @@
+---
+layout: post
+title: Running_in_board Generator (駅名標ジェネレータ)
+date: '2010-05-16T19:39:00.005+09:00'
+author: cat_in_136
+tags:
+- javascript
+- web application
+- train and rails
+modified_time: '2012-12-23T12:16:29.131+09:00'
+thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/S-_No3XsNZI/AAAAAAAAACM/wdv5zf3QbXo/s72-c/120px-JR_Tokyo_Keihintouhoku_and_Yamanote_Line.JPG
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6604467272883914506
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/runninginboard-generator.html
+---
+
+<canvas id="__rib_canvas" width="300" height="200">Get a modern browser (<a href="www.getfirefox.net/">Firefox</a>, <a href="http://www.google.com/chrome/">Google Chrome</a> and so on) to run this generator.</canvas>
+<div id="__rib_errormsg"></div>
+<script type="text/javascript" defer="defer"><!-- /* --><![CDATA[ /* *///
+try {
+  Rib = {
+    currentRenderer: "jreast",
+    elemids: "__rib_hira,__rib_kanji,__rib_romaji,__rib_nhira,__rib_nkanji,__rib_nromaji,__rib_phira,__rib_pkanji,__rib_promaji,__rib_color,__rib_type".split(","),
+    getContext: function() {
+      return document.getElementById("__rib_canvas").getContext("2d");
+    },
+    update: function() {
+      var ctx = Rib.getContext();
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+      Rib.currentRenderer = document.getElementById("__rib_type").value;
+      var renderer = Rib.Renderer[Rib.currentRenderer];
+      ctx.canvas.setAttribute("width", renderer.size[0]);
+      ctx.canvas.setAttribute("height", renderer.size[1]);
+      renderer.render();
+
+      for (var i = 0; i < Rib.elemids.length; i++) {
+        document.getElementById(Rib.elemids[i]).removeAttribute("disabled");
+      }
+      for (var i = 0; i < renderer.nouse.length; i++) {
+        document.getElementById(renderer.nouse[i]).setAttribute("disabled", "disabled");
+      }
+      document.getElementById("__rib_link_to_this_img").href = ctx.canvas.toDataURL();
+    },
+    Renderer: {
+      classical: {
+        name: "Japanese Classical",
+        nouse: "__rib_color".split(","),
+        size: [300, 200],
+        render: function() {
+          var ctx = Rib.getContext();
+         
+          var w = ctx.canvas.width;
+          var h = ctx.canvas.height;
+          var hLine_h = ctx.canvas.height * 0.65;
+         
+          ctx.lineWidth = 5.0;
+          ctx.strokeStyle = "black";
+          ctx.fillStyle = "black";
+         
+          ctx.beginPath();
+          ctx.moveTo(w, hLine_h);
+          ctx.lineTo(0 + ctx.lineWidth    , hLine_h);
+          ctx.moveTo(0 + ctx.lineWidth / 2, hLine_h);
+          ctx.lineTo(0 + ctx.lineWidth / 2 + 10, hLine_h - 10);
+          ctx.lineTo(0 + ctx.lineWidth / 2, hLine_h);
+          ctx.lineTo(0 + ctx.lineWidth / 2 + 10, hLine_h + 10);
+          ctx.stroke();
+         
+          ctx.beginPath();
+          ctx.moveTo(w / 2, hLine_h);
+          ctx.lineTo(w / 2, h);
+          ctx.stroke();
+         
+          ctx.font = (h*0.25)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_hira").value, w/2, (h*0.25));
+          ctx.font = (h*0.1)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_kanji").value, w/2, (h*0.4));
+          ctx.fillText(document.getElementById("__rib_romaji").value.toUpperCase(), w/2, (h*0.55));
+         
+          ctx.font = (h*0.15)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_nhira").value, w*0.25, (h*0.85));
+          ctx.font = (h*0.1)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_nromaji").value.toUpperCase(), w*0.25, h);
+         
+          ctx.font = (h*0.15)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_phira").value, w*0.75, (h*0.85));
+          ctx.font = (h*0.1)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_promaji").value.toUpperCase(), w*0.75, h);
+        }
+      },
+      jreast: {
+        name: "JR East",
+        size: [300, 100],
+        nouse: "__rib_nhira,__rib_phira".split(","),
+        render: function() {
+          var ctx = Rib.getContext();
+         
+          var w = ctx.canvas.width;
+          var h = ctx.canvas.height;
+          var hLine_h = h * 0.5;
+          var hLine_lw = h * 0.2;
+
+          ctx.beginPath();
+          ctx.fillStyle = "green";
+          ctx.moveTo(w, hLine_h);
+          ctx.lineTo(hLine_lw, hLine_h + hLine_lw * 0.0);
+          ctx.lineTo(0,        hLine_h + hLine_lw * 0.5);
+          ctx.lineTo(hLine_lw, hLine_h + hLine_lw * 1.0);
+          ctx.lineTo(w, hLine_h + hLine_lw);
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.fillStyle = document.getElementById("__rib_color").value;
+          ctx.fillRect(w/2 - hLine_lw / 2, hLine_h, hLine_lw, hLine_lw);
+
+          ctx.font = (h*0.3)+"px sans-serif";
+          ctx.fillStyle = "black";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_kanji").value, w/2, (h*0.3));
+          ctx.font = (h*0.15)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_hira").value, w/2, (h*0.45));
+          ctx.font = (h*0.15)+"px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(document.getElementById("__rib_romaji").value, w/2, (h*0.85));
+
+          ctx.font = (hLine_lw*0.75)+"px sans-serif";
+          ctx.fillStyle = "white";
+          ctx.textAlign = "left";
+          ctx.fillText(document.getElementById("__rib_nkanji").value, hLine_lw + 5, hLine_h + hLine_lw - 5);
+          ctx.fillStyle = "black";
+          ctx.font = (h*0.1)+"px sans-serif";
+          ctx.fillText(document.getElementById("__rib_nromaji").value, hLine_lw + 5, h*0.8);
+
+          ctx.font = (hLine_lw*0.75)+"px sans-serif";
+          ctx.fillStyle = "white";
+          ctx.textAlign = "right";
+          ctx.fillText(document.getElementById("__rib_pkanji").value, w - hLine_lw - 5, hLine_h + hLine_lw - 5);
+          ctx.fillStyle = "black";
+          ctx.font = (h*0.1)+"px sans-serif";
+          ctx.fillText(document.getElementById("__rib_promaji").value, w - hLine_lw - 5, h*0.8);
+        }
+      }
+    },
+    init: function() {
+      Rib.update();
+      for (var i = 0; i < Rib.elemids.length; i++) {
+        document.getElementById(Rib.elemids[i]).addEventListener("change", Rib.update, false);
+      }
+    }
+  };
+  window.addEventListener("load", Rib.init, false);
+} catch (ex) {
+  document.getElementById("__rib_errormsg").appendChild(document.createTextNode(ex.toString()));
+}
+/* ]]><!-- */// --></script>
+<a id="__rib_link_to_this_img" href="javascript:void(0);">Link to this image</a>
+<fieldset>
+<legend>This station</legend>
+
+<input type="text" id="__rib_hira" value="とうきょう" />
+<input type="text" id="__rib_kanji" value="東京" />
+<input type="text" id="__rib_romaji" value="Tōkyō" />
+</fieldset>
+<fieldset>
+<legend>Next</legend>
+<input type="text" id="__rib_nhira" value="かんだ" />
+<input type="text" id="__rib_nkanji" value="神田" />
+<input type="text" id="__rib_nromaji" value="Kanda" />
+</fieldset>
+<fieldset>
+<legend>Previous</legend>
+<input type="text" id="__rib_phira" value="ゆうらくちょう" />
+<input type="text" id="__rib_pkanji" value="有楽町" />
+<input type="text" id="__rib_promaji" value="Yurakuchō" />
+
+</fieldset>
+<label for="__rib_color">Color of this line:</label>
+<input type="text" id="__rib_color" value="#00b2e5" />
+<label for="__rib_type">Style:</label>
+<select id="__rib_type">
+<optgroup label="Asia/Japan">
+<option value="classical">Classical Japanese Style</option>
+<option value="jreast" selected="selected">JR East Style</option>
+</optgroup>
+</select>
+<noscript>
+Enable JavaScript to run this generator.
+</noscript>
+
+<p>
+Powered by HTML5 &lt;canvas&gt; Text.
+</p>
+<h4>Note for non east Asian people</h4>
+<p>
+Unlike europian Running-in-board, Japanese (and/or east Asian) Running-in-board (駅名標; Ekimei-hyō) say not only the station name but also adjacent station names.
+</p>
+<a href="http://commons.wikimedia.org/wiki/File:JR_Tokyo_Keihintouhoku_and_Yamanote_Line.JPG"><img src="http://1.bp.blogspot.com/_mg7ZLoSThok/S-_No3XsNZI/AAAAAAAAACM/wdv5zf3QbXo/s1600/120px-JR_Tokyo_Keihintouhoku_and_Yamanote_Line.JPG" style="width:120px;height:90px;display:block; margin:0px auto 10px; text-align:center; border:none;" /></a>

@@ -1,0 +1,44 @@
+---
+layout: post
+title: Unofficial CSS property zoom implemented on WebKit
+date: '2010-09-02T01:12:00.000+09:00'
+author: cat_in_136
+tags:
+- html
+- css
+modified_time: '2010-09-02T01:12:00.237+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-960049941352060835
+blogger_orig_url: http://cat-in-136.blogspot.com/2010/09/unofficial-css-property-zoom.html
+---
+
+<p>
+I found unofficial CSS property "<code>zoom</code>" is implemented on WebKit (Safari and Google Chrome.) And is not implemented on Gecko (Firefox.)
+</p>
+
+<div style="zoom: 2.0; background-color: #ff8;">
+Here is test of CSS <code>zoom</code>. (scale by 200%.)
+</div>
+<div>
+<pre class="prettyprint"><code>&lt;div style="zoom: 2.0; background-color: #ff8;"&gt;
+Here is test of CSS &lt;code&gt;zoom&lt;/code&gt;. (scale by 200%.)
+&lt;/div&gt;</code></pre>
+</div>
+
+<p>
+I think if you wanna scale you SHALL use CSS3 transform as follows:
+</p>
+<div style="transform: scale(2); -webkit-transform: scale(2); -webkit-transform-origin: 0 0; -moz-transform: scale(2); -moz-transform-origin: 0 0; -o-transform: scale(2); -o-transform-origin: 0 0; -ms-transform: scale(2); -ms-transform-origin: 0 0;">
+Here is test of CSS3 <code>transform</code>. (scale by 200%.)
+</div>
+<pre class="prettyprint"><code>&lt;div style="transform: scale(2); -webkit-transform: scale(2); -webkit-transform-origin: 0 0; -moz-transform: scale(2); -moz-transform-origin: 0 0; -o-transform: scale(2); -o-transform-origin: 0 0; -ms-transform: scale(2); -ms-transform-origin: 0 0;"&gt;
+Here is test of CSS &lt;code&gt;transform&lt;/code&gt;. (scale by 200%.)
+&lt;/div&gt;
+</code></pre>
+<p>
+Note that...
+</p>
+<ul>
+<li>CSS3 transform is a <a href="http://www.w3.org/TR/css3-2d-transforms/">W3C working draft</a>.
+So vender prefix (e.g. <code>-webkit-</code>, <code>-moz-</code>, <code>-o-</code>, and/or <code>-ms-</code>) is required.</li>
+<li>The default value of <code>transform-origin</code> is "<code>50% 50%</code>" (or <code>center center</code>) So I specified <code>transform-origin: 0 0</code> (or <code>top left</code>) to do the same thing with <code>zoom</code>.</li>
+</ul>

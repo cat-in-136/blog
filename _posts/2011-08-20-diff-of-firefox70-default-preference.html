@@ -1,0 +1,38 @@
+---
+layout: post
+title: Diff of firefox7.0 default preference and firefox6.0
+date: '2011-08-20T12:19:00.001+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2011-08-20T12:20:00.227+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-801952648338477401
+blogger_orig_url: http://cat-in-136.blogspot.com/2011/08/diff-of-firefox70-default-preference.html
+---
+
+<p>
+This is difference between the default preference of Firefox 7.0 and one of 6.0.
+</p>
+
+<dl>
+<dt>Default pref Javascript files:</dt>
+<dd>(omni.jar){/greprefs.js,/defaults/pref/{firefox.js,firefox-branding.js,firefox-l10n.js,services-sync.js}}</dd>
+</dl>
+
+<div>
+<table class="diff_firefox7_pref_diff">
+<thead><tr><td></td><td>Firefox 6</td><td>Firefox 7</td></tr></thead>
+<tbody><tr class="oldkey"><td>app.<wbr>update.<wbr>nagTimer.<wbr>restart</td><td>86400</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>browser.<wbr>cache.<wbr>disk.<wbr>max_<wbr>entry_<wbr>size</td><td class="undefined">undefined</td><td>5120</td></tr><tr class="newkey"><td>browser.<wbr>cache.<wbr>memory.<wbr>max_<wbr>entry_<wbr>size</td><td class="undefined">undefined</td><td>5120</td></tr><tr class="newkey"><td>browser.<wbr>urlbar.<wbr>trimURLs</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr>editor.<wbr>expandtab</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr>editor.<wbr>tabsize</td><td class="undefined">undefined</td><td>4</td></tr><tr class="newkey"><td>dom.<wbr>enable_<wbr>performance</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>extensions.<wbr>blocklist.<wbr>itemURL</td><td class="undefined">undefined</td><td>https://addons.mozilla.org/%LOCALE%/%APP%/blocked/%blockID%</td></tr><tr><td>font.<wbr>mathfont-<wbr>family</td><td>STIXNonUnicode, STIXSizeOneSym, STIXSize1, STIXGeneral, Standard Symbols L, DejaVu Sans, Cambria Math</td><td>STIXNonUnicode, STIXSizeOneSym, STIXSize1, STIXGeneral, Asana Math, Standard Symbols L, DejaVu Sans, Cambria Math</td></tr><tr><td>image.<wbr>mem.<wbr>min_<wbr>discard_<wbr>timeout_<wbr>ms</td><td>120000</td><td>10000</td></tr><tr class="oldkey"><td>javascript.<wbr>options.<wbr>mem.<wbr>gc_<wbr>frequency</td><td>300</td><td class="undefined">undefined</td></tr><tr><td>network.<wbr>websocket.<wbr>extensions.<wbr>stream-<wbr>deflate</td><td>false</td><td>true</td></tr><tr class="newkey"><td>network.<wbr>websocket.<wbr>max-<wbr>connections</td><td class="undefined">undefined</td><td>200</td></tr><tr class="oldkey"><td>services.<wbr>sync.<wbr>autoconnect</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>services.<wbr>sync.<wbr>log.<wbr>appender.<wbr>debugLog</td><td>Trace</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>services.<wbr>sync.<wbr>log.<wbr>appender.<wbr>debugLog.<wbr>enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>services.<wbr>sync.<wbr>log.<wbr>appender.<wbr>debugLog.<wbr>maxSize</td><td>1048576</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>services.<wbr>sync.<wbr>log.<wbr>appender.<wbr>debugLog.<wbr>rotate</td><td>true</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>log.<wbr>appender.<wbr>file.<wbr>level</td><td class="undefined">undefined</td><td>Trace</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>log.<wbr>appender.<wbr>file.<wbr>logOnError</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>log.<wbr>appender.<wbr>file.<wbr>logOnSuccess</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>scheduler.<wbr>activeInterval</td><td class="undefined">undefined</td><td>300</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>scheduler.<wbr>idleInterval</td><td class="undefined">undefined</td><td>3600</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>scheduler.<wbr>idleTime</td><td class="undefined">undefined</td><td>300</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>scheduler.<wbr>immediateInterval</td><td class="undefined">undefined</td><td>60</td></tr><tr class="newkey"><td>services.<wbr>sync.<wbr>scheduler.<wbr>singleDeviceInterval</td><td class="undefined">undefined</td><td>3600</td></tr><tr class="newkey"><td>toolkit.<wbr>telemetry.<wbr>infoURL</td><td class="undefined">undefined</td><td>http://www.mozilla.com/legal/privacy/firefox.html#telemetry</td></tr><tr><td>toolkit.<wbr>telemetry.<wbr>server</td><td>http://telemetry.allizom.org</td><td>https://data.mozilla.com</td></tr><tr class="newkey"><td>toolkit.<wbr>telemetry.<wbr>server_<wbr>owner</td><td class="undefined">undefined</td><td>Mozilla</td></tr><tr class="oldkey"><td>ui.<wbr>use_<wbr>native_<wbr>popup_<wbr>windows</td><td>false</td><td class="undefined">undefined</td></tr></tbody>
+</table>
+</div>
+
+<script type="text/javascript" defer="defer"><!-- /* --><![CDATA[ *///
+(function(){
+    var s = document.createElement("link");
+    s.rel = "stylesheet";
+    s.type = "text/css";
+    s.href = "data:text/css;base64,dGFibGUuZGlmZl9maXJlZm94N19wcmVmX2RpZmYgeyBib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlOyBmb250LXNpemU6IHgtc21hbGw7IG92ZXJmbG93OiBhdXRvOyB9CnRhYmxlLmRpZmZfZmlyZWZveDdfcHJlZl9kaWZmIHRkIHsgYm9yZGVyOiAxcHggc29saWQgI2RkZDsgcGFkZGluZzogMXB4OyB2ZXJ0aWNhbC1hbGlnbjogdG9wOyB9CnRhYmxlLmRpZmZfZmlyZWZveDdfcHJlZl9kaWZmIHRkLnVuZGVmaW5lZCB7IGNvbG9yOiAjODg4OyBmb250LXN0eWxlOiBpdGFsaWM7IH0KdGFibGUuZGlmZl9maXJlZm94N19wcmVmX2RpZmYgdHIuc2FtZXZhbCB0ZDpmaXJzdC1jaGlsZCB7IGNvbG9yOiAjNDQ0OyB9CnRhYmxlLmRpZmZfZmlyZWZveDdfcHJlZl9kaWZmIHRyLm5ld2tleSAgdGQ6Zmlyc3QtY2hpbGQgeyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgICAgfQp0YWJsZS5kaWZmX2ZpcmVmb3g3X3ByZWZfZGlmZiB0ci5vbGRrZXkgIHRkOmZpcnN0LWNoaWxkIHsgdGV4dC1kZWNvcmF0aW9uOiBsaW5lLXRocm91Z2g7IH0KCnRhYmxlLmRpZmZfZmlyZWZveDdfcHJlZl9kaWZmIHRyOmhvdmVyIHsgYmFja2dyb3VuZC1jb2xvcjogI2VlZTsgfQp0YWJsZS5kaWZmX2ZpcmVmb3g3X3ByZWZfZGlmZiB0ciB7IC1tb3otdHJhbnNpdGlvbjogYmFja2dyb3VuZCAwLjEyNXMgZWFzZS1pbi1vdXQgMHM7IH0K";
+    document.getElementsByTagName("head")[0].appendChild(s);
+})();
+/* ]]><!-- */ --></script>

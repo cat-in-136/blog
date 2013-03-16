@@ -1,0 +1,108 @@
+---
+layout: post
+title: UnicodeでMingw32の落とし穴〜_tWinMain/wWinMain問題など〜
+date: '2012-04-22T11:00:00.002+09:00'
+author: cat_in_136
+tags:
+- mingw
+- windows
+modified_time: '2012-04-22T11:10:05.414+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8256030474975752840
+blogger_orig_url: http://cat-in-136.blogspot.com/2012/04/unicodemingw32twinmainwwinmain.html
+---
+
+<div style="font-size: smaller; font-weight: lighter; border: solid 1px #aaa;">
+本記事は<a href="http://cat-in-136.blogspot.jp/2010/03/pitfall-of-unicode-in-mingw32.html">Pitfall of "Unicode in Mingw32"</a>の和訳+αです。
+あまりにも<a href="http://cat-in-136.blogspot.jp/2010/03/mingw32undefined-reference-to-winmain16.html">mingw32での「undefined reference to `WinMain@16'」</a>の日本からのアクセス数が多いので…
+</div>
+
+<p>
+Mingw32 は完全には Unicode に対応していない。いくつかよく知られている落とし穴がある。
+</p>
+
+<h4><code>wWinMain</code>が使えない</h4>
+<pre class="prettyprint"><code>// NG:
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
+{
+//...
+
+// OK:
+int main(int argc, char** argv)
+{
+//...
+</code></pre>
+<p>
+Mingw32では、<code>wWinMain</code>関数は使えない<span style="font-size: smaller;">（→<a href="http://cat-in-136.blogspot.jp/2010/03/mingw32undefined-reference-to-winmain16.html" title="mingw32での「undefined reference to `WinMain@16'」" rel="nofollow">以前の記事</a>で述べたとおり）</span>。さらに<code>wmain</code>関数も同じく使えない。なので Unicode 環境においては、エントリー関数(entry function)として<code>main</code>関数を使うしかない。
+</p>
+<p>
+加えて<code>_tWinMain</code>と<code>_tmain</code>関数もマルチバイト環境のみ使えて Unicode 環境においては使えない。なお、マルチバイト環境では、これらは<code>WinMain</code>と<code>main</code>に変換される。
+</p>
+
+<h5><code>hInstance</code>を<code>main</code>関数でどうやって取得するのか?</h5>
+<pre class="prettyprint"><code>HINSTANCE hInstance;
+
+hInstance = GetModuleHandle(NULL);
+</code></pre>
+<p>
+なお、<code>wWinMain</code>の引数<code>hPrevInstance</code>は Win32 環境では常に<code>NULL</code>であることに留意すること。
+</p>
+
+<h5><code>lpCmdLine</code>を<code>main</code>関数でどうやって取得するのか?</h5>
+<p>
+<code>GetCommandLine()</code>を使う。
+ただ<code>lpCmdLine</code>と違って、<code>GetCommandLine()</code>の戻り値はコマンドライン全体であって、プログラム名も含む。
+</p>
+
+<h4><code>__wargv</code>も使えないがどうするのか?</h4>
+<pre class="prettyprint"><code>// NG:
+for (i = 0; i &lt; __argc; i++) {
+    arg = __wargv[i];
+    //...
+}
+
+// OK:
+INT argc;
+WCHAR **argv;
+wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+for (i = 0; i &lt; argc; i++) {
+    arg = wargv[i];
+    //...
+}
+LocalFree(wargv);
+</code></pre>
+<p>
+<code>__wargv</code>もMingw32では使えない。引数リストを取得するには<code>CommandLineToArgvW</code> 関数と<code>GetCommandLineW</code>関数を使う。
+なお、ここで<code>CommandLineToArgv<strong>A</strong></code>という名前の関数は Win32 API には定義されていないので注意すること。
+</p>
+
+<h4>例：_tMainWin問題の私なりの解決策</h4>
+<pre class="prettyprint"><code>int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+{
+    // ...
+}
+
+#ifdef _UNICODE
+#ifndef _tWinMain // Mingw32 does not implement wide startup module
+int main(int argc, char **argv)
+{
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    int retval = 0;
+
+    retval = _tWinMain(hInstance, NULL, _T("") /* lpCmdLine is not available*/, SW_SHOW);
+
+    return retval;
+}
+#endif
+#endif /* _UNICODE */
+</code></pre>
+
+<p>
+なお、概述のように<code>lpCmdLine</code>と完全に同じものは簡単には得られないので<code>lpCmdLine</code>は使わない、という前提で使う。
+引数をどうしても使う場合には<code>GetCommandLine()</code>を使うことにする。
+</p>
+
+<h4>参考文献</h4>
+<ul>
+<li><a href="http://demosten-eng.blogspot.com/2008/08/mingw-and-unicode-support.html">MinGW and Unicode support?</a></li>
+<li><a href="http://lists-archives.org/mingw-users/07124-link-error-when-using-_tmain.html"> Re: [Mingw-users] link error when using _tmain</a></li>
+</ul>
