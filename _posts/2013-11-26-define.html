@@ -1,0 +1,99 @@
+---
+layout: post
+title: '#define 展開を沢山一気に確認+整形をプログラムでやらせるときに注意する点について'
+date: '2013-11-26T23:23:00.000+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+modified_time: '2013-11-26T23:23:00.726+09:00'
+thumbnail: http://2.bp.blogspot.com/-iS4KMDSWJi8/UpFqhoOVtMI/AAAAAAAAAYo/qqgGhhE2RC8/s72-c/vc-tooltip.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3221142969393014792
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/11/define.html
+---
+
+<p><a href="{{ site.baseurl }}{% post_url 2013-11-25-tcharh-generic-text-mapping-cheatsheet %}">Tchar.h generic-text mapping cheatsheet</a>
+を作るときに問題となったのが、
+「C言語の <code>#define</code> 展開を沢山一気に確認するにはどうすればよいか?」
+ということである。</p>
+
+<p>もっとも一個一個ならばIDE上でマウスホーバーすれば展開表示されるので
+このようなことを思う必要はない。</p>
+
+<figure style="display: block; margin: 1em; text-align: center;">
+<a href="http://2.bp.blogspot.com/-iS4KMDSWJi8/UpFqhoOVtMI/AAAAAAAAAYo/qqgGhhE2RC8/s1600/vc-tooltip.png"><img style="border: none 0;" src="http://2.bp.blogspot.com/-iS4KMDSWJi8/UpFqhoOVtMI/AAAAAAAAAYo/qqgGhhE2RC8/s1600/vc-tooltip.png" width="286" height="115" /></a>
+<figcaption>VC上での <code>#define</code> 展開表示</figcaption>
+</figure>
+
+<p>そこでコンパイラによって実際に展開させることにした。
+コンパイラのプリプロセッサ展開だけをさせることも考えたが、
+出力の整形も一気にやらせることを考えたので
+普通にC言語のプログラムを書くことにした。</p>
+
+<p>このとき一つ注意が必要だったので、備忘録としてメモっておく。</p>
+
+<pre class="prettyprint lang-c"><code>#define FOO bar
+
+printf("%s", FOO);
+</code></pre>
+
+<p>これはコンパイラによって下記のように展開される（C言語として妥当ではないのでプリプロセッサ処理まででコンパイルエラーになる）</p>
+
+<pre class="prettyprint lang-c"><code>printf("%s", bar);
+</code></pre>
+
+<p>今したいのはこの展開後を「テキスト」として取得したいので
+ここでマクロの <code>#</code> を使うことにした。</p>
+
+<pre class="prettyprint lang-c"><code>#define STRINGIFY(x) (#x)
+#define FOO bar
+
+printf("%s", STRINGIFY(FOO));
+</code></pre>
+
+<p>しかし実はこれは予期する動作にならず、
+下記のようになる：</p>
+
+<pre class="prettyprint lang-c"><code>printf("%s", ("FOO"));
+</code></pre>
+
+<p>展開させつつ、テキストに変換するにはマクロを二重にする必要があるらしい。</p>
+
+<pre class="prettyprint lang-c"><code>#define STRINGIFY_(x) (#x)
+#define STRINGIFY(x) (STRINGIFY_(x))
+#define FOO bar
+
+printf("%s", STRINGIFY(FOO));
+</code></pre>
+
+<p>これで望んだ展開がやっと得られる。</p>
+
+<pre class="prettyprint lang-c"><code>printf("%s", (("bar")));
+</code></pre>
+
+<p>逆に言えば、 <code>#</code> を含むマクロを間接的に呼んだ場合、
+実際に書かれたものと違って展開されてしまうので
+注意が必要ということになる。</p>
+
+<pre class="prettyprint lang-c"><code>#define STRINGIFY0(x) (#x)
+#define STRINGIFY1(x) (STRINGIFY0(x))
+#define STRINGIFY2(x) (STRINGIFY1(x))
+#define FOO BAR
+#define BAR baz
+
+printf("%s", STRINGIFY0(FOO));
+printf("%s", STRINGIFY1(FOO));
+printf("%s", STRINGIFY2(FOO));
+printf("%s", STRINGIFY0(BAR));
+printf("%s", STRINGIFY1(BAR));
+printf("%s", STRINGIFY2(BAR));
+</code></pre>
+
+<p>↓</p>
+
+<pre class="prettyprint lang-c"><code>printf("%s", ("FOO"));
+printf("%s", (("baz")));
+printf("%s", ((("baz"))));
+printf("%s", ("BAR"));
+printf("%s", (("baz")));
+printf("%s", ((("baz"))));
+</code></pre>

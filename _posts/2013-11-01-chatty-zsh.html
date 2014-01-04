@@ -1,0 +1,187 @@
+---
+layout: post
+title: 小うるさい端末 chatty ――を zsh で。
+date: '2013-11-01T00:30:00.000+09:00'
+author: cat_in_136
+tags:
+- zsh
+modified_time: '2013-11-03T22:06:55.626+09:00'
+thumbnail: http://3.bp.blogspot.com/-klo7sXvXtMc/Um0uFwQsc2I/AAAAAAAAAYY/CvrGvZrXzGk/s72-c/zle-chatty.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-994045954562817831
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/11/chatty-zsh.html
+---
+
+<h3>動機づけ</h3>
+
+<blockquote cite="http://0xcc.net/chatty/">
+<p>
+chatty はユーザが入力した文字列に応じて端末のタイトルバーに 小うるさいメッセージを表示するソフトウェアです。
+</p>
+</blockquote>
+
+<p>という<a href="http://0xcc.net/chatty/" title="chatty: 小うるさい端末">代物</a>があるのだが、<strong>zsh 単独でやってみたい</strong>。</p>
+
+
+<figure style="display: block; margin: 1em; text-align: center;">
+<a href="http://3.bp.blogspot.com/-klo7sXvXtMc/Um0uFwQsc2I/AAAAAAAAAYY/CvrGvZrXzGk/s1600/zle-chatty.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img src="http://3.bp.blogspot.com/-klo7sXvXtMc/Um0uFwQsc2I/AAAAAAAAAYY/CvrGvZrXzGk/s400/zle-chatty.png" style="border: none 0;" width="400" height="117" /></a>
+<figcaption>zsh で chatty 動作イメージ</figcaption>
+</figure>
+
+<h3>表示領域</h3>
+
+<p><a href="http://0xcc.net/chatty/" title="chatty: 小うるさい端末">本家 chatty</a> は、複雑な処理となる端末エミュレーションを嫌った結果なのか、
+小うるさいメッセージはタイトルバーに表示される。</p>
+
+<p>しかし、端末エミュレータをいじっている時にタイトルバーを見ることは稀だと思う。
+小うるさい感を出すためには、ユーザが入力している近傍に小うるさいメッセージを出したほうが良いであろう。</p>
+
+<p><abbr title="Zsh Line Editor">zle</abbr>では、
+コマンド入力行のすぐ下にメッセージを表示するコマンド<code>zle -M "..."</code>が用意されているので、これを使うことにする。</p>
+
+<p>例えば、<a href="http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Special-Widgets" title="'The Z Shell Manual' sub-clause 18.5.1 Special Widgets">zsh のマニュアルのZLEの章</a>にあるように下記のようにすると、</p>
+
+<pre class="pretty-print"><code>zle-isearch-update() { zle -M "Line $HISTNO"; }
+zle -N zle-isearch-update
+zle-isearch-exit() { zle -M ""; }
+zle -N zle-isearch-exit
+</code></pre>
+
+<p>インクリメンタルサーチ時に下に行数<code>"Line $HISTNO"</code>が表示される。</p>
+
+<pre style="padding: 2px; background-color: #000; color: #fff;"><code>[cat@localhost /tmp]$ <u>net</u>stat -altup
+bck-i-search: net_
+Line 284
+</code></pre>
+
+<h3>辞書</h3>
+
+<p>辞書化することも考えたが<strong>面倒くさくなったのでやめた</strong>。
+現状 <code>if</code>/<code>elif</code> の連なりというひどく固定的なコードになっている。</p>
+
+<h3>コード</h3>
+
+<p>で、<code>self-insert</code>, <code>magic-space</code>, <code>backward-delete-char</code>, <code>delete-char-or-list</code> をホックして、
+そのときの入力コマンド(<code>$BUFFER</code>)を毎度条件判定してメッセージを表示するという方法に至った。</p>
+
+<pre class="prettyprint"><code># chatty: 小うるさい端末 のzsh版 
+#
+# 元ネタ：http://0xcc.net/chatty/
+# 
+# Usage:
+#     autoload chatty-on
+#     chatty-on              
+#
+
+chatty-on() {
+  zle -N self-insert          chatty-self-insert
+  zle -N magic-space          chatty-magic-space
+  zle -N backward-delete-char chatty-backward-delete-char
+  zle -N delete-char-or-list  chatty-delete-char-or-list
+  return 0
+}
+chatty-off() {
+  zle -A .self-insert          self-insert
+  zle -A .magic-space          magic-space
+  zle -A .backward-delete-char backward-delete-char
+  zle -A .delete-char-or-list  delete-char-or-list
+  return 0
+}
+
+chatty-self-insert() {
+  zle .$WIDGET "$@"
+  chatty-info
+}
+chatty-magic-space() {
+  zle .$WIDGET "$@"
+  chatty-info
+}
+chatty-backward-delete-char() {
+  zle .$WIDGET "$@"
+  chatty-info
+}
+chatty-delete-char-or-list() {
+  zle .$WIDGET "$@"
+  chatty-info
+}
+
+chatty-info() {
+  if [[ "$BUFFER" =~ "^ *man ?$" ]]; then
+    zle -M "google使えよ"
+  elif [[ "$BUFFER" =~ "^ *mail ?$" ]]; then
+    zle -M "仕事しないでメールばっかり"
+  elif [[ "$BUFFER" =~ "^ *more ?$" ]]; then
+    zle -M "まだこんなコマンドあったのか"
+  elif [[ "$BUFFER" =~ "^ *reboot ?$" ]]; then
+    zle -M "面倒なトラブルは再起動で解決"
+  elif [[ "$BUFFER" =~ "^ *vi ?$" ]]; then
+    zle -M "emacsは嫌いなのね"
+  elif [[ "$BUFFER" =~ "^ *vim ?$" ]]; then
+    zle -M "お〜れだっけ V.I.M. &lt;http://www.taiyaki.org/misc/vim/&gt;"
+  elif [[ "$BUFFER" =~ "^ *sudo ?$" ]]; then
+    zle -M "他人のメールでも見るんでしょ〜"
+  elif [[ "$BUFFER" =~ "^ *vipw ?$" ]]; then
+    zle -M "rootの雑用ご苦労さま"
+  elif [[ "$BUFFER" =~ "^ *w3m ?$" ]]; then
+    zle -M "仕事中に目立たずネットサーフィンするのだ"
+  elif [[ "$BUFFER" =~ "^ *find ?$" ]]; then
+    zle -M "ファイルってすぐどっかいっちゃうんだよね"
+  elif [[ "$BUFFER" =~ "^ *telnet ?$" ]]; then
+    zle -M "余所の計算機に不正侵入しちゃいまーす"
+  elif [[ "$BUFFER" =~ "^ *xman ?$" ]]; then
+    zle -M "うげ。まだこんなのあったのか"
+  elif [[ "$BUFFER" =~ "^ *killall ?$" ]]; then
+    zle -M "皆殺し大好き"
+  elif [[ "$BUFFER" =~ "^ *./configure ?$" ]]; then
+    zle -M "途中でこけたりして"
+  elif [[ "$BUFFER" =~ "^ *#jet ?$" ]]; then
+    zle -M "jet氏のメッセージ"
+  elif [[ "$BUFFER" =~ "^ *make ?$" ]]; then
+    zle -M "ソースからビルドかよ"
+  elif [[ "$BUFFER" =~ "^ *rm -f ?$" ]]; then
+    zle -M "実は大切なファイルだったりして..."
+  elif [[ "$BUFFER" =~ "^ *rpm ?$" ]]; then
+    zle -M "バイナリで手抜きかよ"
+  elif [[ "$BUFFER" =~ "^ *ssh ?$" ]]; then
+    zle -M "隠しごとかよ"
+  elif [[ "$BUFFER" =~ "^ *pwd ?$" ]]; then
+    zle -M "今いる場所ぐらい覚えとけよ"
+  elif [[ "$BUFFER" =~ "^ *emacs ?$" ]]; then
+    zle -M "やっぱりお前もAの横のCapsLock死ねとか思ってるの?"
+  elif [[ "$BUFFER" =~ "^ *gimp ?$" ]]; then
+    zle -M "失敗した写真の修正?"
+  elif [[ "$BUFFER" =~ "^ *kill ?$" ]]; then
+    zle -M "ひでーやつだ"
+  elif [[ "$BUFFER" =~ "^ *less ?$" ]]; then
+    zle -M "むしろ動体視力鍛えてcatでしょ"
+  elif [[ "$BUFFER" =~ "^ *ls ?$" ]]; then
+    zle -M "cdの後のそれは癖なんか?"
+  else
+    # clear
+    zle -M ""
+  fi
+}
+
+# Handle zsh autoloading conventions
+chatty-on "$@"
+</code></pre>
+
+<p>使い方は <code>chatty-on</code> というファイル名で <code>/usr/share/zsh/site-functions</code> (などの<code>$fpath</code>が通っているフォルダ)に置いた上で、下記を実行する。</p>
+
+<pre style="padding: 2px; background-color: #000; color: #fff;"><code>% autoload chatty-on
+% chatty-on
+</code></pre>
+
+<p>ただし、お試しとして使うために <code>$fpath</code>が通っているフォルダに置きたくない場合は、
+下記でもよい。</p>
+
+<pre style="padding: 2px; background-color: #000; color: #fff;"><code>% source /path/to/chatty-on
+% chatty-on
+</code></pre>
+
+<h3>参考文献</h3>
+
+<ul>
+<li><a href="http://0xcc.net/chatty/" title="chatty: 小うるさい端末">chatty: 小うるさい端末</a>, 0xcc.net</li>
+</ul>
+
+

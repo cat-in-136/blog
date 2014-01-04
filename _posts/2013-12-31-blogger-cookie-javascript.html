@@ -1,0 +1,85 @@
+---
+layout: post
+title: Blogger の国別ドメインリダイレクト対策コードを入れると、Cookie 無効 + JavaScript 有効なブラウザの環境下で無限リダイレクトする件
+date: '2013-12-31T15:33:00.001+09:00'
+author: cat_in_136
+tags:
+- javascript
+- blogger
+- cookie
+modified_time: '2013-12-31T15:34:22.015+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3162900503194357319
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/12/blogger-cookie-javascript.html
+---
+
+<p>
+言われて、たった今知りましたので首釣ってきます。
+（修正して、該当コードは削除しました）
+</p>
+
+<p>
+以下に言い訳を記す。
+（昔の話と思って再確認したら去年の話だったでござる）
+</p>
+
+<h4>いいわけ</h4>
+
+<p>Blogger って2012年から<strong>公式に</strong><a href="http://googleblog.blogspot.com/2012/03/our-approach-to-free-expression-and.html">特定国に対するコンテンツ非表示</a>
+が始まったわけだが、
+そのためにアクセス元に応じてドメイン名が変わるという施策が導入された。</p>
+
+<p>いまはガジェット類その他何も使っていないので関係ないが、
+当時確か何らかの問題が発生したので、
+下記コードを投入して、<code>.com</code> にドメイン名を強制するようにした。
+そういえば、暫定的な対処だった。</p>
+
+<pre class="prettyprint"><code>&lt;script type='text/javascript'&gt;
+  if (location.host.indexOf('.com') == -1) location.href = location.href.replace(location.host + '/', 'cat-in-136.blogspot.com/ncr/');
+&lt;/script&gt;
+</code></pre>
+
+<p>方法は簡単で <code>http://ほげほげ.blogspot.jp/</code> →<code>http://ほげほげ.blogspot.com/ncr/</code> にリダイレクトしてやると、
+その後 <code>http://ほげほげ.blogspot.com/</code> になるという作戦。</p>
+
+<p>だが、これは標題の通り</p>
+
+<ul>
+<li>JavaScript を有効</li>
+<li>Cookie 無効（またはドメイン名指定での拒否）</li>
+</ul>
+
+<p>で無限リダイレクトしてしまう。</p>
+
+<p>ブラウザには、セキュリティ上の理由から HTTP-Redirect の無限リダイレクト制限はあるが、
+JavaScript を介しているのでこれが効かない。</p>
+
+<p>具体的には下記の通り無限ループする。
+下記アクセスをした場合に攻撃者と見なされるかどうかは不明。</p>
+
+<ol>
+<li>まず <code>http://ほげほげ.blogspot.com/</code> にアクセス</li>
+<li>NCR クッキーがないならば、国別ドメインにリダイレクト。日本からの場合は、<code>http://ほげほげ.blogspot.jp/</code> にリダイレクト</li>
+<li>JavaScript が有効なので、コードが実行されて <code>http://ほげほげ.blogspot.com/ncr/</code> に転送</li>
+<li>Cookie が無効なので、NCR クッキーが発行されない。</li>
+<li>2に戻る。</li>
+</ol>
+
+<p>たぶん上の施策をするとしてもクッキーの有無（<code>navigator.cookieEnabled</code>）を確認するべきであった。
+ただしが、これでも <code>blogspot.com</code> は許可していても国別ドメインの方は許可していないならば、やはり無限 redirect する。</p>
+
+<pre class="prettyprint"><code>if (navigator.cookieEnabled) {
+  if (location.host.indexOf('.com') == -1) {
+    location.href = location.href.replace(location.host + '/', 'ほげほげ.blogspot.com/ncr/');
+  }
+} else {
+  // この処理が呼ばれるときに cookieEnabled が無効だった場合は対策方法はない。
+  // 独自ドメインを取得するか、Blogger から逃げるかのみ。
+}
+</code></pre>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="https://support.google.com/blogger/answer/2402711">ブログが国別の URL にリダイレクトされる理由</a> - Blogger ヘルプ</li>
+<li><a href="http://wada811.blogspot.com/2012/03/bloggerblogspotjp.html">Bloggerでblogspot.jpにリダイレクトされるのを防ぐ方法</a></li>
+</ul>

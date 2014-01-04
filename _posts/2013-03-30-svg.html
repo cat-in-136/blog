@@ -1,0 +1,171 @@
+---
+layout: post
+title: SVGフィルターで雲を描くことに関して
+date: '2013-03-30T23:16:00.000+09:00'
+author: cat_in_136
+tags:
+- web application
+- svg
+- お空
+- html
+modified_time: '2013-03-30T23:16:00.216+09:00'
+thumbnail: http://1.bp.blogspot.com/-hfM55RIyAuk/UVaWbnIqFJI/AAAAAAAAAVU/AnftczgCGAM/s72-c/cloud.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1068312420984105883
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/svg.html
+---
+
+<p>
+<a href="{{ site.baseurl }}{% post_url 2012-11-23-saaspaasiaas %}" rel="nofollow">SaaSとかのクラウドコンピューティング</a>じゃない、Misty Sky のほうの雲のお話し。
+</p>
+
+
+<div style="text-align: center; margin: auto;">
+<img src="http://1.bp.blogspot.com/-hfM55RIyAuk/UVaWbnIqFJI/AAAAAAAAAVU/AnftczgCGAM/s320/cloud.png" width="100" height="100" />
+</div>
+
+<ul>
+<li>SVGには高機能なフィルタがついているので、写実的な絵も描ける</li>
+<li>inkscapeのフィルタ編集機能をつかって雲を描く方法を紹介する</li>
+<li>Firefox でもこのフィルタ機能を使うことができる</li>
+</ul>
+
+<p>
+SVGにはベクトル画像を編集するためのツールである。ラスタ画像と違って線や面を組み合わせて描くので輪郭が曖昧なモノを描くのは困難なように思える。しかし、SVG編集ソフトのinkscapeにはフィルタ機能があって、簡単にラスタ画像的なフィルタ効果を得ることができる。
+</p>
+<p>
+このフィルタは実はSVGの規格の標準のものである。SVGのフィルタは、画像編集ソフトのフィルタ処理手順を書き下したような形になっていて、レンダリングの際に処理が実行される。ぼかしはフィルタの一種類であり、他にもフィルタの種類がある。それらを組み合わせることで様々な絵を描ける。
+</p>
+<p>
+ここに示した絵はその機能を使った雲である。本節ではこの雲の描き方を説明する。
+</p>
+
+<h4>雲の描画方法</h4>
+
+<p>
+CGの世界で、雲はPerlinの乱流関数（Perlin turbulence）を使って、いい感じに表現できることが知られている。この乱流関数の出力を透明度（アルファ値）に、色を白とすればよい。これをまとめると以下のように描画すればよいことになる。
+</p>
+<ol>
+<li>Perlin turbulenceの出力を得る。パラメタは好みのものを選ぶ。</li>
+<li>色を白として、turbulenceの値を透明度に対応付ける。</li>
+<li>雲を付けたい図形にオーバーレイさせる。</li>
+</ol>
+
+<h4>inkscapeでの雲の描画の実際</h4>
+
+<p>
+とはいえ、SVGのコードを描くのは骨の折れる作業のため、inkscapeを用いて作成する。もちろんテキストエディタでSVGのコードを書いても等しい結果を得られる。
+</p>
+<p>
+フィルタエディタはメニューのフィルタ→フィルタエディタから開く。適当な図形を作ってそれをあらかじめ選択しておくとよい。新規ボタンでフィルタを作成し、その中にまず乱流（Turbulence）とカラーマトリクス（ColorMatrix）のエフェクトを追加する。
+</p>
+
+<div>
+<a href="http://4.bp.blogspot.com/-YcRzRlnTYSE/UVadz331y2I/AAAAAAAAAVw/mgeN2Oj-yso/s1600/Filter_Effects.png" ><img src="http://4.bp.blogspot.com/-YcRzRlnTYSE/UVadz331y2I/AAAAAAAAAVw/mgeN2Oj-yso/s320/Filter_Effects.png" width="320" height="303" /></a>
+</div>
+
+<p>
+これらのエフェクトについて下記のように設定する。
+</p>
+<ul>
+<li>乱流：各設定値はお好みで。</li>
+<li>カラーマトリクス
+<ul>
+<li>タイプ：行列</li>
+<li>値：
+<pre>0 0 0 0  1
+0 0 0 0  1
+0 0 0 0  1
+0 0 0 4 -2</pre></li>
+</ul></li>
+</ul>
+<p>
+ColorMatrixのValue(s)は<a href="http://www.w3.org/TR/SVG11/filters.html#feColorMatrix">SVGの仕様のそれ</a>と対応している。参考までに以下に引用する。これからわかるように、この値ではTurbulenceの出力を透明度(A')についてRGBA成分を加算したものにし、それ以外のRGB成分に1を入れることで白色としている。
+</p>
+<blockquote cite="http://www.w3.org/TR/SVG11/filters.html#feColorMatrix"><pre>| R' |     | a00 a01 a02 a03 a04 |   | R |
+| G' |     | a10 a11 a12 a13 a14 |   | G |
+| B' |  =  | a20 a21 a22 a23 a24 | * | B |
+| A' |     | a30 a31 a32 a33 a34 |   | A |
+| 1  |     |  0   0   0   0   1  |   | 1 |
+</pre></blockquote>
+
+<p>
+この時点で雲は描けているが、対象図形にオーバーレイするのが残っている。これは合成（Composite）をエフェクトに追加し、その入力ソースをカラーマトリクスとソースグラフィックに接続することで実現できる。
+</p>
+
+<div>
+<a href="http://4.bp.blogspot.com/-A8dOkk8qVvA/UVaeFsOuL0I/AAAAAAAAAV4/HhSjdjPtgiw/s1600/Filter_Effects_Composite.png"><img src="http://4.bp.blogspot.com/-A8dOkk8qVvA/UVaeFsOuL0I/AAAAAAAAAV4/HhSjdjPtgiw/s320/Filter_Effects_Composite.png" width="320" height="303" /></a>
+</div>
+
+<p>
+こうして作成したフィルタを青い四角形に反映させたのが冒頭の雲の絵である。
+</p>
+
+<h4>Firefox での利用</h4>
+
+<p>
+一度フィルタを作ってしまえばあとはSVGはXMLという所詮テキストに過ぎないのだから該当部分をコピペして利用したりできる。だが、もっとも斬新な利用法はFirefoxだとそのままブチ込めることであろう。
+</p>
+<p>
+例として、動的にSVGのDOMツリーを生成することによって雲をかぶせる画像ジェネレータを以下に示す。
+</p>
+<div style="border: 2px dashed #888888;padding: 15px;">
+<label for="inkscape_cloud_app_url">画像のURL :</label>
+<input type="text" id="inkscape_cloud_app_url" value="http://1.bp.blogspot.com/_mg7ZLoSThok/TFmBNZK00-I/AAAAAAAAAEA/b42GlzHQXVw/micropolis.png" />
+<button id="inkscape_cloud_app_btn">雲を付加</button>
+<output><div id="inkscape_cloud_app_area">ここに表示されます</div></output>
+<script src="data:text/javascript;base64,KGZ1bmN0aW9uKCkgewogIHZhciBTVkdfTlMgPSAiaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmci
+OwogIHZhciBYTElOS19OUyA9ICJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIjsKCiAgZnVu
+Y3Rpb24gbmV3U1ZHRWxlbShuYW1lLCBhdHRyKSB7CiAgICB2YXIgZWxlbSA9IGRvY3VtZW50LmNy
+ZWF0ZUVsZW1lbnROUyhTVkdfTlMsIG5hbWUpOwogICAgaWYgKGF0dHIgIT0gdW5kZWZpbmVkKSB7
+CiAgICAgIGZvciAodmFyIGtleSBpbiBhdHRyKSB7CiAgICAgICAgaWYgKHR5cGVvZihhdHRyW2tl
+eV0pICE9ICJmdW5jdGlvbiIpIHsKICAgICAgICAgIGVsZW0uc2V0QXR0cmlidXRlKGtleSwgYXR0
+cltrZXldKTsKICAgICAgICB9CiAgICAgIH0KICAgIH0KICAgIHJldHVybiBlbGVtOwogIH0KICBm
+dW5jdGlvbiByZW5kZXJDbG91ZChzcmMpIHsKICAgIHZhciBTVkdfTlMgPSAiaHR0cDovL3d3dy53
+My5vcmcvMjAwMC9zdmciOwogICAgdmFyIFhMSU5LX05TID0gImh0dHA6Ly93d3cudzMub3JnLzE5
+OTkveGxpbmsiOwogICAgdmFyIHNlZWQgPSBNYXRoLmZsb29yKE1hdGgucmFuZG9tKCkgKiAyNTUp
+OwoKICAgIHZhciBvQ2xvdWRBcHBBcmVhID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImlua3Nj
+YXBlX2Nsb3VkX2FwcF9hcmVhIik7CiAgICB2YXIgb1N2ZyA9IG5ld1NWR0VsZW0oInN2ZyIsIHt2
+ZXJzaW9uOiAiMS4wIn0pOwogICAgdmFyIG9EZWZzID0gbmV3U1ZHRWxlbSgiZGVmcyIpOwogICAg
+dmFyIG9GaWx0ZXIgPSBuZXdTVkdFbGVtKCJmaWx0ZXIiLCB7aWQ6ICJpbmtzY2FwZV9jbG91ZF9h
+cHBfZmlsdGVyIn0pOwogICAgdmFyIG9GaWx0ZXJzID0gWwogICAgICBuZXdTVkdFbGVtKCJmZVR1
+cmJ1bGVuY2UiLCB7YmFzZUZyZXF1ZW5jeTogMC4wMSwgc2VlZDogc2VlZCwgbnVtT2N0YXZlczog
+MTV9KSwKICAgICAgbmV3U1ZHRWxlbSgiZmVDb2xvck1hdHJpeCIsIHt0eXBlOiAibWF0cml4Iiwg
+cmVzdWx0OiJyZXN1bHQwIiwgdmFsdWVzOiAiMCAwIDAgMCAxIDAgMCAwIDAgMSAwIDAgMCAwIDEg
+MCAwIDAgNCAtMiJ9KSwKICAgICAgbmV3U1ZHRWxlbSgiZmVDb21wb3NpdGUiLCB7b3BlcmF0b3I6
+ICJvdmVyIiwgaW4yOiAiU291cmNlR3JhcGhpYyJ9KQogICAgXTsKICAgIHZhciBvRyA9IG5ld1NW
+R0VsZW0oImciKTsKICAgIHZhciBvSW1nID0gbmV3U1ZHRWxlbSgiaW1hZ2UiLCB7eDogMCwgeTog
+MCwgc3R5bGU6ICJmaWx0ZXI6dXJsKCNpbmtzY2FwZV9jbG91ZF9hcHBfZmlsdGVyKSJ9KTsKCiAg
+ICBvU3ZnLmFwcGVuZENoaWxkKG9EZWZzKTsKICAgIG9EZWZzLmFwcGVuZENoaWxkKG9GaWx0ZXIp
+OwogICAgZm9yICh2YXIgaSA9IDA7IGkgPCBvRmlsdGVycy5sZW5ndGg7IGkrKykgewogICAgICBv
+RmlsdGVyLmFwcGVuZENoaWxkKG9GaWx0ZXJzW2ldKTsKICAgIH0KICAgIG9TdmcuYXBwZW5kQ2hp
+bGQob0cpOwogICAgb0cuYXBwZW5kQ2hpbGQob0ltZyk7CgogICAgdmFyIGltZyA9IG5ldyBJbWFn
+ZSgpOwogICAgaW1nLm9ubG9hZCA9IGZ1bmN0aW9uKCl7CiAgICAgIG9Tdmcuc2V0QXR0cmlidXRl
+KCJ3aWR0aCIsICBpbWcud2lkdGggKTsKICAgICAgb1N2Zy5zZXRBdHRyaWJ1dGUoImhlaWdodCIs
+IGltZy5oZWlnaHQpOwogICAgICBvSW1nLnNldEF0dHJpYnV0ZSgid2lkdGgiLCAgaW1nLndpZHRo
+ICk7CiAgICAgIG9JbWcuc2V0QXR0cmlidXRlKCJoZWlnaHQiLCBpbWcuaGVpZ2h0KTsKICAgICAg
+b0ltZy5zZXRBdHRyaWJ1dGVOUyhYTElOS19OUywgImhyZWYiLCBpbWcuc3JjKTsKCiAgICAgIHdo
+aWxlIChvQ2xvdWRBcHBBcmVhLmZpcnN0Q2hpbGQpIHsKICAgICAgICBvQ2xvdWRBcHBBcmVhLnJl
+bW92ZUNoaWxkKG9DbG91ZEFwcEFyZWEuZmlyc3RDaGlsZCk7CiAgICAgIH0KICAgICAgb0Nsb3Vk
+QXBwQXJlYS5hcHBlbmRDaGlsZChvU3ZnKTsKICAgIH07CiAgICBpbWcub25lcnJvciA9IGZ1bmN0
+aW9uKGV2ZW50KSB7CiAgICB3aW5kb3cuZWVlID0gZXZlbnQ7CiAgICAgIGFsZXJ0KCLnlLvlg4/j
+ga7oqq3jgb/ovrzjgb/jgavlpLHmlZciKTsKICAgIH07CiAgICBpbWcuc3JjID0gc3JjOwogIH0K
+ICBmdW5jdGlvbiBpc1N1cHBvcnRlZE5hdGl2ZVNWRygpIHsKICAgIHZhciBvU1ZHID0gbmV3U1ZH
+RWxlbSgic3ZnIik7CiAgICBpZiAoIHR5cGVvZihvU1ZHLndpZHRoKSAhPSAidW5kZWZpbmVkIiAp
+IHsKICAgICAgcmV0dXJuIHRydWU7CiAgICB9IGVsc2UgewogICAgICByZXR1cm4gY29uZmlybSgi
+U1ZH5pyq44K144Od44O844OI44OW44Op44Km44K244Gu44KI44GG44Gn44GZ44CC5by35Yi255qE
+44Gr44K544Kv44Oq44OX44OI44KS5YuV44GL44GX44Gm44G/44G+44GZ44GLPyIpOwogICAgfQog
+IH0KCiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImlua3NjYXBlX2Nsb3VkX2FwcF9idG4iKS5h
+ZGRFdmVudExpc3RlbmVyKCJjbGljayIsIGZ1bmN0aW9uIChldmVudCkgewogICAgaWYgKGlzU3Vw
+cG9ydGVkTmF0aXZlU1ZHKCkpIHsKICAgICAgcmVuZGVyQ2xvdWQoZG9jdW1lbnQuZ2V0RWxlbWVu
+dEJ5SWQoImlua3NjYXBlX2Nsb3VkX2FwcF91cmwiKS52YWx1ZSk7CiAgICB9CiAgfSwgZmFsc2Up
+OwoKfSkuY2FsbCh7fSk7Cg==" defer="defer"></script>
+</div>
+
+<h4>参考文献</h4>
+
+<ul>
+<li>"<a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/">Scalable Vector Graphics (SVG) 1.1 (Second Edition)</a>", eds World Wide Web Consortium, Aug 2011, <a href="http://www.w3.org/TR/2011/REC-SVG11-20110816/filters.html">chapter 15. Filter Effects</a></li>
+<li>Paul Bourke, "<a href="http://ozviz.wasp.uwa.edu.au/~pbourke/texture_colour/perlin/">Perlin Noise and Turbulence</a>," Jan. 2000</li>
+<li><a href="http://inkscape.svn.sourceforge.net/viewvc/inkscape/inkscape/tags/RELEASE_0_46_0/share/examples/turbulence_effects.svg">share/examples/turbulence_effects.svg</a>, <a href="http://www.inkscape.org/">inkscape</a>0.46</li>
+<li>"<a href="https://developer.mozilla.org/ja/SVG_improvements_in_Firefox_3">SVG improvements in Firefox 3</a>," Mozilla Developer Network</li>
+</ul>

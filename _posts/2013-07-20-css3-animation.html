@@ -1,0 +1,92 @@
+---
+layout: post
+title: CSS3 Animation の使いすぎは嫌だ
+date: '2013-07-20T08:47:00.000+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- css
+modified_time: '2013-07-20T08:47:00.389+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6207201207739997563
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/07/css3-animation.html
+---
+
+
+<div class="css3-anim-fashion-fear">
+
+<span class="blink-normal">あまりにも</span>
+<span class="blink-fast">CSS3 Animation が</span>
+<span class="fashion">流行ってしまうと</span><br />
+<span class="enlarge">困ると思うんだ</span>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+
+@keyframes blink-normal {
+  100% { visibility: hidden; }
+}
+@-webkit-keyframes blink-normal {
+  100% { visibility: hidden; }
+}
+
+.css3-anim-fashion-fear .blink-normal {
+  -webkit-animation: blink-normal 1s steps(5,start) infinite;
+  animation: blink-normal 1s steps(5,start) infinite;
+}
+
+.css3-anim-fashion-fear .blink-fast {
+  -webkit-animation: blink-normal 400ms steps(5,start) infinite;
+  animation: blink-normal 400ms steps(5,start) infinite;
+}
+
+@keyframes fashion {
+  0% { color: #f00; }
+  16% { color: #ff0; }
+  32% { color: #0f0; }
+  48% { color: #0ff; }
+  64% { color: #00f; }
+  80% { color: #f0f; }
+  100% { color: #f00; }
+}
+@-webkit-keyframes fashion {
+  0% { color: #f00; }
+  16% { color: #ff0; }
+  32% { color: #0f0; }
+  48% { color: #0ff; }
+  64% { color: #00f; }
+  80% { color: #f0f; }
+  100% { color: #f00; }
+}
+
+.css3-anim-fashion-fear .fashion {
+  -webkit-animation: fashion 1s linear infinite;
+  animation: fashion 1s linear infinite;
+}
+
+@keyframes enlarge {
+  0% { font-size: 12px; font-weight: 100; }
+  100% { font-size: 64px; font-weight: 900; }
+}
+@-webkit-keyframes enlarge {
+  0% { font-size: 12px; font-weight: 100; }
+  100% { font-size: 64px; font-weight: 900; }
+}
+
+.css3-anim-fashion-fear .enlarge {
+  color: #f00;
+  line-height: 80px;
+  -webkit-animation: enlarge 1s steps(5,start) infinite;
+  animation: enlarge 1s steps(5,start) infinite;
+}
+
+/* ]]><!-- *//* --></style>
+
+
+</div>
+
+<p>
+<code>&lt;blink&gt;</code> や <code>&lt;marquee&gt;</code> よりも遥かに見栄え的に強力すぎる。
+</p>
+
+<p>
+なにごともやり過ぎはよくない。
+</p>

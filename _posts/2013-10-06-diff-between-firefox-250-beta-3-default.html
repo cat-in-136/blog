@@ -1,0 +1,45 @@
+---
+layout: post
+title: Diff between firefox 25.0 beta 3 default preference and firefox 24.0
+date: '2013-10-06T22:00:00.000+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2013-10-06T22:02:08.463+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-4317133440353957573
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/10/diff-between-firefox-250-beta-3-default.html
+---
+
+
+<p>
+This is difference between the default preference of Firefox 25.0 beta 3 and one of 24.0.
+</p>
+
+<dl>
+<dt>Default pref Javascript files (Firefox 24.0 for Linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/services-sync.js}, (browser/omni.ja)defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js}</dd>
+<dt>Default pref Javascript files (Firefox 25.0 beta 3 for Linux):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/services-sync.js}, (browser/omni.ja)defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js}</dd>
+</dl>
+
+<table class="diff_firefox25_pref_diff">
+<thead>
+<tr><td>Pref</td><td>Firefox 24.0</td><td>Firefox 25.0 beta 0</td></tr>
+</thead>
+<tbody><tr class="newkey"><td>app.<wbr />update.<wbr />checkInstallTime</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>app.<wbr />update.<wbr />checkInstallTime.<wbr />days</td><td class="undefined">undefined</td><td>63</td></tr><tr class="newkey"><td>browser.<wbr />download.<wbr />animateNotifications</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>browser.<wbr />download.<wbr />useJSTransfer</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>browser.<wbr />sessionstore.<wbr />debug</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>browser.<wbr />sessionstore.<wbr />upgradeBackup.<wbr />latestBuildID</td><td class="undefined">undefined</td><td></td></tr><tr><td>datareporting.<wbr />healthreport.<wbr />service.<wbr />providerCategories</td><td>healthreport-js-provider-default</td><td>healthreport-js-provider-default,healthreport-js-provider-beta</td></tr><tr class="newkey"><td>devtools.<wbr />browserconsole.<wbr />filter.<wbr />netwarn</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>devtools.<wbr />debugger.<wbr />enable-<wbr />content-<wbr />actors</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />inspector.<wbr />remote</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />profiler.<wbr />ui.<wbr />show-<wbr />platform-<wbr />data</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>devtools.<wbr />webconsole.<wbr />filter.<wbr />netwarn</td><td class="undefined">undefined</td><td>true</td></tr><tr class="oldkey"><td>dom.<wbr />future.<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>dom.<wbr />navigator-<wbr />property.<wbr />disable.<wbr />mozSettings</td><td>true</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>dom.<wbr />promise.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>dom.<wbr />use_<wbr />watchdog</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>dom.<wbr />webapps.<wbr />useCurrentProfile</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>extensions.<wbr />hotfix.<wbr />certs.<wbr />1.<wbr />sha1Fingerprint</td><td style="word-break: break-all;">CA:C4:7D:BF:63:4D:24:E9:DC:93:07:2F:E3:C8:EA:6D:C3:94:6E:89</td><td style="word-break: break-all;">91:53:98:0C:C1:86:DF:47:8F:35:22:9E:11:C9:A7:31:04:49:A1:AA</td></tr><tr class="oldkey"><td>general.<wbr />useragent.<wbr />complexOverride.<wbr />moodle</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>javascript.<wbr />options.<wbr />pccounts.<wbr />chrome</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>javascript.<wbr />options.<wbr />pccounts.<wbr />content</td><td>false</td><td class="undefined">undefined</td></tr><tr class="newkey"><td>layers.<wbr />bufferrotation.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>layers.<wbr />frame-<wbr />counter</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>layers.<wbr />prefer-<wbr />memory-<wbr />over-<wbr />shmem</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>layers.<wbr />use-<wbr />deprecated-<wbr />textures</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>layout.<wbr />css.<wbr />filters.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>layout.<wbr />css.<wbr />osx-<wbr />font-<wbr />smoothing.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>media.<wbr />mediasource.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>media.<wbr />peerconnection.<wbr />turn.<wbr />disable</td><td>true</td><td>false</td></tr><tr class="newkey"><td>media.<wbr />video_<wbr />stats.<wbr />enabled</td><td class="undefined">undefined</td><td>true</td></tr><tr><td>media.<wbr />webaudio.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>network.<wbr />disable.<wbr />ipc.<wbr />security</td><td>false</td><td>true</td></tr><tr class="newkey"><td>network.<wbr />tickle-<wbr />wifi.<wbr />delay</td><td class="undefined">undefined</td><td>16</td></tr><tr class="newkey"><td>network.<wbr />tickle-<wbr />wifi.<wbr />duration</td><td class="undefined">undefined</td><td>400</td></tr><tr class="newkey"><td>network.<wbr />tickle-<wbr />wifi.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>nglayout.<wbr />debug.<wbr />paint_<wbr />flashing_<wbr />chrome</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>plugins.<wbr />click_<wbr />to_<wbr />play</td><td>false</td><td>true</td></tr><tr class="newkey"><td>ril.<wbr />numRadioInterfaces</td><td class="undefined">undefined</td><td>1</td></tr><tr><td>security.<wbr />ssl.<wbr />enable_<wbr />false_<wbr />start</td><td>false</td><td>true</td></tr><tr class="newkey"><td>security.<wbr />ssl.<wbr />enable_<wbr />ocsp_<wbr />stapling</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>security.<wbr />ssl.<wbr />false_<wbr />start.<wbr />require-<wbr />forward-<wbr />secrecy</td><td class="undefined">undefined</td><td>false</td></tr><tr class="newkey"><td>security.<wbr />ssl.<wbr />false_<wbr />start.<wbr />require-<wbr />npn</td><td class="undefined">undefined</td><td>true</td></tr><tr class="newkey"><td>services.<wbr />sync.<wbr />scheduler.<wbr />eolInterval</td><td class="undefined">undefined</td><td>604800</td></tr><tr class="newkey"><td>svg.<wbr />marker-<wbr />improvements.<wbr />enabled</td><td class="undefined">undefined</td><td>false</td></tr><tr><td>svg.<wbr />text.<wbr />css-<wbr />frames.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>toolkit.<wbr />telemetry.<wbr />server</td><td>https://data.mozilla.com</td><td>https://incoming.telemetry.mozilla.org</td></tr><tr class="oldkey"><td>xpinstall.<wbr />whitelist.<wbr />add.<wbr />36</td><td>getpersonas.com</td><td class="undefined">undefined</td></tr></tbody>
+</table>
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox25_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox25_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox25_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox25_pref_diff td.json { word-break: break-all; }
+table.diff_firefox25_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox25_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox25_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox25_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox25_pref_diff td.json { word-break: break-all; }
+
+table.diff_firefox25_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox25_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>

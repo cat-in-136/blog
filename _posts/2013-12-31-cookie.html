@@ -1,0 +1,88 @@
+---
+layout: post
+title: Cookie のブロックを検出する方法：更新
+date: '2013-12-31T00:00:00.000+09:00'
+author: cat_in_136
+tags:
+- javascript
+- cookie
+modified_time: '2013-12-31T13:14:41.731+09:00'
+thumbnail: http://4.bp.blogspot.com/-7a2xfXasq7I/UsIz7oN9M0I/AAAAAAAAAaA/kZNy0SocePE/s72-c/device-2013-12-31-111917.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-803644920389857632
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/12/cookie.html
+---
+
+<p>Cookie を検出してブロックする、のではなくて
+あるサイトに訪れたユーザの
+ブラウザが Cookie をブロックする設定となっているのを検出できるかどうか、
+のおはなし。</p>
+
+<figure style="display: block; margin: 1em; text-align: center;">
+<a href="http://4.bp.blogspot.com/-7a2xfXasq7I/UsIz7oN9M0I/AAAAAAAAAaA/kZNy0SocePE/s1600/device-2013-12-31-111917.png" style="margin-left: 1em; margin-right: 1em;" imageanchor="1" ><img alt="プライバシーとセキュリティ→Cookie→Cookieを受け入れる" width="192" height="320"  src="http://4.bp.blogspot.com/-7a2xfXasq7I/UsIz7oN9M0I/AAAAAAAAAaA/kZNy0SocePE/s320/device-2013-12-31-111917.png" /></a>
+<figcaption>Android のブラウザだと「Cookieを受け入れる」で Cookie のブロックを指定できる</figcaption>
+</figure>
+
+<ins datetime="2013-12-31T13:04:19">
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator.cookieEnabled"><code>navigator.cookieEnabled</code></a>を見ればいいだけの簡単なお仕事だった(ドメイン指定の設定も反映される)。
+なので、この記事の内容は忘れるように。
+</ins>
+
+<del datetime="2013-12-31T13:04:19">
+
+<h4>Solution</h4>
+
+<pre class="prettyprint"><code>document.cookie = "cookie-block-check=a;max-age=1;domain=%DOMAIN%;path=%PATH%%SECURE%"
+                  .replace("%DOMAIN%", location.host)
+                  .replace("%PATH%", location.pathname)
+                  .replace("%SECURE%", (location.protocol == "https:")? ";secure" : "")
+if (document.cookie == "") {
+    alert("Cookie is blocked");
+} else {
+    alert("Cookie is allowed");
+}
+</code></pre>
+
+<p>Cookie の受け入れをON/OFFするなり、ドメイン指定で拒否/許可を切り替えるなりして、
+下記ボタンを押すと動作が変わると思う。</p>
+
+<p><button onclick="document.cookie='cookie-block-check=1;max-age=1;domain=%DOMAIN%;path=%PATH%%SECURE%'.replace('%DOMAIN%',location.hostname).replace('%PATH%',location.pathname).replace('%SECURE%','https:'==location.protocol?';secure':'');(''==document.cookie)?alert('Cookie is blocked'):alert('Cookie is allowed');">検証用ボタン</button><noscript>※実行にあたっては、JavaScript を有効にすること</noscript></p>
+
+<h4>仕組み</h4>
+
+<p>話は単純で、<strong>Cookie を実際に JavaScript でつくってして、それが登録されているかを見えればよい</strong>。</p>
+
+<p>なお、この Cookie の扱いは下記の通り慎重を期している。</p>
+
+<ul>
+<li><code>max-age=1</code> とすることで<del>賞味</del>期限を1秒としている。
+<ul>
+<li>ここで設定した <code>cookie-block-check=a</code> は HTTP request 等に含めるまでもないものである。</li>
+<li><code>if (document.cookie == "")</code> の判定後は不要である。</li>
+<li>明示的に消去してもよいがだるいので、期限を設けてブラウザに自動削除させている。</li>
+</ul></li>
+<li>すぐに消えるとはいえ、念の為 <code>domain</code> <code>path</code> <code>secure</code> attribute を付けるなど
+安全性には気をつけた</li>
+</ul>
+
+<h4>「一時的に許可」の判定はできないし、意味はない</h4>
+
+<p>JavaScript の <code>document.cookie</code> で cookie を取得するときには、
+key=value ペアしか取得できないので、
+「一時的に許可（ブラウザ閉じたら削除）」になっているかは判定できない。</p>
+
+<p>もっとも、cookie はユーザによって後で削除されるかもしれないし、
+ブラウザによって（cookie の格納個数などの原因によって）削除されるかもしれない。
+これは原理的に判断できるわけがないので、
+一時的に許可されているか=後で削除されるかどうかを判定するのはできないし、無意味だ。</p>
+
+<h4>参考文献</h4>
+
+<ul>
+<li>"HTTP State Management Mechanism", <a href="http://tools.ietf.org/html/rfc6265" title="RFC 6265 - HTTP State Management Mechanism">RFC 6265</a>, April 2011
+<ul>
+<li>特に 7.2 節に User-Agent が勝手に Cookie を削除する云々の話がある</li>
+</ul></li>
+<li>"<a href="https://developer.mozilla.org/docs/DOM/document.cookie" title="document.cookie - DOM | MDN"><code>document.cookie</code> - DOM</a>", MDN</li>
+</ul>
+
+</del>

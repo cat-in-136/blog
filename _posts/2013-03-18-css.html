@@ -1,0 +1,116 @@
+---
+layout: post
+title: CSSの改行を含む属性値を含むセレクターについて
+date: '2013-03-18T07:00:00.000+09:00'
+author: cat_in_136
+tags:
+- css
+modified_time: '2013-03-18T07:00:03.567+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7229832977382995005
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/css.html
+---
+
+<p>CSSのエンコード規則について<a href="http://kojika17.com/2013/03/kaomoji_selectors.html" title="CSSの変態向き - id, classを顔文字でコーディングする方法">CSSの変態向き - id, classを顔文字でコーディングする方法</a>
+を読んで、いまさらになってやっと改行を含むルールの記述を知った。</p>
+
+<p><a href="http://www.w3.org/TR/CSS21/syndata.html#rule-sets" title="4.1.7 Rule sets, declaration blocks, and selectors - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification">CSS 2.1 spec 4.1.7節</a>には下記記述がある。</p>
+
+<blockquote>
+  <p>Here is a more complex example. The first two pairs of curly braces are inside a string, and do not mark the end of the selector. This is a valid CSS 2.1 rule.</p>
+
+<pre class="prettyprint lang-css"><code>p[example="public class foo\
+{\
+    private int x;\
+\
+    foo(int x) {\
+        this.x = x;\
+    }\
+\
+}"] { color: red }
+</code></pre>
+</blockquote>
+
+<p>いかにも以下のような要素が赤色で表示されそうに期待するところだが、
+実際はそうならない。</p>
+
+<pre class="prettyprint lang-xhtml"><code>&lt;p example="public class foo
+{
+    private int x;
+
+    foo(int x) {
+        this.x = x;
+    }
+
+}"&gt;test&lt;/p&gt;
+</code></pre>
+
+<p>これは引っかけ問題だ。「バックスラッシュ+改行」は改行をなくす
+意味があると<a href="http://www.w3.org/TR/CSS21/syndata.html#strings" title="4.3.7 Strings - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification">CSS 2.1 spec 4.3.7節</a>にあるんので、
+以下と同じだ。</p>
+
+<pre class="prettyprint lang-xhtml"><code> p[example="public class foo{    private int x;    foo(int x) {        this.x = x;    }}"][
+     color: red;
+ }
+</code></pre>
+
+<p>つまり、対象となる要素も以下のように<code>example</code>属性値をダラダラ長く
+続けた感じになる。</p>
+
+<pre class="prettyprint lang-css"><code> &lt;p example="public class foo{    private int x;    foo(int x) {        this.x = x;    }}"&gt;test&lt;/p&gt;
+</code></pre>
+
+<p>改行を含むルールにするにも、ルールのテキスト列について、
+改行コードを <code>\00000A</code> や <code>\A</code> として加えてやらないといけない。</p>
+
+<p>例えば以下のようになる。</p>
+
+<pre class="prettyprint lang-xhtml"><code>&lt;p example="foo
+bar"&gt;
+test
+&lt;/p&gt;
+&lt;style&gt;
+p[example="foo\00000Abar"] { color: red }
+/* 別解： */
+p[example="foo\A bar"] { color: red }
+&lt;/style&gt;
+</code></pre>
+
+<p>なお、ここで改行コードが <abbr title="Line Feed">LF</abbr> (<code>U+000A</code>) でなくとも、
+この指定でダイジョブらしい旨が、<a href="http://www.w3.org/TR/CSS21/syndata.html#strings" title="4.3.7 Strings - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification">CSS 2.1 spec 4.3.7節</a>に書いてある。（参考訳は <a href="http://momdo.s35.xrea.com/web-html-test/spec/CSS21/syndata.html#strings" title="4.3.7 文字列 - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification">http://momdo.s35.xrea.com/web-html-test/spec/CSS21/syndata.html#strings</a> から。）</p>
+
+<blockquote>
+  <p>A string cannot directly contain a newline. To include a newline in a string, use an escape representing the line feed character in ISO-10646 (U+000A), such as "\A" or "\00000a". (参考訳：文字列は直接改行を含むことはできない。文字列に改行を含むには、ISO 10646で（U+000A）をエスケープ表現した改行文字"\A"または"\00000a"を用いる。この文字は、CSSで"改行"の一般概念を表現する。)</p>
+</blockquote>
+
+<p>というわけで、以下（再掲）の要素をスタイリングするには、</p>
+
+<pre class="prettyprint lang-xhtml"><code>&lt;p example="public class foo
+{
+    private int x;
+
+    foo(int x) {
+        this.x = x;
+    }
+
+}"&gt;test&lt;/p&gt;
+</code></pre>
+
+<p>以下のようなCSSを書けばよい。</p>
+
+<pre class="prettyprint lang-css"><code>p[example="public class foo\A \
+{\A \
+    private int x;\A \
+\A \
+    foo(int x) {\A \
+        this.x = x;\A \
+    }\A \
+\A \
+}"] { color: red }
+</code></pre>
+
+<h4>参考文献</h4>
+
+<ul>
+<li>"<a href="http://kojika17.com/2013/03/kaomoji_selectors.html" title="CSSの変態向き - id, classを顔文字でコーディングする方法">CSSの変態向き - id, classを顔文字でコーディングする方法</a>",  Web Design KOJIKA17, (2013-03-05)</li>
+<li>"<a href="http://www.w3.org/TR/CSS2/">Cascading Style Sheets Level 2 Revision 1</a>" B. Bos, T. Çelik, I. Hickson, H. Lie. W3C.</li>
+</ul>

@@ -1,0 +1,98 @@
+---
+layout: post
+title: Why cannot upload a photo to Blogger and Why is "In order to select an item
+  from your online storage, please sign in" displayed?
+date: '2013-12-28T10:00:00.000+09:00'
+author: cat_in_136
+tags:
+- web application
+- cookie
+- security
+modified_time: '2013-12-28T10:00:01.229+09:00'
+thumbnail: http://2.bp.blogspot.com/-7LFw27ck1Jk/UrxMltTeD-I/AAAAAAAAAZI/RuGI1y8RnYI/s72-c/error.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7092067443168795121
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/12/why-cannot-upload-photo-to-blogger-and.html
+---
+
+<h4>Question</h4>
+
+<div style="border: double #008 5px; padding: 1ex;">
+
+<p>I cannot upload a photo to Blogger.</p>
+
+<figure style="display: block; margin: 1em; text-align: center;">
+<a href="http://2.bp.blogspot.com/-7LFw27ck1Jk/UrxMltTeD-I/AAAAAAAAAZI/RuGI1y8RnYI/s1600/error.png"><img style="border: none 0;" src="http://2.bp.blogspot.com/-7LFw27ck1Jk/UrxMltTeD-I/AAAAAAAAAZI/RuGI1y8RnYI/s400/error.png" width="400" height="222" alt="In order to select an item from your online storage, please sign in" /></a>
+</figure>
+
+<p>When I try to upload photos to my Blogger post, I got following alert:</p>
+
+<blockquote>
+  <p>In order to select an item from your online storage, please sign in</p>
+</blockquote>
+
+<p>I clicked "Sign in" button because I have no choice.
+A popup window was opened, I signed in again, the popup was closed,
+and then I got following alert:</p>
+
+<blockquote>
+  <p>There was an error!<br />
+  Details:<br />
+  The feature you requested is currently unavailable. Please try again later.</p>
+</blockquote>
+
+<p>WTF?</p>
+
+</div>
+
+<h4>(Usual-) Answer</h4>
+
+<div style="border: double #800 5px; padding: 1ex;">
+<p style="font-size: x-large;">Solution: Allow third-party cookies to <code>docs.google.com</code>.</p>
+</div>
+
+<p>For example, In Firefox:</p>
+
+<ul>
+<li>Solution A: Choose "Always" ("From visited" may be ok) on "Firefox Options(Preferences)"->"Privacy"->"Accept third-party cookies"; or</li>
+<li>Solution B: Click "Exceptions" next to "Accept cookies from sites" on "Firefox Options(Preferences)"->"Privacy" and then Allow (or Allow for Session) <code>docs.google.com</code></li>
+</ul>
+
+<figure style="display: block; margin: 1em; text-align: center;">
+<a href="http://1.bp.blogspot.com/-wupxDkr2FLI/UrxMmJfV16I/AAAAAAAAAZY/XoA3rXWpCH4/s1600/settingA.png" ><img src="http://1.bp.blogspot.com/-wupxDkr2FLI/UrxMmJfV16I/AAAAAAAAAZY/XoA3rXWpCH4/s320/settingA.png"  width="320" height="290" /></a>
+<figcaption>Solution A</figcaption>
+</figure>
+<figure style="display: block; margin: 1em; text-align: center;">
+<a href="http://3.bp.blogspot.com/-tuvAgyNX9FA/UrxMmQol-BI/AAAAAAAAAZQ/tKRp_MkYqTM/s1600/settingB.png"  ><img src="http://3.bp.blogspot.com/-tuvAgyNX9FA/UrxMmQol-BI/AAAAAAAAAZQ/tKRp_MkYqTM/s320/settingB.png" width="320" height="76" /></a>
+<figcaption>Solution B</figcaption>
+</figure>
+
+<p>Note: Once you completed to upload photos, you may configure your browser to block the third-party cookies.</p>
+
+<aside>
+<figure style="display: block; margin: 1em; text-align: center;">
+<img src="http://4.bp.blogspot.com/-W61CKDVHQ04/UrxUesq0yHI/AAAAAAAAAZw/bwqlmHHxdd4/s1600/3720985079_dc16ea0e47_n.jpg" width="320" height="240" />
+<figcaption>(Image Credit: <a href="http://www.flickr.com/photos/universityofscrantonlibrary/3720985079/">By University of Scranton community, on Flickr, CC-BY-2.0</a>)</figcaption>
+</figure>
+</aside>
+
+<h4>Why <code>docs.google.com</code>?</h4>
+
+<p>All the photo in Blogger is stored in Google Drive.</p>
+
+<p>To upload photo, your browser will send a HTTP request
+to Google Drive (<code>docs.google.com</code>)
+with your-session-ID cookie.
+This cookie is third-party cookie because <code>docs.google.com</code> is <strong>different</strong> than
+the domain shown on your browser address bar <code>www.blogger.com</code>.</p>
+
+<figure style="display: block; margin: 1em; text-align: center;">
+<a href="http://2.bp.blogspot.com/-imNarKpzoX4/UrxMmBG1oKI/AAAAAAAAAZg/t22n88a-7j8/s1600/nocookie_log.png" ><img src="http://2.bp.blogspot.com/-imNarKpzoX4/UrxMmBG1oKI/AAAAAAAAAZg/t22n88a-7j8/s400/nocookie_log.png" width="400" height="198" /></a>
+<figcaption>HTTP Connection Log when clicking "Insert Image" button ("No cookies for this request" indicates blocking the cookie!)</figcaption>
+</figure>
+
+<p>If you configure your browser to block this third-party cookies,
+Your browser does not send your-session-ID cookie.
+<code>docs.google.com</code> server does not receive session ID.
+Thus, <code>docs.google.com</code> says "please sign in".</p>
+
+<p style="font-size: larger;">BTW, I wonder why Blogger does not use sorta proxy (for example, use of <code>https://www.blogger.com/google_drive/...</code>).</p>

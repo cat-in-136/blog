@@ -1,0 +1,274 @@
+---
+layout: post
+title: ２本の（省略付き）棒グラフを思いのまま描く方法
+date: '2013-04-13T20:29:00.000+09:00'
+author: cat_in_136
+tags:
+- チラシの裏
+- math
+modified_time: '2013-04-20T19:35:03.283+09:00'
+thumbnail: http://3.bp.blogspot.com/-S6asQgyCd0c/UWk8zua_TzI/AAAAAAAAAWc/Vpij-1gJDrA/s72-c/bar.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8643086228401238791
+blogger_orig_url: http://cat-in-136.blogspot.com/2013/04/two-element-barchart-designing.html
+---
+
+<p>例えば、こんなふたつの値があったとしましょう。</p>
+
+<figure style="display: block; margin: 1em;">
+<figcaption style="display: block;">
+中国・日本のGDP (<a href="http://data.worldbank.org/indicator/NY.GDP.MKTP.CD" rel="nofollow">世界銀行発表の2011年のGDP</a>)
+</figcaption>
+
+<table>
+<col />
+<col />
+<thead>
+<tr>
+ <th>Country name</th>
+ <th>GDP (US$)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+ <td>China</td>
+ <td>7,318,499,269,769</td>
+</tr>
+<tr>
+ <td>Japan</td>
+ <td>5,867,154,491,918</td>
+</tr>
+</tbody>
+</table>
+
+</figure>
+
+<p>そのままグラフを作ると <strong>差が少なくて見栄えが悪い</strong> の。</p>
+
+<figure style="display: block; margin: 1em;">
+<a href="http://3.bp.blogspot.com/-S6asQgyCd0c/UWk8zua_TzI/AAAAAAAAAWc/Vpij-1gJDrA/s1600/bar.png"><img src="http://3.bp.blogspot.com/-S6asQgyCd0c/UWk8zua_TzI/AAAAAAAAAWc/Vpij-1gJDrA/s320/bar.png" width="245" height="292" /></a>
+<figcaption style="display: block;">中国・日本のGDP</figcaption>
+</figure>
+
+<h3>そんなときの簡単な省略棒グラフの描き方</h3>
+
+<p>まずは、枠の中に高さの違う棒（四角形）を２つ描きます。
+棒の高さは <strong>差をぐいっと付けて</strong> 描きます。
+どの程度、差を付けるかは <strong>お好みで調整してね</strong> 。</p>
+
+<figure style="display: block; margin: 1em;">
+<img src="http://2.bp.blogspot.com/-znhC2KK9fjM/UWk8z9LQ-XI/AAAAAAAAAWU/ZW3THcJHIBQ/s320/step1.png" width="110" height="156"/>
+</figure>
+
+<p>大きい方に合わせて線を引いて大きい方の数字を、
+小さい方に合わせて線を引いて小さい方の数字を書き入れます。
+値が大きいので billion で区切って、7318 と 5867 を書き入れました。
+また、棒の下にはラベルも書きましょう。
+もちろん、高い棒の方が China ですね。</p>
+
+<figure style="display: block; margin: 1em;">
+<img src="http://4.bp.blogspot.com/-MAylsW6CNec/UWk80KelHaI/AAAAAAAAAW4/CgGeNOYAPfY/s320/step2.png" width="110" height="156"/>
+</figure>
+
+<p>最後に左下に省略線と数字のゼロを入れるだけ。</p>
+
+<figure style="display: block; margin: 1em;">
+<img src="http://3.bp.blogspot.com/-EaqdgmvrxOY/UWk80YfJNUI/AAAAAAAAAWo/p4-xjLVpvpE/s320/step3.png" width="142" height="169"/>
+</figure>
+
+<p>見栄えが気に入らないのなら、お好みで色なり線を工夫してみてね☆彡</p>
+
+<figure style="display: block; margin: 1em;">
+<img src="http://4.bp.blogspot.com/-D1ilLAFpPjM/UWk80ZAbI2I/AAAAAAAAAWw/H2g_WB1hYn0/s320/step4.png" width="153" height="187"/>
+</figure>
+
+<h4>このやり方で省略棒グラフとして正しいことの数学的議論</h4>
+
+<p>2つのデータがあって、それぞれの値が
+<var>V<sub>1</sub></var>,
+<var>V<sub>2</sub></var>
+とする。
+それぞれに対応する棒グラフの高さが
+<var>h<sub>1</sub></var>,
+<var>h<sub>2</sub></var>
+とし（単位はセンチメートルなどの長さ）、
+省略グラフの波線によって
+<var>E</var>
+だけ省略されているとする。</p>
+
+<figure style="display: block; margin: 1em;">
+<img src="http://4.bp.blogspot.com/-PpVwxZY66F8/UWk8zgAds3I/AAAAAAAAAW8/tn44kWgvsg8/s320/anly.png" widht="189" height="167" />
+</figure>
+
+<p>このとき、</p>
+
+<div style="text-align: center; margin: auto;">
+<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>V<sub>2</sub></var>
+&lt;
+<var>h<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>2</sub></var>
+</div>
+
+<p>が成り立つ任意の
+<var>V<sub>1</sub></var>,
+<var>V<sub>2</sub></var>,
+<var>h<sub>1</sub></var>,
+<var>h<sub>2</sub></var>
+(<var>V<sub>1</sub></var>&#x205f;&gt;&#x205f;<var>V<sub>2</sub></var>&#x205f;&gt;&#x205f;0,
+<var>h<sub>1</sub></var>&#x205f;&gt;&#x205f;<var>h<sub>2</sub></var>&#x205f;&gt;&#x205f;0)
+に対して<var>E</var>(&gt;&#x205f;0)が存在することを以下に示す。</p>
+
+<p>もし省略部のない単なる棒グラフの場合、
+<var>V<sub>1</sub></var>,
+<var>h<sub>1</sub></var>と
+<var>V<sub>2</sub></var>,
+<var>h<sub>2</sub></var>
+の比は同じになるように、棒グラフを描く必要がある。
+よって、省略部のない単なる棒グラフの場合下式が成り立つ。</p>
+
+<div style="text-align: center; margin: auto;">
+<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>1</sub></var>
+=
+<var>V<sub>2</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>2</sub></var>
+</div>
+
+<p>省略部のある棒グラフでは
+<var>h<sub>1</sub></var>,
+<var>h<sub>2</sub></var>
+がそれぞれ<var>E</var>だけ省略されているので、
+上の式を
+<var>h<sub>1</sub></var>&#x205f;&#x2192;&#x205f;(<var>h<sub>1</sub></var> + <var>E</var>),
+<var>h<sub>2</sub></var>&#x205f;&#x2192;&#x205f;(<var>h<sub>2</sub></var> + <var>E</var>)
+を書き換えた、下式が成り立たなければならない。</p>
+
+<div style="text-align: center; margin: auto;">
+<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;(<var>h<sub>1</sub> + E)</var>
+=
+<var>V<sub>2</sub></var>&#x205f;&#xf7;&#x205f;(<var>h<sub>2</sub> + E)</var>
+</div>
+
+<p>これを解くと <var>E</var> は下記の値となる。</p>
+
+<div style="text-align: center; margin: auto;">
+<var>E</var>
+=
+(<var>V<sub>2</sub></var>&#x2062;<var>h<sub>1</sub></var>&#x205f;-&#x205f;<var>V<sub>1</sub></var>&#x2062;<var>h<sub>2</sub></var>)&#x205f;&#xf7;&#x205f;(<var>V<sub>1</sub></var>&#x205f;-&#x205f;<var>V<sub>2</sub></var>)
+</div>
+
+<p>ここで</p>
+
+<div style="text-align: center; margin: auto;">
+<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>V<sub>2</sub></var>
+&lt;
+<var>h<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>2</sub></var>
+</div>
+
+<p>から</p>
+
+<div style="text-align: center; margin: auto;">
+<var>V<sub>2</sub></var>&#x2062;<var>h<sub>1</sub></var>&#x205f;-&#x205f;<var>V<sub>1</sub></var>&#x2062;<var>h<sub>2</sub></var>
+&gt;
+0
+</div>
+
+<p>が求まるので、今求めた<var>E</var>の値は正の数である。</p>
+
+<p><abbr title="Quod erat demonstrandum">QED</abbr>.</p>
+
+<h4>上の証明の考察</h4>
+
+<p>上の証明で最初に与えた条件式</p>
+
+<div style="text-align: center; margin: auto;">
+<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>V<sub>2</sub></var>
+&lt;
+<var>h<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>2</sub></var>
+</div>
+
+<p>は、実際の値の比(<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>V<sub>2</sub></var>)
+よりもグラフの上の棒の高さの比
+(<var>h<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>2</sub></var>)
+が大きいということを表す。</p>
+
+<p>この前提下では、任意のデータ、任意の棒の高さで省略付き棒グラフが描ける。
+というのも、任意のデータ、任意の棒の高さに対して、省略線で省略された棒の高さ(<var>E</var>)が求められるからである。</p>
+
+<p style="background-color: rgba(255,192,192,0.5); font-size: larger;">結論1: このやり方は<ins datetime="2013-04-20">実際の値の比よりもグラフの上の棒の高さの比が大きいという前提下で</ins>任意のデータ、任意の棒の高さで省略付き棒グラフが描ける</p>
+
+<p>逆に</p>
+
+<div style="text-align: center; margin: auto;">
+<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>V<sub>2</sub></var>
+&gt;
+<var>h<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>2</sub></var>
+</div>
+
+<p>すなわち、実際の値の比(<var>V<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>V<sub>2</sub></var>)
+よりもグラフの上の棒の高さの比
+(<var>h<sub>1</sub></var>&#x205f;&#xf7;&#x205f;<var>h<sub>2</sub></var>)
+が小さい場合、省略線で省略された棒の高さ(<var>E</var>)が負になってしまう。
+これは具体的には下記のようなことであり、省略によって棒の高さを減じなければならないのに、
+棒の高さが水増し、という意味不明なことになっている。
+これは明らかにおかしい。</p>
+
+<figure style="display: block; margin: 1em;">
+<figcaption style="display: block;">
+中国・パラオのGDP (<a href="http://data.worldbank.org/indicator/NY.GDP.MKTP.CD" rel="nofollow">世界銀行発表の2011年のGDP</a>)
+</figcaption>
+
+<table>
+<col />
+<col />
+<thead>
+<tr>
+ <th>Country name</th>
+ <th>GDP (US$)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+ <td>China</td>
+ <td>7,318,499,269,769</td>
+</tr>
+<tr>
+ <td>Palau</td>
+ <td>165,517,314</td>
+</tr>
+</tbody>
+</table>
+
+</figure>
+
+
+<figure style="display: block; margin: 1em;">
+<img src="http://2.bp.blogspot.com/-0hfEHef_NZ0/UWk80jgEuOI/AAAAAAAAAW0/GARtTUTzR4c/s320/wrongscale.png" width="198" height="187"/>
+<figcaption style="display: block;">中国・パラオのGDP（不正な省略棒グラフ表現）</figcaption>
+</figure>
+
+<p style="background-color: rgba(255,192,192,0.5); font-size: larger;">結論2: 省略棒グラフは、元のデータの変化の比を強調して表示できる。しかし、元のデータの変化の比を縮めて表示することはできない。</p>
+
+<h4>まとめ</h4>
+
+<p>以上の考察によって、<strong style="color: #f00;">2本の</strong> 省略棒グラフは、以下の特徴を持つことがわかった。</p>
+
+<ul>
+<li><ins datetime="2013-04-20">実際の値の比よりもグラフの上の棒の高さの比が大きいという前提下で</ins>任意のデータに対して、任意の棒の高さで描くことができる。すなわち、<strong style="color: #f00;">棒の高さや高さの差にまったく意味はない</strong>。</li>
+<li>2つの値の <strong style="color: #f00;"><del datetime="2013-04-20">差</del><ins datetime="2013-04-20">比</ins>がたいしたことがない</strong> ことがわかる。</li>
+</ul>
+
+<h4>補足</h4>
+
+<ul>
+<li>本稿では、3本以上の省略棒グラフについては言及はしていないし、善悪も言及していない。
+<ul>
+<li>3本以上の省略棒グラフでは、差の束縛条件が加わるため、「棒の高さの差にまったく意味がない」ということはなくなる。</li>
+<li>「棒の高さの差」には意味が生じるので、批評の観点としては、人間が見た「印象」を考慮に入れた議論となる。</li>
+<li>よって、3本以上の省略棒グラフの善悪の議論には、純粋な数式では答えは導き出せないのである。</li>
+</ul></li>
+<li>本稿は GDP を単なる手頃なデータとして使っただけであり、例えば中国の GDP について強調しようとしたわけではない。</li>
+</ul>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://data.worldbank.org/indicator/NY.GDP.MKTP.CD" rel="nofollow">GDP (current US$)</a>, The World Bank, 2011.</li>
+<li><a href="http://linux.slashdot.jp/comments.pl?sid=419181&amp;cid=1421914">Re: 悪いグラフの例|3D円グラフにご注意</a>, commented by x-rebuttal, スラッシュ・ドット・ジャパン, 2008.</li>
+</ul>
