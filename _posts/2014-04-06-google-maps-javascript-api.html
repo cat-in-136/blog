@@ -1,0 +1,228 @@
+---
+layout: post
+title: カスタムマップを Google Maps JavaScript API を使ってスクロール地図にする方法
+date: '2014-04-06T12:07:00.001+09:00'
+author: cat_in_136
+tags:
+- howto
+- google maps
+modified_time: '2014-04-06T12:07:47.676+09:00'
+thumbnail: http://1.bp.blogspot.com/-2GhpEqnDGWA/U0C8NVqTUfI/AAAAAAAAAb4/5Zu7s5W0Pk8/s72-c/howto-github.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6182503136358433823
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/04/google-maps-javascript-api.html
+---
+
+<p><a href="http://imgcity.chirijin.com/" title="空想都市へ行こう！ ／ 地理人が、空想都市を詳細地図で描く。">地理人さんの想像都市</a>を<a href="http://rawgithub.com/cat-in-136/9703504/raw/index.html" title="空想都市中村市勝手にスクロールマップ">勝手にスクロール地図化</a>を作ったところ受け取った、
+<a href="https://twitter.com/koridentetsu/statuses/447643865491599360">下記メンション</a>に対する一定の回答として。</p>
+
+<blockquote class="twitter-tweet" data-conversation="none" cite="https://twitter.com/koridentetsu/statuses/447643865491599360"><p><a href="https://twitter.com/cat_in_136">@cat_in_136</a> 突然で申し訳ありませんが、僕も地理人さんと同じく架空の地図を作っているものです。僕も同じようにこの地図（ <a href="http://t.co/NZxdIIJbVZ" title="http://www27.atpages.jp/souzoumap/Maps/Expmaps.HTM">http://t.co/NZxdIIJbVZ</a> ）でスクロール/拡大縮小地図を作りたいと思っているのですが、方法を教示いただいてもよろしいでしょうか？</p>&mdash; 想像地図の篠永 (MACHO筋トレ) (@koridentetsu) <a href="https://twitter.com/koridentetsu/statuses/447643865491599360">March 23, 2014</a></blockquote>
+<script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p><a href="https://developers.google.com/maps/documentation/javascript/" title="Google Maps JavaScript API">Google Maps API</a>を駆使すればいくらでもできるが、
+極めて簡単にできるようにしてみた。</p>
+
+<h4>テンプレを落とす</h4>
+
+<p>一から作るのはダルいと思うのでテンプレートを用意した。
+"Download ZIP"というところをクリックしてZIPをダウンロードする。</p>
+
+<p><a href="https://github.com/cat-in-136/custom_map_tutorial">https://github.com/cat-in-136/custom_map_tutorial</a></p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://1.bp.blogspot.com/-2GhpEqnDGWA/U0C8NVqTUfI/AAAAAAAAAb4/5Zu7s5W0Pk8/s1600/howto-github.png" ><img src="http://1.bp.blogspot.com/-2GhpEqnDGWA/U0C8NVqTUfI/AAAAAAAAAb4/5Zu7s5W0Pk8/s320/howto-github.png" width="320" height="184" alt="github の Download ZIP の位置" /></a>
+</figure>
+
+<p>余計な補足：もちろんgitを使って、<kbd>git clone https://github.com/cat-in-136/custom_map_tutorial.git</kbd>でクローンして…をやってもいい。</p>
+
+<h3>フォルダー構成</h3>
+
+<p>テンプレートのファイルの構造は（本記事執筆時）以下のようになっている：</p>
+
+<ul>
+<li><code>simple_tile\</code>
+<ul>
+<li><code>gmap3\</code>  --- Google Maps API をつかったカスタムマップのテンプレート
+<ul>
+<li><code>index.css</code> --- スタイルシート、変更不要</li>
+<li><code>index.html</code> --- HTMLファイル、変更箇所後述</li>
+<li><code>index.js</code> --- JavaScriptファイル、変更箇所後述</li>
+</ul></li>
+<li><code>osm-feaflet\</code> --- （本記事の対象外） Open Street Map を使ったカスタムマップのテンプレート</li>
+<li><code>tile\</code> --- サンプル地図データ
+<ul>
+<li><code>custom_map_tile_*_*.png</code></li>
+</ul></li>
+</ul></li>
+<li><code>tools\</code>
+<ul>
+<li><code>ImageSlicerForCustomMap\</code> --- 私謹製の画像分割ツール
+<ul>
+<li><code>bin\</code></li>
+<li><code>Release\</code>
+<ul>
+<li><code>ImageSlicerForCustomMap.exe</code> --- 画像分割ツール</li>
+</ul></li>
+<li><code>*.cs</code>など --- ソースコード</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>テンプレートとは言っているが、これ自体がサンプルとなるようにしてある。
+上記の <code>index.html</code> をウェブブラウザーでそのまま開くと私が適当に作った
+地図が表示されるようになっている。</p>
+
+<p>まずは、適当な作業用フォルダーを作成し、その中で
+<code>gmap3</code>フォルダーをコピーする。
+この中のファイルは変更が必要だが後述する。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://4.bp.blogspot.com/-i4OnzCHS-Ro/U0C9hF1OHjI/AAAAAAAAAcE/UwbSklAfVsg/s1600/howto-copy.png"><img src="http://4.bp.blogspot.com/-i4OnzCHS-Ro/U0C9hF1OHjI/AAAAAAAAAcE/UwbSklAfVsg/s320/howto-copy.png" width="320" height="101" /></a>
+<figcaption><code>gmap3</code>フォルダーのコピー</figcaption>
+</figure>
+
+
+<p>そして、地図データ用のフォルダーとして<code>tile</code>フォルダーを作成する。
+ここに格納すべき画像ファイルは次節で述べる。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://3.bp.blogspot.com/-uMxDL1ADYGo/U0C9jHPeLOI/AAAAAAAAAcM/OkmMVtmvzLI/s1600/howto-tilefolder.png"><img src="http://3.bp.blogspot.com/-uMxDL1ADYGo/U0C9jHPeLOI/AAAAAAAAAcM/OkmMVtmvzLI/s320/howto-tilefolder.png" width="320" height="127" /></a>
+<figcaption>新しいフォルダーから<code>tile</code>フォルダーを作る</figcaption>
+</figure>
+
+<h4>地図画像ファイルの作成</h4>
+
+<p>地図の画像を256x256ピクセルで分割してほしい。
+その時に画像のファイル名を下記のようにする：</p>
+
+<ul>
+<li><code>custom_map_tile_0_0.png</code></li>
+<li><code>custom_map_tile_1_0.png</code></li>
+<li><code>custom_map_tile_2_0.png</code></li>
+<li>...</li>
+<li><code>custom_map_tile_10_0.png</code></li>
+<li><code>custom_map_tile_0_1.png</code></li>
+<li><code>custom_map_tile_1_1.png</code></li>
+<li>...</li>
+<li><code>custom_map_tile_10_9.png</code></li>
+</ul>
+
+<p><strong>数字の部分はルールがあり</strong>、位置関係が下記のようにする必要がある。</p>
+
+<ul>
+<li>左上が <code>custom_map_tile_0_0.png</code></li>
+<li>一つ右（東）に位置する画像はひとつめの数字を進める。</li>
+<li>一つ下（南）に位置する画像はふたつめの数字を進める。</li>
+</ul>
+
+<p>要するに数字は下記のようなルールで番号を付けていく。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://2.bp.blogspot.com/-Ra40O9FExdo/U0C9mpvFwRI/AAAAAAAAAcU/eXen4SWWmdg/s1600/howto-tilesystem.png"><img src="http://2.bp.blogspot.com/-Ra40O9FExdo/U0C9mpvFwRI/AAAAAAAAAcU/eXen4SWWmdg/s320/howto-tilesystem.png" width="192" height="192" /></a>
+<figcaption>タイルの数字の関係</figcaption>
+</figure>
+
+<p>なお、テンプレートのところにちゃっかり入っている
+ <code>ImageSlicerForCustomMap.exe</code> は、
+これをするためのツールであって、この exe ファイルに
+PNG ファイルまたは JPEG ファイルをドラッグアンドドロップすると
+同一フォルダに 256x256 ピクセルで分割したファイルが生成するようになっている。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://2.bp.blogspot.com/-pezNrqwqyIo/U0C-cjlND8I/AAAAAAAAAcc/7i7t7cjpKps/s1600/howto-split.png"><img src="http://2.bp.blogspot.com/-pezNrqwqyIo/U0C-cjlND8I/AAAAAAAAAcc/7i7t7cjpKps/s320/howto-split.png" width="320" height="119" /></a>
+<figcaption><code>ImageSlicerForCustomMap.exe</code>へのドラッグアンドドロップ</figcaption>
+</figure>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;"><a href="http://2.bp.blogspot.com/-i5EIcN3n1aA/U0C-efn1NJI/AAAAAAAAAck/6Awk6cslVt4/s1600/howto-aftersplit.png"><img src="http://2.bp.blogspot.com/-i5EIcN3n1aA/U0C-efn1NJI/AAAAAAAAAck/6Awk6cslVt4/s320/howto-aftersplit.png" width="276" height="320" /></a>
+<figcaption><code>ImageSlicerForCustomMap.exe</code>へのドラッグアンドドロップの事後</figcaption>
+</figure>
+
+<p>小規模な地図ならば一旦一枚にまとめた巨大画像ファイルを作って、
+それを <code>ImageSlicerForCustomMap.exe</code> にドラッグアンドドロップすればつくれるだろう。</p>
+
+<h4>テンプレートで必要な箇所を修正する</h4>
+
+<p><code>gmap3</code>フォルダー配下のファイルの一部は手直しが必要だ。</p>
+
+<h5>index.html での修正箇所</h5>
+
+<p>以下のタイトル部分をお好みのタイトルに変える：</p>
+
+<pre class="prettyprint lang-html"><code>  &lt;title&gt;＿タイトル＿&lt;/title&gt;
+↓
+  &lt;title&gt;<ins>私の想像地図</ins>&lt;/title&gt;
+</code></pre>
+
+<p>次は必須ではないが、JavaScriptがうまくうごかなかった
+環境とかのために何らかのリンクを貼ったほうがよいと思われる。
+（検索エンジン最適化も兼ねる）</p>
+
+<pre class="prettyprint lang-html"><code> &lt;div id="map_canvas"&gt;
+   JavaScript を有効にしてください。
+ &lt;/div&gt;
+↓
+ &lt;div id="map_canvas"&gt;
+   JavaScript を有効にしてください。
+   <ins>もしくは &lt;a href="http://hoge.example.com/map.pdf"&gt;私の想像地図をPDFでみる&lt;/a&gt;</ins>
+ &lt;/div&gt;
+</code></pre>
+
+<h5>index.css での修正箇所</h5>
+
+<p>変更点なし。</p>
+
+<h5>index.js での修正箇所</h5>
+
+<p>以下の部分をあなたのウェブページなどに変える。
+私だったら下記のように変える：</p>
+
+<pre class="prettyprint lang-js"><code>  copyrightSpan.innerHTML = "地図データ &amp;#169; " + "＿地図製作者＿".link("http://example.com/＿地図製作者のページへのリンク＿");
+↓
+  copyrightSpan.innerHTML = "地図データ &amp;#169; " + "<ins>@cat_in_136</ins>".link("<ins>http://cat-in-136.blogspot.com/</ins>");
+</code></pre>
+
+<p>余計な注釈：地図画像を上の例とは違った置き方やファイル名とした場合は下記の箇所を変えると動作する。html ファイルからの相対パスかあるいは絶対パスを指定する。以下は変更例：</p>
+
+<pre class="prettyprint lang-js"><code>      return "../tile/custom_map_tile_%y_%x.png"
+       .replace("%x", x.toString())
+       .replace("%y", y.toString());
+↓
+      return "<ins>http://map-image.example.com/hoge/huga/tile_%y_%x.png</ins>"
+       .replace("%x", x.toString())
+       .replace("%y", y.toString());
+</code></pre>
+
+<h4>以上でできあがり</h4>
+
+<p>以上で出来上がり。
+自分一人で楽しむのならばそのままウェブブラウザで開けば良い。</p>
+
+<p>公開するのならばそのフォルダ構成のままウェブサーバーにアップロードする。
+すなわち以下の様にする：</p>
+
+<ul>
+<li><code>http://map.example.com/hoge/huga/gmap3/index.html</code> --- ここにアクセスしてもらう</li>
+<li><code>http://map.example.com/hoge/huga/gmap3/index.css</code></li>
+<li><code>http://map.example.com/hoge/huga/gmap3/index.js</code></li>
+<li><code>http://map.example.com/hoge/huga/tile/custom_map_tile_*_*.png</code> --- 先程作った地図画像は tile フォルダ以下に置く</li>
+</ul>
+
+<h4>補足</h4>
+
+<ul>
+<li>この方法のポイントとして縮尺を表示しないようにしている。
+<ul>
+<li>Google Maps API はメルカトル図法をベースとしているため、緯度経度を考慮しないと縮尺をあわせることはむずかしい。</li>
+<li>しかし縮尺を表示しないことで単にスクロール機能だけを流用することができる。</li>
+</ul></li>
+<li>規約上 Google のロゴを消すのは（技術上可能だが）してはいけない。
+<ul>
+<li>かえってリアリティが出ているともいえる。</li>
+<li>クリックすると <a href="https://maps.google.com/maps?ll=85.051129,-180" rel="nofollow">Google Maps の北極海付近に飛ばされる</a>が<strong>キニシナイキニシナイ</strong></li>
+</ul></li>
+<li>初期位置の調整方法は現在考え中
+<ul>
+<li>どのようにすればいいのだろう…</li>
+</ul></li>
+<li>これを書いた後に<a href="https://github.com/bramus/photoshop-google-maps-tile-cutter" title="PS_Bramus.GoogleMapsTileCutter - A Photoshop script that cuts image tiles from any image for direct use with Google Maps">PS_Bramus.GoogleMapsTileCutter</a>というものを発見してしまったorz</li>
+</ul>
+

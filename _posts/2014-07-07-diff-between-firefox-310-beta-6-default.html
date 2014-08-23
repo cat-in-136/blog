@@ -1,0 +1,51 @@
+---
+layout: post
+title: Diff between firefox 31.0 beta 6 default preference and firefox 30.0
+date: '2014-07-07T23:58:00.003+09:00'
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+modified_time: '2014-07-07T23:59:30.639+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-759108632686725850
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/07/diff-between-firefox-310-beta-6-default.html
+---
+
+<p>
+This is difference between the default preference of Firefox 31.0 beta 6 and one of 30.0.
+</p>
+
+<dl>
+<dt>Default pref Javascript files (Firefox 30.0 for Linux x86_64):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/services-sync.js},
+(browser/omni.ja)/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js},
+(webapprt/omni.ja)/defaults/preferences/prefs.js</dd>
+<dt>Default pref Javascript files (Firefox 31.0 beta 6 for Linux x86_64):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/services-sync.js},
+(browser/omni.ja)/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js},
+(webapprt/omni.ja)/defaults/preferences/prefs.js</dd>
+</dl>
+
+<table class="diff_firefox31_pref_diff">
+<thead>
+<tr><td>Pref</td><td>Firefox 30.0</td><td>Firefox 31.0 beta 6</td></tr>
+</thead>
+<tbody>
+<tr class="oldkey"><td>browser.<wbr />cache.<wbr />memory_<wbr />limit</td><td>51200</td><td class="undefined">undefined</td></tr><tr><td>browser.<wbr />slowStartup.<wbr />timeThreshold</td><td>60000</td><td>50000</td></tr><tr class="oldkey"><td>browser.<wbr />tabs.<wbr />closeButtons</td><td>1</td><td class="undefined">undefined</td></tr><tr><td>datareporting.<wbr />healthreport.<wbr />service.<wbr />providerCategories</td><td>healthreport-js-provider-default</td><td>healthreport-js-provider-default,healthreport-js-provider-beta</td></tr><tr><td>devtools.<wbr />browserconsole.<wbr />filter.<wbr />cssparser</td><td>true</td><td>false</td></tr><tr><td>devtools.<wbr />browserconsole.<wbr />filter.<wbr />networkinfo</td><td>true</td><td>false</td></tr><tr><td>devtools.<wbr />editor.<wbr />tabsize</td><td>4</td><td>2</td></tr><tr><td>devtools.<wbr />netmonitor.<wbr />panes-<wbr />network-<wbr />details-<wbr />width</td><td>450</td><td>550</td></tr><tr><td>devtools.<wbr />toolbox.<wbr />toolbarSpec</td><td class="json">["splitconsole", "paintflashing toggle","tilt toggle","scratchpad","resize toggle"]</td><td class="json">["splitconsole", "paintflashing toggle","tilt toggle","scratchpad","resize toggle","eyedropper"]</td></tr><tr><td>devtools.<wbr />webconsole.<wbr />filter.<wbr />jslog</td><td>true</td><td>false</td></tr><tr><td>dom.<wbr />mozAlarms.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>dom.<wbr />network.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>dom.<wbr />network.<wbr />metered</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>dom.<wbr />sysmsg.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>font.<wbr />mathfont-<wbr />family</td><td>MathJax_Main, STIXNonUnicode, STIXSizeOneSym, STIXSize1, STIXGeneral, Asana Math, Standard Symbols L, DejaVu Sans, Cambria Math</td><td>Latin Modern Math, XITS Math, STIX Math, Cambria Math, Asana Math, TeX Gyre Bonum Math, TeX Gyre Pagella Math, TeX Gyre Termes Math, Neo Euler, Lucida Bright Math, MathJax_Main, STIXNonUnicode, STIXSizeOneSym, STIXGeneral, Standard Symbols L, DejaVu Sans</td></tr><tr><td>geo.<wbr />wifi.<wbr />uri</td><td>https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_API_KEY%</td><td>https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%</td></tr><tr class="oldkey"><td>javascript.<wbr />options.<wbr />typeinference</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>layers.<wbr />use-<wbr />deprecated-<wbr />textures</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>layout.<wbr />css.<wbr />variables.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>media.<wbr />navigator.<wbr />video.<wbr />default_<wbr />height</td><td>480</td><td>0</td></tr><tr><td>media.<wbr />navigator.<wbr />video.<wbr />default_<wbr />width</td><td>640</td><td>0</td></tr><tr class="oldkey"><td>media.<wbr />peerconnection.<wbr />aec</td><td>1</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>media.<wbr />peerconnection.<wbr />aec_<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>media.<wbr />peerconnection.<wbr />agc</td><td>1</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>media.<wbr />peerconnection.<wbr />agc_<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>media.<wbr />peerconnection.<wbr />identity.<wbr />timeout</td><td>5000</td><td>10000</td></tr><tr class="oldkey"><td>media.<wbr />peerconnection.<wbr />noise</td><td>1</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>media.<wbr />peerconnection.<wbr />noise_<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>media.<wbr />webvtt.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>memory_<wbr />info_<wbr />dumper.<wbr />watch_<wbr />fifo</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />browser.<wbr />tabs.<wbr />closeButtons</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>svg.<wbr />paint-<wbr />order.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>toolkit.<wbr />telemetry.<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr>
+</tbody>
+</table>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox31_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox31_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox31_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox31_pref_diff td.json { word-break: break-all; }
+table.diff_firefox31_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox31_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox31_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox31_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox31_pref_diff td.json { word-break: break-all; }
+
+table.diff_firefox31_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox31_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>

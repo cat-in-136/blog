@@ -1,0 +1,282 @@
+---
+layout: post
+title: ベジェ曲線で描く円弧と本物の円弧の差（中心角について一般化）
+date: '2014-03-26T08:00:00.000+09:00'
+author: cat_in_136
+tags:
+- math
+- bézier
+modified_time: '2014-04-06T13:41:39.626+09:00'
+thumbnail: http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s72-c/generic-theta-tile.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6565037743517885288
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-4-diff.html
+---
+
+<aside>
+<div style="background: #ffd; border: solid 3px #ff8">
+この記事を読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です
+もし数式部分が読めない場合は
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<button onclick="var a=document.createElement(&quot;script&quot;);a.setAttribute(&quot;type&quot;,&quot;application/javascript&quot;);a.setAttribute(&quot;src&quot;,&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;);document.body.appendChild(a);">このボタンをクリックしてMathJaxを使って無理矢理表示する</button>
+などしてください。
+</div>
+</aside>
+
+<p><a href="{{ site.baseurl }}{% post_url 2014-03-05-bezier-1-kappa %}" title="ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?">ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?</a>から始まり
+ベジェ曲線で描く円の誤差について
+<a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>
+にて議論した。
+次に、ドローソフトで一般的な中心角90度に注目し、これを一般化したのが
+<a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>
+ということであった。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s1600/generic-theta-tile.png" imageanchor="1" ><img border="0" src="http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s320/generic-theta-tile.png" width="320" height="320" /></a>
+</figure>
+
+<p>しかし<a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>では、
+中心角の大きさとベジェ曲線で描く円と真円の誤差の関係について定式化をしていなかった。
+これは数式の途中式が複雑だったら投げ出していたのだが、
+改めて<a href="http://maxima.sourceforge.net/" title="Maxima, a Computer Algebra System">maxima</a>使って解いてみるとシンプルにまとまった。</p>
+
+<h4>制御点の位置</h4>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://1.bp.blogspot.com/-Ezck2skyk_Q/UxNGvjn5wWI/AAAAAAAAAbA/2iJvsXMKoJY/s1600/generic-kappa.png" imageanchor="1" ><img border="0" src="http://1.bp.blogspot.com/-Ezck2skyk_Q/UxNGvjn5wWI/AAAAAAAAAbA/2iJvsXMKoJY/s1600/generic-kappa.png" alt="135degree arc using Bézier" width="262" height="302" /></a>
+</figure>
+
+<p><a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">前回</a>とかぶるがまずは制御点の位置、要するに<var>&#x03BA;</var>を求める。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3">
+  <semantics>
+    <mrow><mi mathvariant="bold">P</mi><mo>&#x2061;</mo><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="bold">A</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup><mo>+</mo><mi mathvariant="bold">A</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi mathvariant="bold">B</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo><mo>+</mo><mi mathvariant="bold">B</mi><mo>&#x2062;</mo><msup><mi>u</mi><mn>3</mn></msup></mrow>
+    <annotation encoding="TeX">\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3</annotation>
+  </semantics>
+</math>
+</td>
+<td>(4.1)</td>
+</tr>
+</tbody>
+</table>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\text{A:}&amp;(\cos\theta,\sin\theta)\\
+\text{B:}&amp;(1,0)\\
+\text{A':}&amp;(\cos\theta+\kappa\sin\theta,\sin\theta-\kappa\cos\theta)\\
+\text{B':}&amp;(1,\kappa)\\
+\end{aligned}"><semantics><mtable columnspacing="0em"><mtr><mtd><mtext>A:</mtext></mtd><mtd><mo stretchy="false">(</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>,</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>B:</mtext></mtd><mtd><mo stretchy="false">(</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>A':</mtext></mtd><mtd><mo stretchy="false">(</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>+</mo><mi>&#x03BA;</mi><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>,</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>-</mo><mi>&#x03BA;</mi><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>B':</mtext></mtd><mtd><mo stretchy="false">(</mo><mn>1</mn><mo>,</mo><mi>&#x03BA;</mi><mo stretchy="false">)</mo></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\text{A:}&amp;(\cos\theta,\sin\theta)\\
+\text{B:}&amp;(1,0)\\
+\text{A':}&amp;(\cos\theta+\kappa\sin\theta,\sin\theta-\kappa\cos\theta)\\
+\text{B':}&amp;(1,\kappa)\\
+\end{aligned}
+</annotation></semantics></math>
+</td>
+<td>(4.2)</td>
+</tr>
+</tbody>
+</table>
+
+<p>このベジェ曲線の定義(4.1)式に、座標(4.2)を代入して
+x座標成分<code>Px(u)</code>と<code>Py(u)</code>を求める。</p>
+
+<pre class="maxima-output"><samp>(%i1) <kbd>P(u):=A*(1-u)^3+Ac*3*u*(1-u)^2+Bc*3*u^2*(1-u)+B*u^3;</kbd>
+                          3                 2         2              3
+(%o1)    P(u) := A (1 - u)  + Ac 3 u (1 - u)  + Bc 3 u  (1 - u) + B u
+(%i2) <kbd>Px(u):=sublis([A = cos(theta),B = 1,Ac = cos(theta)+k*sin(theta),Bc = 1],P(u));</kbd>
+(%o2) Px(u) := sublis([A = cos(theta), B = 1, Ac = cos(theta) + k sin(theta), 
+                                                                 Bc = 1], P(u))
+(%i3) <kbd>Py(u):=sublis([A = sin(theta),B = 0,Ac = sin(theta)-k*cos(theta),Bc = k],P(u));</kbd>
+(%o3) Py(u) := sublis([A = sin(theta), B = 0, Ac = sin(theta) - k cos(theta), 
+                                                                 Bc = k], P(u))
+</samp></pre>
+
+<p>ベジェ曲線の中間点<var>u</var>=1/2に注目して<var>&#x03BA;</var>の値を得る。</p>
+
+<pre class="maxima-output"><samp>(%i4) <kbd>solve([Px(1/2) = cos(theta/2)],k);</kbd>
+                                                theta
+                           4 cos(theta) - 8 cos(-----) + 4
+                                                  2
+(%o4)               [k = - -------------------------------]
+                                    3 sin(theta)
+</samp></pre>
+
+<p>ここからmaximaは簡略化がたいして出来ないのであるが、
+<code>theta/4</code>を使うことを明示的に指示すれば簡略化ができることに気づいた。
+つまり<code>theta/4</code>を明示的に他の変数<code>t</code>に書き換えた上で簡略化を指示した。</p>
+
+<pre class="maxima-output"><samp>(%i5) <kbd>sublis([theta = 4*t],%);</kbd>
+                             4 cos(4 t) - 8 cos(2 t) + 4
+(%o5)                 [k = - ---------------------------]
+                                     3 sin(4 t)
+(%i6) <kbd>trigsimp(%),trigexpand;</kbd>
+                                     4 sin(t)
+(%o6)                           [k = --------]
+                                     3 cos(t)
+</samp></pre>
+
+<p>これより、&#x03BA;の値が求まった。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\kappa=\frac{4}{3}\cdot\tan\frac\theta4"><semantics><mrow><mi>&#x03BA;</mi><mo>=</mo><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>&#x00B7;</mo><mo rspace="0.5ex" lspace="0em">tan</mo><mfrac><mi>&#x03B8;</mi><mn>4</mn></mfrac></mrow><annotation encoding="TeX">\kappa=\frac{4}{3}\cdot\tan\frac\theta4</annotation></semantics></math>
+</td>
+<td>(4.3)</td>
+</tr>
+</tbody>
+</table>
+
+<h4>ベジェ曲線で描く円と真円の差、一般化。</h4>
+
+<p><a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>と同じように解く、力技で。</p>
+
+<p>ベジェ曲線の近似円弧の半径方向の大きさ<code>Pp(u)</code>は：</p>
+
+<pre class="maxima-output"><samp>(%i7) <kbd>Pp(u):=Px(u)^2+Py(u)^2;</kbd>
+                                      2        2
+(%o7)                      Pp(u) := Px (u) + Py (u)
+</samp></pre>
+
+<p>これを<var>&#x03B8;</var>=90度で計算したときと同様に微分=0の式を立てる。</p>
+
+<pre class="maxima-output"><samp>(%i8) <kbd>diff(sublis([k = 4/3*tan(theta/4)],Pp(u)),u) = 0$</kbd>
+(%i9) <kbd>sublis([theta = 4*t],%);</kbd>
+              4 tan(t) sin(4 t)
+(%o9) 2 (- 6 (----------------- + cos(4 t)) (1 - u) u + 6 (1 - u) u
+                      3
+      4 tan(t) sin(4 t)                    2                     2
+ + 3 (----------------- + cos(4 t)) (1 - u)  - 3 cos(4 t) (1 - u) )
+              3
+   3              2      4 tan(t) sin(4 t)                    2
+ (u  + 3 (1 - u) u  + 3 (----------------- + cos(4 t)) (1 - u)  u
+                                 3
+                   3                   2
+ + cos(4 t) (1 - u) ) + 2 (- 4 tan(t) u
+                 4 tan(t) cos(4 t)
+ - 6 (sin(4 t) - -----------------) (1 - u) u + 8 tan(t) (1 - u) u
+                         3
+                 4 tan(t) cos(4 t)         2                     2
+ + 3 (sin(4 t) - -----------------) (1 - u)  - 3 sin(4 t) (1 - u) )
+                         3
+                    2                 4 tan(t) cos(4 t)         2
+ (4 tan(t) (1 - u) u  + 3 (sin(4 t) - -----------------) (1 - u)  u
+                                              3
+                   3
+ + sin(4 t) (1 - u) ) = 0
+(%i10) <kbd>trigsimp(trigexpand(%));</kbd>
+                 6     5          6     4          6     3          6     2
+(%o10) - (384 sin (t) u  - 960 sin (t) u  + 832 sin (t) u  - 288 sin (t) u
+                                                      6           2
+                                              + 32 sin (t) u)/(sin (t) - 1) = 0
+</samp></pre>
+
+<p>なお、<code>(%o8)</code>はあまりにも長いので出力を省略した。
+ともあれこちらについても
+<code>theta/4</code>を明示的に他の変数<code>t</code>に書き換えた上で簡略化を指示することで
+かなり式が簡単になっていると思う。</p>
+
+<p>これを解くと</p>
+
+<pre class="maxima-output"><samp>(%i11) <kbd>solve(%,u);</kbd>
+                       1        sqrt(3) - 3      sqrt(3) + 3
+(%o11)     [u = 1, u = -, u = - -----------, u = -----------, u = 0]
+                       2             6                6
+</samp></pre>
+
+<p>この解のうち、<var>u</var>=0,1/2,0 は、ベジェ曲線の位置と円が一致するところであり<code>Pp(u)</code>が極小（最小）値となるのである。
+極大値をとる<var>u</var>は以下の２つである。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="u=\frac{3\pm \sqrt{3}\,}{6}=\frac{1}{2}\pm\frac{\sqrt{3}\,}{6}"><semantics><mrow><mi>u</mi><mo>=</mo><mfrac><mrow><mn>3</mn><mo>&#x00B1;</mo><msqrt><mn>3</mn></msqrt><mspace width="thinmathspace"></mspace></mrow><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>&#x00B1;</mo><mfrac><mrow><msqrt><mn>3</mn></msqrt><mspace width="thinmathspace"></mspace></mrow><mn>6</mn></mfrac></mrow><annotation encoding="TeX">u=\frac{3\pm \sqrt{3}\,}{6}=\frac{1}{2}\pm\frac{\sqrt{3}\,}{6}</annotation></semantics></math>
+</td>
+<td>(4.4)</td>
+</tr>
+</tbody>
+</table>
+
+<p>これは<a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>の(2.7)式と完全に同一であり、
+ベジェ曲線で描く円と真円の差が最大となる位置に中心角<var>&#x03B8;</var>が依存していない
+ことがいま示された。</p>
+
+<p>そして最大値を求めるには、このときの<code>Pp(u)</code>の値であるからにして：</p>
+
+<pre class="maxima-output"><samp>(%i12) <kbd>sublis([k = 4/3*tan(theta/4),u = (sqrt(3)+3)/6],Pp(u))$</kbd>
+(%i13) trigsimp(trigexpand(sublis([theta = 4*t],%))),factor;
+                            2               2        2
+                        (sin (t) + 3) (2 sin (t) - 3)
+(%o13)                  ------------------------------
+                                        2
+                                  27 cos (t)
+</samp></pre>
+
+<p>すなわち最大値は：</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\left\|\bm{P}\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)\right\|=\sqrt{\frac{\left(\sin ^2\frac{\theta}{4}+3\right)\left(2\sin ^2\frac{\theta}{4}-3\right)^2}{{ "{{" }}27 \cos ^2\frac{\theta}{4}}}\,}"><semantics><mrow><mrow><mo>&#x2016;</mo><mrow><mi mathvariant="bold">P</mi><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>&#x00B1;</mo><mfrac><msqrt><mn>3</mn></msqrt><mn>6</mn></mfrac></mrow><mo>)</mo></mrow></mrow><mo>&#x2016;</mo></mrow><mo>=</mo><msqrt><mfrac><mrow><mrow><mo>(</mo><mrow><msup><mo rspace="0em" lspace="0em">sin</mo><mn>2</mn></msup><mfrac><mi>&#x03B8;</mi><mn>4</mn></mfrac><mo>+</mo><mn>3</mn></mrow><mo>)</mo></mrow><mo>&#x2062;</mo><msup><mrow><mo>(</mo><mrow><mn>2</mn><mo>&#x2062;</mo><msup><mo rspace="0em" lspace="0em">sin</mo><mn>2</mn></msup><mfrac><mi>&#x03B8;</mi><mn>4</mn></mfrac><mo>-</mo><mn>3</mn></mrow><mo>)</mo></mrow><mn>2</mn></msup></mrow><mrow><mn>27</mn><mo>&#x2062;</mo><msup><mo rspace="0em" lspace="0em">cos</mo><mn>2</mn></msup><mfrac><mi>&#x03B8;</mi><mn>4</mn></mfrac></mrow></mfrac><mspace width="thinmathspace"></mspace></mrow></sqrt><annotation encoding="TeX">\left\|\bm{P}\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)\right\|=\sqrt{\frac{\left(\sin ^2\frac{\theta}{4}+3\right)\left(2\sin ^2\frac{\theta}{4}-3\right)^2}{{ "{{" }}27 \cos ^2\frac{\theta}{4}}}\,}</annotation></semantics></math>
+</td>
+<td>(4.5)</td>
+</tr>
+</tbody>
+</table>
+
+<p>なお、中心角90度について求めると、
+<a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>の(2.8)式と同一の結果が得られるので
+確かに一般化した式であるとわかる。</p>
+
+<pre class="maxima-output"><samp>(%i14) <kbd>limit((%o13), t, %pi/2/4)$</kbd>
+(%i15) float(sqrt(%));
+(%o15)                         1.000272530007428
+</samp></pre>
+
+<p>さて、(4.5)式をグラフ化する。</p>
+
+<pre class="maxima-output"><samp>(%i16) <kbd>deg_to_rad(d) := %pi * d / 180$</kbd>
+(%i17) <kbd>plot2d(sublis([theta=deg_to_rad(theta)], limit(sqrt(%o13), t, theta/4)),
+       [theta, 0, 270], [ylabel, "Pmax"])$</kbd>
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://4.bp.blogspot.com/-n6MVqiqD7G0/UypMUJfGiyI/AAAAAAAAAbo/V3k4mdgmsvQ/s1600/diff-general-Pmax-theta.png" ><img src="http://4.bp.blogspot.com/-n6MVqiqD7G0/UypMUJfGiyI/AAAAAAAAAbo/V3k4mdgmsvQ/s1600/diff-general-Pmax-theta.png" width="467" height="251" /></a>
+<figcaption>(4.5)式の図示</figcaption>
+</figure>
+
+<p>なおここで、0〜270度しかプロットしていないのは、360度までプロットすると無限大に発散してしまうからである。</p>
+
+<pre class="maxima-output"><samp>(%i18) <kbd>limit((%o13), t, 2*%pi/4);</kbd>
+(%o18)                                    inf
+</samp></pre>
+
+<p>単調増加で中心角が増えると急激に1から離れていく様子がわかる。
+前回
+<a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>
+といったが、これは<strong>撤回、
+実際にどこまで誤差を認めるかをベースに考えるのが良さそう</strong>だ。</p>
+
+<style type="text/css" scoped="scoped"><!--
+.maxima-output {
+  background-color: #fff;
+  color: #000;
+  font-size: smaller;
+  border: solid 1px #888;
+}
+.maxima-output kbd {
+  color: #008;
+}
+--></style>

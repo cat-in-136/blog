@@ -1,0 +1,215 @@
+---
+layout: post
+title: ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?
+date: '2014-03-05T07:00:00.000+09:00'
+author: cat_in_136
+tags:
+- math
+- bézier
+modified_time: '2014-03-05T07:00:05.833+09:00'
+thumbnail: http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s72-c/kappa.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5958083912134829282
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-1-kappa.html
+---
+
+<aside>
+<div style="background: #ffd; border: solid 3px #ff8">
+この記事を読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です
+もし数式部分が読めない場合は
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<button onclick="var a=document.createElement(&quot;script&quot;);a.setAttribute(&quot;type&quot;,&quot;application/javascript&quot;);a.setAttribute(&quot;src&quot;,&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;);document.body.appendChild(a);">このボタンをクリックしてMathJaxを使って無理矢理表示する</button>
+などしてください。
+</div>
+</aside>
+
+<p>ベジェ曲線は二次曲線であり、円はそれで表現できないので正確な円は描けない。
+ベジェ曲線を使って円を四分割して近似して描いているだけだ。
+そのときの制御点はどこにおけばよいのだろうか?</p>
+
+<p>円とベジェ曲線に関するブログ記事（日本語）で
+数値解析的な議論は数あれど、
+数式を使って
+制御点を求めているところまでやっている頭の硬い記事は
+なかなか少ない。</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/n-yuji/20131017/p1">イラレの円は本当は円じゃない（もしくは時空の裂け目について）</a></li>
+<li><a href="http://pgcity.jp/?p=590">11:ベジェ曲線で円を描けるか &#124; ProgrammingCity</a></li>
+<li><a href="http://d.hatena.ne.jp/Zellij/20131021/p1">「イラレの円は本当は円じゃない」というけど誤差はどれくらいなのか - 大人になってからの再学習</a></li>
+</ul>
+
+<p>ベジェ曲線といってもドローソフトなどで一般的に使われている三次ベジェ曲線ではなく二次ベジェ曲線をベースに解いているものの例：</p>
+
+<ul>
+<li><a href="http://www.tokyo-pax.co.jp/200701.htm">ベジェ曲線</a></li>
+<li><a href="http://www.fumiononaka.com/TechNotes/Flash/FN0506002.html">FN0506002 - 描画メソッドで円を描く - Flash : テクニカルノート</a></li>
+</ul>
+
+<p>幾何学的解析から解いている例：</p>
+
+<ul>
+<li><a href="http://watenoblog.blogspot.jp/2010/08/blog-post.html">ワテのブログ: ベジェ曲線による円の近似</a></li>
+</ul>
+
+<p>数式を使って解いている例。本記事と内容は被る：</p>
+
+<ul>
+<li><a href="http://spphire9.wordpress.com/2010/03/01/%E3%83%99%E3%82%B8%E3%82%A7%E6%9B%B2%E7%B7%9A%E3%81%A7%E6%A5%95%E5%86%86%E3%82%92%E6%8F%8F%E3%81%8F2/">ベジェ曲線で楕円を描く(2) | 生存日記</a></li>
+<li><a href="http://park12.wakwak.com/~shp/cgi-bin/wiki.cgi/view/bezier_curve">s.h's page - [graphic] ベジエ曲線</a></li>
+</ul>
+
+<h4>0.55228…?</h4>
+
+<p>以下、<a href="http://www.whizkidtech.redprince.net/bezier/circle/kappa/" title="Drawing a circle with Bézier Curves">G. Adam Stanislav氏によるページ</a>を教科書にして
+書く。
+英語を読む気があるのなら、そちらを読んでこのページは読まないで良い。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s1600/kappa.png" imageanchor="1" ><img src="http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s1600/kappa.png" alt="90degree arc using Bézier" width="260" height="260" /></a>
+</figure>
+
+<p>ベジェ曲線で中心角 45 度の円弧ABを近似するとき、
+制御点 A', B' はどこに置くのが適切か、という問題。</p>
+
+<p>ベジェ曲線頂点A,Bの座標を下記のとおりとする。</p>
+
+<ul>
+<li>A: (0, 1)</li>
+<li>B: (1, 0)</li>
+</ul>
+
+<p>ベジェ曲線の制御点A'について、AA'が頂点Aでの円の接線となるようにするので
+y座標はAと同じ1である。
+制御点B'も同様に、BB'が頂点Bでの円の接線となるようにするので
+x座標はBと同じ1である。</p>
+
+<p>対称性からAA'=BB'であるので、AA'=BB'=<var>&#x03BA;</var>とすると、
+制御点A',B'の座標は下記の通りとなる：</p>
+
+<ul>
+<li>A': (<var>&#x03BA;</var>, 1)</li>
+<li>B': (1, <var>&#x03BA;</var>)</li>
+</ul>
+
+<p>ベジェ曲線の定義より、ベジェ曲線上の任意の点はパラメータ<math xmlns="http://www.w3.org/1998/Math/MathML" title="u (0\leq u \leq 1)" display="inline">
+  <semantics>
+    <mrow><mi>u</mi><mo stretchy="false">(</mo><mn>0</mn><mo>&#x2264;</mo><mi>u</mi><mo>&#x2264;</mo><mn>1</mn><mo stretchy="false">)</mo></mrow>
+    <annotation encoding="TeX">u(0\leq u \leq 1)</annotation>
+  </semantics>
+</math>を使って、下記の通りとなる：</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3">
+  <semantics>
+    <mrow><mi mathvariant="bold">P</mi><mo>&#x2061;</mo><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="bold">A</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup><mo>+</mo><mi mathvariant="bold">A</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi mathvariant="bold">B</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo><mo>+</mo><mi mathvariant="bold">B</mi><mo>&#x2062;</mo><msup><mi>u</mi><mn>3</mn></msup></mrow>
+    <annotation encoding="TeX">\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3</annotation>
+  </semantics>
+</math>
+</td>
+<td>(1.1)</td>
+</tr>
+</tbody>
+</table>
+
+<p>ベジェ曲線の中間点Cは<var>u</var>=1/2として</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\bm{P}\left(\frac{1}{2}\right)=\frac{\bm{A}}{8}+\frac{3\bm{A}'}{8}+\frac{3\bm{B}'}{8}+\frac{\bm{B}}{8}"><semantics><mrow><mi mathvariant="bold">P</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mo>=</mo><mfrac><mi mathvariant="bold">A</mi><mn>8</mn></mfrac><mo>+</mo><mfrac><mrow><mn>3</mn><mo>&#x2062;</mo><mi mathvariant="bold">A</mi><mo>′</mo></mrow><mn>8</mn></mfrac><mo>+</mo><mfrac><mrow><mn>3</mn><mo>&#x2062;</mo><mi mathvariant="bold">B</mi><mo>′</mo></mrow><mn>8</mn></mfrac><mo>+</mo><mfrac><mi mathvariant="bold">B</mi><mn>8</mn></mfrac></mrow><annotation encoding="TeX">\bm{P}\left(\frac{1}{2}\right)=\frac{\bm{A}}{8}+\frac{3\bm{A}'}{8}+\frac{3\bm{B}'}{8}+\frac{\bm{B}}{8}</annotation></semantics></math>
+</td>
+<td>(1.2)</td>
+</tr>
+</tbody>
+</table>
+
+<p>となるが、ここが円弧の中心点になるようにする。</p>
+
+<p>頂点Cの座標はCOAのなす角度が45度であることから下記の通りである：</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\bm{C}=(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2})"><semantics><mrow><mi mathvariant="bold">C</mi><mo>=</mo><mo stretchy="false">(</mo><mfrac><msqrt><mn>2</mn></msqrt><mn>2</mn></mfrac><mo separator="true">,</mo><mfrac><msqrt><mn>2</mn></msqrt><mn>2</mn></mfrac><mo stretchy="false">)</mo></mrow><annotation encoding="TeX">\bm{C}=(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2})</annotation></semantics></math>
+</td>
+<td>(1.3)</td>
+</tr>
+</tbody>
+</table>
+
+<p>(1.2)と(1.3)についてx座標成分について解くと、</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\frac{\sqrt{2}}{2}&amp;=&amp;0+\frac{3}{8}\kappa+\frac{3}{8}+\frac{1}{8}\\
+4\sqrt{2}&amp;=&amp;3\kappa+4\\
+\kappa&amp;=&amp;\frac{4\left(\sqrt{2}-1\right)}{3}
+\end{aligned}"><semantics><mtable><mtr><mtd><mfrac><msqrt><mn>2</mn></msqrt><mn>2</mn></mfrac></mtd><mtd><mo>=</mo></mtd><mtd><mn>0</mn><mo>+</mo><mfrac><mn>3</mn><mn>8</mn></mfrac><mi>&#x03BA;</mi><mo>+</mo><mfrac><mn>3</mn><mn>8</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>8</mn></mfrac></mtd></mtr><mtr><mtd><mn>4</mn><msqrt><mn>2</mn></msqrt></mtd><mtd><mo>=</mo></mtd><mtd><mn>3</mn><mi>&#x03BA;</mi><mo>+</mo><mn>4</mn></mtd></mtr><mtr><mtd><mi>&#x03BA;</mi></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mrow><mn>4</mn><mo>&#x2062;</mo><mrow><mo>(</mo><mrow><msqrt><mn>2</mn></msqrt><mo>-</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow><mn>3</mn></mfrac></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\frac{\sqrt{2}}{2}&amp;=&amp;0+\frac{3}{8}\kappa+\frac{3}{8}+\frac{1}{8}\\
+4\sqrt{2}&amp;=&amp;3\kappa+4\\
+\kappa&amp;=&amp;\frac{4\left(\sqrt{2}-1\right)}{3}
+\end{aligned}</annotation></semantics></math>
+</td>
+<td>(1.4)</td>
+</tr>
+</tbody>
+</table>
+
+<p><var>&#x03BA;</var>の値を数値で求めると</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\kappa = \frac{4\left(\sqrt{2}-1\right)}{3}=0.55228474983\cdots"><semantics><mrow><mi>&#x03BA;</mi><mo>=</mo><mfrac><mrow><mn>4</mn><mrow><mo>(</mo><mrow><msqrt><mn>2</mn></msqrt><mo>-</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow><mn>3</mn></mfrac><mo>=</mo><mn>0.55228474983⋯</mn></mrow><annotation encoding="TeX">\kappa = \frac{4\left(\sqrt{2}-1\right)}{3}=0.55228474983\cdots</annotation></semantics></math>
+</td>
+<td style="vertical-align: bottom;">(1.5)</td>
+</tr>
+</tbody>
+</table>
+
+<p>以上で、ベジェ曲線で円弧を描くときに使う例の数値を導き出せた。</p>
+
+<h4>まとめ</h4>
+
+<p>ドローソフトなどでベジェ曲線で描いている円は、下記特徴がある：</p>
+
+<ul>
+<li>四分割してベジェ曲線で描いているが、その端点の他に真ん中も正確な位置である（45度づつに正確なポイントがある）</li>
+<li>制御点は頂点から半径の0.55228…倍の位置にある。</li>
+</ul>
+
+<h4>余談</h4>
+
+<p>この<a href="http://whizkidtech.redprince.net/bezier/circle/" title="Drawing a circle with Bézier Curves"><var>&#x03BA;</var>の値の暗記法</a>があるらしい。
+必要か?</p>
+
+<blockquote cite="http://whizkidtech.redprince.net/bezier/circle/" lang="en">
+<p>
+Fortunately, the formula to derive kappa is very simple: Just remember the phrase “As simple as 1-2-3-4”. That will help you in remembering the full formula which I will describe verbally:
+</p>
+<div style="text-align: center; font-style: italic;">
+Subtract one<br />
+from square root of two,<br />
+divide the result by three,<br />
+and multiply by four.
+</div>
+</blockquote>
+
+<h4>参考文献</h4>
+
+<ul>
+<li>G. Adam Stanislav, "<a href="http://www.whizkidtech.redprince.net/bezier/circle/kappa/" title="Drawing a circle with Bézier Curves">Drawing a circle with Bézier Curves</a>", (2005).</li>
+<li><a href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve#Quadratic_B.C3.A9zier_curves" title="Quadratic Bézier curves">Quadratic Bézier curves</a> , Bézier curves, Wikipedia.</li>
+<li><a href="http://spphire9.wordpress.com/2010/03/01/%E3%83%99%E3%82%B8%E3%82%A7%E6%9B%B2%E7%B7%9A%E3%81%A7%E6%A5%95%E5%86%86%E3%82%92%E6%8F%8F%E3%81%8F2/">ベジェ曲線で楕円を描く(2) | 生存日記</a></li>
+<li><a href="http://park12.wakwak.com/~shp/cgi-bin/wiki.cgi/view/bezier_curve">s.h's page - [graphic] ベジエ曲線</a></li>
+</ul>

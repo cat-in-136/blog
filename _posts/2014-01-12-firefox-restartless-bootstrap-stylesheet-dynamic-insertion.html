@@ -1,0 +1,103 @@
+---
+layout: post
+title: Firefox restartless (bootstrap) 拡張で動的に stylesheet を追加削除する方法
+date: '2014-01-12T08:34:00.000+09:00'
+author: cat_in_136
+tags:
+- javascript
+- xul
+- xml
+- mozilla
+- css
+modified_time: '2014-03-15T15:39:14.430+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-159875161166334536
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/01/firefox-restartless-bootstrap-stylesheet-dynamic-insertion.html
+---
+
+<p><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=564667#c37">Mozilla Bugzilla 564667 comment#37</a>
+を見てようやく stylesheet (CSSの反映) の動的追加削除の方法を知った。
+（下記引用、体裁は修正している）</p>
+
+<blockquote cite="https://bugzilla.mozilla.org/show_bug.cgi?id=564667#c37">
+  <blockquote>
+    <p>I also filed <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=675387" title="675387 - load/unload overlays from chrome.manifest files loaded dynamically">bug 675387</a> for overlay directives, but there's no capability to
+    unload them at this time so that one will probably have to wait a while.</p>
+    
+    <p>Do we care about supporting style overlay directives here, and if so is the
+    capability also missing along the lines of XUL overlays?</p>
+  </blockquote>
+  
+  <p>I don't think there is an API to do it right now, but I think it'd be simpler to add one than 
+  for overlays for example. I believe style lines just wind up as <code>xml-stylesheet</code> lines in the DOM.</p>
+</blockquote>
+
+<p>要するに、<code>&lt;?xml-stylesheet ...&gt;</code>を動的に追加削除すればよいという。</p>
+
+<h4>stylesheet の動的追加</h4>
+
+<p>例えば、ブラウザウィンドウを開いた時などで、restartless (bootstrap) 拡張は
+DOM で XUL 要素を追加するが、これと同じタイミングで stylesheet を動的追加する。
+stylesheet の動的追加の方法を以下に示す。</p>
+
+<p>この<code>&lt;?xml-stylesheet ...&gt;</code> -- XML の規格にそうと <a href="http://www.w3.org/TR/2004/REC-xml-infoset-20040204#sec-pi" title="Processing Instructions - Extensible Markup Language (XML) 1.0">processing instruction</a> という --
+は下記のようにして動的に追加できる。</p>
+
+<pre class="prettyprint lang-js"><code>var pi = document.createProcessingInstruction('xml-stylesheet',
+          'href="chrome://foobar/skin/foobar.css" type="text/css"');
+document.insertBefore(pi, document.documentElement);
+</code></pre>
+
+<p>一般に processing instruction は任意の場所に挿入できるのだが、
+<code>xml-stylesheet</code> の場合はルート要素（ドキュメント要素）の前に入れないといけない。
+そのため、上の例ではルート要素の直前に挿入するコードとなっている。</p>
+
+<h4>stylesheet の動的削除</h4>
+
+<p>例えば、ブラウザウィンドウを閉じた時などで、restartless (bootstrap) 拡張は
+DOM で XUL 要素を削除するが、これと同じタイミングで stylesheet を動的削除する。</p>
+
+<p><code>&lt;?xml-stylesheet ...&gt;</code> を削除すれば元通りに戻せるが、
+この処理は、
+普通に要素を探して <code>removeChild()</code> すればよい。</p>
+
+<pre class="prettyprint lang-js"><code>for (var i = 0; document.childNodes.length; i++) {
+  var child = document.childNodes[i];
+  if (child.nodeType == Element.PROCESSING_INSTRUCTION_NODE) {
+    if ((child.nodeName == 'xml-stylesheet') &amp;&amp;
+        (child.nodeValue.indexOf('href="chrome://foobar/skin/foobar.css"') &gt;= 0)) {
+      document.removeChild(child);
+      break;
+    }
+  } else if (child == document.documentElement) {
+    break;
+  }
+}
+</code></pre>
+
+<h4>余計な補足（念の為）</h4>
+
+<ul>
+<li>Restartless (bootstrap) では <strong>ない</strong> 従来型拡張 (traditional extension) については、
+普通に overlay の XUL ファイルに <code>&lt;?xml-stylesheet ...&gt;</code> を書いておくか、
+または <a href="https://developer.mozilla.org/en/docs/Chrome_Registration#style" title="style -- Chrome registration | MDN">chrome.manifest で style overlay</a>を利用する。</li>
+<li>今回の目的とは若干異なるが、XUL といった XML ではなく、HTML についてはこのようなことをする場合は、同様に <code>&lt;link rel="stylesheet" ... /&gt;</code> の動的追加削除をすればよい。</li>
+</ul>
+
+<ins datetime="2014-03-15T15:29:08+09:00">
+<h4>実は nsIStyleSheetService インタフェースがあった。</h4>
+
+<p>
+と張り切って書いたものの、XUL アプリ的には <a href="https://developer.mozilla.org/docs/XPCOM_Interface_Reference/nsIStyleSheetService">nsIStyleSheetService</a> を使えということらしい。
+なお、非XULならば、ここで述べた方法をとる必要がある。
+（2014-03-15追記。）
+</p>
+
+</ins>
+
+<h4>Reference</h4>
+
+<ul>
+<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=564667" title="564667 – Allow bootstrapped add-ons to have chrome">Mozilla Bugzilla 564667 - Allow bootstrapped add-ons to have chrome</a></li>
+<li><a href="http://www.w3.org/TR/2004/REC-xml-infoset-20040204" title="XML Information Set (Second Edition)">XML Information Set (Second Edition) W3C Recomendation</a>, W3C, 4 Feb 2004</li>
+<li><a href="http://www.w3.org/TR/2010/REC-xml-stylesheet-20101028" title="Associating Style Sheets with XML documents 1.0 (Second Edition)">Associating Style Sheets with XML documents 1.0 (Second Edition) W3C Recomendation</a>, W3C, 28 Oct 2010</li>
+</ul>

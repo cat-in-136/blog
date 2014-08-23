@@ -1,0 +1,69 @@
+---
+layout: post
+title: 「あっイルミネーション」「うわーキレイ～」「アプリ起動してスマホかざしてみて！」「これって///」――の実現性について
+date: '2014-01-26T18:46:00.000+09:00'
+author: cat_in_136
+tags:
+- video
+- LED
+- チラシの裏
+- light
+modified_time: '2014-01-26T18:51:17.802+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5924736967125037288
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/01/illumination-smartphone-app-realization.html
+---
+
+<div>
+<blockquote class="twitter-tweet" lang="ja"><p>「あっイルミネーション」「うわーキレイ～」「アプリ起動してスマホかざしてみて！」「これって///」「返事はOKかい？」な展開を技術者（可視光）が望むというのか RT <a href="https://twitter.com/cat_in_136">@cat_in_136</a> クリスマスイルミネーションのLEDに情報を重畳させる可視光通信がありそうでない件について</p>&mdash; diffshare (@diffshare) <a href="https://twitter.com/diffshare/statuses/279234091721822208">December 13, 2012</a></blockquote>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<p>この tweet の内容について、LED を先程点滅させてみて気づいたことは、
+これは使い方によっては <strong>健康被害を及ぼす可能性がありそう</strong> であることがわかった。</p>
+
+<p>点滅の時間間隔を狭めれば狭めるほど多くの情報ビットを重畳することができる。
+符号化率=1という超理想環境下では、30 Hz で LED の点滅を切り替えれば、
+30 bps で通信できるということになる。
+つまり、点滅間隔の時間に反比例してスループットを上げることができる。</p>
+
+<p>一般的なスマホで撮影するというユースケースを考えると、
+現状高々 30 fps 程度まででしか録画できない。</p>
+
+<p>30 fps で動画撮影した時に識別できるのは高々 30 Hz での点滅である。
+そこで、 30 Hz (点滅間隔 33.3 ms) 程度で LED を実際に点滅をさせてみた結果、
+観ているのが<strong>気持ち悪くなった</strong>。
+どうやら LED の点滅が人間の視覚に晒されることで、
+いわゆる<a href="http://ja.wikipedia.org/wiki/%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AF" title="ポケモンショック">ポケモンショック</a>のような症状が起こりそうである。</p>
+
+<p>人間の視覚上点滅が気にならなくなるのは、60 Hz ぐらいらしいのだが、
+お手近の GR-Sakura (Arduino 互換ボード) で実際に試したら 100 Hz ぐらいまでは見ていて気持ち悪くなった。
+安全のため、120 Hz 程度で点滅をするようにするべきであろう。</p>
+
+<p>120 Hz 程度で点滅させるとなると、120 fps で撮影してくれないと困るわけだが、
+しばらくは出てこなさそうである。</p>
+
+<p><a href="http://dcimovies.com/specification/DCI_DCSS_v12_with_errata_2012-1010.pdf" title="Digital Cinema System Specification v.1.2">DCIのデジタルシネマの規格</a>でも下記の通り、高々48 fpsしか求められていない。</p>
+
+<blockquote>
+  <ul>
+  <li>The output of the decoder shall conform to Section 3.2 Image Specification. These images are
+  basically:
+  <ul>
+  <li>4K = 4096x2160 at 24 FPS</li>
+  <li>2K = 2048x1080 at 24 or 48 FPS</li>
+  <li>...</li>
+  </ul></li>
+  </ul>
+</blockquote>
+
+<p>以上より、「あっイルミネーション」「うわーキレイ～」「アプリ起動してスマホかざしてみて！」「これって///」…
+を実現するためには、単純に点滅させる方法しか思い浮かばない限り、当分の間は無理そうである。</p>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://ja.wikipedia.org/wiki/%E5%85%89%E9%81%8E%E6%95%8F%E6%80%A7%E7%99%BA%E4%BD%9C" title="光過敏性発作">光過敏性発作</a>, Wikipedia (ja)</li>
+<li><a href="http://ja.wikipedia.org/wiki/%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AF" title="ポケモンショック">ポケモンショック</a>, Wikipedia (ja)</li>
+<li><a href="http://ja.wikipedia.org/wiki/%E3%83%95%E3%83%AA%E3%83%83%E3%82%AB%E3%83%BC" title="フリッカー">フリッカー</a>, Wikipedia (ja)</li>
+<li>DCI, "<a href="http://dcimovies.com/specification/DCI_DCSS_v12_with_errata_2012-1010.pdf" title="Digital Cinema System Specification v.1.2">Digital Cinema System Specification Version 1.2 with Errata as of 30 August 2012 Incorporated</a>", sub-clause 4.3.2</li>
+</ul>

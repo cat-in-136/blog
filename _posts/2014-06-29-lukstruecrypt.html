@@ -1,0 +1,160 @@
+---
+layout: post
+title: LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには
+date: '2014-06-29T23:48:00.000+09:00'
+author: cat_in_136
+tags:
+- luks
+- encrypt
+- linux
+- howto
+- security
+modified_time: '2014-06-29T23:48:00.563+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7186359417273335878
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/06/lukstruecrypt.html
+---
+
+<p>結局開発終了騒ぎのあった <a href="http://truecrypt.ch/" title="TCnext | Site dedicated to the next &quot;truecrypt&quot;">TrueCryptはフォークされた</a> のであるが、
+このタイミングでLUKS(Linux Unified Key Setup)に触っておこうというお話し。</p>
+
+<p>LUKSは実ドライブのボリューム暗号化で使われることが多いようだが、
+今回は TrueCrypt でありがちな運用方法である
+仮想ドライブ（ファイル）を使ったものである。</p>
+
+<p>結論は単にループデバイスを介して普通にLUKSの設定をするだけであったが、
+メモとして残しておく。</p>
+
+<h4>作成</h4>
+
+<h5>仮想ドライブファイルの作成</h5>
+
+<p>まず仮想ドライブファイルとなるファイルを作る。
+仮に 1G byte で作るのならば…</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% dd if=/dev/zero of=/path/to/foobar.img bs=1k count=1M
+</samp></pre>
+
+<p>ファイルを置く場所が ext4 などならば fallocate(1) を使って作ってもよい。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% fallocate -l 1G /path/to/foobar.img
+</samp></pre>
+
+<p>なお本手法ではディスクイメージをそのまま扱う都合上、
+可変ドライブに対応しない（対応できない）。
+どうしてもというのならば、スパースファイルでも使えばよいと思う。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% touch /path/to/foobar.img
+% truncate -s 1G /path/to/foobar.img
+</samp></pre>
+
+<h5>暗号化仮想ドライブの構築</h5>
+
+<p>仮想ドライブファイルをループデバイスに割り当てる。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># losetup /dev/loop0 /path/to/foobar.img
+</samp></pre>
+
+<p>ここでは /dev/loop0 を使っているが
+また、 /dev/loop* が起動時に生成されない環境の場合は、
+mknod(1) を使って予めループデバイスを作成しておくこと。</p>
+
+<p>次に、ループデバイスに対して cryptsetup(1) を実行して
+LUKS の暗号化の設定をする。
+下の例ではデフォルト設定で行っている。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># cryptsetup luksFormat /dev/loop0
+WARNING!
+========
+This will overwrite data on /dev/loop0 irrevocably.
+
+Are you sure? (Type uppercase yes): <kbd>YES</kbd>
+Enter passphrase: 
+Verify passphrase: 
+# 
+</samp></pre>
+
+<p>次に /dev/mapper/foobar にデバイスマッピングしてから、
+ファイルシステムを構築する。
+この例ではファイルシステムとして ext4 を使っている。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># cryptsetup luksOpen /dev/loop0 foobar
+Enter passphrase for /path/to/foobar.img:
+# mkfs.ext4 /dev/mapper/foobar
+</samp></pre>
+
+<h5>暗号化仮想ドライブのマウント/アンマウント</h5>
+
+<p>あとは <samp>/dev/mapper/foobar</samp> を普通にマウント(mount(1))すればすぐに使える。
+使い終わったら普通にアンマウント(umount(1))する。</p>
+
+<p>なおパーミッションなどをこの段階で設定をしておくといいかもしれない。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># mkdir /mnt/foobar
+# mount /dev/mapper/foobar /mnt/foobar
+# chown 500:500 /mnt/foobar
+# umount /mnt/foobar
+# rmdir /mnt/foobar
+</samp></pre>
+
+<h5>暗号化仮想ドライブの開放</h5>
+
+<p>LUKSの開放、ループデバイスの割り当て解除の順番で行う：</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># cryptsetup luksClose foobar
+# losetup -d /dev/loop0
+</samp></pre>
+
+<h4>日常使い</h4>
+
+<p>ループデバイスへの割り当てはコマンドラインで行う必要がある：</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># losetup /dev/loop0 /path/to/foobar.img
+</samp></pre>
+
+<p>こうした時点で各種 gtk アプリ (厳密には GIO サブシステム) からはドライブと
+認識されているので、
+USB メモリのような操作感でマウントして使える。
+すなわちNautilusといったファイラーやファイルダイアログ(!)から
+（rootパスワードと暗号化仮想ドライブのパスフレーズの入力を除いて）
+マウス操作でマウントアンマウントできる。</p>
+
+<p>なおコマンドラインでマウントするには下記のとおりとなる。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># losetup /dev/loop0 /path/to/foobar.img
+# cryptsetup luksOpen /dev/loop0 foobar
+# mkdir /mnt/foobar
+# mount /dev/mapper/foobar /mnt/foobar
+</samp></pre>
+
+<p>アンマウントは下記のとおりとなる。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># umount /mnt/foobar
+# rmdir /mnt/foobar
+# cryptsetup luksClose foobar
+# losetup -d /dev/loop0
+</samp></pre>
+
+<h4>ドライブ拡張</h4>
+
+<p>ファイルシステムがリサイズに拡張しているならば、
+簡単に拡張することができる。
+よって、仮想ドライブファイルの容量が足りなくなった場合に
+そのときに増やすことが可能である。</p>
+
+<p>以下は2G byteに増量する例。</p>
+
+<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% truncate -s 2G /path/to/foobar.img
+% su
+# losetup /dev/loop0 /path/to/foobar.img
+# cryptsetup luksOpen /dev/loop0 foobar
+# resize2fs /dev/mapper/foobar
+</samp></pre>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://goohackle.com/how-to-create-a-portable-encrypted-file_system-on-a-loop-file/">How to create a portable encrypted file system on a loop file</a></li>
+<li><a href="https://help.ubuntu.com/community/EncryptedFilesystemsOnRemovableStorage">EncryptedFilesystemsOnRemovableStorage</a>, Ubuntsu Community Help Wiki</li>
+<li><a href="http://www.nminoru.jp/~nminoru/programming/sparse_file.html">Linux で疎なファイル(sparse file)を使う</a></li>
+<li><a href="http://sourceforge.jp/magazine/03/10/16/1431223">Linuxファイルシステムのサイズ変更とデフラグ</a>, SourceForge.JP Magazine (2003-10-13)</li>
+</ul>

@@ -1,0 +1,140 @@
+---
+layout: post
+title: 'Note: do same without browser.tabs.closeButtons on Firefox 31+'
+date: '2014-05-12T23:31:00.000+09:00'
+author: cat_in_136
+tags:
+- firefox
+- howto
+modified_time: '2014-05-12T23:31:00.117+09:00'
+thumbnail: http://2.bp.blogspot.com/-nFqoGuDA6to/U2-KL4CQi3I/AAAAAAAAAc8/_nKbv7Gop2M/s72-c/value0.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5783655650226609881
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/05/note-do-same-without.html
+---
+
+<p>Unfortunately <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=865826" title="Bug 865826 - Remove the browser.tabs.closeButtons pref">Bug865826</a> remove <a href="http://kb.mozillazine.org/Browser.tabs.closeButtons"><code>browser.tabs.closeButtons</code></a> pref ("Browser" -&gt; "TabBrowsing" -&gt; "Display a close button ..." in Configuration Mania).
+This removal would be captured in upcoming Firefox 31.</p>
+
+<p>In this article, I describe how to do same without <code>browser.tabs.closeButtons</code> pref.</p>
+
+<h4>Use addons</h4>
+
+<ul>
+<li><a href="https://addons.mozilla.org/firefox/addon/no-close-buttons/">No Close Buttons</a>
+<ul>
+<li>Only "Value=2: Display no close button" (as of version 0.1)</li>
+</ul></li>
+<li><a href="https://addons.mozilla.org/firefox/addon/classicthemerestorer/" title="Classic Theme Restorer">Classic Theme Restorer (Customize Australis)</a>
+<ul>
+<li>Only "Value=2: Display no close button" (as of version 1.1.8)</li>
+</ul></li>
+</ul>
+
+<p>As of May 2014, there is <em>no</em> addon providing a close button at the end of the tab strip (Value=3).</p>
+
+<h4>Use <code>userChrome.css</code></h4>
+
+<h5>Value=0: Display a close button on the Active tab Only</h5>
+
+
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://2.bp.blogspot.com/-nFqoGuDA6to/U2-KL4CQi3I/AAAAAAAAAc8/_nKbv7Gop2M/s1600/value0.png"><img src="http://2.bp.blogspot.com/-nFqoGuDA6to/U2-KL4CQi3I/AAAAAAAAAc8/_nKbv7Gop2M/s400/value0.png" width="400" height="42" /></a>
+<figcaption style="display: block; text-align: center;"></figcaption>
+</figure>
+
+<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+  .tab-close-button:not([selected]) {
+    display: none;
+  }
+}
+</code></pre>
+
+<h5>Value=1: Display close buttons on All tabs</h5>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://2.bp.blogspot.com/-Z7UwbWGpJ8g/U2-KMENW0II/AAAAAAAAAdE/f2LJ4W_Nrwk/s1600/value1.png"><img src="http://2.bp.blogspot.com/-Z7UwbWGpJ8g/U2-KMENW0II/AAAAAAAAAdE/f2LJ4W_Nrwk/s400/value1.png" width="400" height="42" /></a>
+<figcaption style="display: block; text-align: center;"></figcaption>
+</figure>
+
+<p>Default. There is nothing to do.</p>
+
+<h5>Value=2: Display no close button</h5>
+
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://2.bp.blogspot.com/-xVbrwXbGqgA/U2-KMcBGcDI/AAAAAAAAAdA/2OObtgfvpgM/s1600/value2.png"><img src="http://2.bp.blogspot.com/-xVbrwXbGqgA/U2-KMcBGcDI/AAAAAAAAAdA/2OObtgfvpgM/s400/value2.png" width="400" height="42" /></a>
+<figcaption style="display: block; text-align: center;"></figcaption>
+</figure>
+
+<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+  .tab-close-button {
+    display: none;
+  }
+}
+</code></pre>
+
+<h5>Value=3: Display a close button at the end of the tab strip (Firefox 1.x behavior)</h5>
+
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://1.bp.blogspot.com/-3K-2gxLJDC0/U2-KNDUKpyI/AAAAAAAAAdI/x-JY0gwK5ns/s1600/value3.png"><img src="http://1.bp.blogspot.com/-3K-2gxLJDC0/U2-KNDUKpyI/AAAAAAAAAdI/x-JY0gwK5ns/s400/value3.png" width="400" height="42" /></a>
+<figcaption style="display: block; text-align: center;"></figcaption>
+</figure>
+
+<p>The close button at the end of the tab strip has been removed in <a href="https://hg.mozilla.org/integration/fx-team/rev/1c2ef0d3d997">1c2ef0d3d997</a>.
+Therefore, some sorta addon would be needed.</p>
+
+<p>For example, to get back the close button, add following user script using <a href="http://userchromejs.mozdev.org/">userChrome.js</a>.</p>
+
+<pre class="prettyprint"><code>// ==UserScript==
+// @name close_btn_end_tab_strip.uc.js
+// @include main
+// ==/UserScript==
+(function () {
+  var tabsCloseButton = document.createElement("toolbarbutton");
+  tabsCloseButton.setAttribute("id", "tabs-closebutton");
+  tabsCloseButton.setAttribute("class", "close-button tabs-closebutton close-icon");
+  tabsCloseButton.setAttribute("command", "cmd_close");
+  tabsCloseButton.setAttribute("label", "Close Tab");
+  tabsCloseButton.setAttribute("cui-areatype", "toolbar");
+  tabsCloseButton.setAttribute("tooltiptext", "Close Tab");
+
+  var tabsToolbar = document.getElementById("TabsToolbar");
+  tabsToolbar.appendChild(tabsCloseButton);
+})();
+</code></pre>
+
+<p>(Note: To hide close buttons on tabs, the user CSS rule described in value=2 is also required.)</p>
+
+<h5>FYI: More customize!</h5>
+
+<p>Example 1. Display close button when the cursor hovers over the tab, even if tab width is smaller than <code>browser.tabs.tabClipWidth</code>.</p>
+
+<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+  tab:hover .tab-close-button {
+    display: -moz-box ! important;
+  }
+  tab:not(:hover) .tab-close-button {
+    display: none ! important;
+  }
+}
+</code></pre>
+
+<p>Example 2. Display close button when the cursor hovers near the tabbar, even if tab width is smaller than <code>browser.tabs.tabClipWidth</code>.</p>
+
+<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+  .tabbrowser-tabs[closebuttons="activetab"] .tab-close-button {
+    display: -moz-box ! important;
+  }
+  tab:not(:hover) .tab-close-button {
+    display: none ! important;
+  }
+}
+</code></pre>
+
+<h4>Reference</h4>
+
+<ul>
+<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=865826" title="Bug 865826 - Remove the browser.tabs.closeButtons pref">Bug 865826 - Remove the browser.tabs.closeButtons pref</a> - Mozilla Bugzilla</li>
+</ul>

@@ -1,0 +1,258 @@
+---
+layout: post
+title: C言語の構造体を構造分析したい〜静的解析としての doxygen
+date: '2014-04-27T23:32:00.000+09:00'
+author: cat_in_136
+tags:
+- howto
+- c-language
+modified_time: '2014-04-27T23:32:00.088+09:00'
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5300366015909406766
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/04/c-struct-with-doxygen-xml.html
+---
+
+<p>ソースコードからドキュメント生成するツールとしていにしえの時代から有名な
+<a href="http://www.doxygen.org/" title="Doxygen: Main Page">doxygen</a> には xml 出力があるので、静的解析ツールの補助として
+いろいろと活用ができそう。</p>
+
+<h4>使い方</h4>
+
+<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>doxygen -g</kbd>
+</samp></pre>
+
+<p>で生成された Doxyfile ないしすでにある Doxyfile において
+<code>GENERATE_XML</code> を <code>YES</code> にして、</p>
+
+<pre class="prettyprint"><code># If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
+# captures the structure of the code including all documentation.
+# The default value is: NO.
+
+GENERATE_XML           = <ins>YES</ins>
+</code></pre>
+
+<p>ドキュメントをつくるように doxygen を実行すると xml が出力される。
+html 出力などほかの出力も有効にしているならば、一緒に出力される。</p>
+
+<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ doxygen Doxyfile
+</samp></pre>
+
+<h4>具体例</h4>
+
+<p>構造体 <code>struct _Foo</code> にどんなメンバがあるかを構造分析したい：</p>
+
+<pre class="prettyprint lang-c"><code>// foobar.h
+typedef enum _BarType {
+  BAR_TYPE_A,
+  BAR_TYPE_B
+} BarType;
+
+#define NUM_B 3
+
+typedef union _Bar {
+  uint a;
+  uint b[NUM_B];
+} Bar;
+
+typedef struct _Foo {
+  BarType bartype;
+  Bar bar;
+} Foo;
+</code></pre>
+
+<p>doxygen の実行</p>
+
+<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>ls</kbd>
+foobar.h
+$ <kbd>doxygen -g</kbd>
+
+
+Configuration file 'Doxyfile' created.
+
+Now edit the configuration file and enter
+
+  doxygen Doxyfile
+
+to generate the documentation for your project
+
+$ <kbd>vi Doxyfile</kbd>
+$ <kbd>doxygen Doxyfile</kbd>
+(略)
+$ <kbd>ls -F</kbd>
+Doxyfile  foobar.h  html/  latex/  xml/
+$ <kbd>ls -F xml</kbd>
+combine.xslt  foobar_8h.xml  index.xsd        union__Bar.xml
+compound.xsd  index.xml      struct__Foo.xml
+</samp></pre>
+
+<p>構造体 <code>struct _Foo</code> の構造を見るには <code>struct__Foo.xml</code> を見るという風な単純な構造となっている：</p>
+
+<pre class="prettyprint lang-xml"><code>&lt;?xml version='1.0' encoding='UTF-8' standalone='no'?&gt;
+&lt;doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6"&gt;
+  &lt;compounddef id="struct__Foo" kind="struct" prot="public"&gt;
+    &lt;compoundname&gt;_Foo&lt;/compoundname&gt;
+      &lt;sectiondef kind="public-attrib"&gt;
+      &lt;memberdef kind="variable" id="struct__Foo_1a8f8833abcfaa7b946be2b13d9e4ef73d" prot="public" static="no" mutable="no"&gt;
+        &lt;type&gt;BarType&lt;/type&gt;
+        &lt;definition&gt;BarType _Foo::bartype&lt;/definition&gt;
+        &lt;argsstring&gt;&lt;/argsstring&gt;
+        &lt;name&gt;bartype&lt;/name&gt;
+        &lt;briefdescription&gt;
+        &lt;/briefdescription&gt;
+        &lt;detaileddescription&gt;
+        &lt;/detaileddescription&gt;
+        &lt;inbodydescription&gt;
+        &lt;/inbodydescription&gt;
+        &lt;location file="/tmp/doxytest/foobar.h" line="12" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="12" bodyend="-1"/&gt;
+      &lt;/memberdef&gt;
+      &lt;memberdef kind="variable" id="struct__Foo_1a21f3b7dab2816e7ea7938baf94e643c8" prot="public" static="no" mutable="no"&gt;
+        &lt;type&gt;&lt;ref refid="union__Bar" kindref="compound"&gt;Bar&lt;/ref&gt;&lt;/type&gt;
+        &lt;definition&gt;Bar _Foo::bar&lt;/definition&gt;
+        &lt;argsstring&gt;&lt;/argsstring&gt;
+        &lt;name&gt;bar&lt;/name&gt;
+        &lt;briefdescription&gt;
+        &lt;/briefdescription&gt;
+        &lt;detaileddescription&gt;
+        &lt;/detaileddescription&gt;
+        &lt;inbodydescription&gt;
+        &lt;/inbodydescription&gt;
+        &lt;location file="/tmp/doxytest/foobar.h" line="13" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="13" bodyend="-1"/&gt;
+      &lt;/memberdef&gt;
+      &lt;/sectiondef&gt;
+    &lt;briefdescription&gt;
+    &lt;/briefdescription&gt;
+    &lt;detaileddescription&gt;
+    &lt;/detaileddescription&gt;
+    &lt;collaborationgraph&gt;
+      &lt;node id="4"&gt;
+        &lt;label&gt;_Bar&lt;/label&gt;
+        &lt;link refid="union__Bar"/&gt;
+      &lt;/node&gt;
+      &lt;node id="3"&gt;
+        &lt;label&gt;_Foo&lt;/label&gt;
+        &lt;link refid="struct__Foo"/&gt;
+        &lt;childnode refid="4" relation="usage"&gt;
+          &lt;edgelabel&gt;bar&lt;/edgelabel&gt;
+        &lt;/childnode&gt;
+      &lt;/node&gt;
+    &lt;/collaborationgraph&gt;
+    &lt;location file="/tmp/doxytest/foobar.h" line="11" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="11" bodyend="14"/&gt;
+    &lt;listofallmembers&gt;
+      &lt;member refid="struct__Foo_1a21f3b7dab2816e7ea7938baf94e643c8" prot="public" virt="non-virtual"&gt;&lt;scope&gt;_Foo&lt;/scope&gt;&lt;name&gt;bar&lt;/name&gt;&lt;/member&gt;
+      &lt;member refid="struct__Foo_1a8f8833abcfaa7b946be2b13d9e4ef73d" prot="public" virt="non-virtual"&gt;&lt;scope&gt;_Foo&lt;/scope&gt;&lt;name&gt;bartype&lt;/name&gt;&lt;/member&gt;
+    &lt;/listofallmembers&gt;
+  &lt;/compounddef&gt;
+&lt;/doxygen&gt;
+</code></pre>
+
+<p><code>memberdef</code> 要素の中身を探していけば良い。他のファイルにその定義がある場合は <code>ref</code> 要素
+があるようなので再帰的に処理を行えば探せる。</p>
+
+<p>というわけで、さくっと doxygen の xml 出力を利用して、<a href="https://gist.github.com/cat-in-136/11336549">C言語構造体の構造を JSON で吐き出すスクリプトを書いてみた</a>。
+100 行未満で書けるのだから doxygen の xml 出力は強力である。</p>
+
+<pre class="prettyprint lang-ruby"><code>#!/usr/bin/ruby
+# vim: filetype=ruby fileencoding=UTF-8 shiftwidth=2 tabstop=2 autoindent expandtab
+# 
+# MIT License
+
+require 'rexml/document'
+require 'json'
+
+class DoxyStructXml
+  def initialize
+    @structs = {}
+  end
+  attr_reader :structs
+
+  def load_doxy_struct_xml_file(file)
+    File.open(file, 'r') do |f|
+      doc = REXML::Document.new(f)
+
+      id = doc.elements['doxygen/compounddef'].attributes['id']
+
+      members = []
+      doc.elements.each('doxygen/compounddef//memberdef') do |elem|
+        member = {}
+        if elem.elements['type/ref']
+          member[:typeref] = elem.elements['type/ref'].attributes['refid']
+          member[:type] = elem.elements['type/ref'].text
+        else
+          member[:type] = elem.elements['type'].text
+        end
+        member[:argsstring] = elem.elements['argsstring'].text
+        member[:name] = elem.elements['name'].text
+
+        members &lt;&lt; member
+      end
+
+      @structs[id] = {
+        :name =&gt; doc.elements['doxygen/compounddef/compoundname'].text,
+        :members =&gt; members
+      }
+    end
+  end
+
+  def data(struct_id)
+    d = {}
+    d[:id] = struct_id
+    d[:name] = @structs[struct_id][:name]
+    d[:members] = []
+    @structs[struct_id][:members].each do |member|
+      m = {}
+      m[:name] = member[:name]
+      m[:type] = member[:type]
+      m[:name] &lt;&lt; member[:argsstring] if member[:argsstring]
+      if member[:typeref]
+        m[:type_data] = data(member[:typeref])
+      end
+      d[:members] &lt;&lt; m
+    end
+
+    d
+  end
+end
+
+if $0 == __FILE__
+  doxy_struct_xml = DoxyStructXml.new
+  Dir.glob('{struct,union}_*.xml') do |file|
+    doxy_struct_xml.load_doxy_struct_xml_file(file)
+  end
+
+  struct_id = ARGV[0]
+
+  unless struct_id
+    $stderr &lt;&lt; "Usage: ruby #{$0} struct_id\n"
+    $stderr &lt;&lt; "struct_id: "
+    doxy_struct_xml.structs.each do |key,value|
+      $stderr &lt;&lt; key &lt;&lt; "  "
+    end
+    $stderr &lt;&lt; "\n\n"
+    exit 1
+  end
+
+  if doxy_struct_xml.structs[struct_id]
+    $stdout &lt;&lt; JSON.dump(doxy_struct_xml.data(struct_id))
+    $stdout &lt;&lt; "\n"
+  else
+    $stderr &lt;&lt; "#{struct_id} does not found"
+    exit 1
+  end
+end
+</code></pre>
+
+<p>列挙体が扱えないことが残念なことこの上ない。</p>
+
+<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>ruby doxy_struct_xml_to_json.rb</kbd>
+Usage: ruby doxy_struct_xml_to_json.rb struct_id
+struct_id: struct__Foo  union__Bar  
+
+$ <kbd>ruby doxy_struct_xml_to_json.rb struct__Foo</kbd>
+{"id":"struct__Foo","name":"_Foo","members":[{"name":"bartype","type":"BarType"},{"name":"bar","type":"Bar","type_data":{"id":"union__Bar","name":"_Bar","members":[{"name":"a","type":"uint"},{"name":"b[NUM_B]","type":"uint"}]}}]}
+</samp></pre>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://www.stack.nl/~dimitri/doxygen/manual/output.html">Doxygen Manual: Output Formats</a></li>
+<li><a href="http://kotatuinu.cocolog-nifty.com/blog/2011/10/doxygen-1981.html" title="Doxygenの出力結果から構造体を展開させるプログラム">Doxygenの出力結果から構造体を展開させるプログラム</a> - 備忘ぶ録</li>
+</ul>

@@ -1,0 +1,249 @@
+---
+layout: post
+title: ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない
+date: '2014-03-07T07:00:00.000+09:00'
+author: cat_in_136
+tags:
+- math
+- bézier
+modified_time: '2014-03-29T11:02:06.205+09:00'
+thumbnail: http://1.bp.blogspot.com/-Ezck2skyk_Q/UxNGvjn5wWI/AAAAAAAAAbA/2iJvsXMKoJY/s72-c/generic-kappa.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-428969032470124202
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-3-general-theta.html
+---
+
+<aside>
+<div style="background: #ffd; border: solid 3px #ff8">
+この記事を読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です
+もし数式部分が読めない場合は
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<button onclick="var a=document.createElement(&quot;script&quot;);a.setAttribute(&quot;type&quot;,&quot;application/javascript&quot;);a.setAttribute(&quot;src&quot;,&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;);document.body.appendChild(a);">このボタンをクリックしてMathJaxを使って無理矢理表示する</button>
+などしてください。
+</div>
+</aside>
+
+<p>ベジェ曲線の円弧についていままで90度で計算してきた。
+しかし、この数字に意味付けはなかった。
+ただ単にドローソフトがそういう実装になっていたからだ。</p>
+
+<p>そこで、任意の中心角の円弧をベジェ曲線で曲線近似するときの
+制御点の位置を算出してみよう。</p>
+
+<h4>ベジェ曲線の近似円弧の制御点位置</h4>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://1.bp.blogspot.com/-Ezck2skyk_Q/UxNGvjn5wWI/AAAAAAAAAbA/2iJvsXMKoJY/s1600/generic-kappa.png" imageanchor="1" ><img border="0" src="http://1.bp.blogspot.com/-Ezck2skyk_Q/UxNGvjn5wWI/AAAAAAAAAbA/2iJvsXMKoJY/s1600/generic-kappa.png" alt="135degree arc using Bézier" width="262" height="302" /></a>
+</figure>
+
+<p>AOBのなす角度を90度から<var>&#x03B8;</var>に拡張する。
+頂点Bはそのままで、
+BB'が頂点Bでの接線、BB'の長さが<var>&#x03BA;</var>とする。
+AA'が頂点Aでの接線、AA'の長さも対称性より<var>&#x03BA;</var>である。</p>
+
+<p>すると、各点の座標は下記のようになる</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\text{A:}&amp;(\cos\theta,\sin\theta)\\
+\text{B:}&amp;(1,0)\\
+\text{A':}&amp;(\cos\theta+\kappa\sin\theta,\sin\theta-\kappa\cos\theta)\\
+\text{B':}&amp;(1,\kappa)\\
+\text{C:}&amp;(\cos\frac{\theta}{2},\sin\frac{\theta}{2})\\
+\end{aligned}"><semantics><mtable columnspacing="0em"><mtr><mtd><mtext>A:</mtext></mtd><mtd><mo stretchy="false">(</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>,</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>B:</mtext></mtd><mtd><mo stretchy="false">(</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>A':</mtext></mtd><mtd><mo stretchy="false">(</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>+</mo><mi>&#x03BA;</mi><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>,</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>-</mo><mi>&#x03BA;</mi><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>B':</mtext></mtd><mtd><mo stretchy="false">(</mo><mn>1</mn><mo>,</mo><mi>&#x03BA;</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>C:</mtext></mtd><mtd><mo stretchy="false">(</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>,</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\text{A:}&amp;(\cos\theta,\sin\theta)\\
+\text{B:}&amp;(1,0)\\
+\text{A':}&amp;(\cos\theta+\kappa\sin\theta,\sin\theta-\kappa\cos\theta)\\
+\text{B':}&amp;(1,\kappa)\\
+\text{C:}&amp;(\cos\frac{\theta}{2},\sin\frac{\theta}{2})\\
+\end{aligned}
+</annotation></semantics></math>
+</td>
+<td>(3.1)</td>
+</tr>
+</tbody>
+</table>
+
+<p>ベジェ曲線の定義より、ベジェ曲線上の任意の点はパラメータ<math xmlns="http://www.w3.org/1998/Math/MathML" title="u (0\leq u \leq 1)" display="inline">
+  <semantics>
+    <mrow><mi>u</mi><mo stretchy="false">(</mo><mn>0</mn><mo>&#x2264;</mo><mi>u</mi><mo>&#x2264;</mo><mn>1</mn><mo stretchy="false">)</mo></mrow>
+    <annotation encoding="TeX">u(0\leq u \leq 1)</annotation>
+  </semantics>
+</math>を使って、下記の通りとなる：</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3">
+  <semantics>
+    <mrow><mi mathvariant="bold">P</mi><mo>&#x2061;</mo><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="bold">A</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup><mo>+</mo><mi mathvariant="bold">A</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi mathvariant="bold">B</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo><mo>+</mo><mi mathvariant="bold">B</mi><mo>&#x2062;</mo><msup><mi>u</mi><mn>3</mn></msup></mrow>
+    <annotation encoding="TeX">\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3</annotation>
+  </semantics>
+</math>
+</td>
+<td>(3.2)</td>
+</tr>
+</tbody>
+</table>
+
+<p>ベジェ曲線の中間点Cは<var>u</var>=1/2として</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\bm{P}\left(\frac{1}{2}\right)=\frac{\bm{A}}{8}+\frac{3\bm{A}'}{8}+\frac{3\bm{B}'}{8}+\frac{\bm{B}}{8}"><semantics><mrow><mi mathvariant="bold">P</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mo>=</mo><mfrac><mi mathvariant="bold">A</mi><mn>8</mn></mfrac><mo>+</mo><mfrac><mrow><mn>3</mn><mo>&#x2062;</mo><mi mathvariant="bold">A</mi><mo>′</mo></mrow><mn>8</mn></mfrac><mo>+</mo><mfrac><mrow><mn>3</mn><mo>&#x2062;</mo><mi mathvariant="bold">B</mi><mo>′</mo></mrow><mn>8</mn></mfrac><mo>+</mo><mfrac><mi mathvariant="bold">B</mi><mn>8</mn></mfrac></mrow><annotation encoding="TeX">\bm{P}\left(\frac{1}{2}\right)=\frac{\bm{A}}{8}+\frac{3\bm{A}'}{8}+\frac{3\bm{B}'}{8}+\frac{\bm{B}}{8}</annotation></semantics></math>
+</td>
+<td>(3.3)</td>
+</tr>
+</tbody>
+</table>
+
+<p>となる。</p>
+
+<p>(3.3)式に(3.1)の頂点データを代入することで、x座標成分として</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\frac{1}{8}(4\cos\theta + 3\kappa\sin\theta + 4)"><semantics><mrow><mfrac><mn>1</mn><mn>8</mn></mfrac><mo stretchy="false">(</mo><mn>4</mn><mi>&#x03BA;</mi><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>+</mo><mn>3</mn><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>+</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><annotation encoding="TeX">\frac{1}{8}(4\cos\theta + 3\kappa\sin\theta + 4)</annotation></semantics></math>
+</td>
+<td>(3.4)</td>
+</tr>
+</tbody>
+</table>
+
+<p>同様に、y座標成分として</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\frac{1}{8}(4 \sin\theta + 3\kappa (1-\cos\theta))"><semantics><mrow><mfrac><mn>1</mn><mn>8</mn></mfrac><mo stretchy="false">(</mo><mn>4</mn><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>+</mo><mn>3</mn><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="TeX">\frac{1}{8}(4 \sin\theta + 3\kappa (1-\cos\theta))</annotation></semantics></math>
+</td>
+<td>(3.5)</td>
+</tr>
+</tbody>
+</table>
+
+<p>が得られる。
+ここが円弧の中心点Cになるようにすればよい。</p>
+
+<p>よって(3.4)式から</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\cos\frac{\theta}{2}&amp;=&amp;\frac{1}{8} (4 \cos\theta + 3 \kappa \sin\theta + 4)\\
+8\cos\frac{\theta}{2}&amp;=&amp;4 \left(2\cos^2\frac{\theta}{2}-1\right)+6 \kappa \cos\frac\theta2 \sin\frac\theta2+4\\
+8\cos\frac{\theta}{2}&amp;=&amp;8 \cos^2\frac\theta2+6 \kappa \cos\frac\theta2 \sin\frac\theta2\\
+\kappa&amp;=&amp;\frac{8 \cos\frac\theta2-8 \cos^2\frac\theta2}{6 \cos\frac\theta2 \sin\frac\theta2}\\
+&amp;=&amp;\frac{4}{3} \left({\frac{1-\cos\frac\theta2}{\sin\frac\theta2}}\right)\\
+&amp;=&amp;\frac{4}{3}\cdot\tan\frac\theta4
+\end{aligned}"><semantics><mtable columnspacing="0em"><mtr><mtd><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>4</mn><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>+</mo><mn>3</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>+</mo><mn>4</mn><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mn>8</mn><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mtd><mtd><mo>=</mo></mtd><mtd><mn>4</mn><mo>&#x2062;</mo><mrow><mo>(</mo><mrow><mn>2</mn><msup><mo rspace="0.5ex" lspace="0em">cos</mo><mn>2</mn></msup><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>-</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>+</mo><mn>6</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>+</mo><mn>4</mn></mtd></mtr><mtr><mtd><mn>8</mn><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mtd><mtd><mo>=</mo></mtd><mtd><mn>8</mn><mo>&#x2062;</mo><msup><mo rspace="0.5ex" lspace="0em">cos</mo><mn>2</mn></msup><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>+</mo><mn>6</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mtd></mtr><mtr><mtd><mi>&#x03BA;</mi></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mrow><mn>8</mn><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>-</mo><mn>8</mn><mo>&#x2062;</mo><msup><mo rspace="0.5ex" lspace="0em">cos</mo><mn>2</mn></msup><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mrow><mrow><mn>6</mn><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mrow></mfrac></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>&#x2062;</mo><mrow><mo>(</mo><mfrac><mrow><mn>1</mn><mo>-</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mrow><mrow><mo rspace="0.5ex" lspace="0em">sin</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mrow></mfrac><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>&#x00B7;</mo><mo rspace="0.5ex" lspace="0em">tan</mo><mfrac><mi>&#x03B8;</mi><mn>4</mn></mfrac></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\cos\frac{\theta}{2}&amp;=&amp;\frac{1}{8} (4 \cos\theta + 3 \kappa \sin\theta + 4)\\
+8\cos\frac{\theta}{2}&amp;=&amp;4 \left(2\cos^2\frac{\theta}{2}-1\right)+6 \kappa \cos\frac\theta2 \sin\frac\theta2+4\\
+8\cos\frac{\theta}{2}&amp;=&amp;8 \cos^2\frac\theta2+6 \kappa \cos\frac\theta2 \sin\frac\theta2\\
+\kappa&amp;=&amp;\frac{8 \cos\frac\theta2-8 \cos^2\frac\theta2}{6 \cos\frac\theta2 \sin\frac\theta2}\\
+&amp;=&amp;\frac{4}{3} \left({\frac{1-\cos\frac\theta2}{\sin\frac\theta2}}\right)\\
+&amp;=&amp;\frac{4}{3}\cdot\tan\frac\theta4
+\end{aligned}</annotation></semantics></math>
+</td>
+<td>(3.6)</td>
+</tr>
+</tbody>
+</table>
+
+<p>と<var>&#x03BA;</var>の値が得られた。</p>
+
+<p>なお、この算出過程で<math xmlns="http://www.w3.org/1998/Math/MathML" title="\theta = \pi \,\text{[rad]}\,(= 180\degree)"><semantics><mrow><mi>&#x03B8;</mi><mo>=</mo><mi>&#x03C0;</mi><mspace width="thinmathspace"></mspace><mtext>[rad]</mtext><mspace width="thinmathspace"></mspace><mo stretchy="false">(</mo><mo>=</mo><mn>180</mn><mo>°</mo><mo stretchy="false">)</mo></mrow><annotation encoding="TeX">\theta = \pi \,\text{[rad]}\,(= 180\degree)</annotation></semantics></math>を除外
+してしまっている。この場合のみだけ、y軸成分の(3.5)式から計算して出すと</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\sin\frac\theta2&amp;=&amp;\frac{1}{8} (4 \sin\theta+3 \kappa (1-\cos\theta))\\
+0&amp;=&amp;\frac{1}{8} (0+3 \kappa (1-0))\\
+\kappa&amp;=&amp;\frac{4}{3}
+\end{aligned}"><semantics><mtable columnspacing="0em"><mtr><mtd><mo rspace="0.5ex" lspace="0em">sin</mo><mfrac><mi>&#x03B8;</mi><mn>2</mn></mfrac></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>4</mn><mo>&#x2062;</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>+</mo><mn>3</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>0</mn><mo>+</mo><mn>3</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mn>0</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mi>&#x03BA;</mi></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mn>4</mn><mn>3</mn></mfrac></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\sin\frac\theta2&amp;=&amp;\frac{1}{8} (4 \sin\theta+3 \kappa (1-\cos\theta))\\
+0&amp;=&amp;\frac{1}{8} (0+3 \kappa (1-0))\\
+\kappa&amp;=&amp;\frac{4}{3}
+\end{aligned}</annotation></semantics></math>
+</td>
+<td>(3.6)</td>
+</tr>
+</tbody>
+</table>
+
+<p>となり、結局以下の単一の式で表現できる：</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\kappa=\frac{4}{3}\cdot\tan\frac\theta4"><semantics><mrow><mi>&#x03BA;</mi><mo>=</mo><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>&#x00B7;</mo><mo rspace="0.5ex" lspace="0em">tan</mo><mfrac><mi>&#x03B8;</mi><mn>4</mn></mfrac></mrow><annotation encoding="TeX">\kappa=\frac{4}{3}\cdot\tan\frac\theta4</annotation></semantics></math>
+</td>
+<td>(3.7)</td>
+</tr>
+</tbody>
+</table>
+
+<p>アタリマエのことながら、この結果に対して<math xmlns="http://www.w3.org/1998/Math/MathML" title="\theta = \pi/2 \,\text{[rad]}\,(= 90\degree)"><semantics><mrow><mi>&#x03B8;</mi><mo>=</mo><mi>&#x03C0;</mi><mo>/</mo><mn>2</mn><mspace width="thinmathspace"></mspace><mtext>[rad]</mtext><mspace width="thinmathspace"></mspace><mo stretchy="false">(</mo><mo>=</mo><mn>90</mn><mo>°</mo><mo stretchy="false">)</mo></mrow><annotation encoding="TeX">\theta = \pi/2 \,\text{[rad]}\,(= 90\degree)</annotation></semantics></math>を代入することで
+よく知られた90度の場合の<var>&#x03BA;</var>の値が得られる。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\frac{4}{3}\cdot \tan\frac{\pi/2}{4}=\frac{4 (\sqrt{2}-1)}{3}"><semantics><mrow><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>⋅</mo><mo rspace="0.5ex" lspace="0em">tan</mo><mfrac><mrow><mi>π</mi><mo>/</mo><mn>2</mn></mrow><mn>4</mn></mfrac><mo>=</mo><mfrac><mrow><mn>4</mn><mo>&#x2062;</mo><mo stretchy="false">(</mo><msqrt><mn>2</mn></msqrt><mo>-</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>3</mn></mfrac></mrow><annotation encoding="TeX">\frac{4}{3}\cdot \tan\frac{\pi/2}{4}=\frac{4 (\sqrt{2}-1)}{3}</annotation></semantics></math>
+</td>
+<td>(3.8)</td>
+</tr>
+</tbody>
+</table>
+
+<h4>ベジェ曲線の円弧の中心角</h4>
+
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s1600/generic-theta-tile.png" imageanchor="1" ><img border="0" src="http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s320/generic-theta-tile.png" width="320" height="320" /></a>
+</figure>
+
+<p><var>&#x03B8;</var>を変えて描画させてみると、
+180度まではまずまずの近似であるが、180度を超えるとかけ離れた概形になってしまう。
+180度以上の円弧を描くときは分割が必須である。</p>
+
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<div id="bezier-curve-generic-canvas-out">
+</div>
+</figure>
+
+<script type="application/javascript" src="data:application/javascript;base64,CndpbmRvdy5hZGRFdmVudExpc3RlbmVyKCJsb2FkIiwgZnVuY3Rpb24oKSB7CiAgInVzZSBzdHJpY3QiOwoKICB2YXIgb091dCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJiZXppZXItY3VydmUtZ2VuZXJpYy1jYW52YXMtb3V0Iik7CiAgdmFyIG9DYW52YXMgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCJjYW52YXMiKTsKICBvQ2FudmFzLnNldEF0dHJpYnV0ZSgid2lkdGgiLCAiMzIwIik7CiAgb0NhbnZhcy5zZXRBdHRyaWJ1dGUoImhlaWdodCIsICIzMjAiKTsKICB2YXIgY3R4ID0gb0NhbnZhcy5nZXRDb250ZXh0KCIyZCIpOwoKICB2YXIgdGhldGEgPSA5MCA+PiAwOwogIGZ1bmN0aW9uIGRyYXdDYW52YXMoKSB7CiAgICB2YXIgYW5nbGVSID0gLSB0aGV0YSAqIE1hdGguUEkgLyAxODA7CiAgICB2YXIgc2luQVIgPSBNYXRoLnNpbihhbmdsZVIpOwogICAgdmFyIGNvc0FSID0gTWF0aC5jb3MoYW5nbGVSKTsKICAgIHZhciBrYXBwYSA9IDQgKiBNYXRoLnRhbihhbmdsZVIgLyA0KSAvIDM7CiAgICB2YXIgb3JpZ2luWCA9ICsob0NhbnZhcy53aWR0aCAvIDIpOwogICAgdmFyIG9yaWdpblkgPSArKG9DYW52YXMuaGVpZ2h0IC8gMik7CiAgICB2YXIgcmFkaXVzID0gKzc1OwoKICAgIGN0eC5maWxsU3R5bGUgPSAiIzAwMDAwMCI7CiAgICBjdHguZmlsbFJlY3QoMCwgMCwgb0NhbnZhcy53aWR0aCwgb0NhbnZhcy5oZWlnaHQpOwoKICAgIGN0eC5zdHJva2VTdHlsZSA9ICIjODg4ODg4IjsKICAgIGN0eC5saW5lV2lkdGggPSAyOwoKICAgIGN0eC5iZWdpblBhdGgoKTsKICAgIGN0eC5hcmMob3JpZ2luWCwgb3JpZ2luWSwgcmFkaXVzLAogICAgICAgICAgICAwLCBNYXRoLlBJKjIsIHRydWUpOwogICAgY3R4LnN0cm9rZSgpOwoKICAgIGN0eC5iZWdpblBhdGgoKTsKICAgIGN0eC5tb3ZlVG8ob3JpZ2luWCwgb3JpZ2luWSk7CiAgICBjdHgubGluZVRvKG9yaWdpblggKyByYWRpdXMsIG9yaWdpblkpOwogICAgY3R4LmxpbmVUbyhvcmlnaW5YICsgcmFkaXVzLCBvcmlnaW5ZICsgcmFkaXVzICoga2FwcGEpOwogICAgY3R4Lm1vdmVUbyhvcmlnaW5YLCBvcmlnaW5ZKTsKICAgIGN0eC5saW5lVG8ob3JpZ2luWCArIHJhZGl1cyAqIGNvc0FSLCBvcmlnaW5ZICsgcmFkaXVzICogc2luQVIpOwogICAgY3R4LmxpbmVUbyhvcmlnaW5YICsgcmFkaXVzICogKGNvc0FSICsga2FwcGEgKiBzaW5BUiksIG9yaWdpblkgKyByYWRpdXMgKiAoc2luQVIgLSBrYXBwYSAqIGNvc0FSKSk7CiAgICBjdHguc3Ryb2tlKCk7CgogICAgY3R4LmZpbGxTdHlsZSA9ICIjZmZmZmZmIjsKCiAgICBjdHguZm9udCA9ICI2NHB4IG1vbm9zcGFjZSI7CiAgICBjdHgudGV4dEFsaWduID0gImNlbnRlciI7CiAgICBjdHgudGV4dEJhc2VsaW5lID0gIm1pZGRsZSI7CiAgICBjdHguZmlsbFRleHQoIiIgKyB0aGV0YSwgb3JpZ2luWCwgb3JpZ2luWSk7CgogICAgY3R4LnN0cm9rZVN0eWxlID0gIiNmZjAwMDAiOwogICAgY3R4LmxpbmVXaWR0aCA9IDM7CgogICAgY3R4LmJlZ2luUGF0aCgpOwogICAgY3R4Lm1vdmVUbyhvcmlnaW5YICsgcmFkaXVzLCBvcmlnaW5ZKTsKICAgIGN0eC5iZXppZXJDdXJ2ZVRvKG9yaWdpblggKyByYWRpdXMsIG9yaWdpblkgKyByYWRpdXMgKiBrYXBwYSwKICAgICAgICAgICAgICAgICAgICAgIG9yaWdpblggKyByYWRpdXMgKiAoY29zQVIgKyBrYXBwYSAqIHNpbkFSKSwgb3JpZ2luWSArIHJhZGl1cyAqIChzaW5BUiAtIGthcHBhICogY29zQVIpLAogICAgICAgICAgICAgICAgICAgICAgb3JpZ2luWCArIHJhZGl1cyAqIGNvc0FSLCBvcmlnaW5ZICsgcmFkaXVzICogc2luQVIpOwogICAgY3R4LnN0cm9rZSgpOwoKICAgIHRoZXRhICs9IDUgPj4gMDsKICAgIGlmICh0aGV0YSA+PSAzNjApIHsKICAgICAgdGhldGEgPSA1ID4+IDA7CiAgICB9CiAgICB3aW5kb3cuc2V0VGltZW91dChkcmF3Q2FudmFzLCAxMDApOwogIH0KICB3aW5kb3cuc2V0VGltZW91dChkcmF3Q2FudmFzLCAxMDApOwoKCiAgb091dC5hcHBlbmRDaGlsZChvQ2FudmFzKTsKfSwgZmFsc2UpOwo="></script>
+
+<h4>まとめ</h4>
+
+<ul>
+<li>円を分割してベジェ曲線で描画するとき、2分割（中心角180度）以上した方がよい</li>
+</ul>
+
+<ins>
+<p>しかし、<a href="{{ site.baseurl }}{% post_url 2014-03-26-bezier-4-diff %}">この感覚的な結論は正しくないことが後で判明</a></p>
+</ins>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://ja.wikipedia.org/wiki/%E4%B8%89%E8%A7%92%E9%96%A2%E6%95%B0%E3%81%AE%E5%85%AC%E5%BC%8F%E3%81%AE%E4%B8%80%E8%A6%A7">三角関数の公式の一覧</a>, Wikipedia (ja)</li>
+<li><a href="http://park12.wakwak.com/~shp/cgi-bin/wiki.cgi/view/bezier_curve">s.h's page - [graphic] ベジエ曲線</a></li>
+</ul>

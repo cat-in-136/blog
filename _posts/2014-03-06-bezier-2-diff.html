@@ -1,0 +1,253 @@
+---
+layout: post
+title: ベジェ曲線で描く円と真円の差について
+date: '2014-03-06T07:00:00.000+09:00'
+author: cat_in_136
+tags:
+- math
+- bézier
+modified_time: '2014-03-06T07:00:03.221+09:00'
+thumbnail: http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s72-c/kappa.png
+blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6293801686377850895
+blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-2-diff.html
+---
+
+<aside>
+<div style="background: #ffd; border: solid 3px #ff8">
+この記事を読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です
+もし数式部分が読めない場合は
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<button onclick="var a=document.createElement(&quot;script&quot;);a.setAttribute(&quot;type&quot;,&quot;application/javascript&quot;);a.setAttribute(&quot;src&quot;,&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;);document.body.appendChild(a);">このボタンをクリックしてMathJaxを使って無理矢理表示する</button>
+などしてください。
+</div>
+</aside>
+
+<p><a href="{{ site.baseurl }}{% post_url 2014-03-05-bezier-1-kappa %}">前回の記事</a>で、</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\kappa=\frac{4\left(\sqrt{2}-1\right)}{3}=0.55228474983\cdots"><semantics><mrow><mi>&#x03BA;</mi><mo>=</mo><mfrac><mrow><mn>4</mn><mo>&#x2062;</mo><mrow><mo>(</mo><mrow><msqrt><mn>2</mn></msqrt><mo>-</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow><mn>3</mn></mfrac><mo>=</mo><mn>0.55228474983</mn><mo>⋯</mo></mrow><annotation encoding="TeX">\kappa=\frac{4\left(\sqrt{2}-1\right)}{3}=0.55228474983\cdots</annotation></semantics></math>
+</td>
+<td>(2.1)</td>
+</tr>
+</tbody>
+</table>
+
+<p>のとして、下記の頂点A,Bおよび制御点A',B'で中心角90度の円弧を
+近似したベジェ曲線を描いていることを紹介した。</p>
+
+<ul>
+<li>A: (0, 1)</li>
+<li>B: (1, 0)</li>
+<li>A': (<var>&#x03BA;</var>, 1)</li>
+<li>B': (1, <var>&#x03BA;</var>)</li>
+</ul>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s1600/kappa.png" imageanchor="1" ><img src="http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s1600/kappa.png" alt="90degree arc using Bézier" width="260" height="260" /></a>
+</figure>
+
+<p>このとき、本物と円とどのような差があるのか考察したい。</p>
+
+<h4>ベジェ曲線の近似円弧の解析</h4>
+
+<p>ベジェ曲線の定義より、ベジェ曲線上の任意の点はパラメータ<math xmlns="http://www.w3.org/1998/Math/MathML" title="u (0\leq u \leq 1)" display="inline">
+  <semantics>
+    <mrow><mi>u</mi><mo stretchy="false">(</mo><mn>0</mn><mo>&#x2264;</mo><mi>u</mi><mo>&#x2264;</mo><mn>1</mn><mo stretchy="false">)</mo></mrow>
+    <annotation encoding="TeX">u(0\leq u \leq 1)</annotation>
+  </semantics>
+</math>を使って、下記の通り表現できる。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3">
+  <semantics>
+    <mrow><mi mathvariant="bold">P</mi><mo>&#x2061;</mo><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="bold">A</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup><mo>+</mo><mi mathvariant="bold">A</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi mathvariant="bold">B</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo><mo>+</mo><mi mathvariant="bold">B</mi><mo>&#x2062;</mo><msup><mi>u</mi><mn>3</mn></msup></mrow>
+    <annotation encoding="TeX">\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3</annotation>
+  </semantics>
+</math>
+</td>
+<td>(2.2)</td>
+</tr>
+</tbody>
+</table>
+
+<p>(2.2)式に頂点座標を入れることで、ベジェ曲線による近似円弧のx座標、y座標が得られる：</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+P_x(u)&amp;=&amp;3\kappa(1-u)  u^2 &amp;+&amp; 3 (1-u)^2 u&amp;+&amp; (1-u)^3\\
+P_y(u)&amp;=&amp;3\kappa u  (1-u)^2 &amp;+&amp; 3 u^2 (1-u)&amp;+&amp; u^3
+\end{aligned}"><semantics><mtable columnspacing="0em" columnalign="right left right left right left right left right left"><mtr><mtd><msub><mi>P</mi><mi>x</mi></msub><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo></mtd><mtd><mo>=</mo></mtd><mtd><mn>3</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup></mtd><mtd><mo>+</mo></mtd><mtd><mn>3</mn><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>&#x2062;</mo><mi>u</mi></mtd><mtd><mo>+</mo></mtd><mtd><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup></mtd></mtr><mtr><mtd><msub><mi>P</mi><mi>y</mi></msub><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo></mtd><mtd><mo>=</mo></mtd><mtd><mn>3</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mtd><mtd><mo>+</mo></mtd><mtd><mn>3</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mtd><mtd><mo>+</mo></mtd><mtd><msup><mi>u</mi><mn>3</mn></msup></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+P_x(u)&amp;=&amp;3\kappa(1-u) u^2 &amp;+&amp; 3 (1-u)^2 u&amp;+&amp; (1-u)^3\\
+P_y(u)&amp;=&amp;3\kappa u (1-u)^2 &amp;+&amp; 3 u^2 (1-u)&amp;+&amp; u^3
+\end{aligned}</annotation></semantics></math>
+</td>
+<td>(2.3)</td>
+</tr>
+</tbody>
+</table>
+
+<p>ベジェ曲線の近似円弧の半径方向の大きさは、</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\|\bm{P}(u)\|^2&amp;=&amp;P_x(u)^2 + P_y(u)^2\\
+&amp;=&amp;\cdots\\
+&amp;=&amp;\left( 136-96 \sqrt{2}\right) u^6+\left(-408 + 288 \sqrt{2} \right) u^5\\
+&amp;&amp;+ \left(442 -312 \sqrt{2}\right) u^4+\left(-204 + 144 \sqrt{2}\right) u^3\\
+&amp;&amp; + \left(34 -24 \sqrt{2}\right) u^2+1
+\end{aligned}"><semantics><mtable columnspacing="0em" columnalign="right center left right center left right center left"><mtr><mtd><mo stretchy="false">&#8214;</mo><mi mathvariant="bold">P</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><msup><mo stretchy="false">&#8214;</mo><mn>2</mn></msup></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>P</mi><mi>x</mi></msub><mo stretchy="false">(</mo><mi>u</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><msub><mi>P</mi><mi>y</mi></msub><mo stretchy="false">(</mo><mi>u</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo></mtd><mtd><mo>⋯</mo></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo></mtd><mtd><mrow><mo>(</mo><mrow><mn>136</mn><mo>-</mo><mn>96</mn><msqrt><mn>2</mn></msqrt></mrow><mo>)</mo></mrow><mo>&#x2062;</mo><msup><mi>u</mi><mn>6</mn></msup><mo>+</mo><mrow><mo>(</mo><mrow><mo>-</mo><mn>408</mn><mo>+</mo><mn>288</mn><msqrt><mn>2</mn></msqrt></mrow><mo>)</mo></mrow><mo>&#x2062;</mo><msup><mi>u</mi><mn>5</mn></msup></mtd></mtr><mtr><mtd></mtd><mtd><mo></mo></mtd><mtd><mo>+</mo><mrow><mo>(</mo><mrow><mn>442</mn><mo>-</mo><mn>312</mn><msqrt><mn>2</mn></msqrt></mrow><mo>)</mo></mrow><mo>&#x2062;</mo><msup><mi>u</mi><mn>4</mn></msup><mo>+</mo><mrow><mo>(</mo><mrow><mo>-</mo><mn>204</mn><mo>+</mo><mn>144</mn><msqrt><mn>2</mn></msqrt></mrow><mo>)</mo></mrow><mo>&#x2062;</mo><msup><mi>u</mi><mn>3</mn></msup></mtr><mtr><mtd></mtd><mtd><mo></mo></mtd><mtd><mo>+</mo><mrow><mo>(</mo><mrow><mn>34</mn><mo>-</mo><mn>24</mn><msqrt><mn>2</mn></msqrt></mrow><mo>)</mo></mrow><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\|\bm{P}(u)\|^2&amp;=&amp;P_x(u)^2 + P_y(u)^2\\
+&amp;=&amp;\cdots\\
+&amp;=&amp;\left( 136-96 \sqrt{2}\right) u^6+\left(-408 + 288 \sqrt{2} \right) u^5\\
+&amp;&amp;+ \left(442 -312 \sqrt{2}\right) u^4+\left(-204 + 144 \sqrt{2}\right) u^3\\
+&amp;&amp; + \left(34 -24 \sqrt{2}\right) u^2+1
+\end{aligned}</annotation></semantics></math>
+</td>
+<td>(2.4)</td>
+</tr>
+</tbody>
+</table>
+
+<p><var>u</var>=0,1/2,1のときにこの値が1になることに注目して、
+下式のように変形する。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\|\bm{P}(u)\|^2= -2 (12\sqrt{2}-17) u^2 (u-1)^2 (2u-1)^2 + 1"><semantics><mrow><msup><mrow><mo stretchy="false">&#8214;</mo><mi mathvariant="bold">P</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo stretchy="false">&#8214;</mo></mrow><mn>2</mn></msup><mo>=</mo><mo>-</mo><mn>2</mn><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>12</mn><msqrt><mn>2</mn></msqrt><mo>-</mo><mn>17</mn><mo stretchy="false">)</mo><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo>&#x2062;</mo><mo stretchy="false">(</mo><mi>u</mi><mo>-</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>2</mn><mi>u</mi><mo>-</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="TeX">\|\bm{P}(u)\|^2= -2 (12\sqrt{2}-17) u^2 (u-1)^2 (2u-1)^2 + 1</annotation></semantics></math>
+</td>
+<td>(2.5)</td>
+</tr>
+</tbody>
+</table>
+
+<p>(2.5)式から、
+<var>u</var>=0,1/2,1のときに最小値1を取る六次関数になることがわかる。
+グラフの概形を描くと、下の図のようになる。
+（六次関数らしさを出すためにあえて<var>u</var>の範囲外もプロットしてある）</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://4.bp.blogspot.com/-PxNnsRzKVlo/UxNFKIro_FI/AAAAAAAAAas/1x3weiH_gVc/s1600/diff-bezier-curve-r.png" imageanchor="1" ><img src="http://4.bp.blogspot.com/-PxNnsRzKVlo/UxNFKIro_FI/AAAAAAAAAas/1x3weiH_gVc/s1600/diff-bezier-curve-r.png" alt="下に凸の六次関数曲線" width="474" height="237" /></a>
+<figcaption style="display: block; text-align: center;">(2.5)式の図示</figcaption>
+</figure>
+
+<p>さて、最大値について調べるために微分=0を計算する。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\frac{d}{du} \|\bm{P}(u)\|^2 &amp;=&amp; -2(12\sqrt{2}-17) \left( 2 u (u-1)^2 (2 u-1)^2 + 2 u^2 (u-1) (2 u-1)^2 +4 u^2 (u-1)^2 (2 u-1) \right)\\
+&amp;=&amp;\cdots\\
+&amp;=&amp;-4(12\sqrt{2}-17) u (u-1) (2u-1) (6 u^2 - 6 u + 1)
+\end{aligned}"><semantics><mtable columnspacing="0em" ><mtr><mtd><mfrac><mi>d</mi><mrow><mi>d</mi><mi>u</mi></mrow></mfrac><mo>&#x2061;</mo><msup><mrow><mo stretchy="false">&#8214;</mo><mi mathvariant="bold">P</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo stretchy="false">&#8214;</mo></mrow><mn>2</mn></msup></mtd><mtd><mo>=</mo></mtd><mtd><mo>-</mo><mn>2</mn><mo stretchy="false">(</mo><mn>12</mn><msqrt><mn>2</mn></msqrt><mo>-</mo><mn>17</mn><mo stretchy="false">)</mo><mo>&#x2062;</mo><mrow><mo>(</mo><mrow><mn>2</mn><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><mo stretchy="false">(</mo><mi>u</mi><mo>-</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>2</mn><mo>&#x2062;</mo><mi>u</mi><mo>-</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mn>2</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo>&#x2062;</mo><mo stretchy="false">(</mo><mi>u</mi><mo>-</mo><mn>1</mn><mo stretchy="false">)</mo><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>2</mn><mo>&#x2062;</mo><mi>u</mi><mo>-</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mn>4</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo>&#x2062;</mo><mo stretchy="false">(</mo><mi>u</mi><mo>-</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>2</mn><mo>&#x2062;</mo><mi>u</mi><mo>-</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo></mtd><mtd><mo>⋯</mo></mtd></mtr><mtr><mtd></mtd><mtd><mo>=</mo></mtd><mtd><mo>-</mo><mn>4</mn><mo stretchy="false">(</mo><mn>12</mn><msqrt><mn>2</mn></msqrt><mo>-</mo><mn>17</mn><mo stretchy="false">)</mo><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><mo stretchy="false">(</mo><mi>u</mi><mo>-</mo><mn>1</mn><mo stretchy="false">)</mo><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>2</mn><mi>u</mi><mo>-</mo><mn>1</mn><mo stretchy="false">)</mo><mo>&#x2062;</mo><mo stretchy="false">(</mo><mn>6</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo>-</mo><mn>6</mn><mo>&#x2062;</mo><mi>u</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\frac{d}{du} \|\bm{P}(u)\|^2 &amp;=&amp; -2(12\sqrt{2}-17) \left( 2 u (u-1)^2 (2 u-1)^2 + 2 u^2 (u-1) (2 u-1)^2 +4 u^2 (u-1)^2 (2 u-1) \right)\\
+&amp;=&amp;\cdots\\
+&amp;=&amp;-4(12\sqrt{2}-17) u (u-1) (2u-1) (6 u^2 - 6 u + 1) = 0
+\end{aligned}
+</annotation></semantics></math>
+</td>
+<td>(2.6)</td>
+</tr>
+</tbody>
+</table>
+
+<p>この5つの解のうち、下の2つの解が最大値をとる<var>u</var>の値である。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="6\cdot u^2 - 6\cdot u + 1 = 0 \iff u = \frac{-3\pm \sqrt{3^2-6}}{6} = \frac{1}{2} \pm \frac{\sqrt{3}}{6}"><semantics><mrow><mn>6</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo>-</mo><mn>6</mn><mo>&#x2062;</mo><mi>u</mi><mo>+</mo><mn>1</mn><mo>=</mo><mn>0</mn><mo stretchy="false">&#x21D4;</mo><mi>u</mi><mo>=</mo><mfrac><mrow><mo>+</mo><mn>3</mn><mo>&#x00B1;</mo><msqrt><mrow><msup><mn>3</mn><mn>2</mn></msup><mo>-</mo><mn>6</mn></mrow></msqrt></mrow><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>&#x00B1;</mo><mfrac><msqrt><mn>3</mn></msqrt><mn>6</mn></mfrac></mrow><annotation encoding="TeX">6\cdot u^2 - 6\cdot u + 1 = 0 \iff u = \frac{+3\pm \sqrt{3^2-6}}{6} = \frac{1}{2} \pm \frac{\sqrt{3}}{6}</annotation></semantics></math>
+</td>
+<td>(2.7)</td>
+</tr>
+</tbody>
+</table>
+
+<p>この結果と(2.5)式より最大値がわかる。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\left\|\bm{P}\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)\right\| = \sqrt{\frac{71-12\sqrt{2}}{54}\,} = 1.000272530\cdots"><semantics><mrow><mrow><mo>&#x2016;</mo><mrow><mi mathvariant="bold">P</mi><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>&#x00B1;</mo><mfrac><msqrt><mn>3</mn></msqrt><mn>6</mn></mfrac></mrow><mo>)</mo></mrow></mrow><mo>&#x2016;</mo></mrow><mo>=</mo><msqrt><mrow><mfrac><mrow><mn>71</mn><mo>-</mo><mn>12</mn><msqrt><mn>2</mn></msqrt></mrow><mn>54</mn></mfrac><mspace width="thinmathspace"></mspace></mrow></msqrt><mo>=</mo><mn>1.000272530</mn><mo>⋯</mo></mrow><annotation encoding="TeX">\left\|\bm{P}\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)\right\| = \sqrt{\frac{71-12\sqrt{2}}{54}\,} = 1.000272530\cdots</annotation></semantics></math>
+</td>
+<td>(2.8)</td>
+</tr>
+</tbody>
+</table>
+
+<p>また、このとき円弧上のどのあたりなのかを把握するために、
+角度をもとめると</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\atan \frac{P_y\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)}{P_x\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)}
+=\atan\frac{\,\frac{3+6\sqrt{2}\mp 6\sqrt{3} \pm 2\sqrt{6}}{18}\,}{\,\frac{3+6\sqrt{2}\pm 6\sqrt{3} \mp 2\sqrt{6}}{18}\,}"><semantics><mrow><mo rspace="0em" lspace="0em">atan</mo><mo>&#x2061;</mo><mfrac><mrow><msub><mi>P</mi><mi>y</mi></msub><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>&#xb1;</mo><mfrac><msqrt><mn>3</mn></msqrt><mn>6</mn></mfrac></mrow><mo>)</mo></mrow></mrow><mrow><msub><mi>P</mi><mi>x</mi></msub><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>&#xb1;</mo><mfrac><msqrt><mn>3</mn></msqrt><mn>6</mn></mfrac></mrow><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mo rspace="0em" lspace="0em">atan</mo><mo>&#x2061;</mo><mfrac><mrow><mspace width="thinmathspace"></mspace><mfrac><mrow><mn>3</mn><mo>+</mo><mn>6</mn><msqrt><mn>2</mn></msqrt><mo>&#x2213;</mo><mn>6</mn><msqrt><mn>3</mn></msqrt><mo>&#xb1;</mo><mn>2</mn><msqrt><mn>6</mn></msqrt></mrow><mn>18</mn></mfrac><mspace width="thinmathspace"></mspace></mrow><mrow><mspace width="thinmathspace"></mspace><mfrac><mrow><mn>3</mn><mo>+</mo><mn>6</mn><msqrt><mn>2</mn></msqrt><mo>&#xb1;</mo><mn>6</mn><msqrt><mn>3</mn></msqrt><mo>&#x2213;</mo><mn>2</mn><msqrt><mn>6</mn></msqrt></mrow><mn>18</mn></mfrac><mspace width="thinmathspace"></mspace></mrow></mfrac></mrow><annotation encoding="TeX">\atan \frac{P_y\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)}{P_x\left(\frac{1}{2}\pm\frac{\sqrt{3}}{6}\right)}
+=\atan\frac{\,\frac{3+6\sqrt{2}\mp 6\sqrt{3} \pm 2\sqrt{6}}{18}\,}{\,\frac{3+6\sqrt{2}\pm 6\sqrt{3} \mp 2\sqrt{6}}{18}\,}</annotation></semantics></math>
+</td>
+<td>(2.9)</td>
+</tr>
+</tbody>
+</table>
+
+<p>数値を求めると以下の角度である：</p>
+
+<ul>
+<li>70.561445…度</li>
+<li>19.438554…度</li>
+</ul>
+
+<p>もちろんこの2つは45度を軸に対称的な位置である。</p>
+
+<p>ちなみに、
+先程示したグラフの横軸を 0 →1 を 0 →90度と読みかえて
+見てしまってもよい近似だったりする。</p>
+
+<h4>まとめ</h4>
+
+<p>ベジェ曲線の近似円弧における真円との差異について、下記特徴があることがわかった。</p>
+
+<ul>
+<li>ベジェ曲線の近似円弧の方が、真円よりも若干大きい</li>
+<li>0度、45度、90度の部分は円と重なる</li>
+<li>19.44度、70.56度あたりが円と差があるところであり、半径の0.00027倍程度の誤差がある</li>
+</ul>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="http://2.bp.blogspot.com/-lUj8TyVKaHo/UxNFYxkndaI/AAAAAAAAAa0/McCCHan-hmg/s1600/diff-error-illustrator.png" imageanchor="1" ><img src="http://2.bp.blogspot.com/-lUj8TyVKaHo/UxNFYxkndaI/AAAAAAAAAa0/McCCHan-hmg/s1600/diff-error-illustrator.png" alt="円と誤差の関係" width="310" height="189" /></a>
+<figcaption style="display: block; text-align: center;">円と誤差の関係。緑付近は正確、赤付近は若干真円よりも大きい</figcaption>
+</figure>
+
+<p>ベジェ曲線を使う限り円の精度は有効数字4桁程度といったところのようである。</p>
+
+<h4>補足：「時空の裂け目」</h4>
+
+<p><a href="http://d.hatena.ne.jp/n-yuji/20131017/p1">イラレの円は本当は円じゃない（もしくは時空の裂け目について）</a>
+にて45度回転させているが、
+以上で述べた結論からいうと19.44度ぐらいのほうが
+ふたつの円の差（時空の裂け目）が良く見える。</p>
+
+<h4>参考文献</h4>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/n-yuji/20131017/p1">イラレの円は本当は円じゃない（もしくは時空の裂け目について）</a></li>
+</ul>
