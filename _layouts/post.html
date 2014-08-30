@@ -1,0 +1,81 @@
+---
+layout: default
+---
+<div class="post">
+  <header class="post-header">
+    <h1><a href="{{ page.url }}" rel="bookmark">{{ page.title | escape }}</a></h1>
+    <p class="meta"><time>{{ page.date | date_to_xmlschema }}</time>{% if page.meta %} - {{ page.meta }}{% endif %}</p>
+  </header>
+
+  <article class="post-content">
+  {{ content }}
+  </article>
+
+  <footer class="post-footer">
+    <div class="meta">
+      Tag:
+      {% for tag in page.tags %}
+      <a class="tag" href="{{ site.baseurl }}/tags.html#tag_{{ tag | handleize | downcase | uri_escape }}">{{ tag | capitalize }}</a>
+      {% endfor %}
+      {% comment %}
+      {% for category in page.categories %}
+      <a class="category" href="{{ site.baseurl }}/categories/{{ category | handleize | downcase }}">{{ category | capitalize }}</a>
+      {% endfor %}
+      {% endcomment %}
+    </div>
+    <div class="meta share">
+      {% assign page_href = page.url | prepend: site.baseurl | prepend: site.url %}
+      Share:
+      <a rel="noindex nofollow" href="https://twitter.com/intent/tweet?url={{ page_href | uri_escape }}&amp;text={{ page.title | uri_escape }}+{{ site.title | uri_escape }}&amp;via={{ site.twitter_username | uri_escape }}">Twitter</a>
+      <a rel="noindex nofollow" href="https://www.facebook.com/sharer/sharer.php?u={{ page_href | uri_escape }}">Facebook</a>
+      <a rel="noindex nofollow" href="http://b.hatena.ne.jp/entry/{{ page_href | replace: 'http://','' | replace: 'https://','' }}">Hatena Bookmark</a>
+      <a rel="noindex nofollow" href="http://www.addtoany.com/share_save?linkurl={{ page_href | uri_escape }}&amp;linkname={{ page.title | uri_escape }}+{{ site.title | uri_escape }}">More via AddToAny...</a>
+    </div>
+    <div class="meta">
+      {% if page.author %}Author: {{ page.author | escape }}{% endif %}
+      Date: <time>{{ page.date | date_to_xmlschema }}</time>
+      {% if page.modified_time != null %}(Modified: <time>{{ page.modified_time | date_to_xmlschema }}</time>){% endif %}
+    </div>
+    {% if site.github_username %}
+    <div class="meta">
+      Source: <a href="https://github.com/{{ site.source_repo_name }}/blob/{{ site.source_repo_branch }}/{{ page.path }}">{{ page.path | escape }}</a>
+      (<a href="https://github.com/{{ site.source_repo_name }}/commits/{{ site.source_repo_branch }}/{{ page.path }}">History</a>)
+    </div>
+    {% endif %}
+  </footer>
+
+  <style type="text/css"><!-- /* --><![CDATA[ /* */
+@import "https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css";
+pre.prettyprint { overflow: auto; }
+  /* ]]><!-- */ --></style>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js" defer="defer"></script>
+  <script type="text/javascript" src="data:text/javascript;base64,d2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLCBmdW5jdGlvbiAoZSkgeyBwcmV0dHlQcmludCgpOyB9LCBmYWxzZSk7Cg==" defer="defer"></script>
+
+</div>
+
+<nav class="post-nav wrap">
+  <div class="previous-post">
+    {% if page.previous %}
+    <a href="{{ page.previous.url }}" title="{{ page.previous.title | escape }}" rel="prev">&#x2190;{{ page.previous.title | escape }}</a>
+    {% endif %}
+  </div>
+  <div class="next-post">
+    {% if page.next %}
+    <a href="{{ page.next.url }}" title="{{ page.next.title | escape }}" rel="next">{{ page.next.title | escape }}&#x2192;</a>
+    {% endif %}
+  </div>
+</nav>
+
+{% if site.related_posts %}
+<aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul>
+    {% for post in site.related_posts limit:5 %}
+    <li>
+      <span class="post-date">{{ post.date | date: "%F" }}</span>
+      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</aside>
+{% endif %}

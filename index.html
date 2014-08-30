@@ -1,0 +1,34 @@
+---
+layout: default
+---
+<div class="home">
+  <ul class="posts">
+    {% for post in paginator.posts %}
+      <li>
+        <span class="post-date">{{ post.date | date: "%F" }}</span>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
+	<div>{{ post.excerpt | strip_html | truncate: 140 }}</div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <nav class="pagination">
+    {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="prev">&#x2190;Newer</a>
+    {% endif %}
+
+    {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+    {{ page }}
+    {% elsif page == 1 %}
+    <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+    {% else %}
+    <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+    {% endif %}
+    {% endfor %}
+
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="next">Older&#x2192;</a>
+    {% endif %}
+  </nav>
+</div>

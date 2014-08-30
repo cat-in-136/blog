@@ -1,0 +1,28 @@
+# Site settings
+title: cat_in_136.blog()
+baseurl: ""
+url: "http://example.com"
+
+exclude:
+ - Gemfile
+ - Gemfile.lock
+ - Rakefile
+
+paginate: 10
+paginate_path: "/page:num"
+
+timezone: Japan
+encoding: utf-8
+#safe: true
+#lsi: true
+
+# Build settings
+#markdown: kramdown
+#permalink: pretty
+permalink: /:year/:month/:title.html
+
+
+twitter_username: cat_in_136
+github_username: cat-in-136
+source_repo_name: cat-in-136/blog
+source_repo_branch: master
