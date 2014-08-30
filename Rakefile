@@ -70,7 +70,7 @@ task :deploy do
 
   cd "#{deploy_dir}" do
     puts "git pull in #{deploy_dir}... "
-    ok_failed system "git pull"
+    ok_failed system "git pull origin #{deploy_branch}"
   end
 
   puts "\nCopy to _site/ to #{deploy_dir}... "
@@ -83,7 +83,7 @@ task :deploy do
     puts "Commiting: #{message}"
 
     ok_failed system("git add -A")
-    ok_failed system("git commit -m -m \"#{message}\"")
+    ok_failed system("git commit -m \"#{message}\"")
     ok_failed system("git push origin #{deploy_branch}")
   end
   
