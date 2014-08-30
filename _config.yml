@@ -1,7 +1,7 @@
 # Site settings
 title: cat_in_136.blog()
 baseurl: ""
-url: "http://cat-in-136.github.io/"
+url: "http://cat-in-136.github.io"
 
 exclude:
  - Gemfile
