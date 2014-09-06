@@ -397,11 +397,20 @@ a:visited { color: #8f4889; }
   .post-content ol { padding-left: 10px; }
 
   .post-nav .previous-post, .post-nav .next-post { float: none; width: inherit; }
+}
+
+@media screen and (max-width: 400px) {
+  .site-title,
+  .site-title:hover,
+  .site-title:visited {
+    float: none;
+  }
+  .site-nav { float: none; text-align: right; }
 
   .site-footer .column {
     float: none;
     clear: both;
     width: auto;
-    margin: 0 0 15px; }
-
+    margin: 0 0 15px;
+  }
 }

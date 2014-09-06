@@ -8,5 +8,6 @@
   <meta property="og:type" content="{% if page %}article{% else %}website{% endif %}" />
   {% if page.thumbnail %}<meta property="og:image" content="{{ page.thumbnail | escape_url }}" />{% endif %}
   {% if page.title %}<meta property="og:site_name" content="{{ site.title | escape }}" />{% endif %}
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
 </head>
