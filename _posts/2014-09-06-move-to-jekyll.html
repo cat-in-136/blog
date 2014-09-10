@@ -4,7 +4,7 @@ title: Jekyll移行メモ
 tags: blogger jekyll
 author: cat_in_136
 date: '2014-09-06T15:34:30+09:00'
-modified_time: '2014-09-06T15:38:45+09:00'
+modified_time: '2014-09-10T22:02:46+09:00'
 ---
 
 <p>Blogger から Jekyll (Github pages) に移行したときのメモ。</p>
@@ -71,6 +71,37 @@ document.writeln("&lt;link href='" + location.href.replace(location.host + "/", 
 移転先が喰らいやすいというリスクはあるが、
 ここは幸いにも過疎ブログなので失うものは極めて少ないので
 細かいことは考えない。</p>
+
+<ins date="2014-09-10T22:00:00+09:00">
+<p>
+と書いたものの2014-09-10現在、うまくいっているようである。
+すなわち JavaScript で生成された link[rel=canonical] を Google のクローラはうまくフォローしている模様。
+</p>
+
+<p>
+より link[rel=canonical] をうまく追跡するために、Blogger に入れているテンプレートを
+下記の通りとし、記事ページ以外についてもそれなりに対応するページヘの
+link[rel=canonical] を入れるようにした。
+</p>
+
+<pre class="prettyprint lang-html"><code>&lt;b:if cond='data:blog.pageType == &amp;quot;index&amp;quot;'&gt;
+  &lt;link href='http://cat-in-136.github.io/' rel='canonical'/&gt;
+  &lt;meta content='http://cat-in-136.github.io/' property='og:url'/&gt;
+&lt;/b:if&gt;
+&lt;b:if cond='data:blog.pageType == &amp;quot;archive&amp;quot;'&gt;
+  &lt;link href='http://cat-in-136.github.io/archive.html' rel='canonical'/&gt;
+  &lt;meta content='http://cat-in-136.github.io/archive.html' property='og:url'/&gt;
+&lt;/b:if&gt;
+&lt;b:if cond='data:blog.pageType == &amp;quot;item&amp;quot;'&gt;
+  &lt;script&gt;
+    document.writeln(&amp;quot;&lt;link href='&amp;quot; + location.href.replace(location.host + &amp;quot;/&amp;quot;, &amp;quot;cat-in-136.github.io/&amp;quot;) +&amp;quot;' rel='canonical'/&gt;&amp;quot;);
+    document.writeln(&amp;quot;&lt;meta content='&amp;quot; + location.href.replace(location.host + &amp;quot;/&amp;quot;, &amp;quot;cat-in-136.github.io/&amp;quot;) +&amp;quot;' property='og:url'/&gt;&amp;quot;);
+  &lt;/script&gt;
+
+  &lt;!-- snip --&gt;
+&lt;/b:if&gt;
+</code></pre>
+</ins>
 
 <h3>DISQUS</h3>
 
