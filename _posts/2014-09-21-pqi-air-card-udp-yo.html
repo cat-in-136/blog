@@ -1,0 +1,411 @@
+---
+layout: post
+title: PQI Air Card から UDP で Yo と答えさせてデバイス検出する試み
+tags:
+- PQI Air Card
+- linux
+author: cat_in_136
+date: '2014-09-21T19:55:07+09:00'
+modified_time: '2014-09-21T19:59:57+09:00'
+---
+<p>WiFi 内蔵 SD カードである <a href="http://www.pqigroup.com/prod_in.aspx?mnuid=1286&amp;modid=138&amp;prodid=426">PQI Air Card</a>[1] には
+WiFi の子機として繋ぐモードで動かすことができる。
+WiFi AP が DHCP などで動的な IP 割り当てをしているときに、
+PQI Air Card がどの IP アドレスで繋がっているかわからない。
+しかしながら、PQI Air Card のほとんどの設定はブラウザからアクセスする必要があって、
+これには IP アドレスがわからないと繋ぐことができない[4]。
+そこで、PQI Air Card を探すために Yo と話しかけられたら Yo と返す
+極めて簡素なプロトコルを設計し、これで簡易なデバイス検出(device discovery)をすることを試みた。
+そのために PQI Air Card に乗っけるプログラムの作成と、
+簡易デバイス検出クライアントを作成し検証した。</p>
+
+<h3>背景</h3>
+
+<p>WiFi 内蔵 SD カードを親機(WiFi AP)とする使い方はネットワーク接続が簡単ではあるが、
+子機として繋げている機器からはインターネット接続ができなくなるなど不便である。
+インターネット接続を維持する場合は、SD カードを子機として共通の WiFi AP に繋げる必要がある[4]。
+PQI Air Card はどちらの方法でも使えることができる。
+本エントリでは前者をステーション動作、後者をホットスポット動作と呼ぶこととする。</p>
+
+<p>ステーション動作のときは PQI Air Card の IP アドレスは明らかであり、
+子機のデフォルトゲートウェイとおなじになる。
+一方で、ホットスポット動作のときは IP アドレスは環境ごとに変わりうる。
+というのも親機(WiFi AP)によって IP アドレスが割り当てられるからである。</p>
+
+<p>ホットスポット動作のときの IP アドレスを判断する方法はいくつか提案されている。
+もっとも根本的な解決策は PQI Air Card (の MAC アドレス) に対して、
+固定 IP を割り当てることである。
+これは親機(WiFi AP)における機能によって解決する方法である。
+これ以外の方法は公式的には PQI Air Card には存在しないと思われる。</p>
+
+<p>他の WiFi 内蔵 SD カードでのこの問題の解決策としては、
+SD カード側が NetBIOS 名や Bonjour 名を広告して
+Windows 機（samba クライアント）や Mac から見れる
+ようにしている事例(Flash Air)[2]、
+外部サーバにそのままファイルを同期アップロードすることによって
+SD カード側の IP アドレスを知る必要性をほとんどなくしてしまった事例(Eye-Fi)[3]
+がみられる。</p>
+
+<p>いっぽうで PQI Air Card の中では Linux が動いているが、
+SD カードのルートに <code>autorun.sh</code> という名前のシェルスクリプトのファイルを置くと
+任意の動作をさせることができる[6]。
+これを利用して親機(WiFi AP)に繋がった時点で twitter の Mention で伝えるという
+解決策も提示されている[4]。</p>
+
+<p>外部のネットワーク (e.g. twitter) を使わずに、
+WiFi AP を安っすい固定割り当てができないものでも使えるようにし、
+そして Flash Air などを使わずになんとかしたいと思ったので、
+簡易デバイス検出の仕組みを作成し検証した次第である。</p>
+
+<h3>プロトコル Yo</h3>
+
+<p>本目的で使えそうなプロトコルとしては下記が上げられる。
+これらのいくつかは “Simple” と謳っており、
+実際確かにシンプルなものもあるのだが、
+いずれも私が求めるシンプルさよりも遥かに複雑であった。</p>
+
+<ul>
+  <li>NetBIOS Name service</li>
+  <li>Simple Network Management Protocol (SNMP)</li>
+  <li>Multicast DNS (mDNS), DNS-based service discovery (DNS-SD)</li>
+  <li>Simple Service Discovery Protocol (SSDP), Universal Plug and Play (UPnP)</li>
+  <li>Service Location Protocol (SLP)</li>
+</ul>
+
+<p>そこで、極めて実装が簡単なプロトコルを設計した。
+設計したといえない程の簡単なやりとりである。</p>
+
+<ul>
+  <li>UDPを使い、機器（サービス）側のポート番号は既知とする。</li>
+  <li>あるクライアントから機器（サービス）に UDP で <code>REQUEST-MESSAGE</code> を送信したとき、
+機器（サービス）はそのクライアントに対して <code>RESPONSE-MESSAGE</code> を送信する</li>
+  <li>クライアント→機器（サービス）はユニキャスト・ブロードキャストのいずれでもよい</li>
+  <li>機器（サービス）→クライアントはユニキャストである</li>
+  <li>データ構造
+    <ul>
+      <li><code>REQUEST-MESSAGE: "Yo" CLIENT-ARBITARY-TEXT</code></li>
+      <li><code>RESPONSE-MESSAGE: REQUEST-MESSAGE CR-LF "Yo" SERVICE-ARBITARY-TEXT</code></li>
+      <li><code>CLIENT-ARBITARY-TEXT</code>, <code>SERVICE-ARBITARY-TEXT</code>: 改行を含まない任意のテキスト</li>
+      <li><code>CR-LF: "\r\n"</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>要するに、下記の通り “Yo” をやりとりしてるだけの話である。</p>
+
+<pre>
+|Client side                   Service side|
+|                                          |
+|    "Yo from laptop"                      |
+|-----------------------------------------&gt;|
+|                                          |
+| "Yo from laptop\r\nYo from PQI_AIR_CARD" |
+|&lt;-----------------------------------------|
+|                                          |
+</pre>
+
+<p>リクエストメッセージの送信をUDPブロードキャストにすることで、
+クライアントは所望の “Yo” が戻ってきたアドレスを確認することで
+PQI Air Card の IP アドレスがわかる。</p>
+
+<h3>PQI Air Card への Yo サービスの導入</h3>
+
+<p>下記のとおり C 言語で書いた：</p>
+
+<pre class="prettyprint lang-c"><code>/* yo_service.c
+ * under MIT license
+ * 
+ * Copyright (c) 2014 @cat_in_136
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;unistd.h&gt;
+
+/** Have SIGTERM been received? */
+static int isTermReceived = 0;
+
+/** Open a UDP connection.
+ *
+ * @param[in] b_addr bind address, may be INADDR_ANY.
+ * @param[in] port Port number.
+ * @return a file descriptor for the socket on success, -1 on error.
+ */
+static int open_udp_conn(in_addr_t b_addr, u_short port)
+{
+  int sock;
+  int ret;
+  struct sockaddr_in addr;
+
+  sock = socket(AF_INET, SOCK_DGRAM, 0);
+  if (sock == -1) {
+    perror("Socket open error.");
+    return sock;
+  }
+
+  memset(&amp;addr, 0, sizeof(addr));
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(port);
+  addr.sin_addr.s_addr = b_addr;
+  ret = bind(sock, (struct sockaddr *) &amp;addr, sizeof(addr));
+  if (ret == -1) {
+    perror("bind error.");
+    close(sock);
+    return -1;
+  }
+
+  return sock;
+}
+
+/** Listen a UDP packet and send a packet of the response.
+ *
+ * @param[in] sock the socket.
+ * @param[in] msg the response message.
+ * @param[in] msg_len length of the response message.
+ */
+static void handle_udp_conn(int sock, const char *msg, size_t msg_len)
+{
+  static const char * CRLF = "\r\n";
+  char buf[1024];
+  ssize_t s;
+  struct sockaddr src_addr;
+  socklen_t addrlen;
+
+  // receive a packet
+  memset(buf, 0, sizeof(buf));
+  s = recvfrom(sock, buf, sizeof(buf), 0, (struct sockaddr *) &amp;src_addr, &amp;addrlen);
+  if (s == 0) {
+    perror("empty message received");
+    return;
+  }
+
+  //puts(buf);
+  
+  // build response message
+  if ((s + strlen(CRLF) + msg_len) &lt; sizeof(buf)) {
+    memcpy(&amp;buf[s], CRLF, strlen(CRLF));
+    s += strlen(CRLF);
+
+    memcpy(&amp;buf[s], msg, msg_len);
+    s += msg_len;
+
+    sendto(sock, buf, s, 0, (struct sockaddr *) &amp;src_addr, addrlen);
+  }
+}
+
+/** Close the UDP connection.
+ *
+ * @param[in] sock the socket.
+ * @return 0 on success, -1 on error.
+ */
+static int close_udp_conn(int sock)
+{
+  close(sock);
+
+  return 0;
+}
+
+static void signal_handler(int signo)
+{
+  if (signo == SIGTERM) {
+    isTermReceived = 1;
+  }
+}
+
+int main(int argc, char *argv[]) {
+  int ret;
+  int sock;
+  in_addr_t b_addr;
+  u_short port;
+  char *response_msg;
+  size_t response_msg_len;
+
+  if(signal(SIGTERM, signal_handler) == SIG_ERR) {
+    perror("SIGTERM handler error");
+    //return EXIT_FAILURE;
+  }
+
+  if (argc != 4) {
+    printf("Usage: %s bind_address port response_msg\n", argv[0]);
+    printf("Example:\n");
+    printf("  %s 0.0.0.0 22222\n", argv[0]);
+    return EXIT_FAILURE;
+  }
+
+  ret = inet_aton(argv[1], (struct in_addr *) &amp;b_addr);
+  if (ret == 0) {
+    perror("Invalid IP address");
+    return EXIT_FAILURE;
+  }
+  port = atoi(argv[2]);
+  if (port == 0) {
+    perror("Invalid IP port");
+    return EXIT_FAILURE;
+  }
+  response_msg = argv[3];
+  response_msg_len = strlen(argv[3]);
+
+  sock = open_udp_conn(b_addr, port);
+  if (sock == -1) {
+    perror("Failed to open socket");
+    return EXIT_FAILURE;
+  }
+
+  while (isTermReceived == 0) {
+    handle_udp_conn(sock, response_msg, response_msg_len);
+  }
+
+  ret = close_udp_conn(sock);
+  if (ret == -1) {
+    perror("Failed to close socket");
+    return EXIT_FAILURE;
+  }
+
+  return EXIT_SUCCESS;
+}
+
+/* vim:set tabstop=2 expandtab shiftwidth=2 softtabstop=0: */
+</code></pre>
+
+<p>これを PQI Air Card 向けにコンパイルをした。
+商用であるが無料で使える <a href="http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/" title="Sourcery CodeBench Lite Edition including ARM GCC IDE - Mentor Graphics">Sourcery CodeBench Lite</a> という
+のでコンパイルした（クロスコンパイル環境によるコンパイル）。
+なお、ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV) のバイナリを生成する
+コンパイラならどれをつかってもかまわないはずであるし、
+PC上でデバッグ検証をするのならば普通に x86_64 の gcc などでコンパイルして
+動作検証すればよい。</p>
+
+<pre><samp>% arm-none-linux-gnueabi-gcc -o yo_service yo_service.c -O2 -Wall -static
+% arm-none-linux-gnueabi-strip -s yo_service
+</samp></pre>
+
+<p>この <code>yo_service</code> をSDカードの任意の場所に置く。
+（<code>/path/to/yo_service</code>に置いたものとする）</p>
+
+<p>そしてSDカードのルートの<code>autorun.sh</code>には下記を記述する（または追記する）。</p>
+
+<pre class="prettyprint lang-sh"><code>#!/bin/sh
+
+sleep 5
+
+ln -s /mnt/sd/path/to/yo_service /bin/yo_service
+chmod +x /bin/yo_service
+sync; sync; sync
+
+yo_service 0.0.0.0 10091 "Yo from PQI_AIR_CARD" &amp;
+</code></pre>
+
+<p>あとはカメラの電源を入れたときに <code>yo_service</code> が起動し常駐するようになる。</p>
+
+<h3>使用</h3>
+
+<p>機器（サービス）側の実装とデプロイで疲れてしまったので、
+クライアント側は下記のような適当な ruby コードで確認した。</p>
+
+<pre class="prettyprint lang-ruby"><code>#!/usr/bin/ruby
+require "socket"
+
+udp = nil
+begin
+  udp = UDPSocket.open
+  udp.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, 1)
+
+  udp.bind("0.0.0.0", 20091)
+
+  udp.send("Yo from laptop", 0, "255.255.255.255", 10091)
+
+  res, res_addr = udp.recvfrom(2048)
+  p res
+  p res_addr
+ensure
+  udp.close unless udp.nil?
+end
+</code></pre>
+
+<p>カメラに電源を入れた後しばらく待って (PQI Air Card の WiFi が確立する時間)
+下記実行したらきちんと “Yo” が帰ってきた。</p>
+
+<pre><samp>% ruby yo_send_test.rb
+"Yo from laptop\r\nYo from PQI_AIR_CARD"
+["AF_INET", 10091, "192.168.1.3", "192.168.1.3"]
+</samp></pre>
+
+<p>なお、ファイアウォールを導入している場合は、
+UDPの受信ポートを開放しないと動作しないようだ。
+上に示した ruby コードの例では 20091 版ポートを開放する必要がある模様。</p>
+
+<p>これで PQI Air Card は 192.168.1.3 であることがわかるので、
+PQI Air Card にブラウザなり FTP なり telnet なりで接続ができる。</p>
+
+<pre><samp>% telnet 192.168.1.3
+Trying 192.168.1.3...
+Connected to 192.168.1.3.
+Escape character is '^]'.
+
+# 
+</samp></pre>
+
+<p>ただしこの ruby コードはかなり雑であり、
+PQI Air Card の WiFi が確立する前だったりの原因で
+“Yo” が帰ってこなかった場合の考慮が抜けているので、
+その場合は Ctrl+C をするなど対策が必要だ。</p>
+
+<p>UDP のパケット欠落や、その他複数の “Yo” を返す機器（サービス）がある場合については、
+クライアント側のアプリの改良は当然ながら必要である。
+UDP は TCP と違って再送などがないのでそれもプログラムとして組み込む必要があるが、
+実際に何回か試した所、1m 程度の範囲内ならばエラーなしで届いているので
+UDP の再送他はなくてもどうにかなってしまっている。</p>
+
+<h3>まとめ</h3>
+
+<p>PQI Air Card を探すために Yo と話しかけられたら Yo と返す
+極めて簡素なプロトコルを設計、実装をし、検証をした。</p>
+
+<p>その結果、200 行未満の機器（サービス）側のコードと
+やっつけなクライアント側のコードでそれなりに満足のできる結果がえられた。</p>
+
+<p>今後の課題として、
+UDP のパケット欠落や、その他複数の “Yo” を返す機器（サービス）の検討が必要だが、
+これでそれなりに満足してしまったのと、
+NetBIOS 等が入っていない（or 導入が困難）かつ自作プログラムを送り込めるガジェット
+なんてそんなにないだろうから、
+クライアント側のアプリの改良はすることはないだろう。</p>
+
+<h3>特記事項</h3>
+
+<p>“Yo”というキーワードはSNSの<a href="http://www.justyo.co/" title="Yo - It&apos;s that simple.">Yo</a>にインスパイヤされた。</p>
+
+<h3>参考文献</h3>
+
+<ul>
+  <li>[1] <a href="http://www.pqigroup.com/prod_in.aspx?mnuid=1286&amp;modid=138&amp;prodid=426">PQI Air Card</a>, PQI Group</li>
+  <li>[2] <a href="https://www.flashair-developers.com/ja/documents/api/config/">FlashAir Developers - ドキュメント - APIガイド - CONFIG</a>, <code>APPNAME</code></li>
+  <li>[3] <a href="http://jp.eyefi.com/products/cloud">Eyefi （アイファイ）クラウド - 安全なクラウドで便利に同期</a>, Eyefi Japan</li>
+  <li>[4] 竹内義晴 「<a href="http://blogs.itmedia.co.jp/takewave/2013/04/pqi-air-card2-1e41.html">これはいい！PQI Air Cardの2つの不満を解決する方法</a>」, 「竹内義晴の、しごとのみらい」, 2013-04-02</li>
+  <li>[5] あきみち <a href="http://www.geekpage.jp/programming/linux-network/">Linuxネットワークプログラミング</a>, Geekなぺーじ</li>
+  <li>[6] moyashi, 「<a href="http://hitoriblog.com/?p=12627">デジカメ内部でRubyを動かす狂気！無線LAN内蔵SDカードアダプタPQI Air Cardの間違った使い方</a>」, ひとりぶろぐ, 2012-11-02</li>
+  <li>[7] とんすけ, 「<a href="http://ameblo.jp/tonsuke-usagi/entry-11212317428.html">FlucardでプログラムとかCGIとか</a>」, とんすけぶろぐ, 2012-04-03</li>
+</ul>
