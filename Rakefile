@@ -23,7 +23,7 @@ task :watch do
 end
 
 desc "Begin a new content"
-task :new, :dir, :new_post_ext do |dir, t, args|
+task :new, :dir, :title, :new_post_ext do |dir, t, args|
   if args.title
     title = args.title
   else
@@ -62,6 +62,44 @@ end
 desc "Begin a new post in #{drafts_dir}"
 task :new_draft, :title, :new_post_ext do |t, args|
   Rake::Task[:new].invoke(drafts_dir, t, args)
+end
+
+desc "Update datetime in a given post"
+task :touch_post, :path do |t, args|
+  abort("File not found: #{args.path}") unless File.exists?(args.path)
+
+  formatter_str = "---\n"
+  postbody = ''
+  File.open(args.path, 'r') do |f|
+    f.flock(File::LOCK_SH)
+    abort("YAML front formatter not found") unless f.readline == "---\n"
+
+    in_formatter = true
+    f.each_line do |line|
+      if in_formatter
+        if line == "---\n"
+          in_formatter = false
+        else
+          formatter_str << line
+        end
+      else
+        postbody << line
+      end
+    end
+  end
+
+  require 'time'
+  require 'yaml'
+
+  formatter = YAML.load(formatter_str)
+  formatter["date"] = Time.now.xmlschema unless formatter["date"]
+  formatter["modified_time"] = Time.now.xmlschema
+
+  File.open(args.path, 'w') do |f|
+    f << YAML.dump(formatter)
+    f << "---\n"
+    f << postbody
+  end
 end
 
 desc "Deploy to github.io"
