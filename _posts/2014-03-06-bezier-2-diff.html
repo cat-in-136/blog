@@ -6,8 +6,8 @@ author: cat_in_136
 tags:
 - math
 - bézier
-modified_time: '2014-03-06T07:00:03.221+09:00'
-thumbnail: http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s72-c/kappa.png
+modified_time: '2014-11-10T00:02:38+09:00'
+thumbnail: '{% asset_image_path kappa.svg %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6293801686377850895
 blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-2-diff.html
 ---
@@ -47,7 +47,8 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-2-diff.html
 </ul>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
-<a href="http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s1600/kappa.png" imageanchor="1" ><img src="http://3.bp.blogspot.com/-x6XxOpw-FFk/UxNDleEQYeI/AAAAAAAAAag/ReEHS4zcQyI/s1600/kappa.png" alt="90degree arc using Bézier" width="260" height="260" /></a>
+{% asset_image_object_tag kappa.svg %}
+<figcaption>90degree arc using Bézier</figcaption>
 </figure>
 
 <p>このとき、本物と円とどのような差があるのか考察したい。</p>
@@ -141,7 +142,7 @@ P_y(u)&amp;=&amp;3\kappa u (1-u)^2 &amp;+&amp; 3 u^2 (1-u)&amp;+&amp; u^3
 （六次関数らしさを出すためにあえて<var>u</var>の範囲外もプロットしてある）</p>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
-<a href="http://4.bp.blogspot.com/-PxNnsRzKVlo/UxNFKIro_FI/AAAAAAAAAas/1x3weiH_gVc/s1600/diff-bezier-curve-r.png" imageanchor="1" ><img src="http://4.bp.blogspot.com/-PxNnsRzKVlo/UxNFKIro_FI/AAAAAAAAAas/1x3weiH_gVc/s1600/diff-bezier-curve-r.png" alt="下に凸の六次関数曲線" width="474" height="237" /></a>
+{% asset_image_object_tag diff-bezier-curve-r.svg "下に凸の六次関数曲線" %}
 <figcaption style="display: block; text-align: center;">(2.5)式の図示</figcaption>
 </figure>
 
@@ -233,7 +234,7 @@ P_y(u)&amp;=&amp;3\kappa u (1-u)^2 &amp;+&amp; 3 u^2 (1-u)&amp;+&amp; u^3
 </ul>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
-<a href="http://2.bp.blogspot.com/-lUj8TyVKaHo/UxNFYxkndaI/AAAAAAAAAa0/McCCHan-hmg/s1600/diff-error-illustrator.png" imageanchor="1" ><img src="http://2.bp.blogspot.com/-lUj8TyVKaHo/UxNFYxkndaI/AAAAAAAAAa0/McCCHan-hmg/s1600/diff-error-illustrator.png" alt="円と誤差の関係" width="310" height="189" /></a>
+{% asset_image_tag diff-error-illustrator.png %}
 <figcaption style="display: block; text-align: center;">円と誤差の関係。緑付近は正確、赤付近は若干真円よりも大きい</figcaption>
 </figure>
 

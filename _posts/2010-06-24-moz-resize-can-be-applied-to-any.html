@@ -7,25 +7,25 @@ tags:
 - チラシの裏
 - html
 - mozilla
-modified_time: '2010-06-24T23:24:00.229+09:00'
-thumbnail: http://2.bp.blogspot.com/_mg7ZLoSThok/TB4yIBop31I/AAAAAAAAADQ/xIXtdpYzzI4/s72-c/resizer_is_displayed_at_div_element.png
+modified_time: '2014-11-10T00:02:30+09:00'
+thumbnail: '{% asset_image_path resizer_is_displayed_at_div_element.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6283683992125251949
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/moz-resize-can-be-applied-to-any.html
 ---
 
-<p>Firefox 3.7 alpha release (or Firefox 4.0) introduced support for re-sizable textareas. <code>-moz-resize</code> property controls whether or not the textarea is resizable.<br /><br />
+<p>Firefox 3.7 alpha release (or Firefox 4.0) introduced support for re-sizable textareas. <code>-moz-resize</code> property controls whether or not the textarea is resizable.
 </p><pre class="prettyprint"><code>&lt;textarea style="-moz-resize: vertical; width: 100%;"&gt;
 vertical resizing only textarea
 &lt;/textarea&gt;
-</code></pre><fieldset><legend>-moz-resize sample (only for firefox 3.7a/4.0+)</legend><br /><br />
-<textarea style="-moz-resize: vertical; width: 100%;">&lt;br /&gt; vertical resizing only textarea&lt;br /&gt; </textarea></fieldset><p>In addition, <code>-moz-resize</code> seems to be applied to any element!<br /><br />
+</code></pre><fieldset><legend>-moz-resize sample (only for firefox 3.7a/4.0+)</legend>
+<textarea style="-moz-resize: vertical; width: 100%;">vertical resizing only textarea</textarea></fieldset><p>In addition, <code>-moz-resize</code> seems to be applied to any element!
 </p><pre class="prettyprint"><code>&lt;div style="<strong>-moz-resize: both; overflow: auto</strong>; background-color: #ffeeee; color: black;"&gt;
 foobar
 &lt;/div&gt;
-</code></pre><p>A resizer is displayed at end of <code>div</code> element area!<br /><br />
-</p><div style="clear: both; text-align: center;"><img border="0" src="http://2.bp.blogspot.com/_mg7ZLoSThok/TB4yIBop31I/AAAAAAAAADQ/xIXtdpYzzI4/s320/resizer_is_displayed_at_div_element.png" /><br /><br />
-</div><div>-moz-resize sample (only for firefox 3.7a/4.0+)<br /><br />
-<div style="-moz-resize: both; overflow: auto; background-color: #ffeeee; color: black;">foobar</div></div><p>It is required to set "overflow" CSS property. It is written in MDC <a href="https://developer.mozilla.org/en/CSS/-moz-resize">-moz-resize</a> page.<br /><br />
+</code></pre><p>A resizer is displayed at end of <code>div</code> element area!
+</p><div style="clear: both; text-align: center;">{% asset_image_tag resizer_is_displayed_at_div_element.png %}
+</div><div>-moz-resize sample (only for firefox 3.7a/4.0+)
+<div style="-moz-resize: both; overflow: auto; background-color: #ffeeee; color: black;">foobar</div></div><p>It is required to set "overflow" CSS property. It is written in MDC <a href="https://developer.mozilla.org/en/CSS/-moz-resize">-moz-resize</a> page.
 </p><blockquote><ul><li>Applies to: elements whose <a href="https://developer.mozilla.org/en/CSS/overflow">overflow</a> is other than visible</li>
 </ul></blockquote><h4>See also</h4><ul><li><a href="https://developer.mozilla.org/en/CSS/-moz-resize">-moz-resize</a> - MDC</li>
 <li><a href="http://www.w3.org/TR/2004/CR-css3-ui-20040511/#resize">'resize' property</a> - CSS3 Basic User Interface Module W3C Candidate Recommendation 11 May 2004</li>

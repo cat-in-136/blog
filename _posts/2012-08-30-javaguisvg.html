@@ -8,8 +8,8 @@ tags:
 - svg
 - swing
 - gui
-modified_time: '2012-08-30T23:47:00.832+09:00'
-thumbnail: http://4.bp.blogspot.com/-umMYxERWlfo/UDo_t78g3YI/AAAAAAAAASo/pWnQKLo6OoM/s72-c/foobar.png
+modified_time: '2014-11-10T00:02:37+09:00'
+thumbnail: '{% asset_image_path foobar.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3519524004402435399
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/08/javaguisvg.html
 ---
@@ -47,7 +47,7 @@ svgGenerator.stream(filewriter, true);
 テキスト描画がそのまま<text>要素でSVGに変換されていた。</p>
 
 <figure style="display: block; margin: 1em; font-size: smaller;">
-<a href="http://4.bp.blogspot.com/-umMYxERWlfo/UDo_t78g3YI/AAAAAAAAASo/pWnQKLo6OoM/s1600/foobar.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="252" width="400" src="http://4.bp.blogspot.com/-umMYxERWlfo/UDo_t78g3YI/AAAAAAAAASo/pWnQKLo6OoM/s400/foobar.png" /></a>
+<a href="{% asset_image_path foobar.png %}" imageanchor="1" style="margin-left:1em; margin-right:1em">{% asset_image_tag foobar.png 320 201 %}</a>
 
 <figcaption style="display: block;">SwingSet2 のSVGスクリーンショットを inkscape で開いたところ。テキスト選択可能。</figcaption> </figure>
 

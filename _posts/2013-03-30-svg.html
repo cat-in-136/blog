@@ -8,8 +8,8 @@ tags:
 - svg
 - お空
 - html
-modified_time: '2013-03-30T23:16:00.216+09:00'
-thumbnail: http://1.bp.blogspot.com/-hfM55RIyAuk/UVaWbnIqFJI/AAAAAAAAAVU/AnftczgCGAM/s72-c/cloud.png
+modified_time: '2014-11-10T00:02:37+09:00'
+thumbnail: '{% asset_image_path cloud.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1068312420984105883
 blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/svg.html
 ---
@@ -20,7 +20,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/svg.html
 
 
 <div style="text-align: center; margin: auto;">
-<img src="http://1.bp.blogspot.com/-hfM55RIyAuk/UVaWbnIqFJI/AAAAAAAAAVU/AnftczgCGAM/s320/cloud.png" width="100" height="100" />
+{% asset_image_tag cloud.png %}
 </div>
 
 <ul>
@@ -60,7 +60,7 @@ CGの世界で、雲はPerlinの乱流関数（Perlin turbulence）を使って�
 </p>
 
 <div>
-<a href="http://4.bp.blogspot.com/-YcRzRlnTYSE/UVadz331y2I/AAAAAAAAAVw/mgeN2Oj-yso/s1600/Filter_Effects.png" ><img src="http://4.bp.blogspot.com/-YcRzRlnTYSE/UVadz331y2I/AAAAAAAAAVw/mgeN2Oj-yso/s320/Filter_Effects.png" width="320" height="303" /></a>
+{% asset_image_tag Filter_Effects.png %}
 </div>
 
 <p>
@@ -93,7 +93,7 @@ ColorMatrixのValue(s)は<a href="http://www.w3.org/TR/SVG11/filters.html#feColo
 </p>
 
 <div>
-<a href="http://4.bp.blogspot.com/-A8dOkk8qVvA/UVaeFsOuL0I/AAAAAAAAAV4/HhSjdjPtgiw/s1600/Filter_Effects_Composite.png"><img src="http://4.bp.blogspot.com/-A8dOkk8qVvA/UVaeFsOuL0I/AAAAAAAAAV4/HhSjdjPtgiw/s320/Filter_Effects_Composite.png" width="320" height="303" /></a>
+{% asset_image_tag Filter_Effects_Composite.png %}
 </div>
 
 <p>
@@ -110,7 +110,7 @@ ColorMatrixのValue(s)は<a href="http://www.w3.org/TR/SVG11/filters.html#feColo
 </p>
 <div style="border: 2px dashed #888888;padding: 15px;">
 <label for="inkscape_cloud_app_url">画像のURL :</label>
-<input type="text" id="inkscape_cloud_app_url" value="http://1.bp.blogspot.com/_mg7ZLoSThok/TFmBNZK00-I/AAAAAAAAAEA/b42GlzHQXVw/micropolis.png" />
+<input type="text" id="inkscape_cloud_app_url" value="{% asset_image_path micropolis.png %}" />
 <button id="inkscape_cloud_app_btn">雲を付加</button>
 <output><div id="inkscape_cloud_app_area">ここに表示されます</div></output>
 <script src="data:text/javascript;base64,KGZ1bmN0aW9uKCkgewogIHZhciBTVkdfTlMgPSAiaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmci

@@ -6,15 +6,15 @@ author: cat_in_136
 tags:
 - povray
 - optics
-modified_time: '2011-01-03T20:26:40.339+09:00'
+modified_time: '2014-11-10T00:02:32+09:00'
 thumbnail: http://farm4.static.flickr.com/3121/3154885486_a20fd385a3_t.jpg
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8659010404186861422
 blogger_orig_url: http://cat-in-136.blogspot.com/2011/01/pov-ray.html
 ---
 
-<div class="separator" style="clear: left; float: left; margin-right: 1em; text-align: center;">
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 <a href="http://www.flickr.com/photos/toyohara/3154885486/" title="初日の出 by toyohara, on Flickr"><img src="http://farm4.static.flickr.com/3121/3154885486_a20fd385a3_t.jpg" style="width:100px;height:75px" alt="初日の出" /></a>
-</div>
+</figure>
 
 <p>
 新年といえば初日の出を観に行った人もいると思われるが、初日の出のイメージといえば
@@ -116,17 +116,17 @@ plane {
 以下がPOV-Rayにレンダリングをさせて得られた画像である。水面の法線ベクトルが実際の水面をうまく再現できていないらしくやや不自然なところもあるが、理論通り線状に太陽が映っていることがわかる。
 </p>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://3.bp.blogspot.com/_mg7ZLoSThok/TSGuQjM-6JI/AAAAAAAAAF0/OLlx349X2u8/s1600/sun_reflect.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="150" src="http://3.bp.blogspot.com/_mg7ZLoSThok/TSGuQjM-6JI/AAAAAAAAAF0/OLlx349X2u8/s200/sun_reflect.png" style="width:200px;height:150px;" /></a>
-</div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path sun_reflect.png %}">{% asset_image_tag sun_reflect.png 320 240 %}</a>
+</figure>
 
 <p>
 次に、ソースコードを<code>#declare Wavelet=no;</code>と変更し、水面のさざなみをなくした環境下での画像が以下である。教科書通りの上下逆さまの鏡面反射になった。
 </p>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/_mg7ZLoSThok/TSGuRmWCs2I/AAAAAAAAAF4/D5UbG3F0_QU/s1600/sun_reflect_mirror.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="150" src="http://1.bp.blogspot.com/_mg7ZLoSThok/TSGuRmWCs2I/AAAAAAAAAF4/D5UbG3F0_QU/s200/sun_reflect_mirror.png" style="width:200px;height:150px;" /></a>
-</div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path sun_reflect_mirror.png %}">{% asset_image_tag sun_reflect_mirror.png 320 240 %}</a>
+</figure>
 
 <h4>まとめ</h4>
 

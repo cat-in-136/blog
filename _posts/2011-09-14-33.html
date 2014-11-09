@@ -6,8 +6,8 @@ author: cat_in_136
 tags:
 - チラシの裏
 - ponytail
-modified_time: '2011-09-14T06:00:02.915+09:00'
-thumbnail: http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s72-c/pony_tail_model.png
+modified_time: '2014-11-10T00:02:34+09:00'
+thumbnail: '{% asset_image_path pony_tail_model.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7348762453449117794
 blogger_orig_url: http://cat-in-136.blogspot.com/2011/09/33.html
 ---
@@ -23,9 +23,9 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2011/09/33.html
 
 <h4>4. ポニーテール（振り子）の振れ方の考察</h4>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s1600/pony_tail_model.png" ><img style="border: 0" height="255" width="230" src="http://2.bp.blogspot.com/-bHzujB8PSF8/Tmugvk1FvvI/AAAAAAAAAKI/otjdh7XYc8k/s320/pony_tail_model.png" /></a>
-</div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag pony_tail_model.png %}
+</figure>
 
 <p>
 前回まででポニーテール共振器の挙動を定式化することができた。
@@ -95,8 +95,9 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2011/09/33.html
 の関係を示す。なお縦軸は対数スケールであることに注意されたい。
 </p>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://4.bp.blogspot.com/-EB7-2vIZSlE/Tm-M7Key63I/AAAAAAAAAKk/Q1hnD4sy3c0/s1600/theta_graph.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="300" width="400" src="http://4.bp.blogspot.com/-EB7-2vIZSlE/Tm-M7Key63I/AAAAAAAAAKk/Q1hnD4sy3c0/s400/theta_graph.png" /></a></div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag theta_graph.svg %}
+</figure>
 
 <p>
 さて、実際に「
@@ -118,8 +119,9 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2011/09/33.html
 10秒で10歩歩いた時は2秒周期の振動になる。
 </p>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-Wvl_sKd6zlU/TmulvUaq3MI/AAAAAAAAAKQ/lNpEjPw3afk/s1600/walking.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="150" width="400" src="http://1.bp.blogspot.com/-Wvl_sKd6zlU/TmulvUaq3MI/AAAAAAAAAKQ/lNpEjPw3afk/s400/walking.png" /></a></div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag walking.png %}
+</figure>
 
 <p>
 歩くテンポ（速度）と<var>&#x03c9;</var>の関係は以下のようになる。

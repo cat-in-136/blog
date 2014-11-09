@@ -7,8 +7,8 @@ tags:
 - configuration mania
 - xul
 - mozilla
-modified_time: '2010-08-15T00:54:00.193+09:00'
-thumbnail: http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZfwzsGJI/AAAAAAAAAEQ/w3KlskddUpk/s72-c/fx_btn.png
+modified_time: '2014-11-10T00:02:31+09:00'
+thumbnail: '{% asset_image_path fx_btn.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-708624088988421337
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/08/study-for-adding-menuitem-to-firefox4s.html
 ---
@@ -18,10 +18,10 @@ On Windows Vista/7, the menu bar is replaced with the new "Firefox button."
 The old(legacy?) menu bar is shown when ALT-key is pressed and/or when "Menu Bar" option is enabled [<a href="http://www.tothepc.com/archives/switch-to-classic-menu-bar-in-firefox-4/" title="Switch to classic menu bar in Firefox 4">TOTHEPC</a>].
 </p>
 
-<div style="margin-left: auto; margin-right: auto; text-align: center;">
-<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZfwzsGJI/AAAAAAAAAEQ/w3KlskddUpk/s1600/fx_btn.png" style="margin-left: auto; margin-right: auto;"><img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZfwzsGJI/AAAAAAAAAEQ/w3KlskddUpk/s320/fx_btn.png" style="border: 0; width: 279px; height:79px;" /></a><br />
-"Firefox Button"
-</div>
+<figure style="display: block; margin: 1em; font-size: smaller; text-align: center;">
+{% asset_image_tag fx_btn.png %}
+<figcaption style="display: block;">"Firefox Button"</figcaption>
+</figure>
 
 <h4>id of "Firefox button"</h4>
 
@@ -29,9 +29,9 @@ The old(legacy?) menu bar is shown when ALT-key is pressed and/or when "Menu Bar
 ID of "Firefox button" is "<code>appmenu-button</code>", and its <code>&lt;menupopup&gt;</code> is "<code>appmenu-popup</code>".
 </p>
 
-<div style="margin-left: auto; margin-right: auto; text-align: center;">
-<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZdO2_q7I/AAAAAAAAAEI/FoxJ5j4gU3o/s1600/domtree.png" style="margin-left: 1em; margin-right: 1em;"><img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQZdO2_q7I/AAAAAAAAAEI/FoxJ5j4gU3o/s200/domtree.png" style="border:0;width:173px;height200px;" /></a>
-</div>
+<figure style="display: block; margin: 1em; font-size: smaller; text-align: center;">
+<a href="{% asset_image_path domtree.png %}" style="margin-left: 1em; margin-right: 1em;">{% asset_image_tag domtree.png 320 276 %}</a>
+</figure>
 
 
 <h4>Sample of overlay</h4>
@@ -97,9 +97,9 @@ Note: if the browser does not have "Firefox Button" (e.g. older Firefox, current
 
 <p>Result</p>
 
-<div style="margin-left: auto; margin-right: auto; text-align: center;">
-<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQaIpdN94I/AAAAAAAAAEY/5k2a_kiYnKw/s1600/fx_btn_cm.png"><img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TGQaIpdN94I/AAAAAAAAAEY/5k2a_kiYnKw/s320/fx_btn_cm.png" style="border: 0; width: 263px; height: 320px;" /></a>
-</div>
+<figure style="display: block; margin: 1em; font-size: smaller; text-align: center;">
+{% asset_image_tag fx_btn_cm.png %}
+</figure>
 
 <h4>See also</h4>
 

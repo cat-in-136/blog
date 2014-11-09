@@ -8,8 +8,8 @@ tags:
 - swing
 - チラシの裏
 - gui
-modified_time: '2012-01-28T19:15:57.073+09:00'
-thumbnail: http://1.bp.blogspot.com/-eKkyeVWK6gA/TyPIyofn42I/AAAAAAAAAMo/IBTxlqBnujk/s72-c/VerySimpleLAFSwingSet2.png
+modified_time: '2014-11-10T00:02:35+09:00'
+thumbnail: '{% asset_image_path VerySimpleLAFSwingSet2.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5562774790032011102
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/01/javaswinglookandfeel.html
 ---
@@ -54,8 +54,9 @@ public class VerySimpleLookAndFeel extends BasicLookAndFeel {
 出るので実用にはさすがに向かないだろう。
 外見は Windows のクラシックモードに似ている。</p>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-eKkyeVWK6gA/TyPIyofn42I/AAAAAAAAAMo/IBTxlqBnujk/s1600/VerySimpleLAFSwingSet2.png" style="margin-left: 1em; margin-right: 1em;"><img height="304" src="http://1.bp.blogspot.com/-eKkyeVWK6gA/TyPIyofn42I/AAAAAAAAAMo/IBTxlqBnujk/s320/VerySimpleLAFSwingSet2.png" width="320" style="border: 0;" /></a></div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path VerySimpleLAFSwingSet2.png %}">{% asset_image_tag VerySimpleLAFSwingSet2.png 340 304 %}</a>
+</figure>
 
 <p>これは <code>BasicLookAndFeel</code> クラスが抽象クラスとはいえ、
 Look And Feels の動作に必要な殆どの処理が入っているからできるのである。
@@ -65,8 +66,9 @@ Look And Feels の動作に必要な殆どの処理が入っているからで�
 それが、例えば <a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicButtonUI.html" title="javax.swing.plaf.BasicButtonUI"><code>BasicButtonUI</code></a>クラスである。
 <code>BasicLookAndFeel</code> の派生クラスを作れば、内部で <a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicButtonUI.html" title="javax.swing.plaf.BasicButtonUI"><code>BasicButtonUI</code></a> を参照して動作するという仕組みだ。</p>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://2.bp.blogspot.com/-LN5jfyyoax4/TyPIO76zLzI/AAAAAAAAAMY/Px4aRXlxPs0/s1600/Laf_Class_dia.png" style="margin-left: 1em; margin-right: 1em;"><img height="230" src="http://2.bp.blogspot.com/-LN5jfyyoax4/TyPIO76zLzI/AAAAAAAAAMY/Px4aRXlxPs0/s320/Laf_Class_dia.png" width="320" style="border: 0;" /></a></div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path Laf_Class_dia.svg %}">{% asset_image_object_tag Laf_Class_dia.svg 320 231 %}</a>
+</figure>
 
 <p>ただ、すべてが動作するわけではなく <code>JFileChooser</code> などが動作しない
 わけだが、これはさらにそのエラーを対処すれば動作するだろう、が試してはいない。</p>
@@ -79,8 +81,9 @@ Look And Feels の動作に必要な殆どの処理が入っているからで�
 動くわけではないのであくまで参考までに。</p>
 
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://4.bp.blogspot.com/-kruJq2Dv3Wo/TyPIxDVwTXI/AAAAAAAAAMg/q0bakwzAsvI/s1600/RedmondLAFSwingSet2.png" style="margin-left: 1em; margin-right: 1em;"><img height="304" src="http://4.bp.blogspot.com/-kruJq2Dv3Wo/TyPIxDVwTXI/AAAAAAAAAMg/q0bakwzAsvI/s320/RedmondLAFSwingSet2.png" width="320" style="border: 0;" /></a></div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path RedmondLAFSwingSet2.png %}">{% asset_image_tag RedmondLAFSwingSet2.png 340 304 %}</a>
+</figure>
 
 <h3 id="reference">Reference</h3>
 

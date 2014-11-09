@@ -6,8 +6,8 @@ author: cat_in_136
 tags:
 - xul
 - mozilla
-modified_time: '2011-01-20T00:52:00.476+09:00'
-thumbnail: http://4.bp.blogspot.com/_mg7ZLoSThok/TTW6V3q1UjI/AAAAAAAAAF8/gj20zlUK0HY/s72-c/scrolledtab.png
+modified_time: '2014-11-10T00:02:33+09:00'
+thumbnail: '{% asset_image_path scrolledtab.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-2711981770701004333
 blogger_orig_url: http://cat-in-136.blogspot.com/2011/01/xul-tip-scrolling-for-tabs-on-xul.html
 ---
@@ -33,9 +33,9 @@ The solution using <code>&lt;arrowscrollbox&gt;</code>.
 <p>
 When some of tabs are not visible, arrow-scroll-button is shown:
 </p>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://4.bp.blogspot.com/_mg7ZLoSThok/TTW6V3q1UjI/AAAAAAAAAF8/gj20zlUK0HY/s1600/scrolledtab.png" style="margin-left:1em; margin-right:1em"><img height="80" width="400" src="http://4.bp.blogspot.com/_mg7ZLoSThok/TTW6V3q1UjI/AAAAAAAAAF8/gj20zlUK0HY/s400/scrolledtab.png" style="border: 0;" /></a>
-</div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path scrolledtab.png %}">{% asset_image_tag scrolledtab.png %}</a>
+</figure>
 
 <p>
 Note that <code>arrowscrollbox</code> element surrounds <code>tabs</code> element.
@@ -58,9 +58,9 @@ tabbox does not work properly.
 <p>
 On Mac theme, tabs are not painted properly:
 </p>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TTW8-c6NvrI/AAAAAAAAAGE/Qe6kcvOTe4Y/s1600/scrolled_tabbox_macosx_theme_on_linux.png" style="margin-left:1em; margin-right:1em"><img height="101" width="400" src="http://2.bp.blogspot.com/_mg7ZLoSThok/TTW8-c6NvrI/AAAAAAAAAGE/Qe6kcvOTe4Y/s400/scrolled_tabbox_macosx_theme_on_linux.png" style="border:0;" /></a>
-</div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path scrolled_tabbox_macosx_theme_on_linux.png %}">{% asset_image_tag scrolled_tabbox_macosx_theme_on_linux.png 600 151 %}</a>
+</figure>
 
 
 

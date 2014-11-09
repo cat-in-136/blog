@@ -6,8 +6,8 @@ author: cat_in_136
 tags:
 - チラシの裏
 - unicode
-modified_time: '2011-08-28T23:56:50.378+09:00'
-thumbnail: http://1.bp.blogspot.com/-0HTjKHC_XLk/Tk8dqtpxG-I/AAAAAAAAAHg/aCSr_H1qvkI/s72-c/saint_marc_cafe.jpg
+modified_time: '2014-11-10T00:02:33+09:00'
+thumbnail: '{% asset_image_path saint_marc_cafe.jpg %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5044026427133636
 blogger_orig_url: http://cat-in-136.blogspot.com/2011/08/unicode.html
 ---
@@ -18,8 +18,9 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2011/08/unicode.html
 これは、英語表記の"<span lang="en">Saint Marc Caf&#x00e9;</span>"の
  "&#x00e9;" の、アキュート "&#x00b4;" であると考えられる。
 </p>
-<div class="separator" style="clear: both; margin: auto; text-align: center;">
-<a href="http://1.bp.blogspot.com/-0HTjKHC_XLk/Tk8dqtpxG-I/AAAAAAAAAHg/aCSr_H1qvkI/s1600/saint_marc_cafe.jpg" style="margin-left: 1em; margin-right: 1em;"><img src="http://1.bp.blogspot.com/-0HTjKHC_XLk/Tk8dqtpxG-I/AAAAAAAAAHg/aCSr_H1qvkI/s320/saint_marc_cafe.jpg" height="303" width="320" /></a></div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path saint_marc_cafe.jpg %}">{% asset_image_tag saint_marc_cafe.jpg %}</a>
+</figure>
 <p>
 Unicodeでは、"&#x00e9;"(<a href="http://unicode.org/cldr/utility/character.jsp?a=00e9">U+00E9 LATIN SMALL LETTER E WITH ACUTE</a>)
 のようなアキュート付きで文字登録されているものの他に、
@@ -57,8 +58,7 @@ U+30A7 KATAKANA LETTER SMALL E + U+0301 COMBINING ACUTE ACCENT
 濁点半濁点は右上に付くものなので、これはこれでしょうがないというべきだろう。
 </p>
 <div>
-<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="clear: both; margin: auto; text-align: center;"><tbody>
-<tr><td style="text-align: center;"><a href="http://4.bp.blogspot.com/-nMQIHa6ik_c/Tk8dp3aS0zI/AAAAAAAAAHc/gxjorlIIb9Y/s1600/accute_on_katakana_e.png" style="margin-left: auto; margin-right: auto;"><img src="http://4.bp.blogspot.com/-nMQIHa6ik_c/Tk8dp3aS0zI/AAAAAAAAAHc/gxjorlIIb9Y/s1600/accute_on_katakana_e.png" width="250" height="49" /></a></td></tr>
-<tr><td class="tr-caption" style="text-align: center;">筆者環境のレンダリング結果。（"ェ"の右上にアキュートがある。）</td></tr>
-</tbody></table>
-</div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag accute_on_katakana_e.png %}
+<figcaption style="display: block;">筆者環境のレンダリング結果。（"ェ"の右上にアキュートがある。）</figcaption>
+</figure>

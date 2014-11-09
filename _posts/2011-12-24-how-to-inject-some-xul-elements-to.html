@@ -6,14 +6,16 @@ date: '2011-12-24T18:00:00.000+09:00'
 author: cat_in_136
 tags:
 - mozilla
-modified_time: '2011-12-24T18:35:35.255+09:00'
-thumbnail: http://3.bp.blogspot.com/-BkoEzqIhB10/TvVCVEa_frI/AAAAAAAAALc/oNGFq_oB2gw/s72-c/Do_you_want_to_wait_for_restart_firefox.png
+modified_time: '2014-11-10T00:02:34+09:00'
+thumbnail: '{% asset_image_path Do_you_want_to_wait_for_restart_firefox.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5151921295060240246
 blogger_orig_url: http://cat-in-136.blogspot.com/2011/12/how-to-inject-some-xul-elements-to.html
 ---
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://3.bp.blogspot.com/-BkoEzqIhB10/TvVCVEa_frI/AAAAAAAAALc/oNGFq_oB2gw/s1600/Do_you_want_to_wait_for_restart_firefox.png" style="margin-left:1em; margin-right:1em"><img style="border:0;width:400px;height:50px;" height="50" width="400" src="http://3.bp.blogspot.com/-BkoEzqIhB10/TvVCVEa_frI/AAAAAAAAALc/oNGFq_oB2gw/s400/Do_you_want_to_wait_for_restart_firefox.png" /></a><br />Do you want to wait for restart?</div>
+<figure style="clear: both; text-align: center;">
+{% asset_image_tag Do_you_want_to_wait_for_restart_firefox.png %}
+<figcaption style="display: block; text-align: center;">Do you want to wait for restart?</figcaption>
+</figure>
 
 <p>See also: <a href="{{ site.baseurl }}{% post_url 2010-11-27-how-to-create-restart-less-firefox4 %}">How to create restart-less #Firefox4 extension <em>WITHOUT</em> Jetpack</a></p>
 
@@ -68,8 +70,9 @@ BrowserWindowObserver.prototype = {
 <li>When <code>observe()</code> is called with <code>aTopic</code>=<code>"domwindowopened"</code>, the DOM tree is not generated and the browser type is not specified. So, an event listener is required so to wait for <code>"DOMContentLoaded"</code> (refer to following sequence diagram.)</li>
 </ul>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-0xfE-14SW6M/TvVMHRFEqmI/AAAAAAAAALo/aFotNwrdLtQ/s1600/restart-less%2Baddon.png" imageanchor="1" style="margin-left:1em; margin-right:1em"><img border="0" height="292" width="400" src="http://1.bp.blogspot.com/-0xfE-14SW6M/TvVMHRFEqmI/AAAAAAAAALo/aFotNwrdLtQ/s400/restart-less%2Baddon.png" /></a></div>
+<figure style="clear: both; text-align: center;">
+{% asset_image_object_tag restart-less-addon.svg %}
+</figure>
 
 
 

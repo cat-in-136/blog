@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" width="262" height="302">
+  
+  <defs>
+    <marker refX="0" refY="0" orient="auto" id="DotM" style="overflow:visible">
+      <path d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z" transform="matrix(0.4,0,0,0.4,2.96,0.4)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"/>
+    </marker>
+    <marker refX="0" refY="0" orient="auto" id="Arrow1Lend" style="overflow:visible">
+      <path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="matrix(-0.8,0,0,-0.8,-10,0)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"/>
+    </marker>
+  </defs>
+  <g transform="translate(0,-750.36218)">
+    <circle cx="0" cy="0" r="100" transform="translate(130,922.00018)" style="fill:#cccccc;fill-opacity:1"/>
+    <path d="m 0,922.00018 260,0" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#Arrow1Lend)"/>
+    <path d="m 130,1052.0002 0,-300.00002" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#Arrow1Lend)"/>
+    <path d="M 59.289322,851.2895 C 122.04372,788.52046 230,833.24908 230,922.00018" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"/>
+    <text x="114" y="762.58539" xml:space="preserve" style="font-size:18px; font-style:italic; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:start; line-height:125%; text-anchor:start; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">y</text>
+    <text x="249.45053" y="910.00018" xml:space="preserve" style="font-size:18px; font-style:italic; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:start; line-height:125%; letter-spacing:0px; word-spacing:0px; text-anchor:start; fill:rgb(0, 0, 0); fill-opacity:1; stroke:none; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">x</text>
+    <text x="114" y="938.00018" xml:space="preserve" style="font-size:18px; font-style:normal; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:start; line-height:125%; letter-spacing:0px; word-spacing:0px; text-anchor:start; fill:rgb(0, 0, 0); fill-opacity:1; stroke:none; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">O</text>
+    <text x="230" y="938.00018" xml:space="preserve" style="font-size:18px; font-style:normal; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:start; line-height:125%; letter-spacing:0px; word-spacing:0px; text-anchor:start; fill:rgb(0, 0, 0); fill-opacity:1; stroke:none; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">B</text>
+    <text x="52" y="844.00018" xml:space="preserve" style="font-size:18px; font-style:normal; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:start; line-height:125%; letter-spacing:0px; word-spacing:0px; text-anchor:start; fill:rgb(0, 0, 0); fill-opacity:1; stroke:none; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">A</text>
+    <path d="M 59.289322,851.2895 122.28581,788.29302" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0;marker-start:none;marker-end:url(#DotM)"/>
+    <path d="m 230,922.00018 0,-89.09048" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0;marker-start:none;marker-end:url(#DotM)"/>
+    <text x="111.22847" y="792.00018" xml:space="preserve" style="font-size:18px; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:end; line-height:125%; letter-spacing:0px; word-spacing:0px; text-anchor:end; fill:rgb(0, 0, 0); fill-opacity:1; stroke:none; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">A'</text>
+    <text x="244" y="834.00018" xml:space="preserve" style="font-size:18px; font-style:normal; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:start; line-height:125%; letter-spacing:0px; word-spacing:0px; text-anchor:start; fill:rgb(0, 0, 0); fill-opacity:1; stroke:none; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">B'</text>
+    <path d="m 130,922.00018 38.26834,-92.38795" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0;marker-start:none;marker-end:url(#DotM)"/>
+    <text x="172" y="824.00018" xml:space="preserve" style="font-size:18px; font-style:normal; font-variant:normal; font-weight:normal; font-stretch:normal; text-align:start; line-height:125%; letter-spacing:0px; word-spacing:0px; text-anchor:start; fill:rgb(0, 0, 0); fill-opacity:1; stroke:none; font-family:STIX,&quot;Cambria Math&quot;,Times,&quot;Times New Roman&quot;,sans-serif;">C</text>
+    <path d="M 130,922.00018 59.289322,851.2895" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0;marker-start:none;marker-end:url(#DotM)"/>
+  </g>
+</svg>

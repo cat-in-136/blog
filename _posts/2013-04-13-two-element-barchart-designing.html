@@ -6,8 +6,8 @@ author: cat_in_136
 tags:
 - チラシの裏
 - math
-modified_time: '2013-04-20T19:35:03.283+09:00'
-thumbnail: http://3.bp.blogspot.com/-S6asQgyCd0c/UWk8zua_TzI/AAAAAAAAAWc/Vpij-1gJDrA/s72-c/bar.png
+modified_time: '2014-11-10T00:02:37+09:00'
+thumbnail: '{% asset_image_path bar.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8643086228401238791
 blogger_orig_url: http://cat-in-136.blogspot.com/2013/04/two-element-barchart-designing.html
 ---
@@ -45,7 +45,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/04/two-element-barchart-de
 <p>そのままグラフを作ると <strong>差が少なくて見栄えが悪い</strong> の。</p>
 
 <figure style="display: block; margin: 1em;">
-<a href="http://3.bp.blogspot.com/-S6asQgyCd0c/UWk8zua_TzI/AAAAAAAAAWc/Vpij-1gJDrA/s1600/bar.png"><img src="http://3.bp.blogspot.com/-S6asQgyCd0c/UWk8zua_TzI/AAAAAAAAAWc/Vpij-1gJDrA/s320/bar.png" width="245" height="292" /></a>
+{% asset_image_tag bar.png %}
 <figcaption style="display: block;">中国・日本のGDP</figcaption>
 </figure>
 
@@ -56,7 +56,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/04/two-element-barchart-de
 どの程度、差を付けるかは <strong>お好みで調整してね</strong> 。</p>
 
 <figure style="display: block; margin: 1em;">
-<img src="http://2.bp.blogspot.com/-znhC2KK9fjM/UWk8z9LQ-XI/AAAAAAAAAWU/ZW3THcJHIBQ/s320/step1.png" width="110" height="156"/>
+{% asset_image_tag step1.png %}
 </figure>
 
 <p>大きい方に合わせて線を引いて大きい方の数字を、
@@ -66,19 +66,19 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/04/two-element-barchart-de
 もちろん、高い棒の方が China ですね。</p>
 
 <figure style="display: block; margin: 1em;">
-<img src="http://4.bp.blogspot.com/-MAylsW6CNec/UWk80KelHaI/AAAAAAAAAW4/CgGeNOYAPfY/s320/step2.png" width="110" height="156"/>
+{% asset_image_tag step2.png %}
 </figure>
 
 <p>最後に左下に省略線と数字のゼロを入れるだけ。</p>
 
 <figure style="display: block; margin: 1em;">
-<img src="http://3.bp.blogspot.com/-EaqdgmvrxOY/UWk80YfJNUI/AAAAAAAAAWo/p4-xjLVpvpE/s320/step3.png" width="142" height="169"/>
+{% asset_image_tag step3.png %}
 </figure>
 
 <p>見栄えが気に入らないのなら、お好みで色なり線を工夫してみてね☆彡</p>
 
 <figure style="display: block; margin: 1em;">
-<img src="http://4.bp.blogspot.com/-D1ilLAFpPjM/UWk80ZAbI2I/AAAAAAAAAWw/H2g_WB1hYn0/s320/step4.png" width="153" height="187"/>
+{% asset_image_tag step4.png %}
 </figure>
 
 <h4>このやり方で省略棒グラフとして正しいことの数学的議論</h4>
@@ -96,7 +96,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/04/two-element-barchart-de
 だけ省略されているとする。</p>
 
 <figure style="display: block; margin: 1em;">
-<img src="http://4.bp.blogspot.com/-PpVwxZY66F8/UWk8zgAds3I/AAAAAAAAAW8/tn44kWgvsg8/s320/anly.png" widht="189" height="167" />
+{% asset_image_tag anly.png %}
 </figure>
 
 <p>このとき、</p>
@@ -239,7 +239,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/04/two-element-barchart-de
 
 
 <figure style="display: block; margin: 1em;">
-<img src="http://2.bp.blogspot.com/-0hfEHef_NZ0/UWk80jgEuOI/AAAAAAAAAW0/GARtTUTzR4c/s320/wrongscale.png" width="198" height="187"/>
+{% asset_image_tag wrongscale.png %}
 <figcaption style="display: block;">中国・パラオのGDP（不正な省略棒グラフ表現）</figcaption>
 </figure>
 

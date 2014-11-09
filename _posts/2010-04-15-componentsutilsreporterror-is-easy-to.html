@@ -5,8 +5,8 @@ date: '2010-04-15T00:29:00.003+09:00'
 author: cat_in_136
 tags:
 - mozilla
-modified_time: '2010-04-15T00:29:00.812+09:00'
-thumbnail: http://3.bp.blogspot.com/_mg7ZLoSThok/S8Hsq604JwI/AAAAAAAAABk/EyuMlSXUDsI/s72-c/screenshot1.png
+modified_time: '2014-11-10T00:02:29+09:00'
+thumbnail: '{% asset_image_path componentsutilsreporterror-screenshot1.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-938299526229607144
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/04/componentsutilsreporterror-is-easy-to.html
 ---
@@ -18,7 +18,7 @@ Firefox 3.0+ supports <code>Components.utils.reportError()</code>. This function
 <code>Components.utils.reportError("a debugging message");
 </code>yields following message to the Error Console:
 </p>
-<img style="display:block; margin:0px auto 10px; text-align:center;width: 566px; height: 55px;" src="http://3.bp.blogspot.com/_mg7ZLoSThok/S8Hsq604JwI/AAAAAAAAABk/EyuMlSXUDsI/s1600/screenshot1.png" />
+{% asset_image_tag componentsutilsreporterror-screenshot1.png %}
 <p>
 If you don't hope debugging message displayed as a error, <a href="https://developer.mozilla.org/en/nsIConsoleService#logStringMessage()">nsIConsoleService#logStringMessage()</a> is better.
 </p>
@@ -29,7 +29,7 @@ If you don't hope debugging message displayed as a error, <a href="https://devel
 <p>
 yields following message to the Error Console:
 </p>
-<img style="display:block; margin:0px auto 10px; text-align:center;width: 347px; height: 32px;" src="http://1.bp.blogspot.com/_mg7ZLoSThok/S8Ht-eoowiI/AAAAAAAAABs/DjQFsHCaC8w/s400/screenshot2.png" />
+{% asset_image_tag componentsutilsreporterror-screenshot2.png %}
 <p>
 This way is too long to write!
 </p>

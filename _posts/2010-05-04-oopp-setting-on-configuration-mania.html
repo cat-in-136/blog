@@ -5,15 +5,15 @@ date: '2010-05-04T22:10:00.001+09:00'
 author: cat_in_136
 tags:
 - configuration mania
-modified_time: '2010-05-16T16:51:51.965+09:00'
-thumbnail: http://1.bp.blogspot.com/_mg7ZLoSThok/S9_zWauW5-I/AAAAAAAAACE/ulLzZjkgIfg/s72-c/screenshot1.png
+modified_time: '2014-11-10T00:02:29+09:00'
+thumbnail: '{% asset_image_path oop-setting-screenshot1.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1960104260315171310
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/oopp-setting-on-configuration-mania.html
 ---
 
 <p>Today, I added <abbr title="Out of Process plugins">OOPP</abbr> options for <a href="http://www.mozilla.com/en-US/firefox/3.6.4build1/releasenotes/">upcoming Firefox 3.6.4</a> to Configuration Mania. I uploaded the experimental version of Configuration Mania at the <a href="http://bitbucket.org/cat_in_136/configuration-mania/downloads">bitbucket's download page</a> : <code>confmania-experimental-2010050401-7bef5cf4911e.xpi</code>.</p>
 
-<p><a href="http://1.bp.blogspot.com/_mg7ZLoSThok/S9_zWauW5-I/AAAAAAAAACE/ulLzZjkgIfg/s1600/screenshot1.png"><img src="http://1.bp.blogspot.com/_mg7ZLoSThok/S9_zWauW5-I/AAAAAAAAACE/ulLzZjkgIfg/s400/screenshot1.png" alt="Configuration Mania OOPP Setting" title="Configuration Mania OOPP Setting" style="border: none; width: 400px; height:214px; text-align: center; margin: auto;" /></a></p>
+<p><a href="{% asset_image_path oop-setting-screenshot1.png %}">{% asset_image_tag oop-setting-screenshot1.png 320 170 'Configuration Mania OOPP Setting' %}</a></p>
 
 <p>The setting "Run browser plugins in a process thread separate from the main Firefox process (OOPP)" corresponds to <code>dom.ipc.plugins.enabled</code> on <code>about:config</code>.</p>
 

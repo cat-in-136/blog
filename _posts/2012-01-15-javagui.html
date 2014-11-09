@@ -8,8 +8,8 @@ tags:
 - swing
 - gui
 - postscript
-modified_time: '2013-03-04T20:42:54.150+09:00'
-thumbnail: http://4.bp.blogspot.com/-krBgrERBqNQ/TxJbkilJi5I/AAAAAAAAALw/bjo9dxED0Do/s72-c/swingset_java_ocean_gv.png
+modified_time: '2014-11-10T00:02:34+09:00'
+thumbnail: '{% asset_image_path swingset_java_ocean_gv.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3879640900698330637
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/01/javagui.html
 ---
@@ -181,15 +181,19 @@ class ComponentPrintableWrapper implements Printable {
 
 
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://4.bp.blogspot.com/-krBgrERBqNQ/TxJbkilJi5I/AAAAAAAAALw/bjo9dxED0Do/s1600/swingset_java_ocean_gv.png" imageanchor="1"><img border="0" height="305" src="http://4.bp.blogspot.com/-krBgrERBqNQ/TxJbkilJi5I/AAAAAAAAALw/bjo9dxED0Do/s400/swingset_java_ocean_gv.png" width="400" /></a></div>
+<figure style="display: block; 1em margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path swingset_java_ocean_gv.png %}">{% asset_image_tag swingset_java_ocean_gv.png 320 244 %}</a>
+<figcaption>SwingSet の PostScript 出力結果</figcaption>
+</figure>
 
 <p>注意する点は、グラデーション部などは画像となっているが、境界線(border)は線とベクトルデータのままになっている。
 テキストもベクトルデータのままだが、残念ながらアウトラインデータになっているのでテキスト改竄といったことを簡単にはできない。
 とはいえ、inkscape の PostScript 読み込み機能（内部的には一旦PDFに変換されている）を使って読み込んだ後、変形などをして編集することが可能だ。</p>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://3.bp.blogspot.com/-jWj1kjgtl_4/TxJbmIWgxoI/AAAAAAAAAL4/HAuvxlbKjIE/s1600/swingset_java_ocean_inkscape.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="296" src="http://3.bp.blogspot.com/-jWj1kjgtl_4/TxJbmIWgxoI/AAAAAAAAAL4/HAuvxlbKjIE/s400/swingset_java_ocean_inkscape.png" width="400" /></a></div>
+<figure style="display: block; 1em margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path swingset_java_ocean_inkscape.png %}">{% asset_image_tag swingset_java_ocean_inkscape.png 320 237 %}</a>
+<figcaption>SwingSet の PostScript 出力結果を inkscape で開いた図</figcaption>
+</figure>
 
 <p>いくつか Look And Feel (いわゆるテーマのようなもの) を変えていくつかとってみたが、Nimbus といった半透明を使ったものや、GTK+ といった外部レンダリングエンジンを使ったものは画像として書き出されてしまう。 
 後者はしょうがないが、半透明などは PostScript で表現できないからそうなっているんだろうか。
@@ -197,11 +201,15 @@ class ComponentPrintableWrapper implements Printable {
 あと、ここには載せないが、Swing ではない AWT の GUI 部品は本手法を使ってベクトルデータを抜き出すことは出来なかった。</p>
 
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://3.bp.blogspot.com/-_x1FSAUiSJ8/TxJbnWo9P8I/AAAAAAAAAMA/vRre6mm_SsI/s1600/swingset_motif_inkscape.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="247" src="http://3.bp.blogspot.com/-_x1FSAUiSJ8/TxJbnWo9P8I/AAAAAAAAAMA/vRre6mm_SsI/s400/swingset_motif_inkscape.png" width="400" /></a></div>
+<figure style="display: block; margin: 1em auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path swingset_motif_inkscape.png %}">{% asset_image_tag swingset_motif_inkscape.png 320 198 %}</a>
+<figcaption>SwingSet MotifLookAndFeel の場合</figcaption>
+</figure>
 
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-u_EUsgzRjHk/TxJboPJKAWI/AAAAAAAAAME/zmkT9QKEyXQ/s1600/swingset_nimbus_gv.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="327" src="http://1.bp.blogspot.com/-u_EUsgzRjHk/TxJboPJKAWI/AAAAAAAAAME/zmkT9QKEyXQ/s400/swingset_nimbus_gv.png" width="400" /></a></div>
+<figure style="display: block; margin: 1em auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path swingset_nimbus_gv.png %}">{% asset_image_tag swingset_nimbus_gv.png 320 262 %}</a>
+<figcaption>SwingSet NimbusLookAndFeel の場合</figcaption>
+</figure>
 
 <h4>Conclusion</h4>
 

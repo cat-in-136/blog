@@ -8,8 +8,8 @@ tags:
 - web application
 - html
 - mozilla
-modified_time: '2010-09-15T22:51:00.599+09:00'
-thumbnail: http://2.bp.blogspot.com/_mg7ZLoSThok/TIypGOeft4I/AAAAAAAAAE4/TTq4iC5lqK0/s72-c/screenshot1.png
+modified_time: '2014-11-10T00:02:31+09:00'
+thumbnail: '{% asset_image_path nerinefirefox4-screenshot1.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-9098721483293027716
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/09/nerinefirefox4.html
 ---
@@ -24,10 +24,10 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/09/nerinefirefox4.html
 Firefox(やOpera)はCSS zoom 対応していない。そのためindex表示（↑キーを押す）すると、縮小されずにクリッピングされた形になってしまう。
 </p>
 
-<div style="text-align: center;">
-<a href="http://2.bp.blogspot.com/_mg7ZLoSThok/TIypGOeft4I/AAAAAAAAAE4/TTq4iC5lqK0/s1600/screenshot1.png" style="margin-left: auto; margin-right: auto;"><img style="border: 0" src="http://2.bp.blogspot.com/_mg7ZLoSThok/TIypGOeft4I/AAAAAAAAAE4/TTq4iC5lqK0/s320/screenshot1.png" /></a><br />
-Firefox4.0b5による、オリジナルのNerineのindex表示
-</div>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path nerinefirefox4-screenshot1.png %}">{% asset_image_tag nerinefirefox4-screenshot1.png 400 130 %}</a>
+<figcaption style="display: block">Firefox4.0b5による、オリジナルのNerineのindex表示</figcaption>
+</figure>
 
 <p>
 CSS zoomをCSS3 transformの<code>scale()</code>関数に置き換える。IE&amp;Webkit独自機能であるCSS zoomと違って、CSS3 transformはCSS3規格であるので、これに対応すれば現代のモダンなブラウザで正しく表示される。

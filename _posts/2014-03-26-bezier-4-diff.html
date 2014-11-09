@@ -6,8 +6,8 @@ author: cat_in_136
 tags:
 - math
 - bézier
-modified_time: '2014-04-06T13:41:39.626+09:00'
-thumbnail: http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s72-c/generic-theta-tile.png
+modified_time: '2014-11-10T00:02:39+09:00'
+thumbnail: '{% asset_image_path generic-theta-tile.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6565037743517885288
 blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-4-diff.html
 ---
@@ -32,7 +32,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-4-diff.html
 ということであった。</p>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
-<a href="http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s1600/generic-theta-tile.png" imageanchor="1" ><img border="0" src="http://3.bp.blogspot.com/-T1VKk8CM4-U/UxNHKka1koI/AAAAAAAAAbM/cunB--Rx770/s320/generic-theta-tile.png" width="320" height="320" /></a>
+<a href="{% asset_image_path generic-theta-tile.png %}">{% asset_image_tag generic-theta-tile.png 320 320 %}</a>
 </figure>
 
 <p>しかし<a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>では、
@@ -43,7 +43,8 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-4-diff.html
 <h4>制御点の位置</h4>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
-<a href="http://1.bp.blogspot.com/-Ezck2skyk_Q/UxNGvjn5wWI/AAAAAAAAAbA/2iJvsXMKoJY/s1600/generic-kappa.png" imageanchor="1" ><img border="0" src="http://1.bp.blogspot.com/-Ezck2skyk_Q/UxNGvjn5wWI/AAAAAAAAAbA/2iJvsXMKoJY/s1600/generic-kappa.png" alt="135degree arc using Bézier" width="262" height="302" /></a>
+{% asset_image_object_tag generic-kappa.svg %}
+<figcaption>135degree arc using Bézier</figcaption>
 </figure>
 
 <p><a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">前回</a>とかぶるがまずは制御点の位置、要するに<var>&#x03BA;</var>を求める。</p>
@@ -253,7 +254,7 @@ x座標成分<code>Px(u)</code>と<code>Py(u)</code>を求める。</p>
 </samp></pre>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
-<a href="http://4.bp.blogspot.com/-n6MVqiqD7G0/UypMUJfGiyI/AAAAAAAAAbo/V3k4mdgmsvQ/s1600/diff-general-Pmax-theta.png" ><img src="http://4.bp.blogspot.com/-n6MVqiqD7G0/UypMUJfGiyI/AAAAAAAAAbo/V3k4mdgmsvQ/s1600/diff-general-Pmax-theta.png" width="467" height="251" /></a>
+{% asset_image_object_tag diff-general-Pmax-theta.svg %}
 <figcaption>(4.5)式の図示</figcaption>
 </figure>
 

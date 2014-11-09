@@ -6,8 +6,8 @@ author: cat_in_136
 tags:
 - チラシの裏
 - html
-modified_time: '2010-06-20T23:23:55.135+09:00'
-thumbnail: http://2.bp.blogspot.com/_mg7ZLoSThok/TBTxienCLjI/AAAAAAAAADI/l2UpwFKvhKA/s72-c/placeholderLF.png
+modified_time: '2014-11-10T00:02:30+09:00'
+thumbnail: '{% asset_image_path placeholderLF.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8214512307434970583
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/html5-textarea-placeholder-attribute.html
 ---
@@ -15,4 +15,4 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/html5-textarea-placehol
 <p>The placeholder attribute for &lt;input&gt; and &lt;textarea&gt; is supported on Firefox3.7/Chrome/Safari. Placeholder text is displayed when text is empty and is not focused. It is very easy to use:</p><pre class="prettyprint"><code>&lt;input type="text" placeholder="empty text" value=""&gt;
 &lt;textarea placeholder="empty text"&gt;
 &lt;/textarea&gt;
-</code></pre><p>When <code>placeholder="foo&amp;#x0a;bar"</code> is specified to &lt;textarea&gt;, "&amp;#x0a;"(LF) is removed on Firefox. On Chrome, line break after "foo".</p><p><img src="http://2.bp.blogspot.com/_mg7ZLoSThok/TBTxienCLjI/AAAAAAAAADI/l2UpwFKvhKA/s1600/placeholderLF.png" style="width:242px; height:125px; text-align: center; margin: auto;" /></p><p>Since <a href="http://dev.w3.org/html5/spec/the-button-element.html#attr-textarea-placeholder">HTML 5 specification</a> deny "&amp;#x0a;"(LF) to <code>placeholder</code> attribute, it seems to be no matter. <strong>"&amp;#x0a;"(LF) MUST NOT be contained in <code>placeholder</code> attribute.</strong> (i.e. <code>placeholder</code> must be a single-line text)</p><blockquote cite="http://dev.w3.org/html5/spec/the-button-element.html#attr-textarea-placeholder"><p>The attribute, if specified, must have a value that contains no U+000A LINE FEED (LF) or U+000D CARRIAGE RETURN (CR) characters. </p></blockquote><h4>Sample</h4><textarea placeholder="foo&#x0a;bar"></textarea>
+</code></pre><p>When <code>placeholder="foo&amp;#x0a;bar"</code> is specified to &lt;textarea&gt;, "&amp;#x0a;"(LF) is removed on Firefox. On Chrome, line break after "foo".</p><p>{% asset_image_tag placeholderLF.png %}</p><p>Since <a href="http://dev.w3.org/html5/spec/the-button-element.html#attr-textarea-placeholder">HTML 5 specification</a> deny "&amp;#x0a;"(LF) to <code>placeholder</code> attribute, it seems to be no matter. <strong>"&amp;#x0a;"(LF) MUST NOT be contained in <code>placeholder</code> attribute.</strong> (i.e. <code>placeholder</code> must be a single-line text)</p><blockquote cite="http://dev.w3.org/html5/spec/the-button-element.html#attr-textarea-placeholder"><p>The attribute, if specified, must have a value that contains no U+000A LINE FEED (LF) or U+000D CARRIAGE RETURN (CR) characters. </p></blockquote><h4>Sample</h4><textarea placeholder="foo&#x0a;bar"></textarea>
