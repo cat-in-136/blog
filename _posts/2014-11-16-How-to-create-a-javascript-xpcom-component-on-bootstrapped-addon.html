@@ -1,0 +1,134 @@
+---
+layout: post
+title: How to create a JavaScript XPCOM component on bootstrapped addon
+author: cat_in_136
+tags:
+- mozilla
+date: '2014-11-16T23:04:54+09:00'
+modified_time: '2014-11-16T23:04:54+09:00'
+---
+<p>This post describes how to create a JavaScript XPCOM component
+on bootstrapped (restartless) addon.</p>
+
+<h4>On bootstrapped extension</h4>
+
+<ol>
+  <li>Define the component name such as <code>@mozilla.org/foo/bar;1</code>;</li>
+  <li>Generate GUID for the component.
+    <ul>
+      <li>If you have Visual Studio, you may use <a href="http://msdn.microsoft.com/library/ms241442(v=vs.80).aspx"><code>guidgen</code></a>.</li>
+      <li>
+        <p>On linux, you may use <code>uuidgen</code>(1).</p>
+
+	<pre style="background-color: #000; color: #fff;"><code>% uuidgen
+22e1de77-790a-4a78-9ed4-8a8fca8c9f0f
+% 
+</code></pre>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Create the component code (in the bootstrap.js).</p>
+
+    <pre class="prettyprint"><code>const Cc = Components.classes;
+const Ci = Components.interfaces;
+const Cu = Components.utils;
+const Cr = Components.results;
+    
+Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+    
+function ComponentFooBar() { }
+ComponentFooBar.prototype = {
+  classDescription: "foobar class",
+  contractID: "@mozilla.org/foo/bar;1",
+  classID: Components.ID("{22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}"),
+  QueryInterface: XPCOMUtils.generateQI([]),
+
+  // members to implement...
+};
+//
+const ComponentFooBarFactory = Object.freeze({
+  createInstance: function(aOuter, aIID) {
+    if (aOuter) { throw Cr.NS_ERROR_NO_AGGREGATION; }
+    return new ComponentFooBar();
+  },
+  loadFactory: function (aLock) { /* unused */ },
+  QueryInterface: XPCOMUtils.generateQI([Ci.nsIFactory])
+});
+</code></pre>
+
+    <ul>
+      <li>You may specify base interface to <code>ComponentFooBar.prototype.QueryInterface</code> and implement methods.</li>
+    </ul>
+  </li>
+  <li>
+    <p>To regist the component on startup, add the following codes to the <code>startup()</code> in bootstrap.js:</p>
+
+    <pre class="prettyprint"><code>function startup(params, aReason) {
+  const registrar = Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
+  registrar.registerFactory(ComponentFooBar.prototype.classID,
+                            ComponentFooBar.prototype.classDescription,
+                            ComponentFooBar.prototype.contractID,
+                            ComponentFooBarFactory);
+}
+</code></pre>
+  </li>
+  <li>
+    <p>To release the component on shutdown, add the following codes to the <code>shutdown()</code> in bootstrap.js:</p>
+
+    <pre class="prettyprint"><code>function shutdown(params, aReason) {
+  const registrar = Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
+  registrar.unregisterFactory(ComponentFooBar.prototype.classID,
+                              ComponentFooBarFactory);
+}
+</code></pre>
+
+    <ul>
+      <li>Note: bootstrapped add-ons <em>must</em> take care to clean up any component registrations at shutdown. So you must not miss this clean-up code.</li>
+    </ul>
+  </li>
+</ol>
+
+<h4>NOTE: On non-bootstrap extension</h4>
+
+<p>If not bootstrapped add-on, you can use <code>chrome.manifest</code> and do same thing without using <code>nsIComponentRegistrar</code>.</p>
+
+<ol>
+  <li>
+    <p>Add following lines to chrome.manifest:</p>
+
+    <pre><code>component {22e1de77-790a-4a78-9ed4-8a8fca8c9f0f} components/FooBar.js
+contract @mozilla.org/foo/var;1 {22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}
+</code></pre>
+  </li>
+  <li>
+    <p>Create the component code in components/FooBar.js</p>
+
+    <pre class="prettyprint"><code>const Cc = Components.classes;
+const Ci = Components.interfaces;
+const Cu = Components.utils;
+const Cr = Components.results;
+    
+Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+    
+function ComponentFooBar() { }
+ComponentFooBar.prototype = {
+  classDescription: "foobar class",
+  contractID: "@mozilla.org/foo/bar;1",
+  classID: Components.ID("{22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}"),
+  QueryInterface: XPCOMUtils.generateQI([]),
+
+  // members to implement...
+};
+this.NSGetFactory = XPCOMUtils.generateNSGetFactory([ComponentFooBar]);
+</code></pre>
+  </li>
+</ol>
+
+<h4>Reference</h4>
+
+<ul>
+  <li><a href="http://mxr.mozilla.org/mozilla-central/source/js/xpconnect/loader/XPCOMUtils.jsm">resource://gre/modules/XPCOMUtils.jsm</a></li>
+  <li><a href="http://stackoverflow.com/questions/18354668/how-to-implement-xpcom-component-nsicontentpolicy-in-bootstrapped-firefox-exte">How to implement XPCOM component (nsIContentPolicy) in bootstrapped Firefox extension</a> - Stack Overflow</li>
+  <li><a href="https://bitbucket.org/cat_in_136/configuration-mania/commits/fe98ca888a84">https://bitbucket.org/cat_in_136/configuration-mania/commits/fe98ca888a84</a> “use about:confmania for in-content configuration mania URL”</li>
+</ul>
