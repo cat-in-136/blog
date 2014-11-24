@@ -2,6 +2,7 @@ _deploy
 _site
 _drafts
 Gemfile*
+.sass-cache
 *~
 *.swp
 README.md

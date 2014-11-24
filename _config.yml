@@ -16,6 +16,8 @@ timezone: Japan
 encoding: utf-8
 #safe: true
 #lsi: true
+sass:
+        style: :compact
 
 # Build settings
 #markdown: kramdown

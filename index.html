@@ -4,10 +4,12 @@ layout: default
 <div class="home">
   <ul class="posts">
     {% for post in paginator.posts %}
-      <li>
+      <li class="post-item">
         <span class="post-date">{{ post.date | date: "%F" }}</span>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-	<div>{{ post.excerpt | strip_html | truncate: 140 }}</div>
+        <div>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
+          <div>{{ post.content | strip_html | truncate: 140 }}</div>
+        </div>
       </li>
     {% endfor %}
   </ul>

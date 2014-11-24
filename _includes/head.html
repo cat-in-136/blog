@@ -8,6 +8,10 @@
   <meta property="og:type" content="{% if page %}article{% else %}website{% endif %}" />
   {% if page.thumbnail %}<meta property="og:image" content="{{ page.thumbnail | liquify | escape_url }}" />{% endif %}
   {% if page.title %}<meta property="og:site_name" content="{{ site.title | escape }}" />{% endif %}
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,user-scalable=yes" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
+  {% if page and page.content contains 'class="prettyprint' %}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js" defer="defer"></script>
+  <script type="text/javascript" src="data:text/javascript;base64,d2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLCBmdW5jdGlvbiAoZSkgeyBwcmV0dHlQcmludCgpOyB9LCBmYWxzZSk7Cg==" defer="defer"></script>
+  {% endif %}
 </head>
