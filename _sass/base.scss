@@ -46,8 +46,14 @@ $primary-light-color:     $color-usufuji;
     -webkit-align-items: baseline;
     align-items: baseline;
   }
+  > * {
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
   .post-date {
     margin-right: 1ex;
+    -webkit-flex: 1 0 auto;
+    flex: 0 0 auto;
   }
 }
 
