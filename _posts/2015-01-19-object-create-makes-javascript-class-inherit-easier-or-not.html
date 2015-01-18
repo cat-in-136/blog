@@ -1,0 +1,230 @@
+---
+layout: post
+title: Object.create() のお陰でピュアな JavaScript でクラス継承は楽になったか?
+author: cat_in_136
+tags: javascript
+date: '2015-01-19T00:53:10+09:00'
+modified_time: '2015-01-19T00:53:10+09:00'
+---
+
+<p>
+下記のようなクラス継承のコードは…
+</p>
+
+<pre class="prettyprint"><code>class Pet {
+    name: string;
+    age: number;
+    constructor(name: string) {
+        this.name = name;
+        this.age = 0;
+    }
+    countAge() {
+        this.age += 1;
+    }
+}
+
+class Cat extends Pet {
+    sleep() {
+        alert(this.name + " is sleeping.");
+    }
+}
+
+var cat = new Cat("Cathy");
+cat.countAge();
+cat.sleep();
+alert(cat.name + " is " + cat.age + " y.o.");
+</code></pre>
+
+<p>
+伝統的には<code>prototype</code>をコピーして継承をするのが、
+JavaScript のやり方。
+流派はあるが大体下記のような感じじゃないだろうか：
+</p>
+
+<pre class="prettyprint"><code>function Pet(name) {
+    this.name = name;
+    this.age = 0;
+}
+Pet.prototype.countAge = function () {
+    this.age += 1;
+}
+
+function Cat(name) {
+    Pet.apply(this, arguments);
+}
+Cat.prototype = $.extend(Cat.prototype, Pet.prototype);
+Cat.prototype.constructor = Cat;
+Cat.prototype.sleep = function () {
+    alert(this.name + " is sleeping.");
+}
+
+var cat = new Cat("Cathy");
+cat.countAge();
+cat.sleep();
+alert(cat.name + " is " + cat.age + " y.o.");
+</code></pre>
+
+<p>
+最近の JavaScript (ECMA Script 5) では、<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.3.5"><code>Object.create( O [, Properties] )</code></a>というのがある。
+</p>
+
+<blockquote cite="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.3.5">
+        <p>The <b>create</b> function creates a new object with a specified prototype. When the <b>create</b> function is called,
+        the following steps are taken:</p>
+
+        <ol>
+          <li>If <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8">Type</a>(<i>O</i>) is not Object or Null throw a <b>TypeError</b> exception.</li>
+          <li>Let <i>obj</i> be the result of creating a new object as if by the expression new Object() where Object is the
+              standard built-in constructor with that name</li>
+          <li>Set the [[Prototype]] internal property of <i>obj</i> to <i>O</i>.</li>
+          <li>If the argument <i>Properties</i> is present and not <b>undefined</b>, add own properties to <i>obj</i> as if by
+              calling the standard built-in function <code>Object.defineProperties</code> with arguments <i>obj</i> and
+              <i>Properties</i>.</li>
+          <li>Return <i>obj</i>.</li>
+        </ol>
+</blockquote>
+
+<p>
+<code>new</code>演算子に近いような用途を想定した関数である。
+一方で、引数としては <code>Object.defineProperties()</code> と同じ形ということになっている。
+要するに下記のように使って欲しいらしい。
+</p>
+
+<pre class="prettyprint"><code>var Cat = {
+    age: 0,
+    countAge: function () {
+        this.age += 1;
+    },
+    sleep: function () {
+        alert(this.name + " is sleeping.");
+    }
+}
+
+var cat = Object.create(Cat, {name: {value: "Cathy"}});
+cat.countAge();
+cat.sleep();
+alert(cat.name + " is " + cat.age + " y.o.");
+</code></pre>
+
+<p>
+なお <code>cat.name = "Cathy"</code>を改名可能なようにするためには、
+<code>{value: "Cathy", <em>writable: true</em>}</code>としなければならない。
+</p>
+
+<p>
+で、この流儀だと以下の問題がある。なんてこった。
+</p>
+<ul>
+    <li>継承はいままでの伝統的な方法しかない。(<code>extend()</code>処理のループが必要)</li>
+    <li>コンストラクタが<code>Object.create()</code>に置き換わったせいでインスタンス生成時の処理を書く方法がなくなる。</li>
+</ul>
+
+<p>
+そしてMDNの<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_Revisited">Inheritance Revisited</a>というページに書かれた"正解"を基に書いた、
+<code>Object.create()</code>を利用したクラス継承の方法は、下記だ。
+結構冗長。
+</p>
+
+<pre class="prettyprint"><code>function Pet(name) {
+    this.name = name;
+    this.age = 0;
+}
+Pet.prototype = Object.create(Object.prototype, {
+    name: {
+        writable: true
+    },
+    age: {
+        writable: true
+    },
+    constructor: {
+        value: Pet,
+        enumerable: false
+    },
+    countAge: {
+        value: function () {
+            this.age += 1;
+        }
+    }
+});
+
+function Cat(name) {
+    Pet.apply(this, arguments);
+}
+Cat.prototype = Object.create(Pet.prototype, {
+    constructor: {
+        value: Cat,
+        enumerable: false
+    },
+    sleep: {
+        value: function () {
+            alert(this.name + " is sleeping.");
+        }
+    }
+});
+
+var cat = new Cat("Cathy");
+cat.countAge();
+cat.sleep();
+alert(cat.name + " is " + cat.age + " y.o.");
+</code></pre>
+
+<p>
+prototype を<code>Object.create()</code> するという業!
+また、メソッドが単なる関数オブジェクトとして扱うということで、
+<code>{value: function() {...} }</code>を大量にタイプすることになるという
+ちょっと残念な感じだ。
+<code>$.extend()</code>関数をネイティブ関数に置き換えたのにコードは
+かえって複雑になっているのではないか。
+</p>
+<p>
+やはり複雑なクラス構文を書くには、ネイティブなJavaScriptではまだ物足りない。
+（物足りないからこそ private 変数などと組み合わせて記事にしなかった。）
+まだまだライブラリやら transcompiler (CoffeeScript, TypeScript, etc...)
+なしでは複雑なのはきつそうである。
+</p>
+<p>
+ちなみに最初に書いた <code>class</code> などと書いたコードは
+ECMA Script 6 ないし TypeScript となっていて、
+JavaScript に変換すると下のようになる。
+</p>
+
+<pre class="prettyprint"><code>var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var Pet = (function () {
+    function Pet(name) {
+        this.name = name;
+        this.age = 0;
+    }
+    Pet.prototype.countAge = function () {
+        this.age += 1;
+    };
+    return Pet;
+})();
+var Cat = (function (_super) {
+    __extends(Cat, _super);
+    function Cat() {
+        _super.apply(this, arguments);
+    }
+    Cat.prototype.sleep = function () {
+        alert(this.name + " is sleeping.");
+    };
+    return Cat;
+})(Pet);
+var cat = new Cat("Cathy");
+cat.countAge();
+cat.sleep();
+alert(cat.name + " is " + cat.age + " y.o.");
+</code></pre>
+
+<p>参考文献</p>
+
+<ul>
+    <li><a href="http://www.ecma-international.org/ecma-262/5.1/">ECMA-262 ECMAScript Language Specification 5.1 Edition</a>, June 2011. [ECMA-262/51]</li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">Object.create() - JavaScript | MDN</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_Revisited">Inheritance Revisited - JavaScript | MDN</a></li>
+    <li>LightSpeedC, <a href="http://qiita.com/LightSpeedC/items/d307d809ecf2710bd957">[JavaScript] そんな継承はイヤだ - クラス定義 - オブジェクト作成</a>, Qiita, 2014-03-04</li>
+</ul>
