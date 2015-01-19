@@ -7,10 +7,14 @@ tags:
 - チラシの裏
 - web api
 - twitter
-modified_time: '2012-11-05T06:30:01.367+09:00'
+modified_time: '2015-01-20T01:00:14+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1988041811715876401
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/11/twitter-api.html
 ---
+
+<ins datetime="2015-01-20T01:00:14+09:00">
+<p>(2015-01-20加筆)本記事の内容は古くなっていて、ここに記した隠し Twitter API が廃止・変更されている。</p>
+</ins>
 
 <p>Twitter の標準機能として、<a href="https://dev.twitter.com/docs/embedded-tweets" title="Embedded Tweets | Twitter Developers">Tweet を埋め込む機能</a>がある。
 ツイートの詳細画面で「このツイートをサイトに埋め込む」をクリックして、HTML のコードをコピペするだけ、と非常に簡単につかえる。</p>
@@ -106,6 +110,17 @@ cdn.api.twitter.com の隠し API endpoint はそういったボットのよう�
 <blockquote cite="https://dev.twitter.com/blog/changes-coming-to-twitter-api"><p>
 For example, there are many applications that are pulling data from the Twitter API at very high rates (scraping, bots, etc.) where we only know the IP address of the applications. To prevent malicious use of the Twitter API and gain an understanding of what types of applications are accessing the API in order to evolve it to meet the needs of developers, it&apos;s important to have visibility into the activity on the Twitter API and the applications using the platform.
 </p></blockquote>
+
+<ins datetime="2015-01-20T01:00:14+09:00">
+<p>
+(2015-01-20加筆)ここで予期したとおり、この隠しAPIは廃止されたようだ。
+現在は<a href="https://syndication.twitter.com/tweets.json?ids=176199889313734657&amp;lang=ja&amp;callback=twttr.tfw.callbacks.cb0&amp;suppress_response_codes=true">https://syndication.twitter.com/tweets.json?ids=176199889313734657&amp;lang=ja&amp;callback=twttr.tfw.callbacks.cb0&amp;suppress_response_codes=true</a>
+といった URL を発行している。
+例のごとく <a href="https://syndication.twitter.com/tweets.json?ids=176199889313734657&amp;lang=ja">https://syndication.twitter.com/tweets.json?ids=176199889313734657&amp;lang=ja</a>
+として JSON 形式で取得できるが、そもそも埋め込みツイートに最適化された内容になっており、
+再利用性は低い。
+</p>
+</ins>
 
 <h4>参考文献</h4>
 
