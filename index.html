@@ -4,11 +4,11 @@ layout: default
 <div class="home">
   <ul class="posts">
     {% for post in paginator.posts %}
-      <li class="post-item">
+      <li class="post-item"{% if post.content contains "。" and post.content contains "、" %} lang="ja"{% endif %}>
         <span class="post-date">{{ post.date | date: "%F" }}</span>
         <div>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-          <div>{{ post.content | strip_html | truncate: 140 }}</div>
+          <div class="post-summary">{{ post.content | strip_html | truncate: 140 }}</div>
         </div>
       </li>
     {% endfor %}

@@ -56,6 +56,10 @@ $primary-light-color:     $color-usufuji;
     flex: 0 0 auto;
   }
 }
+@mixin japanese-text-justification {
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
 
 html, body {
   height: 100%;
@@ -214,7 +218,10 @@ a:visited {
     font-size: xx-large;
   }
 
-  li li {
+  ul li {
+    display: block;
+  }
+  ul li li {
     padding-left: 1em;
     @media screen and (min-width: 480px) {
       padding-left: 2em;
@@ -382,9 +389,12 @@ a:visited {
     }
   }
 }
+
+.post-summary:lang(ja) {
+  @include japanese-text-justification;
+}
 .post-content:lang(ja) {
-  text-align: justify;
-  text-justify: inter-ideograph;
+  @include japanese-text-justification;
 
   > p {
     text-indent: 1em;
