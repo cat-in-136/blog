@@ -1,0 +1,49 @@
+---
+layout: post
+title: Diff between firefox 37.0 beta 3 default preference and firefox 36.0.1
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+date: '2015-03-07T13:56:26+09:00'
+modified_time: '2015-03-07T13:56:26+09:00'
+---
+
+<p>
+This is difference between the default preference of Firefox 37.0 beta 3 and one of 36.0.1.
+</p>
+
+<dl>
+<dt>Default pref Javascript files (Firefox 36.0.1 for Linux x86_64):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/services-sync.js},
+(browser/omni.ja)/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js},
+(webapprt/omni.ja)/defaults/preferences/prefs.js</dd>
+<dt>Default pref Javascript files (Firefox 37.0 beta 3 for Linux x86_64):</dt>
+<dd>(omni.ja){/greprefs.js,/defaults/pref/services-sync.js},
+(browser/omni.ja)/defaults/preferences/{firefox.js,firefox-branding.js,firefox-l10n.js},
+(webapprt/omni.ja)/defaults/preferences/prefs.js</dd>
+</dl>
+
+<table class="diff_firefox37_pref_diff">
+<thead>
+<tr><td>Pref</td><td>Firefox 36.0.1</td><td>Firefox 37.0 beta 3</td></tr>
+</thead>
+<tbody>
+<tr class="oldkey"><td>browser.<wbr />display.<wbr />use_<wbr />document_<wbr />colors</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>browser.<wbr />preferences.<wbr />inContent</td><td>false</td><td>true</td></tr><tr><td>browser.<wbr />search.<wbr />highlightCount</td><td>5</td><td>0</td></tr><tr class="oldkey"><td>camera.<wbr />control.<wbr />autofocus_<wbr />moving_<wbr />callback.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>datareporting.<wbr />healthreport.<wbr />service.<wbr />providerCategories</td><td>healthreport-js-provider-default</td><td>healthreport-js-provider-default,healthreport-js-provider-beta</td></tr><tr><td>devtools.<wbr />devedition.<wbr />promo.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>devtools.<wbr />devedition.<wbr />promo.<wbr />url</td><td>https://mozilla.org/firefox/developer</td><td>https://www.mozilla.org/firefox/developer/?utm_source=firefox-dev-tools&amp;utm_medium=firefox-browser&amp;utm_content=betadoorhanger</td></tr><tr><td>devtools.<wbr />gcli.<wbr />jquerySrc</td><td>http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js</td><td>https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js</td></tr><tr><td>devtools.<wbr />gcli.<wbr />lodashSrc</td><td>http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js</td><td>https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js</td></tr><tr><td>devtools.<wbr />gcli.<wbr />underscoreSrc</td><td>http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js</td><td>https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js</td></tr><tr><td>dom.<wbr />workers.<wbr />websocket.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>image.<wbr />mem.<wbr />decodeondraw</td><td>true</td><td>false</td></tr><tr class="oldkey"><td>image.<wbr />mem.<wbr />max_<wbr />ms_<wbr />before_<wbr />yield</td><td>5</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>image.<wbr />multithreaded_<wbr />decoding.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />min_<wbr />empty_<wbr />chunk_<wbr />count</td><td>0</td><td>1</td></tr><tr><td>layout.<wbr />css.<wbr />display-<wbr />contents.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>media.<wbr />gmp-<wbr />gmpopenh264.<wbr />provider.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>media.<wbr />gmp-<wbr />manager.<wbr />log</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>media.<wbr />navigator.<wbr />video.<wbr />max_<wbr />fr</td><td>0</td><td>60</td></tr><tr><td>media.<wbr />navigator.<wbr />video.<wbr />max_<wbr />fs</td><td>0</td><td>12288</td></tr><tr><td>network.<wbr />http.<wbr />altsvc.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>network.<wbr />http.<wbr />altsvc.<wbr />oe</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>network.<wbr />negotiate-<wbr />auth.<wbr />allow-<wbr />insecure-<wbr />ntlm-<wbr />v1</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>network.<wbr />negotiate-<wbr />auth.<wbr />allow-<wbr />insecure-<wbr />ntlm-<wbr />v1-<wbr />https</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>network.<wbr />ntlm.<wbr />send-<wbr />lm-<wbr />response</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>network.<wbr />websocket.<wbr />extensions.<wbr />stream-<wbr />deflate</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>profiler.<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>profiler.<wbr />entries</td><td>100000</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>profiler.<wbr />interval</td><td>10</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl.<wbr />false_<wbr />start.<wbr />require-<wbr />forward-<wbr />secrecy</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>security.<wbr />ssl.<wbr />false_<wbr />start.<wbr />require-<wbr />npn</td><td>true</td><td>false</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />dhe_<wbr />dss_<wbr />aes_<wbr />128_<wbr />sha</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />dhe_<wbr />dss_<wbr />aes_<wbr />256_<wbr />sha</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />dhe_<wbr />rsa_<wbr />camellia_<wbr />128_<wbr />sha</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />dhe_<wbr />rsa_<wbr />camellia_<wbr />256_<wbr />sha</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />dhe_<wbr />rsa_<wbr />des_<wbr />ede3_<wbr />sha</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />ecdhe_<wbr />rsa_<wbr />des_<wbr />ede3_<wbr />sha</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />rsa_<wbr />camellia_<wbr />128_<wbr />sha</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>security.<wbr />ssl3.<wbr />rsa_<wbr />camellia_<wbr />256_<wbr />sha</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>security.<wbr />tls.<wbr />version.<wbr />fallback-<wbr />limit</td><td>1</td><td>3</td></tr><tr class="oldkey"><td>selectioncaret.<wbr />noneditable</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>social.<wbr />share.<wbr />activationPanelEnabled</td><td>false</td><td>true</td></tr><tr><td>svg.<wbr />marker-<wbr />improvements.<wbr />enabled</td><td>false</td><td>true</td></tr>
+</tbody>
+</table>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox37_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox37_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox37_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox37_pref_diff td.json { word-break: break-all; }
+table.diff_firefox37_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox37_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox37_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox37_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox37_pref_diff td.json { word-break: break-all; }
+
+table.diff_firefox37_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox37_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
