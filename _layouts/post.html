@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<div class="post">
+<article class="post">
   <header class="post-header">
     <h1><a href="{{ page.url }}" rel="bookmark">{{ page.title | escape }}</a></h1>
     {% if page.author %}
@@ -26,18 +26,18 @@ layout: default
     </div>
   </header>
 
-  <article class="post-content"{% if content contains "。" and content contains "、" %} lang="ja"{% endif %}>
+  <div class="post-content"{% if content contains "。" and content contains "、" %} lang="ja"{% endif %}>
   {{ content }}
-  </article>
+  </div><!-- post-content -->
 
   <footer class="post-footer">
     <div class="meta share">
       {% assign page_href = page.url | prepend: site.baseurl | prepend: site.url %}
       Share:
-      <a rel="noindex nofollow" href="https://twitter.com/intent/tweet?url={{ page_href | uri_escape }}&amp;text={{ page.title | uri_escape }}+{{ site.title | uri_escape }}&amp;via={{ site.twitter_username | uri_escape }}">Twitter</a>
-      <a rel="noindex nofollow" href="https://www.facebook.com/sharer/sharer.php?u={{ page_href | uri_escape }}">Facebook</a>
-      <a rel="noindex nofollow" href="http://b.hatena.ne.jp/entry/{{ page_href | replace: 'http://','' | replace: 'https://','' }}">Hatena Bookmark</a>
-      <a rel="noindex nofollow" href="http://www.addtoany.com/share_save?linkurl={{ page_href | uri_escape }}&amp;linkname={{ page.title | uri_escape }}+{{ site.title | uri_escape }}">More via AddToAny...</a>
+      <a rel="nofollow" href="https://twitter.com/intent/tweet?url={{ page_href | uri_escape }}&amp;text={{ page.title | uri_escape }}+{{ site.title | uri_escape }}&amp;via={{ site.twitter_username | uri_escape }}">Twitter</a>
+      <a rel="nofollow" href="https://www.facebook.com/sharer/sharer.php?u={{ page_href | uri_escape }}">Facebook</a>
+      <a rel="nofollow" href="http://b.hatena.ne.jp/entry/{{ page_href | replace: 'http://','' | replace: 'https://','' }}">Hatena Bookmark</a>
+      <a rel="nofollow" href="http://www.addtoany.com/share_save?linkurl={{ page_href | uri_escape }}&amp;linkname={{ page.title | uri_escape }}+{{ site.title | uri_escape }}">More via AddToAny...</a>
     </div>
     {% if site.github_username %}
     <div class="meta">
@@ -47,7 +47,7 @@ layout: default
     {% endif %}
   </footer>
 
-</div>
+</article>
 
 <nav class="post-nav wrap">
   <div class="previous-post">
