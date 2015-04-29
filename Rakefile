@@ -102,17 +102,27 @@ task :touch_post, :path do |t, args|
   end
 end
 
+desc "Setup for deployment"
+task :setup, :deploy_site do |t, args|
+  raise 'deploy_site is not specified' unless args.deploy_site
+
+  if File.exists?(deploy_dir)
+    remove_entry_secure(deploy_dir, :force => true)
+  end
+  ok_failed system "git clone \'#{args.deploy_site}\' \'#{deploy_dir}\'"
+end
+
 desc "Deploy to github.io"
 task :deploy do
-  Rake::Task[:generate].execute
+  #Rake::Task[:generate].execute
 
   cd "#{deploy_dir}" do
     puts "git pull in #{deploy_dir}... "
-    ok_failed system "git pull origin #{deploy_branch}"
+    ok_failed system "git pull origin \'#{deploy_branch}\'"
   end
 
   puts "\nCopy to _site/ to #{deploy_dir}... "
-  ok_failed system("rsync -a --delete --exclude .git _site/ #{deploy_dir}")
+  ok_failed system("rsync -a --delete --exclude .git _site/ \'#{deploy_dir}\'")
 
   cd "#{deploy_dir}" do
     FileUtils.touch '.nojekyll' unless File.exists?('.nojekyll')
@@ -122,7 +132,7 @@ task :deploy do
 
     ok_failed system("git add -A")
     ok_failed system("git commit -m \"#{message}\"")
-    ok_failed system("git push origin #{deploy_branch}")
+    ok_failed system("git push origin \'#{deploy_branch}\'")
   end
   
 end
