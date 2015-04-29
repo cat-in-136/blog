@@ -1,5 +1,11 @@
 ---
 language: ruby
+addons:
+        apt:
+                packages:
+                        - ruby-dev
+                        - libgsl0ldbl
+                        - libgsl0-dev
 cache: bundler
 rvm:
 - 2.1
