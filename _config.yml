@@ -8,6 +8,7 @@ exclude:
  - Gemfile.lock
  - Rakefile
  - README.md
+ - vendor
 
 paginate: 10
 paginate_path: "/page:num"
