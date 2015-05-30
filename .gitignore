@@ -4,4 +4,7 @@ _drafts
 .sass-cache
 *~
 *.swp
+vendor/bundle/*
+.bundle
+bin/
 README.md
