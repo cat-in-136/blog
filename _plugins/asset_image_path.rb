@@ -7,7 +7,7 @@
 #
 
 require 'image_size'
-require 'nokogiri'
+require 'rexml/document'
 
 module Jekyll
   class AssetImagePathTag < Liquid::Tag
@@ -52,9 +52,9 @@ module Jekyll
       if (File.extname(path).downcase == '.svg')
         File.open(path, 'r') do |f|
           f.flock(File::LOCK_SH)
-          doc = Nokogiri.XML(f)
-          width = doc.xpath("/*/@width")[0].value.to_f.round
-          height = doc.xpath("/*/@height")[0].value.to_f.round
+          doc = REXML::Document.new(f)
+          width  = doc.root.attribute(:width).value.to_f.round  # "/*/@width"
+          height = doc.root.attribute(:height).value.to_f.round # "/*/@height"
         end
       else
         File.open(path, 'r') do |f|
