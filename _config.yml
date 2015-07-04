@@ -20,6 +20,9 @@ encoding: utf-8
 sass:
         style: :compact
 
+gems:
+ - jekyll/itafroma/collapse_newlines
+
 # Build settings
 #markdown: kramdown
 #permalink: pretty
