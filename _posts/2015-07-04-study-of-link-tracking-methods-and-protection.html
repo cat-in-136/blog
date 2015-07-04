@@ -1,0 +1,256 @@
+---
+layout: post
+title: Study of the link tracking methods and the protection
+author: cat_in_136
+tags:
+- tracking
+- html
+- javascript
+date: '2015-07-04T20:27:27+09:00'
+---
+<h3>Scenario</h3>
+<ol>
+  <li>Visitor clicks a link to the “destination URL”</li>
+  <li>The browser connects to the “tracking URL”</li>
+  <li>The browser redirects to the destination “destination URL”</li>
+</ol>
+<p>In demo, I use “http://www.example.com/” for the destination URL and
+“https://bit.ly/1h0ceQI” for tracking URL,
+where “https://bit.ly/1h0ceQI” redirects to “http://www.example.com/”.</p>
+
+<h3>Classical method</h3>
+<p>The link with tracking url:</p>
+<pre class="prettyprint lang-html"><code>&lt;a href="https://tracking-URL/of/destination-URL"&gt;click here&lt;/a&gt;
+</code></pre><p>Demo:</p>
+<div class="link-tracking-demo">
+  <a href="https://bit.ly/1h0ceQI" rel="noindex nofollow">click here</a>
+</div>
+<ul>
+  <li>pros
+    <ul>
+      <li>Static, javascript no use.</li>
+    </ul>
+  </li>
+  <li>cons
+    <ul>
+      <li>Mouse overing displays the tracking url, not destination url.</li>
+    </ul>
+  </li>
+</ul>
+<p>Protection technique to this tracking method:</p>
+<ul>
+  <li>Replace the tracking link <code>href</code> with the destination link.</li>
+</ul>
+
+<h3>Classical method with status bar replacement</h3>
+<p>The link with tracking url:</p>
+<pre class="prettyprint lang-js"><code>&lt;a href="https://tracking-URL/of/destination-URL"
+   onmouseover="window.status = 'http://destination-URL';"
+   onmouseout="window.status = undefined;"&gt;
+click here
+&lt;/a&gt;
+</code></pre><p>Demo:</p>
+<div class="link-tracking-demo">
+  <a href="https://bit.ly/1h0ceQI" onmouseover="window.status = 'http://www.example.com/';" onmouseout="window.status = undefined;" rel="noindex nofollow">
+    click here
+  </a>
+</div>
+<ul>
+  <li>pros
+    <ul>
+      <li>The destination link is displayed on the status bar.</li>
+    </ul>
+  </li>
+  <li>cons
+    <ul>
+      <li>The <code>window.status</code> is <em>no longer used</em> today!</li>
+    </ul>
+  </li>
+</ul>
+<p>Protection technique to this tracking method:</p>
+<ul>
+  <li>Replace the tracking link <code>href</code> with the destination link.</li>
+</ul>
+
+<h3>Google-search method</h3>
+<p>The link with tracking url:</p>
+<pre class="prettyprint lang-html"><code>&lt;a href="http://destination-URL"
+   onmousedown="this.href = 'https://tracking-URL/of/destination-URL';"&gt;
+click here
+&lt;/a&gt;
+</code></pre><p>Demo:</p>
+<div class="link-tracking-demo">
+  <a href="http://www.example.com/" onmousedown="this.href = 'https://bit.ly/1h0ceQI';" rel="noindex nofollow">
+    click here
+  </a>
+</div>
+<ul>
+  <li>pros
+    <ul>
+      <li>The tracking url is intentionally hidden
+since the destination link is displayed on the status bar.</li>
+    </ul>
+  </li>
+  <li>cons
+    <ul>
+      <li>Once the user click the link, the tracking link is displayed on the status bar.</li>
+      <li>The tracking is disabled when the user disables javascript.</li>
+    </ul>
+  </li>
+</ul>
+<p>Protection technique to this tracking method:</p>
+<ul>
+  <li>
+    <p>Disable the event handler</p>
+    <pre class="prettyprint lang-js"><code>oLink.onmousedown = null;          // To disable a DOM0 event listener.
+oLink.outerHTML = oLink.outerHTML; // To disable DOM2 event listeners.
+</code></pre>  </li>
+  <li>
+    <p>Discard <code>href</code> attribute change</p>
+    <pre class="prettyprint lang-js"><code>var mutationObserver = new MutationObserver(function (aRecordList) {
+    for (var i = 0; i &lt; aRecordList.length; i++) {
+        var record = aRecordList[i];
+        if (record.target.href.startsWith("https://tracking-URL/")) {
+            record.target.href = record.oldValue; 
+        }
+    }
+});
+mutationObserver.observe(document, {
+    attributes: true,
+    subtree: true,
+    attributeOldValue: true,
+    attributeFilter: ["href"]
+});
+</code></pre>  </li>
+  <li>
+    <p>… or disable javascript.</p>
+  </li>
+</ul>
+
+<h3>Replace-location-on-click method</h3>
+<p>The link with tracking url:</p>
+<pre class="prettyprint lang-html"><code>&lt;a href="http://destination-URL"
+   onclick="if (event.button == 0) { window.location = 'https://tracking-URL/of/destination-URL'; }"&gt;
+click here
+&lt;/a&gt;
+</code></pre><p>Demo:</p>
+<div class="link-tracking-demo">
+  <a href="http://www.example.com/" onclick="if (event.button == 0) { window.location = 'https://bit.ly/1h0ceQI'; }" rel="noindex nofollow">
+    click here
+  </a>
+</div>
+<ul>
+  <li>pros
+    <ul>
+      <li>The tracking url is intentionally hidden
+since the destination link is displayed on the status bar.</li>
+    </ul>
+  </li>
+  <li>cons
+    <ul>
+      <li>The tracking is disabled when the user disables javascript.</li>
+    </ul>
+  </li>
+</ul>
+<p>Protection technique to this tracking method:</p>
+<ul>
+  <li>
+    <p>Disable the event handler</p>
+    <pre class="prettyprint lang-js"><code>oLink.onclick = null;              // To disable a DOM0 event listener.
+oLink.outerHTML = oLink.outerHTML; // To disable DOM2 event listeners.
+</code></pre>  </li>
+  <li>
+    <p>Discard <code>location</code> field modification using <code>Object.watch()</code></p>
+    <pre class="prettyprint lang-js"><code>window.watch("location", function (aProp, aOldVal, aNewVal) {
+    if (aNewVal.startsWith("https://tracking-URL/")) {
+        throw new Error("tracking is blocked");
+    }
+    return aNewVal;
+});
+</code></pre>  </li>
+  <li>
+    <p>… or disable javascript.</p>
+  </li>
+</ul>
+
+<h3>Google-Analytics method</h3>
+<p>The link with tracking url:</p>
+<pre class="prettyprint lang-html"><code>&lt;a href="http://destination-URL"
+   onclick="if (event.button == 0) { var img = new Image(); img.src = 'https://tracking-URL/of/destination-URL'; }"&gt;
+click here
+&lt;/a&gt;
+</code></pre><p>Demo:</p>
+<div class="link-tracking-demo">
+  <a href="http://www.example.com/" onclick="if (event.button == 0) { var img = new Image(); img.src = 'https://bit.ly/1h0ceQI'; }" rel="noindex nofollow">
+    click here
+  </a>
+</div>
+<ul>
+  <li>pros
+    <ul>
+      <li>The tracking url is intentionally hidden
+since the destination link is displayed on the status bar.</li>
+      <li>No redirection.</li>
+    </ul>
+  </li>
+  <li>cons
+    <ul>
+      <li>The tracking is disabled when the user disables javascript.</li>
+    </ul>
+  </li>
+</ul>
+<p>Protection technique to this tracking method:</p>
+<ul>
+  <li>
+    <p>Disable the event handler</p>
+    <pre class="prettyprint lang-js"><code>oLink.onclick = null;              // To disable a DOM0 event listener.
+oLink.outerHTML = oLink.outerHTML; // To disable DOM2 event listeners.
+</code></pre>  </li>
+  <li>
+    <p>… or disable javascript.</p>
+  </li>
+</ul>
+
+<h3>HTML ping attribute (Note)</h3>
+<p>The link with tracking url:</p>
+<pre class="prettyprint lang-html"><code>&lt;a href="http://destination-URL"
+   ping="https://tracking-URL/of/destination-URL"&gt;
+click here
+&lt;/a&gt;
+</code></pre><p>Demo:</p>
+<div class="link-tracking-demo">
+  <a href="http://www.example.com/" ping="https://bit.ly/1h0ceQI" rel="noindex nofollow">
+    click here
+  </a>
+</div>
+<ul>
+  <li>pros
+    <ul>
+      <li>The tracking url is hidden.</li>
+      <li>No redirection.</li>
+      <li>Static, javascript no use.</li>
+    </ul>
+  </li>
+  <li>cons
+    <ul>
+      <li><em>Almost all browser</em> disable this ping feature.</li>
+    </ul>
+  </li>
+</ul>
+<p>Protection technique to this tracking method:</p>
+<ul>
+  <li>Remove ping attribute</li>
+  <li>Disable ping feature</li>
+</ul>
+
+<h3>References</h3>
+<ul>
+  <li><a href="https://www.google.com/">Google search result pages</a></li>
+  <li><a href="https://www.google.com/analytics/">Google Analytics</a></li>
+  <li>“<a href="http://www.axllent.org/docs/view/track-outbound-links-with-analytics-js/">Track outbound links with Google Universal Analytics.js</a>”, Axllent.org, 27 Feb 2015.</li>
+  <li>“<a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver">MutationObserver - Web API Interfaces</a>”, MDN.</li>
+  <li>“<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/watch">Object.prototype.watch() - JavaScript</a>”, MDN.</li>
+  <li><a href="https://addons.mozilla.org/en-US/firefox/addon/google-search-link-fix-for-/">Google Search Link Fix for Mobile and Desktop :: Add-ons for Firefox</a> – Output of this study.</li>
+</ul>
+
+<style type="text/css" scoped="scoped">.link-tracking-demo { margin: 0.5rem; padding: 0.5rem; border: solid 1px #000; box-shadow: 0.5rem 0.5rem 0 #000; }</style>
