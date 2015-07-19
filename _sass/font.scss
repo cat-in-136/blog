@@ -1,35 +1,25 @@
 /* fontset */
-$default-fontset: 'M+1p',
-                  'Source Han Sans',
-                  'Source Han Sans JP',
-                  'Noto Sans CJK JP',
-                  'Noto Sans JP',
-                  'M+ 1p',
+$default-fontset: 'Fira Sans',
+                  'Yu Gothic',
+                  'YuGothic',
                   'Hiragino Kaku Gothic Std',
-                  'Roboto',
-                  'Arial',
                   'HGPGothicE',
-                  'Yu Gothic',
-                  //'YuGothic',
-                  'Meiryo',
-                  sans-serif;
-$header-fontset:  'M+1p',
                   'Source Han Sans',
                   'Source Han Sans JP',
+                  'Noto Sans CJK',
                   'Noto Sans CJK JP',
-                  'Noto Sans JP',
-                  'M+ 1p',
-                  'Hiragino Kaku Gothic Std',
-                  'Roboto',
-                  'Arial Black',
-                  'Yu Gothic',
-                  //'YuGothic',
-                  'Meiryo',
                   sans-serif;
-$code-fontset:    'Source Code Pro',
+$header-fontset:  'Fira Sans',
+                  'Yu Gothic',
+                  'YuGothic',
+                  'Hiragino Kaku Gothic Std',
+                  'Source Han Sans',
+                  'Source Han Sans JP',
+                  'Noto Sans CJK',
+                  'Noto Sans CJK JP',
+                  sans-serif;
+$code-fontset:    'Fira Mono',
                   //'Osaka-Mono',
-                  'M+ 1m',
-                  'Consolas',
                   'Droid Sans Mono',
                   monospace;
 
@@ -47,7 +37,7 @@ body {
 h1, h2, h3, h4, h5, h6,
 .home .post-link {
   font-family: $header-fontset;
-  font-weight: 900;
+  font-weight: bold;
 }
 pre, code, samp, kbd {
   font-family: $code-fontset;
@@ -58,19 +48,30 @@ pre, figcaption, table caption {
   }
 }
 em {
-  font-weight: bolder;
+  font-weight: normal;
   font-style: italic;
 }
 :lang(ja) em {
   font-style: normal;
-  -webkit-text-decoration-style: double;
+  text-shadow: 0.25px 0 0.125px currentColor;
   -moz-text-decoration-style: double;
   text-decoration-style: double;
-  -webkit-text-decoration-line: underline;
   -moz-text-decoration-line: underline;
   text-decoration-line: underline;
 }
 strong {
-  font-weight: 900; 
+  font-weight: bolder; 
   font-style: normal;
+}
+:lang(ja) strong {
+  color: #c00;
+  text-shadow: 0.5px 0 0.125px #c00;
+  -moz-text-decoration-style: double;
+  text-decoration-style: double;
+  -moz-text-decoration-line: underline;
+  text-decoration-line: underline;
+}
+.post-date {
+  font-size: small;
+  font-family: $code-fontset;
 }

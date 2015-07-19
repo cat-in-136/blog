@@ -101,8 +101,6 @@ a:visited {
 }
 
 .post-date {
-  font-size: smaller;
-  font-weight: 900;
   color: $primary-dark-color;
 }
 
@@ -110,12 +108,12 @@ a:visited {
 .site-header {
   border-bottom: solid 3px $primary-dark-color;
   min-height: 56px;
+  font-weight: 800;
 }
 
 .site-title, .site-title:hover, .site-title:visited {
   display: block;
   font-size: xx-large;
-  font-weight: 900;
   text-decoration: none;
   @media screen {
     color: $primary-light-color;
@@ -245,7 +243,7 @@ a:visited {
   h1 {
     font-size: 300%;
     line-height: 1.1;
-    font-weight: 800;
+    font-weight: bold;
     color: $primary-dark-color;
   }
 }
