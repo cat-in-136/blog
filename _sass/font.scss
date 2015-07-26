@@ -33,6 +33,8 @@ body {
   @media (min-width: 48em) {
     font-size: 18px;
   }
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
 }
 h1, h2, h3, h4, h5, h6,
 .home .post-link {
@@ -41,6 +43,8 @@ h1, h2, h3, h4, h5, h6,
 }
 pre, code, samp, kbd {
   font-family: $code-fontset;
+  -webkit-font-feature-settings: "zero";
+  font-feature-settings: "zero";
 }
 pre, figcaption, table caption {
   @media (min-width: 480px) {
@@ -73,5 +77,6 @@ strong {
 }
 .post-date {
   font-size: small;
-  font-family: $code-fontset;
+  width: 9ex;
+  text-align: end;
 }
