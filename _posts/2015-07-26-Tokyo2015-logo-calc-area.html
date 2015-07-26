@@ -1,0 +1,659 @@
+---
+layout: post
+title: "白い部分の面積を求めなさい〜東京2020"
+author: cat_in_136
+tags:
+- math
+- logo
+date: '2015-07-26T17:19:27+09:00'
+---
+
+<h4>問</h4>
+
+<p>白い部分の面積を求めなさい。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201507_Tokyo2020_emblem_area_calc_figure.svg %}
+<figcaption style="display: block;">Tokyo2020 Emblem Analysis</figcaption>
+</figure>
+
+<ul>
+  <li>AE=EF=FB=BJ=JK=KC=CG=GH=HD=DL=LI=IA=1 とする。</li>
+  <li>点Oを中心とした円と正方形ABCDは、点E,F,G,H,I,J,K,Lで交わっている。</li>
+  <li>右上の赤丸は直径1の正円である。</li>
+</ul>
+
+<h4>解</h4>
+
+<aside>
+<div style="background: #ffd; border: solid 3px #ff8">
+この記事を読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です
+もし数式部分が読めない場合は
+<a href="https://getfirefox.com/">Firefoxをインストールする</a>か
+<button onclick="var a=document.createElement(&quot;script&quot;);a.setAttribute(&quot;type&quot;,&quot;application/javascript&quot;);a.setAttribute(&quot;src&quot;,&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;);document.body.appendChild(a);">このボタンをクリックしてMathJaxを使って無理矢理表示する</button>
+などしてください。
+</div>
+</aside>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201507_Tokyo2020_emblem_area_calc_figure_prj.svg %}
+<figcaption style="display: block;">Top-left of the figure</figcaption>
+</figure>
+
+<p>
+点Oから線分EFに垂線を下ろし点Pとする。
+OP=2OE=3/2である。
+三平方の定理から
+</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="OE=\sqrt{OP^2+OE^2}\sqrt{\left(\frac{3}{2}\right)^2+\left(\frac{1}{2}\right)^2}=\frac{\sqrt{10}}{2} ">
+  <mrow>
+    <mtext>OE</mtext>
+    <mo>=</mo>
+    <msqrt>
+      <mrow>
+        <msup>
+          <mtext>OP</mtext>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msup>
+          <mtext>EP</mtext>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+      </mrow>
+    </msqrt>
+    <mo>=</mo>
+    <msqrt>
+      <mrow>
+        <msup>
+          <mrow>
+            <mfenced open="(" close=")">
+              <mrow>
+                <mfrac>
+                  <mrow>
+                    <mn>3</mn>
+                  </mrow>
+                  <mrow>
+                    <mn>2</mn>
+                  </mrow>
+                </mfrac>
+              </mrow>
+            </mfenced>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msup>
+          <mrow>
+            <mfenced open="(" close=")">
+              <mrow>
+                <mfrac>
+                  <mrow>
+                    <mn>1</mn>
+                  </mrow>
+                  <mrow>
+                    <mn>2</mn>
+                  </mrow>
+                </mfrac>
+              </mrow>
+            </mfenced>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+      </mrow>
+    </msqrt>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <msqrt>
+          <mrow>
+            <mn>10</mn>
+          </mrow>
+        </msqrt>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+<p>
+
+余弦定理から
+</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\cos\angle\text{IOE}=\frac{\text{OI}^2+\text{OE}^2-\text{IE}^2}{2\text{OI}\cdot\text{OE}}=\frac{10/4+10/4-2}{2\cdot 10/4}=\frac{3}{5} ">
+  <mrow>
+    <mo>cos</mo>
+    <mo>&#8736;</mo>
+    <mtext mathvariant="normal">
+      IOE
+    </mtext>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <msup>
+          <mrow>
+            <mtext mathvariant="normal">
+              OI
+            </mtext>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msup>
+          <mrow>
+            <mtext mathvariant="normal">
+              OE
+            </mtext>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>-</mo>
+        <msup>
+          <mrow>
+            <mtext mathvariant="normal">
+              IE
+            </mtext>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msup>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+        <mtext mathvariant="normal">
+          OI
+        </mtext>
+        <mo>&#8901;</mo>
+        <mtext mathvariant="normal">
+          OE
+        </mtext>
+      </mrow>
+    </mfrac>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mn>10</mn>
+        <mo>/</mo>
+        <mn>4</mn>
+        <mo>+</mo>
+        <mn>10</mn>
+        <mo>/</mo>
+        <mn>4</mn>
+        <mo>-</mo>
+        <mn>2</mn>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+        <mo>&#8901;</mo>
+        <mn>10</mn>
+        <mo>/</mo>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mn>3</mn>
+      </mrow>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+<p>
+これより、
+</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\angle\text{IOE}=\frac{\pi}{2}-\cos^{-1}\frac{4}{5} ">
+  <mrow>
+    <mo>&#8736;</mo>
+    <mtext mathvariant="normal">
+      IOE
+    </mtext>
+    <mo>=</mo>
+    <msup>
+      <mrow>
+        <mo>cos</mo>
+      </mrow>
+      <mrow>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mfrac>
+      <mrow>
+        <mn>3</mn>
+      </mrow>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+
+<p>
+点Iから線分EHに下ろし点Qとする。
+ここで&#9653;OQI=&#9653;OQEの面積は、OP=3/2, EQ=1であることに注目して
+</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\triangle\text{OQI}=\frac{1\cdot 3/2}{2}=\frac{1}{4} ">
+  <mrow>
+    <mo>&#9653;</mo>
+    <mtext mathvariant="normal">
+      OQI
+    </mtext>
+    <mo>=</mo>
+    <mo>&#9653;</mo>
+    <mtext mathvariant="normal">
+      OQE
+    </mtext>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mn>1</mn>
+        <mo>⋅</mo>
+        <mn>3</mn>
+        <mo>/</mo>
+        <mn>2</mn>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </mfrac>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mn>1</mn>
+      </mrow>
+      <mrow>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+
+<p>
+であるから、白色部EMIは、 
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="2\left(\frac{5}{4} \cos^{-1}\frac{3}{5}-\frac{1}{2}\right)+4-\pi\left(\frac{1}{2}\right)^2 = 3-\frac{\pi}{4}+\frac{5}{4} \cos^{-1}\frac{3}{5} ">
+  <mrow>
+    <mn>2</mn>
+    <mfenced open="(" close=")">
+      <mrow>
+        <mfrac>
+          <mrow>
+            <mn>5</mn>
+          </mrow>
+          <mrow>
+            <mn>4</mn>
+          </mrow>
+        </mfrac>
+        <msup>
+          <mrow>
+            <mo>cos</mo>
+          </mrow>
+          <mrow>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </msup>
+        <mfrac>
+          <mrow>
+            <mn>3</mn>
+          </mrow>
+          <mrow>
+            <mn>5</mn>
+          </mrow>
+        </mfrac>
+        <mo>-</mo>
+        <mfrac>
+          <mrow>
+            <mn>1</mn>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </mfrac>
+      </mrow>
+    </mfenced>
+    <mo>+</mo>
+    <mn>4</mn>
+    <mo>-</mo>
+    <mi>&#960;</mi>
+    <msup>
+      <mrow>
+        <mfenced open="(" close=")">
+          <mrow>
+            <mfrac>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+              <mrow>
+                <mn>2</mn>
+              </mrow>
+            </mfrac>
+          </mrow>
+        </mfenced>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </msup>
+    <mo>=</mo>
+    <mn>3</mn>
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mi>&#960;</mi>
+      </mrow>
+      <mrow>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+    <mo>+</mo>
+    <mfrac>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+      <mrow>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+    <msup>
+      <mrow>
+        <mo>cos</mo>
+      </mrow>
+      <mrow>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mfrac>
+      <mrow>
+        <mn>3</mn>
+      </mrow>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\text{EMI}=\text{EOI}-\triangle\text{OQI}-\triangle\text{OQE} ">
+  <mrow>
+    <mtext mathvariant="normal">
+      白色部EMI
+    </mtext>
+    <mo>=</mo>
+    <mtext mathvariant="normal">
+      部分円EOI
+    </mtext>
+    <mo>-</mo>
+    <mo>&#9653;</mo>
+    <mtext mathvariant="normal">
+      OQI
+    </mtext>
+    <mo>-</mo>
+    <mo>&#9653;</mo>
+    <mtext mathvariant="normal">
+      OQE
+    </mtext>
+  </mrow>
+</math>
+
+<p>を解いて</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\text{EMI}=\frac{1}{2}\cos^{-1}\frac{3}{5}\left(\frac{\sqrt{10}}{2}\right)^2-\frac{1}{4}-\frac{1}{4}= \frac{5}{4} \cos^{-1}\frac{3}{5}-\frac{1}{2} ">
+  <mrow>
+    <mtext mathvariant="normal">
+      白色部EMI
+    </mtext>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mn>1</mn>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </mfrac>
+    <msup>
+      <mrow>
+        <mo>cos</mo>
+      </mrow>
+      <mrow>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mfrac>
+      <mrow>
+        <mn>3</mn>
+      </mrow>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+    </mfrac>
+    <msup>
+      <mrow>
+        <mfenced open="(" close=")">
+          <mrow>
+            <mfrac>
+              <mrow>
+                <msqrt>
+                  <mrow>
+                    <mn>10</mn>
+                  </mrow>
+                </msqrt>
+              </mrow>
+              <mrow>
+                <mn>2</mn>
+              </mrow>
+            </mfrac>
+          </mrow>
+        </mfenced>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </msup>
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mn>1</mn>
+      </mrow>
+      <mrow>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mn>1</mn>
+      </mrow>
+      <mrow>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+      <mrow>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+    <msup>
+      <mrow>
+        <mo>cos</mo>
+      </mrow>
+      <mrow>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mfrac>
+      <mrow>
+        <mn>3</mn>
+      </mrow>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+    </mfrac>
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mn>1</mn>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+
+<p>
+右下も対称性から同様であって、また赤丸は半径1/2の円であることから
+求める白い部分の面積は
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="2\left(\frac{5}{4} \cos^{-1}\frac{3}{5}-\frac{1}{2}\right)+4-\pi\left(\frac{1}{2}\right)^2 = 3-\frac{\pi}{4}+\frac{5}{2} \cos^{-1}\frac{3}{5} ">
+  <mrow>
+    <mn>2</mn>
+    <mfenced open="(" close=")">
+      <mrow>
+        <mfrac>
+          <mrow>
+            <mn>5</mn>
+          </mrow>
+          <mrow>
+            <mn>4</mn>
+          </mrow>
+        </mfrac>
+        <msup>
+          <mrow>
+            <mo>cos</mo>
+          </mrow>
+          <mrow>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </msup>
+        <mfrac>
+          <mrow>
+            <mn>3</mn>
+          </mrow>
+          <mrow>
+            <mn>5</mn>
+          </mrow>
+        </mfrac>
+        <mo>-</mo>
+        <mfrac>
+          <mrow>
+            <mn>1</mn>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </mfrac>
+      </mrow>
+    </mfenced>
+    <mo>+</mo>
+    <mn>4</mn>
+    <mo>-</mo>
+    <mi>&#960;</mi>
+    <msup>
+      <mrow>
+        <mfenced open="(" close=")">
+          <mrow>
+            <mfrac>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+              <mrow>
+                <mn>2</mn>
+              </mrow>
+            </mfrac>
+          </mrow>
+        </mfenced>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </msup>
+    <mo>=</mo>
+    <mn>3</mn>
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mi>&#960;</mi>
+      </mrow>
+      <mrow>
+        <mn>4</mn>
+      </mrow>
+    </mfrac>
+    <mo>+</mo>
+    <mfrac>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+      <mrow>
+        <mn>2</mn>
+      </mrow>
+    </mfrac>
+    <msup>
+      <mrow>
+        <mo>cos</mo>
+      </mrow>
+      <mrow>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mfrac>
+      <mrow>
+        <mn>3</mn>
+      </mrow>
+      <mrow>
+        <mn>5</mn>
+      </mrow>
+    </mfrac>
+  </mrow>
+</math>
+
+<p>解答おわり</p>
+
+<h4>感想</h4>
+
+<p>&#8736;IOE が三角逆関数使わずに表せられなかったので残念。</p>
+<p>なお、数値計算してみると<a href="http://www.wolframalpha.com/input/?i=3-pi%2F4%2B5%2F2+cos^%28-1%29%283%2F5%29">白色部はおおよそ4.53</a>となる。</p>
+
+<h4>Inspired by</h4>
+
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr">オリンピックのエンブレム、なんとなく既視感がある <a href="http://t.co/4FsLOnLfdY">pic.twitter.com/4FsLOnLfdY</a></p>&mdash; Phi-san (@Phi_san) <a href="https://twitter.com/Phi_san/status/624558370486247424">July 24, 2015</a></blockquote>
+<script async="async" defer="defer" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<h4>参考文献</h4>
+
+<ul>
+<li>"<a href="https://tokyo2020.jp/en/emblem/">The Tokyo 2020 Olympic and Paralympic Games Emblems</a>", The Tokyo Organising Committee of the Olympic and Paralympic Games.</li>
+<li>"<a href="https://tokyo2020.jp/en/news/index.php?mode=page&amp;id=1410">24 Jul. 2015 - Tokyo 2020 Unveils the Emblems of the 2020 Olympic and Paralympic Games Symbolising the Power of the World Coming Together as One</a>", News release, The Tokyo Organising Committee of the Olympic and Paralympic Games.</li>
+<li>"<a href="https://commons.wikimedia.org/wiki/File:2020_Summer_Olympics_logo.svg">Vectorized version of the Tokyo 2020 Summer Olympics Logo</a>", Wikimedia Commons</li>
+</ul>
+

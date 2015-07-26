@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="357.82422" height="354.26376" viewBox="0 0 357.82422 354.26376" enable-background="new 0 0 623.622 960.565">
+  <polygon transform="translate(-25.504711,-12.393418)" style="fill:#b1b0b0" points="566.928,566.928 56.692,566.928 566.928,56.692 "/>
+  <polygon transform="translate(-25.504711,-12.393418)" style="fill:#a58c4c" points="56.692,56.692 56.692,566.928 566.928,56.692 "/>
+  <circle r="268.724" cy="299.4176" cx="286.3063" style="fill:#ffffff;stroke:none;stroke-opacity:1"/>
+  <rect style="fill:#353535" height="510.23599" width="170.07899" y="44.298584" x="201.26628"/>
+  <path d="m 31.186695,44.297984 0,510.236316 510.236325,0 0,-510.236316 -510.236325,0 z" style="fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1"/>
+  <circle style="fill:none;stroke:#000000;stroke-opacity:1" cx="286.3063" cy="299.4176" r="268.724"/>
+  <path style="fill:none;stroke:#ff00ff;stroke-opacity:1" d="M 201.26629,44.298583 371.34528,554.53457"/>
+  <path d="M 371.34528,44.298583 201.26629,554.53457" style="fill:none;stroke:#ff00ff;stroke-opacity:1"/>
+  <path style="fill:none;stroke:#ff00ff;stroke-opacity:1" d="M 541.42378,384.45607 31.187789,214.37708"/>
+  <path d="M 541.42378,214.37708 31.187789,384.45607" style="fill:none;stroke:#ff00ff;stroke-opacity:1"/>
+  <text y="32.109097" x="15.359375" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">A</text>
+  <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif" x="185.35938" y="32.109097">E</text>
+  <text y="220.10909" x="9.359375" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">I</text>
+  <text y="334.1091" x="253.35936" style="font-size:32px;font-family:'Times New Roman', Times, serif;fill:#ff00ff" xml:space="preserve">O</text>
+  <path transform="matrix(0,-1,1,0,0,0)" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:3, 3;stroke-dashoffset:0" d="m -214.37709,31.187782 0,510.235988"/>
+  <text y="204.1091" x="173.35938" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">Q</text>
+  <path d="m 286.30578,47.259096 0,510.235984" style="fill:none;stroke:#ff00ff;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:3, 3;stroke-dashoffset:0;stroke-opacity:1"/>
+  <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif;fill:#ff00ff" x="263.42642" y="69.759071">P</text>
+</svg>

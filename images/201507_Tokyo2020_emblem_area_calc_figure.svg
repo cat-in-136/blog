@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="582.73438" height="594.15625" viewBox="0 0 582.73437 594.15625" enable-background="new 0 0 623.622 960.565">
+    <polygon transform="translate(-25.504711,-12.830639)" style="fill:#b1b0b0" points="566.928,566.928 56.692,566.928 566.928,56.692 "/>
+    <polygon transform="translate(-25.504711,-12.830639)" style="fill:#a58c4c" points="56.692,56.692 56.692,566.928 566.928,56.692 "/>
+    <circle r="268.724" cy="298.98038" cx="286.3063" style="fill:#ffffff;stroke:none;stroke-opacity:1"/>
+    <rect style="fill:#ffffff" height="172.91299" width="172.91299" y="41.027363" x="371.34531"/>
+    <rect style="fill:#353535" height="510.23599" width="170.07899" y="43.861362" x="201.26628"/>
+    <circle style="fill:#c22821" r="85.039001" cy="128.90135" cx="456.38431"/>
+    <rect style="fill:#ffffff" height="172.91299" width="172.91299" y="384.01938" x="28.353291"/>
+    <path d="m 31.186695,43.860763 0,510.236317 510.236325,0 0,-510.236317 -510.236325,0 z" style="fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1"/>
+    <circle style="fill:none;stroke:#000000;stroke-opacity:1" cx="286.3063" cy="298.98038" r="268.724"/>
+    <path style="fill:none;stroke:#ff00ff;stroke-opacity:1" d="M 201.26629,43.861362 371.34528,554.09735"/>
+    <path d="M 371.34528,43.861362 201.26629,554.09735" style="fill:none;stroke:#ff00ff;stroke-opacity:1"/>
+    <path style="fill:none;stroke:#ff00ff;stroke-opacity:1" d="M 541.42378,384.01885 31.187789,213.93986"/>
+    <path d="M 541.42378,213.93986 31.187789,384.01885" style="fill:none;stroke:#ff00ff;stroke-opacity:1"/>
+    <text y="31.671875" x="15.359375" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">A</text>
+    <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif" x="535.35938" y="31.671875">B</text>
+    <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif" x="15.359375" y="583.67188">D</text>
+    <text y="583.67188" x="535.35938" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">C</text>
+    <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif" x="185.35938" y="31.671875">E</text>
+    <text y="31.671875" x="365.35938" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">F</text>
+    <text y="581.67188" x="185.35938" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">H</text>
+    <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif" x="365.35938" y="581.67188">G</text>
+    <text y="219.67186" x="9.359375" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">I</text>
+    <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif" x="9.359375" y="399.67188">L</text>
+    <text xml:space="preserve" style="font-size:32px;font-family:'Times New Roman', Times, serif" x="549.35938" y="219.67186">J</text>
+    <text y="399.67188" x="549.35938" style="font-size:32px;font-family:'Times New Roman', Times, serif" xml:space="preserve">K</text>
+    <text y="333.67188" x="253.35936" style="font-size:32px;font-family:'Times New Roman', Times, serif;fill:#ff00ff" xml:space="preserve">O</text>
+</svg>
