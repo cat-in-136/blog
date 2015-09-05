@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" width="256px" height="256px" viewBox="0 0 256 256">
+  <title>TRTA Emblem Design Analysis</title>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <cc:format>image/svg+xml</cc:format>
+      </cc:Work>
+      <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      <dc:title>TRTA Emblem Design Analysis</dc:title>
+      <dc:description>
+        Note that: the original TRTA (Teito Rapid Transit Authority; 帝都高速度交通営団) Emblem, a.k.a. S mark is a registered trademark of Tokyo Metro Co., Ltd.
+      </dc:description>
+    </rdf:RDF>
+  </metadata>
+  <g>
+    <rect x="0" y="0" width="256" height="256" style="fill: #fff;" />
+    <circle cx="128" cy="128" r="49" style="fill: #e70012;" />
+    <circle cx="128" cy="128" r="35" style="fill: #fff;" />
+    <polygon points="93.35176772185918,93.35176772185918 51.70353544371834,135 170.49747468305833,135 152.74873734152916,162.64823227814082 162.64823227814082,162.64823227814082 204.29646455628165,121 85.50252531694167,121 103.25126265847084,93.35176772185918" style="fill: #e70012;" />
+    <rect x="128" y="112" width="128" height="9" style="fill: #fff;" />
+    <rect x="0" y="135" width="128" height="9" style="fill: #fff;" />
+  </g>
+  <g>
+    <polygon points="93.35176772185918,93.35176772185918 51.70353544371834,135 135,135" style="fill: #0ff; opacity: 0.5;" /> 
+    <polygon points="162.64823227814082,162.64823227814082 204.29646455628165,121 121,121" style="fill: #f0f; opacity: 0.5;" /> 
+
+    <text x="93" y="83" style="fill: #000; font-size: 14px; font-family: serif;">A</text>
+    <circle cx="93.35176772185918" cy="93.35176772185918" r="4" style="fill: #000;" />
+    <text x="162" y="180" style="fill: #000; font-size: 14px; font-family: serif;">A&#8242;</text>
+    <circle cx="162.64823227814082" cy="162.64823227814082" r="4" style="fill: #000;" />
+
+    <text x="40" y="135" style="fill: #000; font-size: 14px; font-family: serif;">B</text>
+    <circle cx="51.70353544371834" cy="135" r="4" style="fill: #000;" />
+    <text x="210" y="121" style="fill: #000; font-size: 14px; font-family: serif;">B&#8242;</text>
+    <circle cx="204.29646455628165" cy="121" r="4" style="fill: #000;" />
+
+    <text x="125" y="152" style="fill: #000; font-size: 14px; font-family: serif;">C</text>
+    <circle cx="135" cy="135" r="4" style="fill: #000;" />
+    <text x="120" y="115" style="fill: #000; font-size: 14px; font-family: serif;">C&#8242;</text>
+    <circle cx="121" cy="121" r="4" style="fill: #000;" />
+  </g>
+</svg>

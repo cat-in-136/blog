@@ -1,0 +1,99 @@
+---
+layout: post
+title: "帝都高速度交通営団の団章の解析"
+author: cat_in_136
+tags: 
+date: '2015-09-06T01:33:55+09:00'
+modified_time: '2015-09-06T01:33:55+09:00'
+---
+
+
+<p>
+かつて存在した<a href="https://ja.wikipedia.org/wiki/%E5%B8%9D%E9%83%BD%E9%AB%98%E9%80%9F%E5%BA%A6%E4%BA%A4%E9%80%9A%E5%96%B6%E5%9B%A3">帝都高速度交通営団</a>の団章はなかなか幾何学的様式美に優れている。
+</p>
+
+<p>
+&#8895;ABCおよび直角二等辺三角形になっていて、
+&#8736;CABが直角、その他が45度である。
+このため、さらに線分ABが円の接線となるようになっている。
+&#8895;A&#8242;B&#8242;C&#8242;も同様である。
+</p>
+
+<p>
+なので容易に作図できるはずなのだが、円のサイズ比率などがいろいろと不明なので、
+けっきょく正しい団章を描くことはかなわなかった。
+</p>
+
+<form id="trta-emblem-control" onsubmit="return false;" style="display: block; margin: auto; text-align: center;">
+  <div>
+  <label for="trta-emblem-control-outer-circle">外円半径</label>
+  <input id="trta-emblem-control-outer-circle" type="range" min="0" max="100" value="80" />
+  </div>
+  <div>
+  <label for="trta-emblem-control-inner-circle">内円半径</label>
+  <input id="trta-emblem-control-inner-circle" type="range" min="0" max="100" value="50" />
+  </div>
+  <div>
+  <label for="trta-emblem-control-blank">切込幅</label>
+  <input id="trta-emblem-control-blank" type="range" min="0" max="100" value="10" />
+  </div>
+</form>
+<figure id="trta-emblem-figure" style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<svg xmlns="http://www.w3.org/2000/svg" width="256px" height="256px" viewBox="0 0 256 256">
+  <rect x="0" y="0" width="256" height="256" style="fill: #fff;" />
+  <circle id="trta-emblem-outer-circle" cx="128" cy="128" r="49" style="fill: #e70012;" />
+  <circle id="trta-emblem-inner-circle" cx="128" cy="128" r="35" style="fill: #fff;" />
+  <polygon id="trta-emblem-polygon" points="93.35176772185918,93.35176772185918 51.70353544371834,135 170.49747468305833,135 152.74873734152916,162.64823227814082 162.64823227814082,162.64823227814082 204.29646455628165,121 85.50252531694167,121 103.25126265847084,93.35176772185918" style="fill: #e70012;" />
+  <rect id="trta-emblem-blank-topright" x="128" y="112" width="128" height="9" style="fill: #fff;" />
+  <rect id="trta-emblem-blank-bottomleft" x="0" y="135" width="128" height="9" style="fill: #fff;" />
+</svg>
+</figure>
+<script type="text/javascript">
+(function () {
+  var oForm = document.getElementById("trta-emblem-control");
+  var oOuterCircle = document.getElementById("trta-emblem-control-outer-circle");
+  var oInnerCircle = document.getElementById("trta-emblem-control-inner-circle");
+  var oBlank = document.getElementById("trta-emblem-control-blank");
+
+  var oSVGOuterCircle = document.getElementById("trta-emblem-outer-circle");
+  var oSVGInnerCircle = document.getElementById("trta-emblem-inner-circle");
+  var oSVGPolygon = document.getElementById("trta-emblem-polygon");
+  var oSVGBlankTR = document.getElementById("trta-emblem-blank-topright");
+  var oSVGBlankBL = document.getElementById("trta-emblem-blank-bottomleft");
+
+  function updateTRTAEmblem(event) {
+    var ro = parseFloat(oOuterCircle.value);
+    var ri = Math.min(parseFloat(oInnerCircle.value), ro);
+    var w = ro - ri;
+    var d = Math.min(parseFloat(oBlank.value), ri - w/2);
+    var cx = 128;
+    var cy = 128;
+
+    oSVGOuterCircle.setAttribute("r", ro);
+    oSVGInnerCircle.setAttribute("r", ri);
+    oSVGPolygon.setAttribute("points", [
+      [cx         - ro * Math.SQRT1_2, cy - ro * Math.SQRT1_2],
+      [cx - w / 2 - ro * Math.SQRT2,   cy + w / 2],
+      [cx - w / 2 + ri * Math.SQRT2,   cy + w / 2],
+      [cx         + ri * Math.SQRT1_2, cy + ro * Math.SQRT1_2],
+      [cx         + ro * Math.SQRT1_2, cy + ro * Math.SQRT1_2],
+      [cx + w / 2 + ro * Math.SQRT2,   cy - w / 2],
+      [cx + w / 2 - ri * Math.SQRT2,   cy - w / 2],
+      [cx         - ri * Math.SQRT1_2, cy - ro * Math.SQRT1_2]
+    ].map(function (v) { return v[0] + "," + v[1]; }).join(" "));
+    oSVGBlankTR.setAttribute("y", cy - w/2 - d);
+    oSVGBlankTR.setAttribute("height", d);
+    oSVGBlankBL.setAttribute("y", cy + w/2);
+    oSVGBlankBL.setAttribute("height", d);
+  }
+
+  oForm.addEventListener("input", updateTRTAEmblem, false);
+  oForm.addEventListener("change", updateTRTAEmblem, false);
+})();
+</script>
+
+<p>
+注記：団章は、東京地下鉄株式会社の登録商標である。
+</p>
+
+
