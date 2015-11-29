@@ -6,6 +6,7 @@ gem 'redcarpet'
 gem 'jekyll-itafroma-collapse_newlines'
 gem 'json'
 gem 'rb-gsl', '~> 1.16'
+gem 'classifier-reborn'
 
 gem 'imagesize'
 

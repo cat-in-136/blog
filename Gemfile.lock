@@ -1,7 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    classifier-reborn (2.0.4)
+      fast-stemmer (~> 1.0)
     colorator (0.1)
+    fast-stemmer (1.0.2)
     ffi (1.9.10)
     gsl (1.16.0.6)
     imagesize (0.1.1)
@@ -45,6 +48,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  classifier-reborn
   imagesize
   jekyll (>= 3)
   jekyll-itafroma-collapse_newlines
