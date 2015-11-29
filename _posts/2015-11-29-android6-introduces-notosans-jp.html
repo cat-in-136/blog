@@ -1,0 +1,179 @@
+---
+layout: post
+title: Android v6 (Mashmallow) に Noto Sans JP が導入された
+author: cat_in_136
+tags: font android
+thumbnail: "{% asset_image_path 201511_android6-notosans-jp.png %}"
+date: '2015-11-29T22:13:38+09:00'
+---
+<p>
+<a href="https://developers.google.com/android/nexus/images">Factory Images</a>から、
+Nexus 5 (hammerhead) の 5.1.1 (Lolipop) と 6.0.0 (Mashmallow) のイメージを落としてきて <code>/system/fonts</code>
+の差分を調べてみたのが下記。
+</p>
+
+<pre><code>-AndroidEmoji.ttf
++CarroisGothicSC-Regular.ttf
+-DroidNaskh-Regular.ttf
+-DroidNaskhUI-Regular.ttf
++ComingSoon.ttf
++CutiveMono.ttf
++DancingScript-Bold.ttf
++DancingScript-Regular.ttf
+-DroidSansArmenian.ttf
+-DroidSansEthiopic-Regular.ttf
+-DroidSansFallback.ttf
+-DroidSansGeorgian.ttf
+-DroidSansHebrew-Bold.ttf
+-DroidSansHebrew-Regular.ttf
+-DroidSerif-Bold.ttf
+-DroidSerif-BoldItalic.ttf
+-DroidSerif-Italic.ttf
+-DroidSerif-Regular.ttf
+-MTLmr3m.ttf
+-NanumGothic.ttf
++NotoNaskhArabic-Bold.ttf
++NotoNaskhArabic-Regular.ttf
++NotoNaskhArabicUI-Bold.ttf
++NotoNaskhArabicUI-Regular.ttf
++NotoSansArmenian-Bold.ttf
++NotoSansArmenian-Regular.ttf
++NotoSansBalinese-Regular.ttf
++NotoSansBamum-Regular.ttf
++NotoSansBatak-Regular.ttf
++NotoSansBuginese-Regular.ttf
++NotoSansBuhid-Regular.ttf
++NotoSansCanadianAboriginal-Regular.ttf
++NotoSansCham-Bold.ttf
++NotoSansCham-Regular.ttf
++NotoSansCherokee-Regular.ttf
++NotoSansCoptic-Regular.ttf
++NotoSansEthiopic-Bold.ttf
++NotoSansEthiopic-Regular.ttf
++NotoSansGeorgian-Bold.ttf
++NotoSansGeorgian-Regular.ttf
++NotoSansGlagolitic-Regular.ttf
++NotoSansGujarati-Bold.ttf
++NotoSansGujarati-Regular.ttf
++NotoSansGujaratiUI-Bold.ttf
++NotoSansGujaratiUI-Regular.ttf
++NotoSansGurmukhi-Bold.ttf
++NotoSansGurmukhi-Regular.ttf
++NotoSansGurmukhiUI-Bold.ttf
++NotoSansGurmukhiUI-Regular.ttf
++NotoSansHanunoo-Regular.ttf
++NotoSansHebrew-Bold.ttf
++NotoSansHebrew-Regular.ttf
++NotoSansJP-Regular.otf
++NotoSansJavanese-Regular.ttf
++NotoSansKR-Regular.otf
++NotoSansKayahLi-Regular.ttf
++NotoSansLepcha-Regular.ttf
++NotoSansLimbu-Regular.ttf
++NotoSansLisu-Regular.ttf
+-NotoSansSymbols-Regular.ttf
++NotoSansMandaic-Regular.ttf
++NotoSansMeeteiMayek-Regular.ttf
++NotoSansMongolian-Regular.ttf
++NotoSansMyanmar-Bold.ttf
++NotoSansMyanmar-Regular.ttf
++NotoSansMyanmarUI-Bold.ttf
++NotoSansMyanmarUI-Regular.ttf
++NotoSansNKo-Regular.ttf
++NotoSansNewTaiLue-Regular.ttf
++NotoSansOlChiki-Regular.ttf
++NotoSansOriya-Bold.ttf
++NotoSansOriya-Regular.ttf
++NotoSansOriyaUI-Bold.ttf
++NotoSansOriyaUI-Regular.ttf
++NotoSansRejang-Regular.ttf
++NotoSansSC-Regular.otf
++NotoSansSaurashtra-Regular.ttf
++NotoSansSinhala-Bold.ttf
++NotoSansSinhala-Regular.ttf
++NotoSansSundanese-Regular.ttf
++NotoSansSylotiNagri-Regular.ttf
++NotoSansSymbols-Regular-Subsetted.ttf
++NotoSansSyriacEstrangela-Regular.ttf
++NotoSansTC-Regular.otf
++NotoSansTagbanwa-Regular.ttf
++NotoSansTaiLe-Regular.ttf
++NotoSansTaiTham-Regular.ttf
++NotoSansTaiViet-Regular.ttf
++NotoSansThaana-Bold.ttf
++NotoSansThaana-Regular.ttf
+-Padauk-book.ttf
+-Padauk-bookbold.ttf
++NotoSansTibetan-Regular.ttf
++NotoSansTifinagh-Regular.ttf
++NotoSansVai-Regular.ttf
++NotoSansYi-Regular.ttf
++NotoSerif-Bold.ttf
++NotoSerif-BoldItalic.ttf
++NotoSerif-Italic.ttf
++NotoSerif-Regular.ttf
++Roboto-Black.ttf
++Roboto-BlackItalic.ttf
++Roboto-Medium.ttf
++Roboto-MediumItalic.ttf
++RobotoCondensed-Light.ttf
++RobotoCondensed-LightItalic.ttf
+</code></pre>
+
+<p>
+全体をかい摘んでいうと、
+</p>
+
+<ul>
+<li>Droid Font Family は全体的に削除がなされていている（まだ DroidSans, DroidSans-Bold, DroidSansMono が残っているが）</li>
+<li>Noto Font Family が拡充されている。これには CJK も含む。</li>
+<li>AndroidEmoji が削除された。NotoColorEmoji があるので絵文字自体が削除されてわけではない。</li>
+<li>MTLmr3m (MotoyaLMaru W3 Mono) がひっそりと削除された。</li>
+<li>NanumGothic (<span xml:lang="kr">고딕체</span> Gothic) がひっそりと削除された。</li>
+<li>Padauk-book, Padauk-bookbold がひっそりと削除された。これはタイ語フォントである。</li>
+<li>NotoSansSC, NotoSansTC, NotoSansJP, NotoSansKR のみ拡張子が OTF!</li>
+</ul>
+
+<p>
+日本語フォントとして Android 6 (Mashmallow) で、
+ようやく Noto Sans が導入されたわけであるが、
+太字用のフォントが用意されていない。
+それ故、太字は依然微妙なレンダリングで表示されるため区別が難しい。
+（ウェブページ上では text-shadow を使うバッドノウハウが依然使うことになりそうだ。）
+</p>
+
+<p>
+また、当然のことながら細字フォントの表示はなされない。
+（ただしフォントを差し替えた場合を除く）
+</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path 201511_android5-motoya.png %}">{% asset_image_tag 201511_android5-motoya.png 320 150 %}</a>
+<figcaption style="display: block;">Android 5 (MotoyaLMaru W3 Mono)</figcaption>
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path 201511_android6-notosans-jp.png %}">{% asset_image_tag 201511_android6-notosans-jp.png 320 152 %}</a>
+<figcaption style="display: block;">Android 6 (NotoSansJP)</figcaption>
+</figure>
+
+<p>あなたの環境での表示</p>
+<div style="font-family: sans-serif; font-size: 14pt; border: solid thin #aaa;">
+<span style="font-weight: 100;">font-weight: 100; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 200;">font-weight: 200; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 300;">font-weight: 300; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 400;">font-weight: 400; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 500;">font-weight: 500; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 600;">font-weight: 600; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 700;">font-weight: 700; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 800;">font-weight: 800; 新しい朝が来た希望の朝。</span><br />
+<span style="font-weight: 900;">font-weight: 900; 新しい朝が来た希望の朝。</span><br />
+</div>
+
+<h3>Reference</h3>
+
+<ul>
+<li><a href="https://developers.google.com/android/nexus/images">Factory Images for Nexus Devices</a> | Nexus Files for Developers | Google Developers</li>
+<li><a href="https://github.com/anestisb/android-simg2img">anestisb/android-simg2img</a> - Tool to convert Android sparse images to raw images</li>
+<li>"<a href="http://androidlover.net/android-os/android-m/android-m-change-japanese-font-from-motoya-to-noto-sans-cjk.html">Android 6.0 Marshmallowでは日本語フォントがモトヤフォントからNoto Sans CJKに変更される。</a>", Android(アンドロイド)おすすめアプリ/格安SIM/SIMフリースマホ情報|アンドロイドラバー</li>
+</ul>
+
