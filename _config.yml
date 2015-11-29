@@ -22,6 +22,7 @@ sass:
 
 gems:
  - jekyll/itafroma/collapse_newlines
+ - jekyll-paginate
 
 # Build settings
 #markdown: kramdown

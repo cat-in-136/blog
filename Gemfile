@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'jekyll'
+gem 'jekyll', '>= 3'
+gem 'jekyll-paginate'
 gem 'redcarpet'
 gem 'jekyll-itafroma-collapse_newlines'
 gem 'json'
