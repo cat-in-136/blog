@@ -1,0 +1,133 @@
+---
+layout: post
+title: "【担当者さん必見】メンバーみんなで日程調整ができる「Scheduling Poll」プラグイン登場！"
+author: cat_in_136
+tags: redmine howto チラシの裏
+date: '2015-11-30T23:48:32+09:00'
+---
+<p>
+もうすぐ12月。そろそろ忘年会や新年会の予定が入る頃ではないでしょうか？
+redmineのプラグイン「<a href="https://github.com/cat-in-136/redmine_scheduling_poll">Scheduling Poll</a>」は、複数人での日程調整が簡単にできる便利プラグインです。
+</p>
+<p>
+忘年会や同窓会はもちろん、普段の予定も redmine にお任せ。
+担当者さんの強い味方となるこのサービス、早速使ってみてくださいね。
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_ticket_vote.png 200 300 %}
+</figure>
+
+<h3>インストール</h3>
+<p>
+まず git clone と migrate してインストールしましょう！
+</p>
+<pre class="terminal">% cd plugins
+% git clone https://github.com/cat-in-136/redmine_scheduling_poll.git
+% cd ..
+% bundle exec rake redmine:plugins:migrate RAILS_ENV=production
+</pre>
+<p>
+管理者さんは、プロジェクトに対して「Scheduling polls」を有効にしましょう。
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_project_module.png 200 300 %}
+</figure>
+<p>
+スケジュール調整に招待できるユーザーは、プロジェクトのロールで許可されているユーザーが対象です。
+<span style="font-size: x-small;">*redmineの[管理]＞[ロール]＞[権限レポート]を選択して、「View scheduling polls」と「Vote scheduling polls」の権限の設定をする必要があります。</span>
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_role_setting.png 200 300 %}
+</figure>
+
+<h3>イベント作成</h3>
+<p>
+予定の取りまとめを任されたら、redmine のプロジェクトから[新しいチケット]を選択して、"イベント"のチケットをつくりましょう。
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_new_ticket.png 200 300 %}
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_new_ticket_xmas.png 200 300 %}
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_ticket_created.png 200 300 %}
+</figure>
+<p>
+チケットの[Scheduling Poll]＞[Add]を選択して、みんなの予定を聞く"Scheduling poll"ページをつくってみましょう！
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_ticket_add_vote.png 200 300 %}
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_new_poll_items.png 200 300 %}
+</figure>
+<p>
+プロジェクトの活動には、スケジュール調整を追加した通知が届きます。回答期限やお願いはチケットの注記に添えてくださいね♪
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_ticket_add_vote_activity.png 200 300 %}
+</figure>
+
+
+<h3>予定の回答</h3>
+<p>
+回答だって簡単。チケットの[Scheduling polls]＞[Vote]をタップして、回答画面に移動しましょう。選択肢を選ぶだけで、時間をかけずにかんたんに回答！コメントを残すことだってできます。
+<span style="font-size: x-small;">*選択肢はプラグインの設定から変更可能です</span>
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_ticket_vote.png 200 300 %}
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_vote.png 200 300 %}
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_vote_add_comment.png 200 300 %}
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_vote_add_comment2.png 200 300 %}
+</figure>
+
+<p>
+回答されたイベントは、回答結果がわかりやすく表示されるので、日程決定がスムーズに。Vote をタップすると、下の方にみんなの回答を一覧にしてみることができます。回答は後から変更することもできるので、他に予定が入ってしまった時も安心！
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_ticket_vote_result.png 200 300 %}
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_vote_vote_result.png 200 300 %}
+</figure>
+<p>
+コメントは、チケットの注記として表示されます。参加可能な時間や、持ち物を書き込むにも便利！
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201511_redmine_scheduling_polls_ticket_vote_jornal_comment.png 200 300 %}
+</figure>
+
+<p>
+作成したイベントの編集や日程の変更の追加はロールで許可したユーザーなら誰でも可能。
+</p>
+<p>
+これからの季節に大活躍すること間違いなしの「Scheduling polls」。楽しい予定の調整に、お役立てください！
+</p>
+
+<hr />
+
+<h3>Inspired by</h3>
+
+<ul>
+<li><a href="http://official-blog.line.me/ja/archives/17582540.html">【幹事さん必見】友だちみんなで日程調整ができる「LINE スケジュール」機能登場！ : LINE公式ブログ</a></li>
+</ul>
+
+<h3>所感</h3>
+
+<ul>
+<li><a href="https://www.redmine.org/versions/102">redmine 3.2.0</a> (2015/12/06リリース予定) のスマホ対応(<a href="https://www.redmine.org/issues/19097">レスポンシブレイアウト対応</a>)はまずまず</li>
+<li>というか、本プラグインの<em>スマホ（画面）対応が必要であると痛感</em>した</li>
+<li>その他、redmine 3.2.0 で早速動かなくなっている箇所が出てきそうなので対策しなければ、と思った。</li>
+<li>「回答者のみにメッセージを送信」する機能は LINE にはあるが、redmine での実装の方法は不明のため作らなかった。</li>
+<li>この記事の「24は行けるかも！チキン作る(^^)/」を書くためだけに、Vote ページにコメント機能を追加したが、ひょっとして便利かもしれない。</li>
+<li>しかし、そもそもリア充は redmine 使わないと思われ</li>
+<li>keita 氏のコメントの♡3つが意味不明すぎる。</li>
+</ul>
+
