@@ -5,7 +5,7 @@ date: '2012-12-31T22:43:00.001+09:00'
 author: cat_in_136
 tags:
 - mozilla
-modified_time: '2012-12-31T23:02:15.553+09:00'
+modified_time: '2015-12-29T09:45:14+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8559095529947273952
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/12/tip-how-to-run-new-firefox-instance-w.html
 ---
@@ -30,3 +30,15 @@ mkdir $PROFILEDIR
 firefox -profile $PROFILEDIR -no-remote -new-instance
 rm -rf $PROFILEDIR
 </code></pre>
+
+<ins datetime="2015-12-29T09:45:14+09:00">
+<p>
+According to the Sangye's comment,
+using <a href="http://www.gnu.org/software/autogen/mktemp.html">mktemp(1)</a> is more better:
+</p>
+<pre class="prettyprint"><code class="lang-sh">#!/bin/sh
+PROFILEDIR=`mktemp -p /tmp -d tmp-fx-profile.XXXXXX.d`
+firefox -profile $PROFILEDIR -no-remote -new-instance
+rm -rf $PROFILEDIR
+</code></pre>
+</ins>
