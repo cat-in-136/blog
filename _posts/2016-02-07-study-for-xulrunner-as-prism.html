@@ -1,0 +1,149 @@
+---
+layout: post
+title: Study for XULRunner as Prism, using Firefox
+author: cat_in_136
+tags: mozilla xulrunner html
+thumbnail: "{% asset_image_path 201602_prism_xulrunner_firefox.png %}"
+date: '2016-02-07T00:14:09+09:00'
+---
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag fitcontain 201602_prism_xulrunner_firefox.png 640 400 %}
+</figure>
+
+<p>Mission: run a web application without the normal browser UI, as a XULRunner application but using Firefox (version 3 and above).</p>
+<p>I am a Firefox funboy. So I want to use Gecko rather than WebKit (<a href="http://electron.atom.io/">Electron</a>).</p>
+
+<h3>Idea</h3>
+
+<blockquote>
+  <p><em>XULRunner</em> is a Mozilla runtime package that can be used to bootstrap XUL+XPCOM applications that are as rich as Firefox and Thunderbird.</p>
+  <footer>-- <cite><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/XULRunner">XULRunner - Mozilla</a>, MDN</cite></footer>
+</blockquote>
+
+<blockquote>
+  <p>Firefox (from version 3) ships with a private XULRunner package, which can run any compatible XULRunner application using the <code>-app</code> switch: <code>firefox -app application.ini</code> is equivalent to <code>xulrunner -app application.ini</code></p>
+  <footer>-- <cite><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/XULRunner">XULRunner - Mozilla</a>, MDN</cite></footer>
+</blockquote>
+
+<blockquote>
+  <p>Prism is a simple XULRunner-based browser that hosts web applications without the normal web browser user interface.</p>
+  <footer>-- <cite><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Prism">Prism - Archive of obsolete content</a>, MDN</cite></footer>
+</blockquote>
+
+<h3>Solution</h3>
+
+<p>Example: view <code>https://www.google.com/</code> without the normal browser UI.</p>
+
+<p>Souce code is available on github <a href="https://github.com/cat-in-136/study-for-xulrunner-as-prism-using-firefox">cat-in-136/study-for-xulrunner-as-prism-using-firefox</a>.</p>
+
+<h4>Normal approach</h4>
+
+<p>Open <code>app.xul</code> when the XULRunner_as_prism application is lanched.
+And then <code>app.xul</code> load the web page – <code>https://www.google.com/</code></p>
+
+<ul>
+  <li>
+    <p>application.ini</p>
+
+    <div><pre class="prettyprint"><code>[App]
+Vendor=cat_in_136
+Name=XULRunner_as_prism
+Version=0.0
+BuildID=20160206
+Copyright=Copyright (c) 2016 @cat_in_136
+ID=xulrunner_as_prism@cat-in-136.github.io
+   
+[Gecko]
+MinVersion=38
+MaxVersion=*
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>defaults/preferences/prefs.js</p>
+
+    <div><pre class="prettyprint"><code>pref("toolkit.defaultChromeURI", "chrome://xrap/content/app.xul");
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>chrome.manifest</p>
+
+    <div><pre class="prettyprint"><code>content xrap content/
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>content/app.xul</p>
+
+    <div><pre class="prettyprint"><code>&lt;?xml version="1.0"?&gt;
+&lt;?xml-stylesheet href="chrome://global/skin/" type="text/css"?&gt;
+&lt;window id="main" width="400" height="300" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+&lt;browser id="browser" flex="1" type="content-primary" src="https://www.google.co.jp/"/&gt;
+&lt;findbar id="findbar" hidden="false" browserid="browser"/&gt;
+&lt;/window&gt;
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p>How to run: <code>firefox -app application.ini</code></p>
+
+<h4>Minimum code solution</h4>
+
+<p>XULRunner FAQ says:</p>
+
+<blockquote>
+<dl>
+ <dt>
+  If I use XULRunner do I have to write my application in XUL?</dt>
+ <dd>
+  No! You can write your application in any language supported by the Mozilla web platform, including HTML, XHTML, SVG, or XUL.</dd>
+</dl>
+<footer>-- <cite><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/XULRunner/FAQ">XULRunner FAQ - Mozilla</a>, MDN</footer>
+</blockquote>
+
+<p>Wow!</p>
+
+<ul>
+  <li>
+    <p>application.ini (No Change)</p>
+
+    <div><pre class="prettyprint"><code>[App]
+Vendor=cat_in_136
+Name=XULRunner_as_prism
+Version=0.0
+BuildID=20160206
+Copyright=Copyright (c) 2016 @cat_in_136
+ID=xulrunner_as_prism@cat-in-136.github.io
+   
+[Gecko]
+MinVersion=38
+MaxVersion=*
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>defaults/preferences/prefs.js</p>
+
+    <div><pre class="prettyprint"><code>pref("toolkit.defaultChromeURI", "https://www.google.com/");
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p>How to run: <code>firefox -app application.ini</code></p>
+
+<h3>Note: profile folder location</h3>
+
+<p>The profile folder is placed in <code>%APPDATA%\cat_in_136</code> (for windows) or <code>~/.cat_in_136</code> (for unix).
+You may remove this folder after you close this XULRunner_as_prism application.</p>
+
+<h3>References</h3>
+
+<ul>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Prism">Prism - Archive of obsolete content</a>, MDN</li>
+  <li><a href="https://mozillalabs.com/en-US/chromeless/">Chromeless Browser</a>, Mozilla Labs</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/XULRunner">XULRunner - Mozilla</a>, MDN</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/XULRunner/FAQ">XULRunner FAQ - Mozilla</a>, MDN</li>
+</ul>
