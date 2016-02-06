@@ -355,6 +355,15 @@ a:visited {
     border: dashed 3px $primary-light-color;
     text-align:center;
   }
+  @media screen and (max-width: 480px) {
+    .fitcontain {
+      object-fit: scale-down;
+      width: -webkit-available;
+      width: -moz-available;
+      width: available;
+      height: auto;
+    }
+  }
   table:not([class]):not([style]) {
     border-collapse: collapse;
     margin: auto;
