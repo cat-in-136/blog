@@ -1,0 +1,319 @@
+---
+layout: post
+title: "算道の解析"
+author: cat_in_136
+tags: art math
+date: '2016-02-12T01:07:50+09:00'
+---
+<p>
+<a href="http://sando.monophile.net/">算道</a>なる構成論的アートとは、
+論理珠算を用いた計算であるが、
+説明がかなり省かれていてよくわからんのでここにまとめる。
+</p>
+
+<h3>Unlambda記法</h3>
+
+<p>
+算道の表記で Unlambda記法 (Unlambda expression ?) は、
+下記のとおり珠を転写して表記したものである。
+</p>
+
+<table>
+<thead>
+<tr>
+<th>珠</th>
+<th>文字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>白珠</td>
+<td>`</td>
+</tr>
+<tr>
+<td>青珠</td>
+<td>s</td>
+</tr>
+<tr>
+<td>黄珠</td>
+<td>k</td>
+</tr>
+<tr>
+<td>赤珠</td>
+<td>i</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+例えば、零を表す「白白赤黄青」は、<code>``iks</code>と表す。
+</p>
+
+<p>
+これは、つまるところ<a href="https://ja.wikipedia.org/wiki/SKI%E3%82%B3%E3%83%B3%E3%83%93%E3%83%8D%E3%83%BC%E3%82%BF%E8%A8%88%E7%AE%97">SKIコンビネータ計算</a>
+の Unlambda 表記そのものであって、
+算道はSKIと等価である。
+</p>
+
+<h3>整珠</h3>
+
+<ul>
+<li><code>s</code>,<code>k</code>,<code>i</code>は、
+それぞれ単珠(single-ju?)と呼ばれるが、これはまた整珠(integal-ju?)でもある。</li>
+<li><code>@1</code>,<code>@2</code>が整珠のとき、
+<code>`@1@2</code>もまた整珠である。</li>
+<li>複珠(multiple-ju?)とは複数の珠からなる整珠のことである。</li>
+</ul>
+
+<h4>整珠の構造</h4>
+
+<p>
+複珠は<code>`@1@2</code>からなるから、<code>`@1@2</code>が入れ子になって
+整珠ができている。
+</p>
+<p>
+整珠の入れ子の構造を括弧で表した例を以下に示す。
+</p>
+<dl>
+    <dt>零</dt>
+    <dd><code>``iks = `(`ik)s</code></dd>
+    <dt>一</dt>
+    <dd><code>`s`ki = `s(`ki)</code></dd>
+    <dt>ものまね鳥の番い</dt>
+    <dd><code>```sii``sii = `(`(`si)i)(`(`(si)i)</code></dd>
+</dl>
+
+<h3>論理算盤への展開</h3>
+
+<p>
+論理珠算を行うにあたり論理算盤へ珠を展開する。
+展開する時、珠を左から右、上から下に置いていく。
+珠を置かない場所を作ってもよいし、
+珠を右に置くか下の行に移動するかは自由である。
+</p>
+<p>
+配置方法について言及していていないため、
+下記に出てくる記法・用語は本文書で提案するものである。
+</p>
+
+<h4>Unlambda形式に依る論理算盤の記述</h4>
+
+<p>
+本文書では、盤面上の配置を Unlambda形式に依ってそのまま記載するものとする。
+但し、珠が置かれていないことを <code>_</code> で示す。
+</p>
+<p>
+<code>`sk</code> の盤面上の配置例を下記に示す。
+</p>
+
+<pre><code>` s
+_ k</code></pre>
+
+<h4>「直列配置」</h4>
+
+<p>
+「直列配置(Linear alignment)」は、そのまま盤面に左から右へ並べたものである。
+</p>
+
+<pre><code>` s k</code></pre>
+
+<p>
+なお、紙面の横幅の都合上途中で行を変えてもよい。
+</p>
+
+<pre><code>` ` ` s i i
+` ` s i i</code></pre>
+
+<h4>「完全ニ分木配置」</h4>
+
+<p>
+「完全ニ分木配置(complete binary-tree alignment)」は、<code>`@1@2</code>の入れ子構造を
+完全な形で表現した配置形式である。
+</p>
+
+<p>
+<code>`@1@2</code>を下記の通り配置する。
+</p>
+
+<pre><code>` @1
+_ @2</code></pre>
+
+<p>
+ここで<code>@1</code>,<code>@2</code>が、複珠であるとき、
+さらに入れ子にする形で配置する。
+</p>
+<p>
+たとえば
+<code>@1 = `@3@4</code>, <code>@2 = `@5@6</code> であるならば、
+先ほどのの盤面は下記のようになる。
+</p>
+
+<pre><code>` ` @3
+_ _ @4
+_ ` @5
+_ _ @6</code></pre>
+
+<h4>「ニ分木配置」</h4>
+
+<p>
+完全ニ分木配置では、紙面も盤面も大きさを要する。
+そこで完全ニ分木配置のうち一部の<code>`@1@2</code>構造をまとめて積み上げることを考える。
+</p>
+
+<p>
+ここでは積み上げた珠は括弧を用いて表現する。
+</p>
+
+<pre><code>` ` @3
+_ _ @4
+_ (`@5@6)</code></pre>
+
+<h3>規則</h3>
+
+<p>
+下記の規則に基づいて整珠を動かす=計算することができる。
+</p>
+
+<dl>
+<dt>青珠の規則 (s-rule?)</dt>
+<dd><code>```s@0@1@2 = ``@0@2`@1@2</code></dd>
+<dt>黄珠の規則 (k-rule?)</dt>
+<dd><code>``k@0@1 = @0</code></dd>
+<dt>赤珠の規則 (i-rule?)</dt>
+<dd><code>`i@0 = @0</code></dd>
+</dl>
+
+<p>
+ここで<code>@0</code>,<code>@1</code>,...は整珠である。
+青珠の規則において、2回現れているがこれは<code>@2</code>を複製して同じものを2つ用意するということである。
+</p>
+
+<p>
+それぞれの規則を、以下にニ分木配置で表す。
+</p>
+
+<dl>
+<dt>青珠の規則 (s-rule?)</dt>
+<dd>
+<pre><code>` ` ` s
+      @0
+    @1
+  @2
+</code></pre>
+↓
+<pre><code>` ` @0
+    @2
+  ` @1
+    @2
+</code></pre>
+</dd>
+<dt>黄珠の規則 (k-rule?)</dt>
+<dd>
+<pre><code>` ` k
+    @0
+  @1
+</code></pre>
+↓
+<pre><code>@1</code></pre>
+</dd>
+<dt>赤珠の規則 (i-rule?)</dt>
+<dd>
+<pre><code>` i
+  @0
+</code></pre>
+↓
+<pre><code>@0</code></pre>
+</dd>
+</dl>
+
+<p>
+それぞれの規則の前後は共に整珠である。
+規則に従って計算している限り、計算結果は整珠である。
+逆に整珠でなくなったときは計算に失敗（いわゆる計算ミス）しているのである。
+</p>
+
+<h4>算道の規則とSKI評価演算の関係</h4>
+
+
+<dl>
+<dt>青珠の規則 (s-rule?)</dt>
+<dd>Substitution combinator</dd>
+<dt>黄珠の規則 (k-rule?)</dt>
+<dd>Constant combinator</dd>
+<dt>赤珠の規則 (i-rule?)</dt>
+<dd>Identity combinator</dd>
+</dl>
+
+<h3>計算手順</h3>
+
+<ol>
+<li>整珠であることを確認。
+    <ul><li>整珠ならば次に進む。</li><li>整珠ではない場合計算に失敗。</li></ul>
+</li>
+<li>赤珠の規則(i-rule?)が適用可能ならば適用する
+    <ul><li>適用したら1からやり直す。</li><li>適用できない場合次に進む</li></ul>
+</li>
+<li>黄珠の規則(k-rule?)が適用可能ならば適用する
+    <ul><li>適用したら1からやり直す。</li><li>適用できない場合次に進む</li></ul>
+</li>
+<li>青珠の規則(s-rule?)が適用可能ならば適用する
+    <ul><li>適用したら1からやり直す。</li><li>適用できない場合計算終了</li></ul>
+</li>
+</ol>
+
+<h3>計算例：真かつ偽</h3>
+
+<p>
+『真かつ偽』を表す整珠は<code>````sskk`sk</code>である。
+</p>
+
+<ol start="0">
+<li><pre><code>` ` ` ` s
+_ _ _ _ s
+_ _ _ k
+_ _ k
+_ (`sk)
+</code></pre>青珠の規則(s-rule?)を<code>```sskk</code>に適用し、</li>
+<li><pre><code>` ` ` s
+_ _ _ k
+_ _ ` k
+_ _ _ k
+_ (`sk)
+</code></pre><code>`kk</code>を積み上げて
+</li>
+<li><pre><code>` ` ` s
+_ _ _ k
+_ _ (`kk)
+_ (`sk)
+</code></pre>青珠の規則(s-rule?)を全体に適用し、
+</li>
+<li><pre><code>` ` k
+_ _ (`sk)
+_ ` (`kk)
+_ _ (`sk)
+</code></pre><code>``kk`sk</code>を積み上げて
+</li>
+<li><pre><code>` ` k
+_ _ (`sk)
+_ (``kk`sk)
+</code></pre>黄珠の規則(k-rule?)を全体に適用し、
+</li>
+<li><pre><code>(`sk)</code></pre>
+計算終了。答えは「偽」である。
+</li>
+</ol>
+
+<h3>感想</h3>
+
+<p>
+青珠の規則の規則にて、<code>@2</code>を複製する必要があるが、
+珠に凹凸のパターンを付けるなどして複製が容易にするようにするとよいと思う。
+</p>
+
+<h3>参考文献</h3>
+
+<ul>
+<li>山本一彰, "<a href="http://sando.monophile.net/">算道</a>"</li>
+<li>"<a href="http://campusgenius.jp/2015/nominate/519/">算道</a>", 第21回学生CGコンテスト, 2015</li>
+<li>"<a href="http://festival.j-mediaarts.jp/award/art/sando">算道</a>", 第19回文化庁メディア芸術祭</li>
+</ul>
