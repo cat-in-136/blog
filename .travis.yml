@@ -13,6 +13,8 @@ before_script:
         - bundle exec rake setup[https://${GH_TOKEN}@github.com/cat-in-136/cat-in-136.github.io.git]
 script:
         - bundle exec rake generate
+        - bundle exec rake validate
+after_success:
         - bundle exec rake -q deploy 2>&1 | sed "s/${GH_TOKEN}/\${GH_TOKEN}/g"
 env:
         global:

@@ -112,6 +112,25 @@ task :setup, :deploy_site do |t, args|
   ok_failed system "git clone \'#{args.deploy_site}\' \'#{deploy_dir}\'"
 end
 
+desc "Validates _site/"
+task :validate do
+  require 'rexml/document'
+
+  ng_count = 0
+  ok_count = 0
+  Dir.glob('_site/**/*.html') do |file|
+    begin
+      File.open(file, 'r') { |f| REXML::Document.new(f) }
+      ok_count = ok_count.succ
+    rescue REXML::ParseException => ex
+      puts "#{Term::ANSIColor::red}#{Term::ANSIColor::bold}NG#{Term::ANSIColor::clear} #{file}(#{ex.line}:#{ex.position}): #{ex.message.split(/\n/).first}\n"
+      ng_count = ng_count.succ
+    end
+  end
+  puts "#{Term::ANSIColor::green}OK:#{ok_count} #{Term::ANSIColor::red}NG:#{ng_count}#{Term::ANSIColor::clear}\n"
+  raise 'Not valid' if ng_count > 0
+end
+
 desc "Deploy to github.io"
 task :deploy do
   #Rake::Task[:generate].execute
