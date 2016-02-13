@@ -7,7 +7,7 @@ tags:
 - win32api
 - mingw
 - windows
-modified_time: '2013-11-23T22:33:05.217+09:00'
+modified_time: '2016-02-13T20:35:01+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8256030474975752840
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/04/unicodemingw32twinmainwwinmain.html
 ---
@@ -64,7 +64,7 @@ for (i = 0; i &lt; __argc; i++) {
 // OK:
 INT argc;
 WCHAR **argv;
-wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+wargv = CommandLineToArgvW(GetCommandLineW(), &amp;argc);
 for (i = 0; i &lt; argc; i++) {
     arg = wargv[i];
     //...

@@ -7,7 +7,7 @@ tags:
 - win32api
 - linux
 - windows
-modified_time: '2013-11-23T22:33:43.275+09:00'
+modified_time: '2016-02-13T20:35:01+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8128995594284955978
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/inode-is-different-from-ntfs-fileref.html
 ---
@@ -24,6 +24,7 @@ You can see "35" is this file's inode number.
 </p>
 <p>
 On NTFS, the ID is called File reference number (FileRef#). To obtain FileRef# of "foobar.txt", type as follows:
+</p>
 <pre>&gt; fsutil usn readdata f:\foobar.txt
 Major Version    : 0x2
 Minor Version    : 0x0
@@ -54,7 +55,7 @@ hFile = CreateFile(TEXT("f:\\foobar.txt"),
                    FILE_FLAG_BACKUP_SEMANTICS | FILE_ATTRIBUTE_READONLY,
                    NULL);
 GetFileInformationByHandle(hFile, &amp;fileInfo);
-fileID = (ULONGLONG)((fileInfo.nFileIndexLow) | (((ULONGLONG)fileInfo.nFileIndexHigh) << 32));
+fileID = (ULONGLONG)((fileInfo.nFileIndexLow) | (((ULONGLONG)fileInfo.nFileIndexHigh) &lt;&lt; 32));
 </code></pre>
 <p>
 In addition, I obtained inode number with MSYS's ls command.

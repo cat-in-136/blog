@@ -7,14 +7,14 @@ tags:
 - web application
 - train and rails
 - google maps
-modified_time: '2012-12-23T12:15:36.726+09:00'
+modified_time: '2016-02-13T20:35:01+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6091809471896729897
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/11/google-maps-api-v3_23.html
 ---
 
 <div id="google_metro_only_map_canvas" style="width: 100%; height: 280px; border: solid thin #000;">読み込み中です。しばらくお待ち下さい。</div>
 <script src="http://maps.google.com/maps/api/js?sensor=false&amp;lang=ja"></script>
-<script defer="defer" async="async" id="google_metro_only_map_script">
+<script defer="defer" async="async" id="google_metro_only_map_script"><!-- /* --><![CDATA[ // */
 (function () {
     var tokyo = new google.maps.LatLng(35.681283, 139.750042);
 
@@ -45,7 +45,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/11/google-maps-api-v3_23.h
     map.mapTypes.set("subway", subwayMapType);
     map.setMapTypeId("subway");
 })();
-</script>
+// ]]><!-- --></script>
 
 <p>
 日本のGoogleマップでは、地下鉄の駅検索などをしたときに地下鉄の路線が強調表示される。
