@@ -5,31 +5,30 @@ title: Tags
 {% assign tags = site.tags | sort %}
 <div class="tag-list">
   <h1>{{ page.title | escape }}</h1>
-    <div class="tag-cloud">
-      <nav>
-      {% for tag in tags %}
-        {% assign fontsize = tag[1] | size | times: 225 | divided_by: tags.size | plus: 75 %}
-        <a class="tag" href="#tag_{{ tag[0] | handleize | downcase | uri_escape }}" style="font-size: {{ fontsize }}%">
-          {{ tag[0] | capitalize }}({{ tag[1] | size }})
-        </a>
-      {% endfor %}
-      </nav>
-    </div> 
-
-    <ul class="post-list">
+  <div class="tag-cloud">
+    <nav>
     {% for tag in tags %}
-      <li id="tag_{{ tag[0] }}">
-      	<span class="tag">{{ tag[0] }}</span>
-        <ul class="tag-posts">
-        {% for post in tag[1] %}
-          <li class="post-item">
-            <span class="post-date">{{ post.date | date: "%F" }}</span>
-            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-          </li>
-        {% endfor %}
-        </ul>
-      </li>
+      {% assign fontsize = tag[1] | size | times: 225 | divided_by: tags.size | plus: 75 %}
+      <a class="tag" href="#tag_{{ tag[0] | handleize | downcase | uri_escape }}" style="font-size: {{ fontsize }}%">
+        {{ tag[0] | capitalize }}({{ tag[1] | size }})
+      </a>
     {% endfor %}
-    </ul>
+    </nav>
+  </div> 
+
+  <ul class="post-list">
+  {% for tag in tags %}
+    <li id="tag_{{ tag[0] }}">
+    	<span class="tag">{{ tag[0] }}</span>
+      <ul class="tag-posts">
+      {% for post in tag[1] %}
+        <li class="post-item">
+          <span class="post-date">{{ post.date | date: "%F" }}</span>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
+        </li>
+      {% endfor %}
+      </ul>
+    </li>
+  {% endfor %}
   </ul>
 </div>

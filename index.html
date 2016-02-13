@@ -8,7 +8,7 @@ layout: default
         <span class="post-date">{{ post.date | date: "%F" }}</span>
         <div>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-          <div class="post-summary">{{ post.content | strip_html | truncate: 140 }}</div>
+          <div class="post-summary">{{ post.content | strip_html | truncate: 140 | escape }}</div>
         </div>
       </li>
     {% endfor %}
