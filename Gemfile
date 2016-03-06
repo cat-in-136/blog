@@ -5,8 +5,11 @@ gem 'jekyll-paginate'
 gem 'redcarpet'
 gem 'jekyll-itafroma-collapse_newlines'
 gem 'json'
-gem 'rb-gsl', '~> 1.16'
+group :lsi do
+  gem 'rb-gsl', '~> 1.16'
+end
 gem 'classifier-reborn'
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 gem 'imagesize'
 
