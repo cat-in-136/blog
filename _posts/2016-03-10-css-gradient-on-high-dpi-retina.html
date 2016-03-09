@@ -1,0 +1,73 @@
+---
+layout: post
+title: CSS gradient で高DPI(所謂Retina Display等)を体感する
+author: cat_in_136
+tags: チラシの裏 css
+date: '2016-03-10T00:44:56+09:00'
+---
+
+<p>
+CSS3 グラデーションで色の間隔を 1px 未満にすると、グラデーション表示されない。
+が、高DPI環境(所謂Retina Display等)だと表示されるらしい。
+</p>
+
+<table style="width: 100%">
+  <colgroup>
+    <col span="1" style="width: 50%; padding: 2px;" />
+    <col span="1" style="width: 50%; padding: 2px;" />
+  </colgroup>
+  <tbody>
+    <tr>
+      <td style="background: -webkit-repeating-radial-gradient(circle, #000 0px, #e54848 5.000px); background: repeating-radial-gradient(circle, #000 0px, #e54848 5.000px);">&nbsp;</td>
+      <td>5px</td>                                                                                                                                                          
+    </tr>                                                                                                                                                                   
+    <tr>                                                                                                                                                                    
+      <td style="background: -webkit-repeating-radial-gradient(circle, #000 0px, #e54848 1.000px); background: repeating-radial-gradient(circle, #000 0px, #e54848 1.000px);">&nbsp;</td>
+      <td>1px</td>                                                                                                                                                          
+    </tr>                                                                                                                                                                   
+    <tr>                                                                                                                                                                    
+      <td style="background: -webkit-repeating-radial-gradient(circle, #000 0px, #e54848 0.500px); background: repeating-radial-gradient(circle, #000 0px, #e54848 0.500px);">&nbsp;</td>
+      <td>0.5px</td>                                                                                                                                                        
+    </tr>                                                                                                                                                                   
+    <tr>                                                                                                                                                                    
+      <td style="background: -webkit-repeating-radial-gradient(circle, #000 0px, #e54848 0.333px); background: repeating-radial-gradient(circle, #000 0px, #e54848 0.333px);">&nbsp;</td>
+      <td>0.333px</td>                                                                                                                                                      
+    </tr>                                                                                                                                                                   
+    <tr>                                                                                                                                                                    
+      <td style="background: -webkit-repeating-radial-gradient(circle, #000 0px, #e54848 0.250px); background: repeating-radial-gradient(circle, #000 0px, #e54848 0.250px);">&nbsp;</td>
+      <td>0.25px</td>                                                                                                                                                       
+    </tr>                                                                                                                                                                   
+    <tr>                                                                                                                                                                    
+      <td style="background: -webkit-repeating-radial-gradient(circle, #000 0px, #e54848 0.200px); background: repeating-radial-gradient(circle, #000 0px, #e54848 0.200px);">&nbsp;</td>
+      <td>0.2px</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+高DPI環境(所謂Retina Display等)でなかったとしても、ブラウザの拡大縮小によってグラデーションが表示されるようになったりするようだ。
+</p>
+
+<p>
+HTML5の規格としてもそのような記述されている。
+でも、色の混合までやっているブラウザはあるのかなぁ。
+</p>
+
+<blockquote cite="https://drafts.csswg.org/css-images-3/#example-c6222b45">
+<div>
+    For example, the following gradient is rendered as a solid light-purple image (equal to <code>rgb(75%,50%,75%)</code>): 
+<pre>repeating-linear-gradient(red 0px, white 0px, blue 0px);</pre>
+    <p>The following gradient would render the same as the previous under normal circumstances
+		(because desktop monitors can’t faithfully render color-stops 1/10th of a pixel apart),
+		but would render as a normal repeating gradient if, for example,
+		the author applied "zoom:100;" to the element on which the gradient appears:</p>
+<pre>repeating-linear-gradient(red 0px, white .1px, blue .2px);</pre>
+   </div>
+</blockquote>
+
+<h3>参考文献</h3>
+
+<ul>
+<li>Tab Atkins Jr., et al., "<a href="https://drafts.csswg.org/css-images-3/">CSS Image Values and Replaced Content Module Level 3</a>", W3C, Editor's Draft, 26 Feb 2016</li>
+</ul>
+
