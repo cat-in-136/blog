@@ -1,0 +1,157 @@
+---
+layout: post
+title: CSS で縦書きと段組を組み合わせる試み
+author: cat_in_136
+tags: css html 和
+date: '2016-03-23T00:20:22+09:00'
+---
+
+<p>
+今時の CSS では、次の通り縦書きと段組ができるが、これを組合せられるのだろうかという試み。
+</p>
+<ul>
+  <li><code>writing-mode: vertical-rl;</code>で和文の縦書き</li>
+  <li><code>column-width: &lt;length&gt;;</code>で段組</li>
+</ul>
+
+<h3>動機</h3>
+
+<p>
+日本語は<em>伝統的には</em>漢文に習って縦書きであって、
+文字を天から地へ、行を右から左へ進めて書きしるす。
+舶来の技術であるHTMLの世界では、元来縦書きはできなかった。
+けれども、W3CのCSS<ruby>作業部会<rp>(</rp><rt>Working Group</rt><rp>)</rp></ruby>の中の人達が、
+<a href="https://www.w3.org/TR/css-writing-modes-3/">CSS Writing Modes Level 3</a>をこしらえ、
+またブラウザもまたこれをこしらえたお陰でHTMLの世界でも
+縦書きができるようになったのである。
+</p>
+<p>
+いまだ問題となるのは、組方向（縦書きと横書き）が混在する場合である。
+そんな組み方をするのが間違っている、という指摘はここでは棚に上げる。
+すると横書きに準じて縦スクロールするべきか
+縦書きに準じて横スクロールするべきかという問題が生じる。
+スクロールの向きが混在するのは流石に読みづらいことこの上ないので避けるとして、
+<em>縦書きだが縦スクロール</em>というのは日本の新聞の紙面などにおける段組と
+同じなのだからそれが組めればいいのではないかと思ったのである。
+</p>
+
+<h3>要求仕様</h3>
+
+<p>
+文書全体としては横書きの縦スクロールであるが、
+縦書きの文章を内部に挿入するにあたり次に示すような要求を満たすものとしたい。
+</p>
+<ol>
+<li>縦書き部の前には横書きのコンテンツがあり、また縦書き部の後には横書きのコンテンツがある。これらの横書きのコンテンツの表示に影響を及ぼさないこと。</li>
+<li>縦書き部に独立のスクロールバーは持たず、あくまで縦スクロールで読者は読むものとする。</li>
+<li>縦書き部の<ruby>横幅<rp>(</rp><rt>width</rt><rp>)</rp></ruby>は、100%、すなわち親の要素に合わせた横幅とする。</li>
+<li>縦書き部の文章は段組とし、行長（段組の高さ）は100vh以下、すなわち<ruby>画面<rp>(</rp><rt>view port</rt><rp>)</rp></ruby>の高さより小さくする。</li>
+</ol>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 2016_03_css_vertical_with_multicolumn_render_expection.svg %}
+<figcaption>期待される表示の図</figcaption>
+</figure>
+
+<h3>ソースコード</h3>
+
+<p>
+単純に横書き→縦書き→横書きの順番で文章が並んだHTMLファイルを用意した。
+</p>
+
+<pre class="prettyprint lang-html"><code>&lt;p&gt;(横書きのコンテンツ)...&lt;/p&gt;
+&lt;p class="vertical-writing"&gt;(縦書きのコンテンツ)...&lt;/p&gt;
+&lt;p&gt;(横書きのコンテンツ)...&lt;/p&gt;
+</code></pre>
+
+<p>
+これに対して、適切なCSSルールを定義した。
+</p>
+<pre class="prettyprint lang-css"><code>.vertical-writing {
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  width: 100%; /* 縦書き部の横幅 */
+  -moz-column-width: calc(100vh - 20px);
+  -moz-column-gap: 20px;
+  -moz-column-rule: 2px dashed #000;
+  column-width: calc(100vh - 20px);
+  column-gap: 20px;
+  column-rule: 2px dashed #000;
+}
+</code></pre>
+
+<p>
+段組の指定には、段数 (<code>column-count</code>) を使うこともできるが、
+段組の高さを指定するのを当初の目的としたのでそうした。
+</p>
+<p>
+なお、縦書き部の段組の高さは<code>100vh - 20px</code>、
+すなわち画面の高さより20px減じたものとした。
+</p>
+
+<h3>表示結果</h3>
+
+<h4>Edge</h4>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path 2016_03_css_vertical_with_multicolumn_render_sample_edge13.png %}">
+{% asset_image_tag 2016_03_css_vertical_with_multicolumn_render_sample_edge13.png 184 356 %}
+</a>
+<figcaption>Edge 13</figcaption>
+</figure>
+
+<p>
+縦書き部の後ろに続く横書き部と、縦書き部の段組二段目移行が重なってしまっている。
+これは縦書きと段組を組み合わせた時にボックスの高さが、一段分しか計算されないかららしい。
+高さを明示しても良いが、それではリキッドレイアウトではないので却下。
+それ以外は良好で、縦書き部の後ろに横書きのコンテンツが一切存在しない場合は、
+使い物になるのではないか。
+</p>
+
+<h4>Chrome</h4>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path 2016_03_css_vertical_with_multicolumn_render_sample_chrome48.png %}">
+{% asset_image_tag 2016_03_css_vertical_with_multicolumn_render_sample_chrome48.png 184 356 %}
+</a>
+<figcaption>Chrome 48</figcaption>
+</figure>
+
+<p>
+一瞬正しくレンダリングしているようにみえるが、
+段組が一切動いていないため、文章の続きが左端の画面外にはみ出ている。
+スクロールバーも表示されないため、これは一番困る動作。
+</p>
+
+<h4>Firefox</h4>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path 2016_03_css_vertical_with_multicolumn_render_sample_firefox45.png %}">
+{% asset_image_tag 2016_03_css_vertical_with_multicolumn_render_sample_firefox45.png 92 255 %}
+</a>
+<figcaption>Firefox 45</figcaption>
+</figure>
+
+<p>
+最も縦書き対応の遅かった Firefox がご覧の通りまともなレンダリングをした。
+しかし、少しでも CSS パラメータを変えるとレンダリングが崩れたりと
+まだ怪しい部分がアリそうだ。
+</p>
+
+
+<h3>まとめ</h3>
+
+<p>
+縦書きと段組のそれぞれは、各ブラウザで良好に動作するようになってきているが、
+まだその組合せは動作は不安定であることがわかった。
+</p>
+
+<h3>参考文献</h3>
+
+<ul>
+<li><a href="https://ja.wikipedia.org/wiki/%E7%B8%A6%E6%9B%B8%E3%81%8D%E3%81%A8%E6%A8%AA%E6%9B%B8%E3%81%8D">縦書きと横書き</a>、ウィキペディア</li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/writing-mode">writing-mode - CSS</a>, MDN</li>
+<li>S. Murakami, P. Nelson, M. Suignard, "<a href="https://www.w3.org/TR/css-writing-modes-3/">CSS Writing Modes Level 3</a>", W3C Candidate Recommendation</li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/columns">columns - CSS</a>, MDN</li>
+<li>H. W. Lie, "<a href="https://www.w3.org/TR/css3-multicol/">CSS Multi-column Layout Module Level 1</a>", W3C Editor’s Draft</li>
+</ul>
