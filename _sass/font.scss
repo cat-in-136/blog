@@ -23,16 +23,28 @@ $code-fontset:    'Fira Mono',
                   'Droid Sans Mono',
                   monospace;
 
+@mixin font-size-for-min-size($min-width, $font-size) {
+  html:not(.vertical-writing-recommended) & {
+    @media (min-width: $min-width) {
+      font-size: $font-size;
+    }
+  }
+  
+  html.vertical-writing-recommended & {
+    @supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
+      @media (min-height: $min-width) {
+        font-size: $font-size;
+      }
+    }
+  }
+}
+
 body {
   font-family: $default-fontset;
   font-weight: 300;
   font-size: 12px;
-  @media (min-width: 480px) {
-    font-size: 16px;
-  }
-  @media (min-width: 48em) {
-    font-size: 18px;
-  }
+  @include font-size-for-min-size(480px, 16px);
+  @include font-size-for-min-size(48em, 18px);
   -webkit-font-feature-settings: "liga";
   font-feature-settings: "liga";
 }
@@ -47,9 +59,7 @@ pre, code, samp, kbd {
   font-feature-settings: "zero";
 }
 pre, figcaption, table caption {
-  @media (min-width: 480px) {
-    font-size: smaller;
-  }
+  @include font-size-for-min-size(480px, smaller);
 }
 em {
   font-weight: normal;
@@ -67,13 +77,38 @@ strong {
   font-weight: bolder; 
   font-style: normal;
 }
-:lang(ja) strong {
-  color: #c00;
-  text-shadow: 0.5px 0 0.125px #c00;
-  -moz-text-decoration-style: double;
-  text-decoration-style: double;
-  -moz-text-decoration-line: underline;
-  text-decoration-line: underline;
+:lang(ja) {
+  em, strong {
+    -moz-text-decoration-style: double;
+    text-decoration-style: double;
+    -moz-text-decoration-line: underline;
+    text-decoration-line: underline;
+  }
+  em {
+    font-style: normal;
+    text-shadow: 0.25px 0 0.125px currentColor;
+  }
+  strong {
+    color: #c00;
+    text-shadow: 0.5px 0 0.125px #c00;
+  }
+}
+@supports (((text-emphasis-style: sesame) or (-webkit-text-emphasis-style: sesame)) and
+           ((text-emphasis-style: circle) or (-webkit-text-emphasis-style: circle))) {
+  :lang(ja) {
+    em, strong {
+      text-decoration: none;
+      text-shadow: none;
+    }
+    em {
+      -webkit-text-emphasis-style: sesame;
+      text-emphasis-style: sesame;
+    }
+    strong {
+      -webkit-text-emphasis-style: circle;
+      text-emphasis-style: circle;
+    }
+  }
 }
 .post-date {
   font-size: small;

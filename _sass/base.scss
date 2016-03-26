@@ -14,13 +14,6 @@ $visited-link-color:$color-kakitsubata;
 $primary-dark-color:      $color-kakitsubata;
 $primary-light-color:     $color-usufuji;
 
-@mixin width-calc($calcformula, $fallback) {
-  width: $fallback;
-  @each $prefix in -webkit-, -moz-, '' {
-    width: #{$prefix}-calc(#{$calcformula});
-  }
-}
-
 @function text-stroke-string-for-text-shadow($color, $width: 2px) {
   $shadow-text:();
 
@@ -54,6 +47,11 @@ $primary-light-color:     $color-usufuji;
     margin-right: 1ex;
     -webkit-flex: 1 0 auto;
     flex: 0 0 auto;
+  }
+}
+@mixin post-item-as-normal-box {
+  .post-item {
+    display: block;
   }
 }
 @mixin japanese-text-justification {
@@ -106,7 +104,8 @@ a:visited {
 
 /* Layout */
 .site-header {
-  border-bottom: solid 3px $primary-dark-color;
+  border: solid $primary-dark-color;
+  border-width: 0 0 3px 0;
   min-height: 56px;
   font-weight: 800;
 }
@@ -131,7 +130,8 @@ a:visited {
 }
 
 .site-footer {
-  border-top: solid 3px $primary-dark-color;
+  border: solid $primary-dark-color;
+  border-width: 3px 0 0 0;
   margin: 1em 0 0 0;
   padding: 1ex 0 1em 0;
   font-size: smaller;
@@ -146,15 +146,7 @@ a:visited {
   }
   .column {
     float: left;
-  }
-  .footer-col-1 {
-    @include width-calc('35% - 10px', 800px * 0.35 - 10px);
-  }
-  .footer-col-2 {
-    @include width-calc('23.125% - 10px', 800px * 0.23125 - 10px);
-  }
-  .footer-col-3 {
-    @include width-calc(41.875%, 800px * 0.41875);
+    width: 50%;
   }
 
   li, p {
@@ -171,19 +163,19 @@ a:visited {
 
 .page-content {
   padding: 30px 0;
+}
 
-  .post-related {
-    margin: 1em 0 0 0; 
+.post-related {
+  margin: 1em 0 0 0; 
 
-    h2 {
-      font-size: normal;
-    }
-    li {
-      list-style-type: none;
-    }
-
-    @include post-item-as-flex-box;
+  h2 {
+    font-size: normal;
   }
+  li {
+    list-style-type: none;
+  }
+
+  @include post-item-as-flex-box;
 }
 
 .home {
@@ -232,13 +224,15 @@ a:visited {
 .tag-list {
   .tag-cloud {
     margin: 1em 0;
-    border-bottom: solid 0.5ex $primary-dark-color;
+    border: solid $primary-dark-color;
+    border-width: 0 0 0.5ex 0;
   }
 }
 
 .post-header {
   margin: 10px 0 30px;
-  border-bottom: solid 0.5ex $primary-dark-color;
+  border: solid $primary-dark-color;
+  border-width: 0 0 0.5ex 0;
 
   h1 {
     font-size: 300%;
@@ -248,7 +242,8 @@ a:visited {
   }
 }
 .post-footer {
-  border-bottom: solid 0.5ex $primary-dark-color;
+  border: solid $primary-dark-color;
+  border-width: 0 0 0.5ex 0;
   margin-top: 8px;
 }
 .post-header .meta,
@@ -310,7 +305,8 @@ a:visited {
   }
 
   blockquote {
-    border-left: 1em solid $primary-dark-color;
+    border: solid $primary-dark-color;
+    border-width: 0 0 0 1em;
     padding-left: 1em;
   }
 
@@ -372,25 +368,9 @@ a:visited {
       border: 1px solid $primary-light-color;
       padding: 2px;
     }
-    thead > tr:last-child {
-      td, th {
-        border-bottom: 3px solid $primary-light-color;
-      }
+    thead, tfoot {
+      background-color: rgba($primary-light-color, 0.25);
     }
-    tfoot > tr:first-child {
-      td, th {
-        border-top: 3px solid $primary-light-color;
-      }
-    }
-    tr > td:first-child, tr > th:first-child {
-      border-left: none 0px;
-      padding-left: 4px;
-    }
-    tr > td:last-child, tr > th:last-child {
-      border-right: none 0px;
-      padding-right: 4px;
-    }
-
     caption {
       text-align: center;
     }
@@ -410,3 +390,122 @@ a:visited {
     text-indent: inherit ! important;
   }
 }
+
+@supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
+  html.vertical-writing-recommended {
+    writing-mode: vertical-rl;
+
+    text-combine-upright: none;
+    -ms-text-combine-horizontal: none;
+    time {
+      /* As of Mar 2016, Edge *always* render <time> elements as horizontal-in-vertical. No idea. */
+    }
+
+    .wrap {
+      padding: 2px;
+      @media (min-height: 480px) {
+        padding: 10vh 1ex;
+      }
+    }
+
+    .post-related, .home .posts, .archive, .tag-list {
+      /* As of firefox 46, vertical-rl conflicts with flex box. */
+      @include post-item-as-normal-box;
+    }
+    .fitcontain {
+      /* As of firefox 46, vertical-rl may conflict with object-fit. */
+      object-fit: unset;
+      width: auto;
+      height: auto;
+    }
+
+    .page-content {
+      padding: 2px 30px;
+    }
+
+    .site-header {
+      border-width: 0 0 0 3px;
+      .site-nav {
+        writing-mode: horizontal-tb;
+        text-align: right;
+        > a { display: block; }
+      }
+    }
+
+    .post-header, .post-footer {
+      margin: 0 30px 0 30px;
+    }
+    .post-header {
+      border-width: 0 0 0 0.5ex;
+      .meta { text-align: right; }
+    }
+
+    .post-content {
+      ol > li {
+        list-style-type: cjk-ideographic;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        margin: 10px calc(10px + 1em) 0 10px;
+      }
+      p {
+        margin: auto;
+      }
+      blockquote, math, > table, > ul, > ol, > figure {
+        margin: auto 1px;
+      }
+      blockquote {
+        border-width: 1em 0 0 0;
+        padding: 1em 0 0 0;
+      }
+      ul, ol {
+        padding: 1ex 0 0 0;
+        @media screen and (min-width: 480px) {
+          padding: 2em 0 0 0;
+        }
+      }
+      dl > dd {
+        padding: 1em auto auto auto;
+      }
+      pre {
+        margin: 0 1em;
+        padding: auto;
+      }
+      figure {
+        writing-mode: horizontal-tb;
+
+        /* As of Mar 2016, Edge fails to calculate the width of horizontal-tb block within vertical-rl block. */
+        max-width: 100vh;
+      }
+    }
+    #disqus_thread {
+      writing-mode: horizontal-tb;
+      width: 90vh;
+    }
+
+    .post-footer {
+      border-width: 0 0.5ex 0 0;
+    }
+
+    .post-related {
+      margin: 0 1em 0 0; 
+    }
+
+    .site-footer {
+      border-width: 0 3px 0 0;
+      margin: 0 1em 0 0;
+      .wrap {
+        writing-mode: horizontal-tb;
+        text-align: right;
+
+        /* As of Mar 2016, Edge fails to calculate the width of horizontal-tb block within vertical-rl block. */
+        max-width: 16em;
+      }
+      .column {
+        float: none;
+        width: auto;
+        margin: 1em 0 1em 1em;
+      }
+    }
+  }
+}
+
