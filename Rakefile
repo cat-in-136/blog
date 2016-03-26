@@ -9,17 +9,17 @@ deploy_branch = 'master'
 
 desc "Draft jekyll site"
 task :preview do
-  system 'jekyll serve --watch --drafts'
+  system "jekyll serve --watch --drafts #{ENV['JEKYLL_ARGS']}"
 end
 
 desc "Generate jekyll site"
 task :generate do
-  system 'jekyll build --lsi'
+  system "jekyll build --lsi #{ENV['JEKYLL_ARGS']}"
 end
 
 desc "Watch the site and regenerate when it changes"
 task :watch do
-  system 'jekyll serve --watch'
+  system "jekyll serve --watch #{ENV['JEKYLL_ARGS']}"
 end
 
 desc "Begin a new content"
