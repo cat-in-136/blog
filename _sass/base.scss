@@ -394,6 +394,7 @@ a:visited {
 @supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
   html.vertical-writing-recommended {
     writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
 
     text-combine-upright: none;
     -ms-text-combine-horizontal: none;
@@ -427,6 +428,7 @@ a:visited {
       border-width: 0 0 0 3px;
       .site-nav {
         writing-mode: horizontal-tb;
+        -webkit-writing-mode: horizontal-tb;
         text-align: right;
         > a { display: block; }
       }
@@ -472,6 +474,7 @@ a:visited {
       }
       figure {
         writing-mode: horizontal-tb;
+        -webkit-writing-mode: horizontal-tb;
 
         /* As of Mar 2016, Edge fails to calculate the width of horizontal-tb block within vertical-rl block. */
         max-width: 100vh;
@@ -479,6 +482,7 @@ a:visited {
     }
     #disqus_thread {
       writing-mode: horizontal-tb;
+      -webkit-writing-mode: horizontal-tb;
       width: 90vh;
     }
 
@@ -495,6 +499,7 @@ a:visited {
       margin: 0 1em 0 0;
       .wrap {
         writing-mode: horizontal-tb;
+        -webkit-writing-mode: horizontal-tb;
         text-align: right;
 
         /* As of Mar 2016, Edge fails to calculate the width of horizontal-tb block within vertical-rl block. */
