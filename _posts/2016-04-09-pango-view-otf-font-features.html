@@ -1,0 +1,118 @@
+---
+layout: post
+title: pango-view と OTF font features
+author: cat_in_136
+tags: font 変体かな howto
+date: '2016-04-09T12:32:37+09:00'
+---
+
+<p>
+Pango の <code>pango-view(1)</code> で OTF font features を使う試み。
+</p>
+
+<pre class="prompt"><samp>% pango-view --output 出力ファイル --font 'フォント' --text "..."
+</samp></pre>
+
+<p>
+これで Pango でのレンダリング結果が保存される。
+（画面表示もされる。）
+</p>
+
+<pre class="prompt"><samp>% pango-view --output jis8903_render001.svg --font '機械彫刻用標準書体 24' --text '機械彫刻用標準書体'
+% pango-view --output jis8903_render002.svg --font '機械彫刻用 標準書体 24' --text 'きけんです。'
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render001.svg %}
+<figcaption><code>'機械彫刻用標準書体'</code></figcaption>
+</figure>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render002.svg %}
+<figcaption><code>'きけんです。'</code></figcaption>
+</figure>
+
+<p>
+出力ファイルは、png といったラスター画像の他、
+svg、pdf、ps といったベクタ画像でも出力可能。
+よって、Adobe Illustrator や inkscape などに取り込んで
+使うことも出来そう。
+</p>
+
+<p>
+ところで <code>--markup</code> オプションを使うことで、
+所謂 <a href="https://developer.gnome.org/pango/stable/PangoMarkupFormat.html">Pango Markup</a> が使える。
+</p>
+
+<pre class="prompt"><samp>% pango-view --output jis8903_render003.svg --font '機械彫刻用標準書体 24' --markup --text '&lt;span color="#ff0000"&gt;きけん&lt;/span&gt;です。'
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render003.svg %}
+<figcaption><code>--markup --text '&lt;span color="#ff0000"&gt;きけん&lt;/span&gt;です。'</code></figcaption>
+</figure>
+
+<p>
+OTF には font feature があってタイポグラフィのオプション機能を持っている
+（ただし、フォントファイル自体が対応している場合に限る）。
+これは Pango Markup の <code>font_features</code> &lt;span&gt; attributes の指定で実現できる。
+書式は CSS3  と同様であるとあるが、CSS3 の当該規格が途中で変わっているとかいう
+歴史的事情があるので若干異なるところがあるかもしれない（詳細未調査）。
+</p>
+
+<p>
+機械彫刻用標準書体フォントは、いくつかのスタイルセットが用意されている。
+スタイルセット06 (<code>"ss06" on</code>) で
+<a href="https://ja.wikipedia.org/wiki/%E5%A4%89%E4%BD%93%E4%BB%AE%E5%90%8D">変体かな</a>
+「き（支）」および「す（春）」を表示してみる。
+</p>
+
+<pre class="prompt"><samp>% pango-view --output jis8903_render004.svg --font '機械彫刻用標準書体 24' --markup --text '&lt;span font_features="&amp;quot;ss06&amp;quot; on"&gt;きけんです。&lt;/span&gt;'
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render004.svg %}
+<figcaption><code>'&lt;span font_features="&amp;quot;ss06&amp;quot; on"&gt;きけんです。&lt;/span&gt;'</code></figcaption>
+</figure>
+
+<p>
+その他文字の間隔を弄る font feature もあるがこれも、
+Pango は正しくレンダリングしている模様。すごい。
+</p>
+
+<pre class="prompt"><samp>% pango-view --output jis8903_render005.svg --font '機械彫刻用標準書体 24' --markup --text 'です。&lt;span font_features="ss11 on"&gt;です。&lt;/span&gt;&lt;span font_features="ss12 on"&gt;です。&lt;/span&gt;'
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render005.svg %}
+<figcaption><code>'です。&lt;span font_features="ss11 on"&gt;です。&lt;/span&gt;&lt;span font_features="ss12 on"&gt;です。&lt;/span&gt;'</code></figcaption>
+</figure>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<table>
+  <caption>機械彫刻用標準書体のスタイルセット11,12</caption>
+  <thead>
+    <tr>
+      <th>スタイルセット</th><th>内容</th><th>収録字種</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th><td>JIS どおりの濁点・半濁点（仮想ボディ正方形）</td><td rowspan="2">濁音・半濁音の仮名</td>
+    </tr>
+    <tr>
+      <th>12</th><td>JIS どおりの濁点・半濁点（仮想ボディ拡大）</td>
+    </tr>
+  </tbody>
+</table>
+</figure>
+
+
+<h3>参考文献</h3>
+
+<ul>
+<li><a href="http://font.kim/">機械彫刻用標準書体フォント</a></li>
+<li><a href="https://developer.gnome.org/pango/stable/PangoMarkupFormat.html">Text Attribute Markup: Pango Reference Manual</a>, Pango Reference Manual</li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/font-feature-settings">font-feature-settings - CSS</a>, MDN</li>
+<li><a href="http://www.clear-code.com/blog/2010/12/24.html">地獄のジェネレータ: Ruby Advent Calendar jp: 2010の24日目</a>, 株式会社クリアコード ククログ, 2010-12-24</li>
+</ul>
