@@ -1,0 +1,87 @@
+---
+layout: post
+title: pango で縦書きとその能力
+author: cat_in_136
+tags: font 縦書き howto 変態かな
+vertical-writing: true
+date: '2016-04-23T03:00:34+09:00'
+---
+
+<h3>pango での縦書き</h3>
+
+<p>
+Pango の gravity 指定で縦書きが実現できる。
+<code>pango-view(1)</code>だと、<code>--gravity east</code> オプション設定を指定すれば良い。
+</p>
+
+<pre class="prompt"><samp>% pango-view --output ipapgothic_render01.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_vertical_writing_ipapgothic_render01.svg %}
+<figcaption><code>--text 'pangoで縦書き' --gravity east</code></figcaption>
+</figure>
+
+<p>
+このとき90度傾いてレンダリングされるので、<code>--rotate -90</code>も付けて文字全体を
+90度回転させることで文字の進行方向を鉛直方向に変える。
+</p>
+
+<pre class="prompt"><samp>% pango-view --output ipapgothic_render02.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east --rotate -90
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_vertical_writing_ipapgothic_render02.svg %}
+<figcaption><code>--text 'pangoで縦書き' --gravity east --rotate -90</code></figcaption>
+</figure>
+
+<p>
+余談だが <code>gravity east</code> の east は東洋の東の意味ではなく<em>方向</em>を意味する。
+よって東西南北(east/west/south/north)すべて指定できる。
+</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_vertical_writing_ipapgothic_render03.svg %}
+<figcaption>pango gravity</figcaption>
+</figure>
+
+<h3>縦書きと font feature</h3>
+
+<p>
+縦書き専用フォントでもそれなりに OTF font feature が動作する。
+</p>
+<p>
+嵯峨本フォントプロトタイプの <code>"liga" on</code> を設定すると、
+連綿が OTF font feature の合字としてレンダリングされる。
+なお、この連綿では、「と」および「か」が変体かな「と（登）」および「か（可）」となっている。
+</p>
+
+<pre class="prompt"><samp>% pango-view --output sagabon_render001.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text '&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;' --gravity east --rotate -90
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_vertical_writing_sagabon_render001.svg %}
+<figcaption><code>'&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;'</code></figcaption>
+</figure>
+
+<p>
+ただし、複雑なタグを使うと文字が崩れるようだ。(Pango 1.38現在)
+</p>
+
+<pre class="prompt"><samp>% pango-view --output sagabon_render002.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text 'いとおかし　&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;' --gravity east --rotate -90
+</samp></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201604_pango_view_vertical_writing_sagabon_render002.svg %}
+<figcaption><code>'いとおかし　&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;'</code></figcaption>
+</figure>
+
+<p>
+このバグがあるせいで pango の縦書き利用の利便性が大幅に下がって残念仕様。
+</p>
+
+<h3>参考文献</h3>
+<ul>
+<li><a href="http://www.clear-code.com/blog/2010/12/24.html">地獄のジェネレータ: Ruby Advent Calendar jp: 2010の24日目</a>, 株式会社クリアコード ククログ, 2010-12-24</li>
+<li><a href="http://epublishing.jp/sagabon/">嵯峨本フォントプロトタイプ</a>, 嵯峨本フォントプロジェクト, 2012</li>
+</ul>
