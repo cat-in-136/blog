@@ -21,7 +21,6 @@ sass:
         style: :compact
 
 gems:
- - jekyll/itafroma/collapse_newlines
  - jekyll-paginate
 
 # Build settings
