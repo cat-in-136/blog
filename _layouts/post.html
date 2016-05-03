@@ -1,17 +1,17 @@
 ---
 layout: default
 ---
-<article class="post">
+<article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
-    <h1><a href="{{ page.url }}" rel="bookmark">{{ page.title | escape }}</a></h1>
+    <h1 itemprop="name"><a href="{{ page.url }}" itemprop="url">{{ page.title | escape }}</a></h1>
     {% if page.author %}
     <div class="meta">
-      Text by: {{ page.author | escape }}
+      Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author | escape }}</span></span>
     </div>
     {% endif %}
     <div class="meta">
-      Date: <time>{{ page.date | date_to_xmlschema }}</time>
-      {% if page.modified_time != null %}(Modified: <time>{{ page.modified_time | date_to_xmlschema }}</time>){% endif %}
+      Date: <time itemprop="datePublished">{{ page.date | date_to_xmlschema }}</time>
+      {% if page.modified_time != null %}(Modified: <time item="dateModified">{{ page.modified_time | date_to_xmlschema }}</time>){% endif %}
     </div>
     <div class="meta">
       Tags:
@@ -26,7 +26,7 @@ layout: default
     </div>
   </header>
 
-  <div class="post-content"{% if content contains "。" and content contains "、" %} lang="ja"{% endif %}>
+  <div class="post-content" itemprop="articleBody"{% if content contains "。" and content contains "、" %} lang="ja"{% endif %}>
   {{ content }}
   </div><!-- post-content -->
 

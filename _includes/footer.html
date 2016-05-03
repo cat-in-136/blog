@@ -1,11 +1,14 @@
 <footer class="site-footer">
-  <div class="wrap">
-    <h2 class="footer-heading">{{ site.title }}</h2>
+  <div class="wrap" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading" itemprop="name">{{ site.title }}</h2>
     <div class="column">
       <p>
-        Copyright (C) <a href="https://twitter.com/{{ site.twitter_username | uri_escape }}/">@{{ site.twitter_username }}</a><br />
+        Copyright (C)
+        <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+          <a href="https://twitter.com/{{ site.twitter_username | uri_escape }}/" itemprop="url"><span itemprop="name">@{{ site.twitter_username }}</span></a>
+        </span><br />
         Content is available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
         unless otherwise noted.
       </p>
     </div>
