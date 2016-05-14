@@ -389,6 +389,9 @@ a:visited {
   > pre+p, > math+p, > ul+p, > ol+p {
     text-indent: inherit ! important;
   }
+  *:lang(en) {
+    text-align: left;
+  }
 }
 
 @supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
