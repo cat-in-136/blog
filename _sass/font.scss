@@ -111,7 +111,9 @@ strong {
   }
 }
 .post-date {
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
   font-size: small;
-  width: 9ex;
+  width: 10ex;
   text-align: end;
 }
