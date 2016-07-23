@@ -4,7 +4,7 @@ title: Jekyll移行メモ
 tags: blogger jekyll
 author: cat_in_136
 date: '2014-09-06T15:34:30+09:00'
-modified_time: '2014-09-10T22:02:46+09:00'
+modified_time: '2016-07-23T12:39:13+09:00'
 ---
 
 <p>Blogger から Jekyll (Github pages) に移行したときのメモ。</p>
@@ -112,8 +112,17 @@ Blogger からのインポートした後にドメインを <code>cat-in-136.blo
 <p>記事のパーマリンクを Blogger と合わせた
 <code>/:year/:month/:title.html</code> としたお陰でこれだけでよい。</p>
 
+<del datetime="2016-07-23T12:39:13+09:00">
 <p>なお、本ブログのソースコードでパット見トラッキングコードの類はまったく
 ないように見えると思うが、
 disqus ウィジットの iframe 中からの読み込みで ssl.google-analysis.com への接続がある。
 （しかし disqus のトラッキングコードなので筆者はトラッキングの傾向は
 見れない）</p>
+</del>
+<ins datetime="2016-07-23T12:39:13+09:00">
+<p>
+disqus ウィジェットについても <a href="https://disqus.com/admin/settings/advanced/">Settings-&gt;Advanced</a>
+-&gt; "Enable anonymous cookie targeting for your site's visitors." のチェックを外したので、
+ ssl.google-analysis.com への接続はなくった。
+</p>
+</ins>
