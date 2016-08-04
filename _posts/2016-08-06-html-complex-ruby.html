@@ -1,0 +1,260 @@
+---
+layout: post
+title: HTML5 Complex Ruby 今日の実装状況
+author: cat_in_136
+tags: html css ruby-annotation チラシの裏
+date: '2016-08-05T01:41:10+09:00'
+---
+<p>
+HTML のルビには、古典的な "Basic Ruby" と新し目の文法の "Complex Ruby" があるが、
+"Complex Ruby" は色々できるがまだあまり実用的ではないっぽい。
+</p>
+<p>
+"Complex Ruby" は、間に&lt;rbc&gt;要素と&lt;rtc&gt;要素をはさむ方の文法のこと。
+</p>
+<pre class="prettyprint lang-html"><code>&lt;!-- Basic Ruby --&gt;
+&lt;ruby&gt;&lt;rb&gt;法華経&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ほけきょう&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;
+
+&lt;!-- Complex Ruby --&gt;
+&lt;ruby&gt;&lt;rbc&gt;&lt;rb&gt;法華経&lt;/rb&gt;&lt;/rbc&gt;&lt;rtc&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ほけきょう&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+</code></pre>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<figcaption>Live sample</figcaption>
+<table id="html5-complex-ruby-table" border="1">
+  <thead>
+    <tr>
+      <td>Live</td>
+      <td>Expected</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <ruby>
+          <rb>新幹線</rb>
+          <rt>しんかんせん</rt>
+        </ruby>
+      </td>
+      <td>
+        <table class="ruby">
+          <tbody>
+            <tr class="rt" style="text-align: center">
+              <td>しんかんせん</td>
+            </tr>
+            <tr class="rb" style="text-align: center">
+              <td>新幹線</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <ruby>
+          <rb>新幹線</rb>
+          <rtc style="ruby-position: over">
+            <rt>しんかんせん</rt>
+          </rtc>
+          <rtc style="ruby-position: under">
+            <rt>shinkansen</rt>
+          </rtc>
+        </ruby>
+      </td>
+      <td>
+        <table class="ruby">
+          <tbody>
+            <tr class="rt" style="text-align: center">
+              <td>しんかんせん</td>
+            </tr>
+            <tr class="rb" style="text-align: center">
+              <td>新幹線</td>
+            </tr>
+            <tr class="rt" style="text-align: center">
+              <td>shinkansen</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <ruby>
+          <rb>WWW</rb>
+          <rt>World Wide Web</rt>
+        </ruby>
+      </td>
+      <td>
+        <table class="ruby">
+          <tbody>
+            <tr class="rt" style="text-align: center">
+              <td>World Wide Web</td>
+            </tr>
+            <tr class="rb" style="text-align: center">
+              <td>WWW</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <ruby>
+          <rbc>
+            <rb>10</rb>
+            <rb>31</rb>
+            <rb>2002</rb>
+          </rbc>
+          <rtc>
+            <rt>Month</rt>
+            <rt>Day</rt>
+            <rt>Year</rt>
+          </rtc>
+          <rtc style="ruby-position: under;">
+            <rt rbspan="3">Expiration Date</rt>
+          </rtc>
+        </ruby>
+      </td>
+      <td>
+        <table class="ruby">
+          <tbody>
+            <tr class="rt" style="text-align: center">
+              <td>Month</td>
+              <td>Day</td>
+              <td>Year</td>
+            </tr>
+            <tr class="rb" style="text-align: center">
+              <td>10</td>
+              <td>31</td>
+              <td>2002</td>
+            </tr>
+            <tr class="rt" style="text-align: center">
+              <td colspan="3">Expiration Date</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="writing-mode: tb">
+        <ruby>
+          <rb>新幹線</rb>
+          <rt>しんかんせん</rt>
+        </ruby>
+      </td>
+      <td>
+        <table class="ruby">
+          <tbody>
+            <tr>
+              <td class="rb" style="text-align: center">新<br>幹<br>線</td>
+              <td class="rt" style="text-align: center">し<br>ん<br>か<br>ん<br>せ<br>ん</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="writing-mode: tb">
+        <ruby>
+          <rbc>
+            <rb>新幹線</rb>
+          </rbc>
+          <rtc style="ruby-position: under left;"><rt>しんかんせん</rt></rtc>
+        </ruby>
+      </td>
+      <td>
+        <table class="ruby">
+          <tbody>
+            <tr>
+              <td class="rt" style="text-align: center">し<br>ん<br>か<br>ん<br>せ<br>ん</td>
+              <td class="rb" style="text-align: center">新<br>幹<br>線</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <ruby style="ruby-position: inter-character">
+          <rbc>
+            <rb>電</rb>
+          </rbc>
+          <rtc>
+            <rt>ㄉㄧㄢ</rt>
+          </rtc>
+          <rbc>
+            <rb>腦</rb>
+          </rbc>
+          <rtc>
+            <rt>ㄋㄠ</rt>
+          </rtc>
+        </ruby>
+      </td>
+      <td>
+        <table class="ruby">
+          <tbody>
+            <tr>
+              <td class="rb" style="text-align: center">電</td>
+              <td class="rt" style="text-align: center">ㄉ<br>ㄧ<br>ㄢ</td>
+              <td class="rb" style="text-align: center">腦</td>
+              <td class="rt" style="text-align: center">ㄋ<br>ㄠ</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<style type="text/css">
+#html5-complex-ruby-table td,
+#html5-complex-ruby-table th {
+  margin: 5px;
+  padding: 5px;
+}
+
+#html5-complex-ruby-table .ruby td {
+  border: none 0;
+  margin: 0;
+  padding: 2px;
+}
+
+#html5-complex-ruby-table .ruby td {
+  margin: 0;
+  padding: 2px;
+}
+
+#html5-complex-ruby-table .ruby .rb {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 100%;
+}
+
+#html5-complex-ruby-table .ruby .rt {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 50%;
+}
+</style>
+</figure>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<figcaption>Chronium</figcaption>
+{% asset_image_object_tag 201608_html5_ruby_chronium.svg %}
+</figure>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<figcaption>Edge</figcaption>
+{% asset_image_object_tag 201608_html5_ruby_edge.svg %}
+</figure>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<figcaption>Firefox</figcaption>
+{% asset_image_object_tag 201608_html5_ruby_fx.svg %}
+</figure>
+
+<h3>参考文献</h3>
+<ul>
+  <li>E. J. Etemad and K. Ishii, "<a href="https://www.w3.org/TR/css-ruby-1/">CSS Ruby Layout Module Level 1</a>", W3C Working Draft</li>
+  <li>R. Ishida, "<a href="https://www.w3.org/TR/ruby-use-cases/">Use Cases &amp; Exploratory Approaches for Ruby Markup</a>", W3C Working Group Note</li>
+  <li>W3C Internationalization tests <a href="https://www.w3.org/International/tests/#css3-ruby">CSS Ruby 1</a></li>
+</ul>
