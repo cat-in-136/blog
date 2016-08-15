@@ -1,0 +1,120 @@
+---
+layout: post
+title: connectivitycheck.gstatic.com への Android の接続を誤魔化してみるテスト
+author: cat_in_136
+tags: android チラシの裏
+thumbnail: "{% asset_image_path 201608_connectivitycheck_noinetwifi.png %}"
+date: '2016-08-15T23:02:54+09:00'
+---
+<h3>Android の「インターネットは利用できません」の検出</h3>
+
+<p>
+Android に詳しい方はご存知の通り、Android は
+<code>http://connectivitycheck.gstatic.com/generate_204</code>
+に定期的に接続をしてインターネット接続できるかどうかを確認している。
+ここへの接続が出来ない場合は「インターネットは利用できません」と表示される。
+</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag fitcontain 201608_connectivitycheck_noinetwifi.png 640 277 %}
+<figcaption>connectivitycheck.gstatic.com へ接続できない時の WiFi アクセスポイントの警告表示</figcaption>
+</figure>
+
+<p>
+なお、この警告は celler 回線（3G/4G 回線）でも表示は異なるが、警告される。
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag fitcontain 201608_connectivitycheck_noinetdocomo.png 487 487 %}
+<figcaption>connectivitycheck.gstatic.com へ接続できない時の docomo 回線の警告表示</figcaption>
+</figure>
+
+<p>
+なお、上の図はいずれも connectivitycheck.gstatic.com への接続を遮断して得られた動作結果であり、
+実際には他のドメインへの接続はできるといった挙動を確認している。
+</p>
+
+<h3>connectivitycheck.gstatic.com の偽装と挙動</h3>
+
+<p>
+<code>http://connectivitycheck.gstatic.com/generate_204</code>
+へ接続すると常に "204 No Content" が帰ってくる。
+ここで、接続不能であったり "404 Not Found" であったりしたときに、
+「インターネットは利用できません」と判定がなされる。
+</p>
+
+<p>
+そこで、connectivitycheck.gstatic.com を他の IP アドレスに解決させることで
+代替することを考えた。
+具体的には、
+</p>
+<ul>
+  <li>192.168.1.2 アドレスで起動している PC 上の port 80 で HTTP server を起動させる。
+    <ul>
+      <li><code>http://192.168.1.2/generate_204</code> へのレスポンスは "204 No Content" とする。</li>
+      <li>簡単のため "Host: connectivitycheck.gstatic.com" が要求ヘッダについていようがついていまいが、同一の動作をするものとする</li>
+    </ul>
+  </li>
+  <li>Android 機において、connectivitycheck.gstatic.com のドメイン名を 192.168.1.2 に解決させる環境を作る。</li>
+  <li>Android 機において、WiFi アクセスポイントに接続させる。Android 機の IP アドレスは 192.168.1.1 とする。</li>
+</ul>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201608_connectivitycheck_env_tporogy.svg %}
+<figcaption>確認環境のネットワーク。"genuine connectivitycheck.gstatic.com"には接続しには行かずに 192.168.1.2 に接続する</figcaption>
+</figure>
+
+<p>
+目的を実現するために簡素な HTTP server <a href="https://gist.github.com/cat-in-136/624e53f4b9437c8eaee15066da654485">"Fake connectivitycheck.gstatic.com"</a> を作成した。
+これを linux マシン上で駆動させた（もちろん su 権限で実行し、また firewall で port 80 を許可した）。
+</p>
+<p>
+そして Android 機を WiFi に接続させると下記の通り、 HTTP server 側のログが吐き出された。
+</p>
+<pre><samp>[2016-08-14 07:23:00] DEBUG accept: 192.168.1.1:51856
+[2016-08-14 07:23:00] DEBUG WEBrick::HTTPServlet::ProcHandler is invoked.
+192.168.1.1 - - [14/Aug/2016:07:23:00 EDT] "GET /generate_204 HTTP/1.1" 204 0
+- -&gt; /generate_204
+Dalvik/2.1.0 (Linux; U; Android 6.0.1; Nexus 5 Build/MMB29X)
+[2016-08-14 07:23:00] DEBUG close: 192.168.1.1:51856
+[2016-08-14 07:23:01] DEBUG accept: 192.168.1.1:56927
+[2016-08-14 07:23:01] DEBUG WEBrick::HTTPServlet::ProcHandler is invoked.
+192.168.1.1 - - [14/Aug/2016:07:23:01 EDT] "GET /generate_204 HTTP/1.1" 204 0
+- -&gt; /generate_204
+Dalvik/2.1.0 (Linux; U; Android 6.0.1; Nexus 5 Build/MMB29X)
+[2016-08-14 07:23:01] DEBUG close: 192.168.1.1:56927</samp></pre>
+
+<p>
+最初の部分しか取り出していないため時間を空けずに幾度も接続しているようにみえるが、
+しばらく経ったら間隔をあけて接続するようだ。
+また、重要なこととしてこれによって「インターネットは利用できません」が表示されないことを実現できた。
+</p>
+
+<h3>connectivitycheck.gstatic.com の偽装効果</h3>
+
+<p>
+<a href="http://connectivitycheck.gstatic.com.ipaddress.com/"><code>connectivitycheck.gstatic.com</code> というGoogle のサーバ</a>への接続処理は、
+そもそも Android のコードに埋め込まれている。
+よって<em>世界中の</em>オンラインとなっている Android 機から定期的に接続しているということだ。
+それは冷静に考えると興味深いことである。
+<code>connectivitycheck.gstatic.com</code> の接続を
+本稿で述べたようにゴニョゴニョすることでこの Google のサーバへの接続処理を止めて
+かつ「インターネットは利用できません」判定も Google のサーバなしで実現することが出来た。
+</p>
+<p>
+さらに <code>connectivitycheck.gstatic.com</code> のドメイン名を 127.0.0.1 に解決させてかつ android 上でサーバを駆動させれば、
+「インターネットは利用できません」判定機能が実質無効化されることを引き換えに
+無線アクセスを抑えることも考えられるが、これはやっていない。
+</p>
+
+<h3>Reference</h3>
+<ul>
+<li><a href="http://androidxref.com/6.0.1_r10/xref/frameworks/base/services/core/java/com/android/server/connectivity/NetworkMonitor.java#429">com.android.server.connectivity.NetworkMonitor.EvaluatingState#processMessage()</a></li>
+<li>"<a href="http://android.stackexchange.com/questions/123129/how-does-wifi-in-android-detect-if-the-device-has-to-sign-in-or-not">How does WiFi in android detect if the device has to sign in or not?</a>", Android Enthusiasts Stack Exchange</li>
+<li>amythical, "<a href="http://amythical.tumblr.com/post/146341363847/bypass-captive-portal-for-android">Bypass captive portal for Android</a>", Notes, Jun 23 2016</li>
+</ul>
+
+<p>
+その他、<code>connectivitycheck.gstatic.com</code> のドメイン名解決を操作するための
+/etc/hosts のフロントエンドとして<a href="https://adaway.org/">AdAway</a>を使用した。
+</p>
+
