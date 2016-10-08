@@ -1,0 +1,103 @@
+---
+layout: post
+title: "アートアクアリウムの水盤における光学的解析のメモ"
+author: cat_in_136
+tags: optics blender3d チラシの裏
+thumbnail: https://c7.staticflickr.com/9/8134/30075992142_fc249ffbab_t.jpg
+date: '2016-10-08T23:46:49+09:00'
+---
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="https://www.flickr.com/photos/27992339@N00/30075992142/" title="Black gold fishes in a water bowl"><img src="https://c7.staticflickr.com/9/8134/30075992142_fc249ffbab_z.jpg" srcset="https://c7.staticflickr.com/9/8134/30075992142_100863d471_o.jpg 3x" width="640" height="360" alt="Black gold fishes in a water bowl" class="fitcontain"/></a>
+</figure>
+<blockquote>
+<p>均等に横面に溢れ出る水により水槽であることを感じさせず、まるで水の塊ごと水中から金魚を取り出して見ているかの様に感じさせる作品です。</p>
+<figcaption style="text-align: right;">＜金魚品評＞</figcaption>
+</blockquote>
+<h3>水盆容器の構造</h3>
+<p>＜金魚品評＞と呼称される作品では、水盆を使っている。
+均等に横面に水が溢れ出ることにより水盆内の水を排水していることは容易に理解できる。</p>
+<p>一方で、給水系統は一目ではわからない。</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="https://www.flickr.com/photos/27992339@N00/30105714101/" title="Black gold fishes in a water bowl, Top View"><img src="https://c6.staticflickr.com/6/5521/30105714101_58b05c2e45_z.jpg" srcset="https://c6.staticflickr.com/6/5521/30105714101_fd7ec9ffcf_h.jpg 2.5x" width="640" height="427" alt="Black gold fishes in a water bowl, Top View" class="fitcontain"/></a>
+</figure>
+<p>水盆の底に白色の台のようなものがあることがわかる。
+よく観察すると、その下にその台の支えている柱状のものがあってそこから水が出ていた。</p>
+<p>すなわち下図のとおりになっている。上面図以外については、青矢印で水の流れを描いた。</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201610_opticalanlyartaquarium_bowl_diagram.svg %}
+<figcaption>＜金魚品評＞の水盆型水槽の図</figcaption>
+</figure>
+<h3>水盆容器の底の白い台に気づきにくい理由</h3>
+<p>ところで、なぜこれに気づきにくいのであろうか?
+光の屈折によって気づきにくくなっている+展示上の細工という説を唱えたい。</p>
+<ul>
+<li>水盆容器の存在は光学的に無視できるものとする
+<ul>
+<li>水盆の方が水よりも屈折率が大きい（水：1.33、水盆=アクリル:1.49）ため、水盆の影響を考えたほうがより効果が大きくなると推測される</li>
+</ul>
+</li>
+<li>均等に横面に溢れ出る水の存在も光学的に無視できるものとする</li>
+<li>水面のゆらぎや水中の空気の泡、汚れなども光学的に無視できるものとする</li>
+<li>すなわち文字通り「水の塊ごと水中から金魚を取り出して見ている」状態とみなして解析する</li>
+<li>水盆の大きさは、当然のことながら、光の波長よりじゅうぶん大きいものとする（幾何光学で説明できるものとする）</li>
+</ul>
+<p>水の屈折の効果については、鉛直方向と水平方向で分けて概説する。</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201610_opticalanlyartaquarium_refraction_vertical.svg %}
+<figcaption>水盆型水槽における光の屈折の効果（鉛直方向）</figcaption>
+</figure>
+<p>鉛直方向のうち水面を通る光線の場合、屈折によって光線は下向きに折れる。
+人間の目は屈折せずにそのまま直線に光線が伸びている（点線）と<em>視覚する</em>ので、
+例えば金魚が実際より<em>沈んで</em>見える。
+（さらに図に示したとおり特に手前が<em>沈み込む</em>ような形で傾いて見える）</p>
+<p>同様に、水盆容器側面を通る光線の場合、屈折によって光線は上向きに折れる。
+人間の目は屈折せずにそのまま直線に光線が伸びている（点線）と<em>視覚する</em>ので、
+例えば金魚が実際より<em>浮き上がって</em>見える。
+（さらに図に示したとおり特に手前が<em>浮き上がった</em>ような形で傾いて見える）</p>
+<p>ここで水盆容器の底の台について、特に水盆容器側面を通る光線であると底が実際より
+<em>上げ底</em>に見えるので水盆容器の底に気づかれるリスクが大きくなると予測される。
+この理由で周辺にビー玉等を配して隠していたのではないか。</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201610_opticalanlyartaquarium_refraction_horizontal.svg %}
+<figcaption>水盆型水槽における光の屈折の効果（水平方向）</figcaption>
+</figure>
+<p>水平方向も同様に、金魚が実際より外側に<em>見える</em>。
+（さらに像も結構歪むが、図にはそれを表現していない。）
+水流の都合上水盆容器の底の台の直径は水盆の内寸直径よりも明らかに小さいのであるが、
+金魚と同様に、台も実際より横に伸びて見える。
+水盆容器の底の台が水盆内寸直径とほぼ同じなように見えてしまう。</p>
+<p>ただ、真上から覗き込むと、光の屈折が起こらなくなるのでこの効果は得られない。</p>
+<h3>まとめ</h3>
+<p>まとめると、水盆の給水口の仕組みに気づきにくい理由として下記があげられると思う。</p>
+<ul>
+<li>光の屈折により水盆容器の底の台は、
+<ul>
+<li>水盆容器の内寸とほぼ同じように見えてしまう</li>
+<li>真上から覗かないと、水盆容器の底の台の直径が水盆容器の内寸より小さいのに気づかない</li>
+<li>水盆容器の底の台が実際より上げ底に見える</li>
+<li>上げ底に見えてしまうことに対してはビー玉を配することで隠している</li>
+</ul>
+</li>
+</ul>
+<h3>3D CG で視覚的に確認</h3>
+<p>最後に、この仮説を視覚的に確認するために 3D CG で再現した画像を下に示す。</p>
+<p>普通に見ると、ビー玉を配していないので、水盆容器の底の台が、
+水盆容器の内寸とほぼ同じように<em>上げ底</em>で<em>見える</em>と思うがいかがであろうか?</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path 201610_opticalanlyartaquarium_simulation_POV@3x.jpg %}">
+{% asset_image_tag fitcontain 201610_opticalanlyartaquarium_simulation_POV.jpg 640 %}
+</a>
+<figcaption>3D CGによる検証画像</figcaption>
+</figure>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+<a href="{% asset_image_path 201610_opticalanlyartaquarium_simulation_no_water@3x.jpg %}">
+{% asset_image_tag fitcontain 201610_opticalanlyartaquarium_simulation_wo_water.jpg 640 %}
+</a>
+<figcaption>3D CGによる検証画像（水盆のかわりに檻状のワイヤーフレームを置いた）</figcaption>
+</figure>
+<h3>参考文献、リソース</h3>
+<ul>
+<li>木村英智, Aquarium Creators Office Srl., “<a href="http://artaquarium.jp/">Art Aquarium</a>”</li>
+<li><a href="https://en.wikipedia.org/wiki/List_of_refractive_indices">List of refractive indices</a>, Wikipedia (en)</li>
+<li>(3D Model Data) birdie T., “<a href="https://3dwarehouse.sketchup.com/social/model.html?id=uae4dedaf-6f79-4273-a6de-07beeef6c107">golden japanese fish</a>”</li>
+</ul>
