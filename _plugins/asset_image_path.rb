@@ -48,7 +48,7 @@ module Jekyll
     def self.get_size(filename)
       width = height = nil
       path = File.expand_path("../images/#{filename}", File.basename(__FILE__))
-      raise "File not found: '#{filename}'" unless File.exists?(path)
+      raise "File not found: '#{filename}'" unless File.exist?(path)
       if (File.extname(path).downcase == '.svg')
         File.open(path, 'r') do |f|
           f.flock(File::LOCK_SH)
@@ -96,6 +96,18 @@ module Jekyll
             @img['width'] = width.to_s
             @img['height'] = height.to_s
           end
+        end
+
+        # srcset
+        if @img['src'] =~ /\.jpg$/
+          srcsets = []
+          (1..9).each do |ratio|
+            file_at_x = @img['src'].sub(/\.jpg$/, "@#{ratio}x.jpg")
+            if File.exist?(File.expand_path("../images/#{file_at_x}", File.basename(__FILE__)))
+              srcsets << "#{AssetImagePathTag.convert_path(file_at_x, context)} #{ratio}x"
+            end
+          end
+          @img['srcset'] = srcsets.join(', ') if srcsets.length > 0
         end
 
         @img['src'] = AssetImagePathTag.convert_path(@img['src'], context)
