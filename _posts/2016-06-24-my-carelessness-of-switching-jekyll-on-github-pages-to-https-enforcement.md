@@ -5,6 +5,7 @@ author: cat_in_136
 tags:
 - "チラシの裏"
 date: '2016-06-25T01:07:23+09:00'
+modified_time: '2016-10-20T21:50:27+09:00'
 ---
 
 #### Github Pages 上 jekyll 使ったブログの HTTPS 強制 (HTTPS enforcement) への移行方法
@@ -22,6 +23,6 @@ date: '2016-06-25T01:07:23+09:00'
    * もし、RSS Reader 経由でここの記事を読んでいる方も同様の現象が発生している恐れ
  * DISQUS の会話内容の消滅
    * URL の移行し忘れであった。
-   * 方法は [URL Mapper | DISQUS](https://help.disqus.com/customer/portal/articles/912757-url-mapper) を使用する。
+   * 方法は [URL Mapper](https://help.disqus.com/customer/portal/articles/912757-url-mapper) を使用する。
 
 
