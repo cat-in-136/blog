@@ -1,0 +1,282 @@
+---
+layout: post
+title: "如何用HTML5 Complex Ruby寫漢文訓讀文。〜如何にしてHTML5 Complex Rubyを用いて漢文訓読文を写すか"
+author: cat_in_136
+tags: 縦書き html css ruby-annotation 漢文
+vertical-writing: true
+date: '2016-10-26T00:05:18+09:00'
+---
+<blockquote cite="https://twitter.com/ikeyasu/status/431696780506304512"><p lang="ja"><a href="https://twitter.com/snsk">@snsk</a> <a href="https://twitter.com/dagezi">@dagezi</a> 漢文については、以前、W3C のワークショップで議題としたことがありました。 <a href="http://t.co/WaBNatYfvA" title="http://www.w3.org/2013/06/ebooks/report">http://t.co/WaBNatYfvA</a> このときに分かったのですが、CSS3 に最近は行ったRubyの新しい仕様と、OpenType の仕様を使えば漢文は表現できます</p>— IKEUCHI Yasuki (@ikeyasu) <a href="https://twitter.com/ikeyasu/status/431696780506304512">February 7, 2014</a></blockquote>
+
+<p>…という話を真に受けて、HTML5 で漢文を組版してみる。</p>
+
+<h3>配置について</h3>
+
+<p>
+漢文訓読文における、訓点（返り点・送り仮名）および振り仮名の配置はだいたいつぎのようになっている。
+</p>
+
+<figure class="kanbun">
+{% asset_image_object_tag 201610_kanbun_composition_layout_positioning.svg %}
+<figcaption>漢文訓読文レイアウト例</figcaption>
+</figure>
+
+<ul>
+  <li>返り点は、漢字のすぐ下に左に寄せて表記される</li>
+  <li>送り仮名と振り仮名は、配置は同一ブロック内であって、漢字の横に表記される</li>
+  <li>送り仮名が漢字の右下ちょうど外に出る程度に上下方向の位置は調整する</li>
+</ul>
+
+<p>
+これを元に次の方針でタグ打ちをすることにした。
+</p>
+
+<ul>
+  <li>返り点は、サイズの小さな文字として扱う。返り点そのものは Unicode の U+3191〜 のを使用する。</li>
+  <li>振り仮名は、標準的に HTML5 ruby を使用する</li>
+  <li>送り仮名も HTML5 ruby を用いるが、漢字の後ろの空白あるいは返り点の ruby となる扱いで送り仮名を配置する</li>
+  <li>送り仮名の上下方向の位置については諦める</li>
+</ul>
+
+<p>具体的には下記の通りとなる</p>
+
+<pre class="prettyprint lang-html"><code>&lt;ruby&gt;
+  &lt;rb&gt;以&lt;/rb&gt;
+  &lt;rb class="kaeriten"&gt;&#12696;&lt;/rb&gt;
+  &lt;rtc&gt;
+    &lt;rt&gt;もつ&lt;/rt&gt;
+    &lt;rt&gt;テ&lt;/rt&gt;
+  &lt;/rtc&gt;
+&lt;/ruby&gt;
+&lt;style&gt;
+.kaeriten {
+  font-size: xx-small;
+  vertical-align: sub;
+  ruby-align: start;
+}
+&lt;/style&gt;
+</code></pre>
+
+<p>
+ここで&lt;rb&gt;要素を緑枠、&lt;rt&gt;要素を青枠で囲んで図に示すと次のようになる。
+</p>
+
+<figure class="kanbun">
+{% asset_image_object_tag 201610_kanbun_composition_layout_html5_ruby.svg %}
+<figcaption>HTML5 Complex Ruby による漢文レイアウト</figcaption>
+</figure>
+
+<p>もう少し複雑な例として、本記事の標題を例にあげる。</p>
+
+<figure class="kanbun">
+<p class="kanbun" style="margin: 1em;">
+<ruby><rb>如何</rb><rtc><rt></rt><rt>ニシテ</rt></rtc></ruby>
+<ruby><rb>用</rb><rb class="kaeriten">&#12691;</rb><rtc><rt></rt><rt>ヒテ</rt></rtc></ruby>
+<ruby><rb>HTML5 Complex Ruby</rb><rb class="kaeriten">&#12690;</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>
+<ruby><rb>寫</rb><rb class="kaeriten">&#12691;</rb><rtc><rt></rt><rt>スカ</rt></rtc></ruby>
+<ruby><rb>漢文訓讀文</rb><rb class="kaeriten">&#12690;</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>。
+</p>
+<figcaption>「如何にしてHTML5 Complex Rubyを用いて漢文訓読文を写すか」ライブビュー</figcaption>
+</figure>
+
+<figure class="kanbun">
+{% asset_image_object_tag 201610_kanbun_fx_render_title.svg %}
+<figcaption>「如何にしてHTML5 Complex Rubyを用いて漢文訓読文を写すか」Firefoxレンダリング</figcaption>
+</figure>
+
+<h3>Complex Ruby を使わない場合</h3>
+
+<ul>
+  <li>返り点は、&lt;sub&gt;として扱う。返り点そのものは Unicode の U+3191〜 のを使用する。</li>
+  <li>振り仮名は、標準的に Basic HTML5 ruby を使用する</li>
+  <li>送り仮名は、&lt;sup&gt;として扱う。</li>
+</ul>
+
+<pre class="prettyprint lang-html"><code>
+如何&lt;sup&gt;ニシテ&lt;/sup&gt;
+用&lt;sub class="kaeriten"&gt;&#12691;&lt;/sub&gt;&lt;sup&gt;ヒテ&lt;/sup&gt;
+HTML5 Complex Ruby&lt;sub class="kaeriten"&gt;&#12690;&lt;/sub&gt;&lt;sup&gt;ヲ&lt;/sup&gt;
+寫&lt;sub class="kaeriten"&gt;&#12691;&lt;/sub&gt;&lt;sup&gt;スカ&lt;/sup&gt;
+漢文訓讀文&lt;sub class="kaeriten"&gt;&#12690;&lt;/sub&gt;&lt;sup&gt;ヲ&lt;/sup&gt;。
+</code></pre>
+
+<figure class="kanbun">
+<p class="kanbun" style="margin: 1em;">
+如何<sup>ニシテ</sup>
+用<sub class="kaeriten">&#12691;</sub><sup>ヒテ</sup>
+HTML5 Complex Ruby<sub class="kaeriten">&#12690;</sub><sup>ヲ</sup>
+寫<sub class="kaeriten">&#12691;</sub><sup>スカ</sup>
+漢文訓讀文<sub class="kaeriten">&#12690;</sub><sup>ヲ</sup>。
+</p>
+<figcaption>ruby不使用版「如何にしてHTML5 Complex Rubyを用いて漢文訓読文を写すか」ライブビュー</figcaption>
+</figure>
+
+<p>
+Complex Ruby を使わない場合との差、おわかりいただけるであろうか。
+</p>
+
+<h3>使用例</h3>
+
+<figure class="kanbun">
+<blockquote>
+<p class="kanbun" style="margin: 1em;">
+<ruby><rb>荷宇</rb><rtc><rt></rt><rt>ハ</rt></rtc></ruby>
+<ruby><rb>生</rb><rtc><rt></rt><rt>マレテ</rt></rtc></ruby>
+<ruby><rb>十月</rb><rtc><rt></rt><rt>ニシテ</rt></rtc></ruby>
+<ruby><rb>而</rb></ruby>
+<ruby><rb>喪</rb><rb class="kaeriten">&#12691;</rb><rtc><rt>うしな</rt><rt>フ</rt></rtc></ruby>
+<ruby><rb>其</rb><rtc><rt></rt><rt>ノ</rt></rtc></ruby>
+<ruby><rb>母</rb><rb class="kaeriten">&#12690;</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>。
+<ruby><rb>及</rb><rb class="kaeriten">&#12689;</rb><rtc><rt></rt><rt>ビ</rt></rtc></ruby>
+<ruby><rb>有</rb><rb class="kaeriten">&#12689;</rb><rtc><rt></rt><rt>ルニ</rt></rtc></ruby>
+<ruby><rb>知</rb></ruby>、
+<ruby><rb>即</rb><rtc><rt></rt><rt>チ</rt></rtc></ruby>
+<ruby><rb>時時</rb></ruby>、
+<ruby><rb>念</rb><rb class="kaeriten">&#12689;</rb><rtc><rt>おも</rt><rt>ヒテ</rt></rtc></ruby>
+<ruby><rb>母</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>
+<ruby><rb>不</rb><rb class="kaeriten">&#12689;</rb></ruby>
+<ruby><rb>置</rb><rtc><rt></rt><rt>カ</rt></rtc></ruby>、
+<ruby><rb>弥</rb><rtc><rt>いよいよ</rt></rtc></ruby>
+<ruby><rb>久</rb><rtc><rt></rt><rt>シクシテ</rt></rtc></ruby>
+<ruby><rb>弥</rb></ruby>
+<ruby><rb>篤</rb><rtc><rt>あつ</rt><rt>シ</rt></rtc></ruby>。
+<ruby><rb>哀</rb><rb class="kaeriten">&#12691;</rb><rtc><rt>かな</rt><rt>シム</rt></rtc></ruby>
+<ruby><rb>其</rb><rtc><rt></rt><rt>ノ</rt></rtc></ruby>
+<ruby><rb>身</rb><rtc><rt></rt><rt>ノ</rt></rtc></ruby>
+<ruby><rb>不</rb><rb class="kaeriten">&#12690;&#12689;</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>
+<ruby><rb>能</rb><rb class="kaeriten">&#12692;</rb><rtc><rt></rt><rt>ハ</rt></rtc></ruby>
+<ruby><rb>一日</rb><rtc><rt></rt><rt>トシテ</rt></rtc></ruby>
+<ruby><rb>事</rb><rb class="kaeriten">&#12691;</rb><rtc><rt></rt><rt>フル</rt></rtc></ruby>
+<ruby><rb>乎</rb></ruby>
+<ruby><rb>母</rb><rb class="kaeriten">&#12690;</rb><rtc><rt></rt><rt>ニ</rt></rtc></ruby>
+<ruby><rb>也</rb></ruby>。
+<ruby><rb>哀</rb><rb class="kaeriten">&#12691;</rb><rtc><rt>かな</rt><rt>シム</rt></rtc></ruby>
+<ruby><rb>母之言語動作</rb><rtc><rt></rt><rt>モ</rt></rtc></ruby>
+<ruby><rb>亦</rb><rtc><rt>ま</rt><rt>タ</rt></rtc></ruby>
+<ruby><rb>未</rb><rb class="kaeriten">&#12690;&#12689;</rb><rtc><rt></rt><rt>ダ</rt></rtc><rtc class="okurikana-2nd"><rt></rt><rt>ルヲ</rt></rtc></ruby>
+<ruby><rb>能</rb><rb class="kaeriten">&#12689;</rb><rtc><rt></rt><rt>ハ</rt></rtc></ruby>
+<ruby><rb>識</rb><rtc><rt>し</rt><rt>ル</rt></rtc></ruby>
+<ruby><rb>也</rb></ruby>。
+</p>
+<caption>&#8213;&#8213;平成二十八年度大学入試センター試験国語より（盧文弨『抱経堂文集』より）</caption>
+</blockquote>
+<figcaption>盧文弨『抱経堂文集』の一節、ライブビュー</figcaption>
+</figure>
+
+<figure class="kanbun">
+{% asset_image_object_tag 201610_kanbun_fx_render_baojingtang.svg %}
+<figcaption>盧文弨『抱経堂文集』の一節、ライブビュー</figcaption>
+</figure>
+
+<p>これは次のソースから得られる。</p>
+
+<pre class="prettyprint lang-html"><code>
+&lt;p class="kanbun" style="margin: 1em;"&gt;
+&lt;ruby&gt;&lt;rb&gt;荷宇&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ハ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;生&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;マレテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;十月&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ニシテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;而&lt;/rb&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;喪&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;うしな&lt;/rt&gt;&lt;rt&gt;フ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;其&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ノ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;母&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;。
+&lt;ruby&gt;&lt;rb&gt;及&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ビ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;有&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ルニ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;知&lt;/rb&gt;&lt;/ruby&gt;、
+&lt;ruby&gt;&lt;rb&gt;即&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;チ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;時時&lt;/rb&gt;&lt;/ruby&gt;、
+&lt;ruby&gt;&lt;rb&gt;念&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;おも&lt;/rt&gt;&lt;rt&gt;ヒテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;母&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;不&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;置&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;カ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;、
+&lt;ruby&gt;&lt;rb&gt;弥&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;いよいよ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;久&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;シクシテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;弥&lt;/rb&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;篤&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;あつ&lt;/rt&gt;&lt;rt&gt;シ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;。
+&lt;ruby&gt;&lt;rb&gt;哀&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;かな&lt;/rt&gt;&lt;rt&gt;シム&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;其&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ノ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;身&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ノ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;不&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;能&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12692;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ハ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;一日&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;トシテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;事&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;フル&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;乎&lt;/rb&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;母&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ニ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;也&lt;/rb&gt;&lt;/ruby&gt;。
+&lt;ruby&gt;&lt;rb&gt;哀&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;かな&lt;/rt&gt;&lt;rt&gt;シム&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;母之言語動作&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;モ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;亦&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;ま&lt;/rt&gt;&lt;rt&gt;タ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;未&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ダ&lt;/rt&gt;&lt;/rtc&gt;&lt;rtc class="okurikana-2nd"&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ルヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;能&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ハ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;識&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;し&lt;/rt&gt;&lt;rt&gt;ル&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
+&lt;ruby&gt;&lt;rb&gt;也&lt;/rb&gt;&lt;/ruby&gt;。
+&lt;/p&gt;
+
+&lt;style scope="scope"&gt;
+.kanbun {
+  line-height: 150%;
+}
+.kanbun rb.kaeriten {
+  font-size: xx-small;
+  vertical-align: sub;
+  ruby-align: start;
+}
+.kanbun .okurikana-2nd {
+  ruby-position: under;
+}
+&lt;/style&gt;
+</code></pre>
+
+<style scope="scope">
+figure.kanbun {
+  -webkit-writing-mode: vertical-rl ! important;
+  writing-mode: vertical-rl ! important;
+  font-size: smaller;
+}
+figure.kanbun p.kanbun {
+  font-size: large;
+}
+.kanbun sub {
+  vertical-align: sub;
+}
+.kanbun sup {
+  vertical-align: super;
+}
+.kanbun {
+  line-height: 150%;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+}
+.kanbun .kaeriten {
+  font-size: xx-small;
+  vertical-align: sub;
+  ruby-align: start;
+}
+.kanbun .okurikana-2nd {
+  ruby-position: under;
+}
+</style>
+
+<h3>所感</h3>
+
+<p>
+確かに書けるが、あまりにも小手先な感じであってすっきりしない
+（特に返り点の配置）し、
+ソースコードは人が書くレベルではない長文になっている。
+したがって、あまり実用的ではない。
+</p>
+<p>
+その他気になった点として、
+</p>
+<ul>
+<li>「一レ点」などが別々に表示されて、返り点の合字が対応したフォントが標準添付されると、
+「一レ点」などがいい感じになるであろう。</li>
+<li>禁則処理が適切でない場所で行われることがあった。&lt;nobr&gt;を使えばいいものの、何らかの解決策が必要。</li>
+</ul>
+
+<h3>参考文献</h3>
+<ul>
+  <li>Y. Ikeuchi, "<a href="https://www.w3.org/2013/06/ebooks/slides/Ikeuchi.ppt">Japanese Typography issue for Novel and Textbook</a>", W3C eBooks &amp; i18n Workshop, Jun 2013</li>
+  <li>E. J. Etemad and K. Ishii, "<a href="https://www.w3.org/TR/css-ruby-1/">CSS Ruby Layout Module Level 1</a>", W3C Working Draft</li>
+  <li>R. Ishida, "<a href="https://www.w3.org/TR/ruby-use-cases/">Use Cases &amp; Exploratory Approaches for Ruby Markup</a>", W3C Working Group Note</li>
+  <li>Y. Anan et al., "<a href="https://www.w3.org/TR/jlreq/">Requirements for Japanese Text Layout</a>", W3C Working Group Note</li>
+</ul>
