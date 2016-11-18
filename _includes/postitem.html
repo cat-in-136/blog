@@ -3,5 +3,8 @@
     <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
       <span class="post-meta">{{ post.date | date: "%F" }}</span>
       <span class="post-title">{{ post.title | escape_once }}</span>
+      {% if post.thumbnail %}{% unless page.vertical-writing %}
+      <span class="post-thumb" data-image-path="{{ post.thumbnail | liquify | escape_url }}"></span>
+      {% endunless %}{% endif %}
     </a>
   </li>

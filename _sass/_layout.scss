@@ -132,8 +132,24 @@
         display: block;
       }
 
+      .post-thumb {
+        display: block;
+        height: 5em;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: auto;
+      }
+      .post-thumb[data-image-path] {
+        background-color: $grey-color-light;
+      }
+
       @include media-query($on-palm) {
         width: 100%;
+        .post-thumb {
+          display: none;
+          visibility: hidden;
+        }
       }
     }
 
@@ -145,6 +161,11 @@
         .post-item {
           width: auto;
           height: 100%;
+
+          .post-thumb {
+            display: none;
+            visibility: hidden;
+          }
         }
       }
     }
