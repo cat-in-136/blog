@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-{% compresshtml %}
-<html{% if page.vertical-writing %} class="vertical-writing-recommended"{% endif %}>
-{% include head.html %}
-<body>
-  {% include header.html %}
-  <div class="page-content" role="main">
-    <div class="wrap">
-    {{ content }}
+<html xmlns="http://www.w3.org/1999/xhtml"{% if page.vertical-writing %} class="vertical-writing-recommended"{% endif %}>
+  {% include head.html %}
+  <body>
+    {% include header.html %}
+    <div class="page-content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
     </div>
-  </div>
-  {% include footer.html %}
-</body>
+    {% include footer.html %}
+  </body>
 </html>
-{% endcompresshtml %}

@@ -1,16 +1,12 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
+ruby RUBY_VERSION
 
-gem 'jekyll', '>= 3'
-gem 'jekyll-paginate'
-gem 'redcarpet'
-gem 'json'
-group :lsi do
-  gem 'rb-gsl', '~> 1.16'
-end
-gem 'classifier-reborn'
-gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem "jekyll", "~>3.3"
 
-gem 'imagesize'
+# If you have any plugins, put them here!
+gem "jekyll-feed", "~> 0.6"
+gem "imagesize"
+gem "jekyll-paginate"
 
-gem 'rake'
-gem 'term-ansicolor'
+gem "rake"
+gem "term-ansicolor"

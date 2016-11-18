@@ -1,0 +1,372 @@
+/*
+ * Site Header
+ */
+
+.site-header {
+  border-bottom: 1px solid $grey-color-light;
+  min-height: 56px;
+  font-size: 150%;
+}
+
+.site-title {
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: $text-color ! important;
+}
+
+.site-nav {
+  float: right;
+  .menu-icon {
+    display: none;
+  }
+}
+@include media-query($on-palm) {
+  .site-nav {
+    position: absolute;
+    top: 9px;
+    right: $spacing-unit;
+    background-color: $background-color;
+    border: 1px solid $grey-color-light;
+    border-radius: 5px;
+    text-align: right;
+
+    .menu-icon {
+      display: block;
+      text-decoration: none;
+      padding: 3px;
+      &::before {
+        content: '≡';
+      }
+      &:hover::before, &:active::before, &:focus::before {
+        // just joke.
+        content: '🍔';
+      }
+    }
+    .trigger {
+      clear: both;
+      display: none;
+    }
+
+    &:hover .trigger, .menu-icon:active + .trigger {
+      display: block;
+      padding: 10px;
+    }
+    .page-link {
+      display: block;
+    }
+  }
+}
+@include vertical-writing {
+  html.vertical-writing-recommended {
+    .site-header {
+      border-bottom: 0px none;
+      border-left: 1px solid $grey-color-light;
+      min-height: none;
+      min-width: 56px;
+      font-size: 150%;
+    }
+    @include media-query($on-palm) {
+      .site-nav {
+        position: static;
+        top: none;
+        right: none;
+        border: 0px none;
+        float: right;
+        .menu-icon {
+          display: none ! important;
+        }
+        .trigger, &:hover .trigger, .menu-icon:active + .trigger {
+          display: block;
+          padding: inherit;
+          clear: none;
+        }
+        .page-link {
+          display: inline ! important;
+        }
+      }
+    }
+  }
+}
+
+/*
+ * Post list cards
+ */
+@supports ((display: -ms-flexbox) or (display: -webkit-flex) or (display: flex)) {
+  .post-list {
+    display: block;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+  
+    .post-item {
+      display: block;
+      border: 1px solid $grey-color-light;
+      width: 20%;
+      margin: 2px;
+      padding: 5px;
+      overflow: hidden;
+
+      .post-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .post-meta {
+        display: block;
+        color: $grey-color-dark;
+      }
+
+      .post-title {
+        display: block;
+      }
+
+      @include media-query($on-palm) {
+        width: 100%;
+      }
+    }
+
+    @include vertical-writing {
+      html.vertical-writing-recommended & {
+        /* As of Oct 2016, Firefox fails to render flex boxes within vertical-rl block. */
+        display: block;
+    
+        .post-item {
+          width: auto;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+/*
+ * Home Layout
+ */
+.pagination {
+  text-align: center;
+  margin: $spacing-unit;
+}
+
+/*
+ * Post Layout
+ */
+
+.post {
+  .post-header {
+    margin: $spacing-unit*2 0;
+    line-height: 1.2;
+
+    @include vertical-writing {
+      html.vertical-writing-recommended & {
+        margin: 0 $spacing-unit*2;
+      }
+    }
+  
+    .post-title {
+      font-size: xx-large;
+      font-weight: 800;
+      letter-spacing: -1px;
+      -webkit-font-feature-settings: "liga";
+      font-feature-settings: "liga";
+    }
+    .post-meta {
+      display: inline;
+      font-size: $small-font-size;
+      color: $grey-color-dark;
+  
+      > *[itemprop], > .tag, > .category {
+        font-weight: bolder;
+      }
+      &:not(:last-child)::after {
+        content: ' / ';
+      }
+    }
+  }
+  
+  .post-footer {
+    margin: 1em;
+  }
+}
+
+/*
+ * Post Content
+ */
+.post-content {
+  h1, h2, h3, h4, h5, h6 {
+    margin: 40px 0 20px 0;
+  }
+  h2, h3 {
+    font-size: xx-large;
+  }
+  h4 {
+    font-size: x-large;
+  }
+  h5 {
+    font-size: large;
+  }
+  p {
+    margin: 10px 0;
+  }
+
+  pre.terminal {
+    background-color: #333;
+    color: #fff;
+  }
+
+  @include media-query(480px) {
+    .fitcontain {
+      object-fit: scale-down;
+      width: -webkit-available;
+      width: -moz-available;
+      width: available;
+      height: auto;
+    }
+  }
+  //@include media-query($on-palm) {
+  //}
+
+  table:not([class]):not([style]) {
+    border-collapse: collapse;
+    margin: auto;
+
+    td, th {
+      border: 1px solid $grey-color-light;
+      padding: 2px;
+    }
+    thead, tfoot {
+      background-color: rgba($grey-color-light, 0.25);
+    }
+    caption {
+      text-align: center;
+    }
+  }
+
+  &:lang(ja) {
+    text-align: justify;
+    text-justify: inter-ideograph;
+
+    > p {
+      text-indent: 1em;
+    }
+    > pre+p, > math+p, > ul+p, > ol+p {
+      text-indent: inherit ! important;
+    }
+  }
+  @include vertical-writing {
+    html.vertical-writing-recommended & {
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0 40px 0 20px;
+      }
+    }
+    p {
+      margin: auto 10px;
+    }
+    .fitcontain {
+      /* As of firefox 46, vertical-rl may conflict with object-fit. */
+      object-fit: unset;
+      width: auto;
+      height: auto;
+    }
+
+    blockquote, math, > table, > ul, > ol, > figure {
+      margin: auto 1px;
+    }
+    figure {
+      writing-mode: horizontal-tb;
+      -webkit-writing-mode: horizontal-tb;
+
+      /* As of Mar 2016, Edge fails to calculate the width of horizontal-tb block within vertical-rl block. */
+      max-width: 100vh;
+    }
+  }
+  &:lang(en) {
+    text-align: left;
+  }
+}
+
+.post-footer {
+  @include vertical-writing {
+    html.vertical-writing-recommended & {
+      #disqus_thread {
+        writing-mode: horizontal-tb;
+        -webkit-writing-mode: horizontal-tb;
+        width: 90vh;
+      }
+    }
+  }
+}
+
+/*
+ * Tag / Archive
+ */
+.tag-cloud, .archive-year-summary {
+  margin-bottom: $spacing-unit;
+}
+
+/*
+ * Site Footer
+ */
+.site-footer {
+  font-size: $small-font-size;
+  color: $grey-color-dark;
+
+  margin-top: $spacing-unit;
+  border-top: 1px solid $grey-color-light;
+  padding-top: $spacing-unit;
+
+  @include vertical-writing {
+    html.vertical-writing-recommended & {
+      margin: auto $spacing-unit auto auto;
+      border-top: auto none;
+      border-right: 1px solid $grey-color-light;
+      padding: inherit $spacing-unit inherit inherit;
+    }
+  }
+
+  .footer-heading {
+    float: right;
+    font-weight: 800;
+    letter-spacing: -1px;
+    padding: 0 $spacing-unit / 2;
+    @include vertical-writing {
+      html.vertical-writing-recommended & {
+        padding: $spacing-unit / 2 0;
+        @include media-query-vertical(640px) {
+          padding: 2px;
+          float: none;
+        }
+      }
+    }
+    @include media-query($on-palm) {
+      padding: 2px;
+      float: none;
+    }
+  }
+
+  a[href="#top"] {
+    display: block;
+    float: right;
+    margin-right: $spacing-unit;
+    padding: 3px;
+    background-color: $background-color;
+    border: 1px solid $grey-color-light;
+    border-radius: 5px;
+    font-size: 150%;
+  }
+
+  [role="contentinfo"], [itemprop] {
+    font-weight: bolder;
+  }
+}

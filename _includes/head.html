@@ -1,18 +1,32 @@
-<head>
+{% stripemptylines %}
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>{% if page.title %}{{ page.title | escape }} {% endif %}{{ site.title | escape }}</title>
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" />
-  <link rel="alternate" type="application/atom+xml" href="{{ '/feed.xml' | prepend: site.baseurl }}" />
-  <meta property="og:title" content="{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>{% if page.title %}{{ page.title | escape_once }}{% else %}{{ site.title | escape_once }}{% endif %}</title>
+
+  <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" />
+  <meta property="og:title" content="{% if page.title %}{{ page.title | escape_once }}{% else %}{{ site.title | escape_once }}{% endif %}" />
+  {% if page.description %}
+  <meta property="og:description" content="{{ page.description | normalize_whitespace | escape_once }}" />
+  {% elsif page.content %}
+  <meta property="og:description" content="{{ page.content | strip_html | normalize_whitespace | truncate: 100 | escape_once }}" />
+  {% endif %}
   <meta property="og:type" content="{% if page %}article{% else %}website{% endif %}" />
   {% if page.thumbnail %}<meta property="og:image" content="{{ page.thumbnail | liquify | escape_url }}" />{% endif %}
   {% if page.title %}<meta property="og:site_name" content="{{ site.title | escape }}" />{% endif %}
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@{{ site.twitter_username }}" />
+  <meta name="twitter:creator" content="@{{ site.twitter_username }}" />
+
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
   <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" />
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} &raquo; Feed" href="/feed.xml" />
   {% if page and page.content contains 'class="prettyprint' %}
   <script type="application/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/prettify.js" defer="defer"></script>
   <script type="application/javascript" src="data:application/javascript,window.addEventListener(%22DOMContentLoaded%22%2Cfunction(e)%7BprettyPrint()%3B%7D%2Cfalse)%3B" defer="defer"></script>
   {% endif %}
 </head>
+{% endstripemptylines %}

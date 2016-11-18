@@ -2,89 +2,62 @@
 layout: default
 ---
 <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  {% stripemptylines %}
   <header class="post-header">
-    <h1 itemprop="name"><a href="{{ page.url }}" itemprop="url">{{ page.title | escape }}</a></h1>
-    {% if page.author %}
-    <div class="meta">
-      Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author | escape }}</span></span>
-    </div>
+    <h1 class="post-title" itemprop="name"><a href="{{ page.url }}" itemprop="url">{{ page.title | escape }}</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="{{ page.date | date_to_xmlschema }}">{{ page.date | date_to_xmlschema }}</span></div>
+    {% if page.last_modified_at != null %}
+    <div class="post-meta">Modified at: <span itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date_to_xmlschema }}</span></div>
     {% endif %}
-    <div class="meta">
-      Date: <time itemprop="datePublished">{{ page.date | date_to_xmlschema }}</time>
-      {% if page.last_modified_at != null %}(Modified: <time item="dateModified">{{ page.last_modified_at | date_to_xmlschema }}</time>){% endif %}
-    </div>
-    <div class="meta">
-      Tags:
+    {% if page.author %}
+    <div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author | escape }}</span></span></div>
+    {% endif %}
+    <div class="post-meta">Tags:
+      <span itemprop="keywords">
       {% for tag in page.tags %}
       <a class="tag" href="{{ site.baseurl }}/tags.html#tag_{{ tag | handleize | downcase | uri_escape }}">{{ tag | capitalize }}</a>
       {% endfor %}
+      </span>
       {% comment %}
       {% for category in page.categories %}
       <a class="category" href="{{ site.baseurl }}/categories/{{ category | handleize | downcase }}">{{ category | capitalize }}</a>
       {% endfor %}
       {% endcomment %}
     </div>
+    {% if site.github_username %}
+    <div class="post-meta">
+      Github source: <a href="https://github.com/{{ site.source_repo_name }}/blob/{{ site.source_repo_branch }}/{{ page.path }}" class="source-path">{{ page.path | escape }}</a>
+        (<a href="https://github.com/{{ site.source_repo_name }}/commits/{{ site.source_repo_branch }}/{{ page.path }}">History</a>)
+    </div>
+    {% endif %}
+    <div class="post-meta">
+      Comments: <a href="#disqus_thread">↓</a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
   </header>
+  {% endstripemptylines %}
 
   <div class="post-content" itemprop="articleBody"{% if content contains "。" and content contains "、" %} lang="ja"{% endif %}>
-  {{ content }}
-  </div><!-- post-content -->
+    {{ content }}
+  </div>
 
   <footer class="post-footer">
-    <div class="meta share">
-      {% assign page_href = page.url | prepend: site.baseurl | prepend: site.url %}
-      Share:
-      <a rel="nofollow" href="https://twitter.com/intent/tweet?url={{ page_href | uri_escape }}&amp;text={{ page.title | uri_escape | escape }}+{{ site.title | uri_escape }}&amp;via={{ site.twitter_username | uri_escape | escape }}">Twitter</a>
-      <a rel="nofollow" href="https://www.facebook.com/sharer/sharer.php?u={{ page_href | uri_escape }}">Facebook</a>
-      <a rel="nofollow" href="http://b.hatena.ne.jp/entry/{{ page_href | replace: 'http://','' | replace: 'https://','' }}">Hatena Bookmark</a>
-      <a rel="nofollow" href="http://www.addtoany.com/share_save?linkurl={{ page_href | uri_escape }}&amp;linkname={{ page.title | uri_escape | escape }}+{{ site.title | uri_escape | escape }}">More via AddToAny...</a>
-    </div>
-    {% if site.github_username %}
-    <div class="meta">
-      Source: <a href="https://github.com/{{ site.source_repo_name }}/blob/{{ site.source_repo_branch }}/{{ page.path }}" class="source-path">{{ page.path | escape }}</a>
-      (<a href="https://github.com/{{ site.source_repo_name }}/commits/{{ site.source_repo_branch }}/{{ page.path }}">History</a>)
-    </div>
-    {% endif %}
+    <div id="disqus_thread"></div>
+    <script type="application/javascript" src="https://catin136blog.disqus.com/embed.js" defer="defer" async="async"></script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </footer>
-
 </article>
-
-<nav class="post-nav wrap">
-  <div class="previous-post">
-    {% if page.previous %}
-    <a href="{{ page.previous.url }}" title="{{ page.previous.title | escape }}" rel="prev">&#x2190;{{ page.previous.title | escape }}</a>
-    {% endif %}
-  </div>
-  <div class="next-post">
-    {% if page.next %}
-    <a href="{{ page.next.url }}" title="{{ page.next.title | escape }}" rel="next">{{ page.next.title | escape }}&#x2192;</a>
-    {% endif %}
-  </div>
-</nav>
-
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-var disqus_shortname = 'catin136blog';
-(function() {
-  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
-  document.getElementsByTagName('head')[0].appendChild(dsq);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
-
+{% stripemptylines %}
 {% if site.related_posts %}
 <aside class="post-related">
   <h2>Related Posts</h2>
-  <ul>
-    {% for post in site.related_posts limit:5 %}
-    <li class="post-item">
-      <span class="post-date">{{ post.date | date: "%F" }}</span>
-      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-    </li>
+  <ul class="post-list">
+    {% for post in site.related_posts limit:8 %}
+    {% include postitem.html post=post %}
     {% endfor %}
   </ul>
 </aside>
 {% endif %}
+{% endstripemptylines %}

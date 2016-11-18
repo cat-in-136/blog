@@ -1,17 +1,13 @@
 ---
 layout: default
+description: Home of the site
 ---
+{% stripemptylines %}
 <div class="home">
-  <ul class="posts">
-    {% for post in paginator.posts %}
-      <li class="post-item"{% if post.content contains "。" and post.content contains "、" %} lang="ja"{% endif %}>
-        <span class="post-date">{{ post.date | date: "%F" }}</span>
-        <div>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-          <div class="post-summary">{{ post.content | strip_html | truncate: 140 | escape_once }}</div>
-        </div>
-      </li>
-    {% endfor %}
+  <ul class="post-list">
+  {% for post in paginator.posts %}
+  {% include postitem.html post=post %}
+  {% endfor %}
   </ul>
 
   <nav class="pagination">
@@ -34,3 +30,4 @@ layout: default
     {% endif %}
   </nav>
 </div>
+{% endstripemptylines %}

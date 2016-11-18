@@ -1,13 +1,12 @@
 ---
 layout: default
 ---
-<div class="post" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+<div class="post">
   <header class="post-header">
-    <h1 itemprop="name"><a href="{{ page.url }}" itemprop="url">{{ page.title | escape }}</a></h1>
+    <h1 class="post-title">{{ page.title }}</h1>
   </header>
 
   <article class="post-content">
-  {{ content }}
+    {{ content }}
   </article>
-
 </div>

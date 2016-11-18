@@ -1,35 +1,30 @@
-# Site settings
 title: cat_in_136.blog()
-baseurl: ""
-url: "https://cat-in-136.github.io"
-
-exclude:
- - Gemfile
- - Gemfile.lock
- - Rakefile
- - README.md
- - vendor
-
-paginate: 10
-paginate_path: "/page:num"
-
-timezone: Japan
-encoding: utf-8
-#safe: true
-#lsi: true
-sass:
-        style: :compact
-
-gems:
- - jekyll-paginate
-
-# Build settings
-#markdown: kramdown
-#permalink: pretty
-permalink: /:year/:month/:title.html
-
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://cat-in-136.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 twitter_username: cat_in_136
 github_username: cat-in-136
 source_repo_name: cat-in-136/blog
 source_repo_branch: master
+
+timezone: Japan
+encoding: utf-8
+
+sass:
+  style: :compact
+paginate: 20
+paginate_path: "/page:num"
+
+# Build settings
+#markdown: kramdown
+#theme: minima
+permalink: /:year/:month/:title.html
+gems:
+  - jekyll-feed
+  - jekyll-paginate
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - Rakefile
+  - README.md

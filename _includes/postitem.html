@@ -1,0 +1,7 @@
+{% assign post = include.post %}
+  <li class="post-item">
+    <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
+      <span class="post-meta">{{ post.date | date: "%F" }}</span>
+      <span class="post-title">{{ post.title | escape_once }}</span>
+    </a>
+  </li>
