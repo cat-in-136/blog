@@ -337,6 +337,23 @@
 }
 
 /*
+ * About page
+ */
+.about-content {
+  ul > li {
+    list-style-type: none;
+  }
+
+  .svg-icon {
+    display: inline-block;
+    vertical-align: middle;
+    * {
+      fill: currentColor;
+    }
+  }
+}
+
+/*
  * Site Footer
  */
 .site-footer {
