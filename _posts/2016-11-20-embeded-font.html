@@ -1,0 +1,184 @@
+---
+layout: post
+title: 文字を画像化して貼るのはやめろとはいうが埋め込むとなると…?
+author: cat_in_136
+tags: 縦書き html font webfont
+vertical-writing: true
+thumbnail: "{% asset_image_path 201611_embedded_font_susanoo_demo_raster.png %}"
+date: '2016-11-20T02:03:18+09:00'
+---
+<p>
+次のように画像 (raster image) 化した文字画像は、
+テキスト選択できないなど批判されることが多いが
+特殊なフォントを使いたい場合など使用されることが多い。
+</p>
+<figure>
+{% asset_image_tag 201611_embedded_font_susanoo_demo_raster.png %}
+<figcaption>ラスター画像化した文字画像の例</figcaption>
+</figure>
+
+<h3>web font</h3>
+
+<p>
+最も理想的な解決策は web font を用意することで、
+ソースも無駄がない。
+しかしフォントサイズが大きくなるという日本語特有の事情や、
+ライセンスの問題から一筋縄ではない。
+だがメジャーなフォントベンダーのフォントなら、その問題をまとめて
+<a href="http://www.typesquare.com/">TypeSquare</a>や
+<a href="http://typekit.com/">TypeKit</a>
+などのサービスで解決もらえるので、普通はこれが良い。
+</p>
+<figure>
+<div class="embeded-font-susanoo-typografy-test">
+  やくもたつ<br />
+  いづもやへがき<br />
+  つまごみに<br />
+  やへがきつくる<br />
+  そのやへがきを
+</div>
+<figcaption>Woffでの表示例（ライブビュー）</figcaption>
+</figure>
+
+<h3>pdf.js で透明テキスト</h3>
+
+<p>
+ところで PDF への埋め込みは許されているというのはありがち。
+そこで <a href="https://github.com/mozilla/pdf.js">pdf.js</a>
+の威力を使ってレンダリングしてしまえば、
+フォントの字形は canvas 要素、テキスト選択できない問題は
+透明テキストで解決できる。
+しかし、無理矢理感が半端ないし、pdf.js 自体が結構重い。
+</p>
+<figure>
+  <div class="render-pdf-file" data-pdf-file-path="{% asset_image_path 201611_embedded_font_susanoo_demo_pdf.pdf %}"></div>
+<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.6.329/pdf.min.js"></script>
+<script type="application/javascript">
+window.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+
+  var container = document.querySelector(".render-pdf-file[data-pdf-file-path]");
+  container.style.position = "relative";
+
+  var PDFJS = pdfjsDistBuildPdf.PDFJS;
+  PDFJS.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.6.329/pdf.worker.min.js";
+  PDFJS.getDocument(container.getAttribute("data-pdf-file-path")).then(function (pdf) {
+    return pdf.getPage(1);
+  }).then(function(page) {
+    var canvas = container.appendChild(document.createElement("canvas"));
+    var ratio = window.devicePixelRatio || 1;
+    var viewport = page.getViewport(1 * ratio);
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    container.style.width = canvas.style.width = canvas.width * 1.0 / ratio + "px";
+    container.style.height = canvas.style.height = canvas.height * 1.0 / ratio + "px";
+
+    page.render({
+      canvasContext: canvas.getContext("2d"),
+      viewport: viewport
+    });
+
+    return Promise.all([page.getTextContent(), {viewport: viewport, canvas: canvas, ratio: ratio}]);
+  }).then(function (param) {
+    var textContent = param[0];
+    var viewport = param[1].viewport;
+    var canvas = param[1].canvas;
+    var ratio = param[1].ratio;
+
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('width', canvas.style.width);
+    svg.setAttribute('height',  canvas.style.height);
+    svg.setAttribute('font-size', 1);
+    svg.setAttribute('style', 'position: absolute; top: 0; left: 0;');
+
+    textContent.items.forEach(function (textItem) {
+      var tx = [
+        [1.0/ratio, 0, 0, 1.0/ratio, 0, 0],
+        viewport.transform,
+        textItem.transform,
+        [1, 0, 0, -1, 0, 0]
+      ].reduce(function(curr, v) { return PDFJS.Util.transform(curr, v); });
+
+      var style = textContent.styles[textItem.fontName];
+      var text = document.createElementNS(SVG_NS, 'text');
+      text.setAttribute('transform', 'matrix(' + tx.join(' ') + ')');
+      text.setAttribute('font-family', style.fontFamily);
+      text.setAttribute('fill-opacity', '0');
+      text.appendChild(document.createTextNode(textItem.str));
+      svg.appendChild(text);
+    });
+    container.appendChild(svg);
+
+    return Promise.resolve();
+  }).catch(function (ex) {
+    console.error(ex);
+  });
+}, false);
+</script>
+<figcaption>pdf.js での表示例（ライブビュー）</figcaption>
+</figure>
+
+<h3>透明テキストを含んだベクトル画像</h3>
+
+<p>
+pdf.js のレンダリング結果を模擬するものの、
+レンダリング結果はラスターではなくベクトルとする。
+すなわちアウトライン化した svg 画像内に透明テキストを入れこむ。
+</p>
+<figure>
+{% asset_image_object_tag 201611_embedded_font_susanoo_demo.svg %}
+<figcaption>svg化した文字画像の例</figcaption>
+</figure>
+
+<h3>感想</h3>
+
+<p>
+日本語のフォントは色々と大変だと思いました（小並感
+</p>
+
+<h3>参考文献</h3>
+
+<ul>
+  <li>github:<a href="https://github.com/mozilla/pdf.js">mozilla/pdf.js</a></li>
+  <li>使用している極太明朝は<a href="http://www.pot.co.jp/font/">MOJもじくみかなSH版</a></li>
+  <li>例文として使用した文は、最古の和歌と伝えられる「八雲立つ／出雲八重垣／妻籠みに／八重垣作る／その八重垣を」</li>
+</ul>
+
+<style scoped="scoped">
+@font-face {
+  /*
+     http://www.pot.co.jp/font/
+     で配布されている 2006/Mon/19 版の
+     MOJもじくみ仮名 OTF フォントからサブセットを生成し
+     WOFF に変換した。
+
+     バージョン履歴
+     [2001/Aug/25]
+     「もじくみ仮名」配布開始
+     日本語の文字と組版を考える会
+     [2001/Nov/12]
+     「MOJもじくみかなSH版」v1.0-sh配布開始
+     [2006/Mon/19]
+     「MOJもじくみかなSH版」OpenTypeフォーマットにて配布開始
+     沢辺均、萩野生政、企画・制作
+   */
+  font-family: "MOJもじくみ仮名 OTF";
+  src: url("data:application/x-font-woff;base64,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") format("woff");
+}
+
+
+.embeded-font-susanoo-typografy-test {
+  font-family: "MOJもじくみ仮名 OTF", serif;
+  padding: 2px;
+  margin: 2px;
+  text-align: left;
+  text-align: start;
+}
+@supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
+  .embeded-font-susanoo-typografy-test {
+    writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+  }
+}
+</style>
