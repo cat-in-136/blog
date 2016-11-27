@@ -148,15 +148,17 @@ task :deploy do
   puts "\nCopy to _site/ to #{deploy_dir}... "
   ok_failed system("rsync -a --delete --exclude .git _site/ \'#{deploy_dir}\'")
 
-  cd "#{deploy_dir}" do
-    FileUtils.touch '.nojekyll' unless File.exists?('.nojekyll')
+  if ENV['TRAVIS_BRANCH'] == 'master'
+    cd "#{deploy_dir}" do
+      FileUtils.touch '.nojekyll' unless File.exists?('.nojekyll')
 
-    message = "Site updated at #{Time.now} (#{Time.now.utc})"
-    puts "Commiting: #{message}"
+      message = "Site updated at #{Time.now} (#{Time.now.utc})"
+      puts "Commiting: #{message}"
 
-    ok_failed system("git add -A")
-    ok_failed system("git commit -m \"#{message}\"")
-    ok_failed system("git push origin \'#{deploy_branch}\'")
+      ok_failed system("git add -A")
+      ok_failed system("git commit -m \"#{message}\"")
+      ok_failed system("git push origin \'#{deploy_branch}\'")
+    end
   end
   
 end
