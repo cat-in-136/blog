@@ -5,7 +5,7 @@ author: cat_in_136
 tags:
 - "チラシの裏"
 date: '2016-06-25T01:07:23+09:00'
-modified_time: '2016-10-20T21:50:27+09:00'
+last_modified_at: '2016-10-20T21:50:27+09:00'
 ---
 
 #### Github Pages 上 jekyll 使ったブログの HTTPS 強制 (HTTPS enforcement) への移行方法

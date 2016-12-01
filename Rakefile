@@ -23,7 +23,13 @@ task :watch do
 end
 
 desc "Begin a new content"
-task :new, :dir, :title, :new_post_ext do |dir, t, args|
+task :new, :dir, :title, :new_post_ext do |t, args|
+  p args
+  if File.directory? args.dir
+    dir = args.dir
+  else
+    abort("dir not found")
+  end
   if args.title
     title = args.title
   else
@@ -46,7 +52,6 @@ task :new, :dir, :title, :new_post_ext do |dir, t, args|
       'layout' => 'post',
       'title' => title,
       'date' => Time.now.strftime('%Y-%m-%dT%H:%M:%S%:z'),
-      'updated' => Time.now.strftime('%Y-%m-%dT%H:%M:%S%:z'),
       'tags' => [],
     }).to_yaml
     post << "---\n"
@@ -56,12 +61,12 @@ end
 
 desc "Begin a new post in #{posts_dir}"
 task :new_post, :title, :new_post_ext do |t, args|
-  Rake::Task[:new].invoke(posts_dir, t, args)
+  Rake::Task[:new].invoke(posts_dir, args.title, args.new_post_ext)
 end
 
 desc "Begin a new post in #{drafts_dir}"
 task :new_draft, :title, :new_post_ext do |t, args|
-  Rake::Task[:new].invoke(drafts_dir, t, args)
+  Rake::Task[:new].invoke(drafts_dir, args.title, args.new_post_ext)
 end
 
 desc "Update datetime in a given post"
@@ -93,7 +98,7 @@ task :touch_post, :path do |t, args|
 
   formatter = YAML.load(formatter_str)
   formatter["date"] = Time.now.xmlschema unless formatter["date"]
-  formatter["modified_time"] = Time.now.xmlschema
+  formatter["last_modified_at"] = Time.now.xmlschema
 
   File.open(args.path, 'w') do |f|
     f << YAML.dump(formatter)

@@ -11,7 +11,7 @@ layout: default
     {% endif %}
     <div class="meta">
       Date: <time itemprop="datePublished">{{ page.date | date_to_xmlschema }}</time>
-      {% if page.modified_time != null %}(Modified: <time item="dateModified">{{ page.modified_time | date_to_xmlschema }}</time>){% endif %}
+      {% if page.last_modified_at != null %}(Modified: <time item="dateModified">{{ page.last_modified_at | date_to_xmlschema }}</time>){% endif %}
     </div>
     <div class="meta">
       Tags:

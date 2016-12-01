@@ -6,7 +6,7 @@
   {% for post in site.posts %}{% unless post.sitemap == false %}
   <url>
     <loc>{{ site_url }}{{ post.url }}</loc>
-    <lastmod>{% if post.modified_time == null %}{{ post.date | date_to_xmlschema }}{% else %}{{ post.modified_time | date_to_xmlschema }}{% endif %}</lastmod>
+    <lastmod>{% if post.last_modified_at == null %}{{ post.date | date_to_xmlschema }}{% else %}{{ post.last_modified_at | date_to_xmlschema }}{% endif %}</lastmod>
     <priority>0.8</priority>
   </url>
   {% endunless %}{% endfor %}
@@ -21,7 +21,7 @@
   {% for file in site.html_files %}
   <url>
     <loc>{{ site_url }}{{ file.path }}</loc>
-    <lastmod>{{ file.modified_time | date:"%Y-%m-%dT%H:%M:%SZ" }}</lastmod>
+    <lastmod>{{ file.last_modified_at | date:"%Y-%m-%dT%H:%M:%SZ" }}</lastmod>
     <priority>0.6</priority>
   </url>
   {% endfor %}
