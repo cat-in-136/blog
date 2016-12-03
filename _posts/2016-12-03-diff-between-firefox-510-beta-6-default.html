@@ -1,0 +1,58 @@
+---
+layout: post
+title: Diff between firefox 51.0 beta 6 default preference and firefox 50.0.2
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+last_modified_at: '2016-12-03T10:53:05+09:00'
+---
+
+<p>
+This is difference between the default preference of Firefox 50.0 beta 3 and one of 49.0.1.
+</p>
+
+<div>
+<table class="diff_firefox51_pref_diff">
+<caption>Preference difference</caption>
+<thead>
+<tr><td>Pref</td><td>Firefox 50.0.2</td><td>Firefox 51.0 beta 6</td></tr>
+</thead>
+<tbody>
+<tr class="oldkey"><td>accessibility.<wbr />typeaheadfind.<wbr />matchesCountTimeout</td><td>100</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>app.<wbr />update.<wbr />cert.<wbr />checkAttributes</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>browser.<wbr />migrate.<wbr />automigrate.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>browser.<wbr />safebrowsing.<wbr />provider.<wbr />google4.<wbr />updateURL</td><td class="uri">https://safebrowsing.googleapis.com/v4/threatListUpdates:fetch?$req=%REQUEST_BASE64%&amp;$ct=application/x-protobuf&amp;key=%GOOGLE_API_KEY%</td><td class="uri">https://safebrowsing.googleapis.com/v4/threatListUpdates:fetch?$ct=application/x-protobuf&amp;key=%GOOGLE_API_KEY%</td></tr><tr><td>browser.<wbr />search.<wbr />reset.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>devtools.<wbr />devedition.<wbr />promo.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>dom.<wbr />mozAlarms.<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>dom.<wbr />vr.<wbr />add-test-devices</td><td>0</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>dom.<wbr />vr.<wbr />cardboard.<wbr />enabled</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>dom.<wbr />vr.<wbr />oculus050.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>gfx.<wbr />content.<wbr />azure.<wbr />backends</td><td>cairo</td><td>skia</td></tr><tr class="oldkey"><td>gfx.<wbr />vr.<wbr />mirror-textures</td><td>false</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>image.<wbr />single-color-optimization.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />per_<wbr />compartment</td><td>true</td><td class="undefined">undefined</td></tr><tr><td>layers.<wbr />shared-buffer-provider.<wbr />enabled</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>layout.<wbr />css.<wbr />vertical-text.<wbr />enabled</td><td>true</td><td class="undefined">undefined</td></tr><tr class="oldkey"><td>media.<wbr />block-play-until-visible</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>media.<wbr />decoder.<wbr />heuristic.<wbr />dormant.<wbr />timeout</td><td>60000</td><td>10000</td></tr><tr><td>media.<wbr />getusermedia.<wbr />screensharing.<wbr />allowed_<wbr />domains</td><td class="dump">webex.com,*.webex.com,ciscospark.com,*.ciscospark.com,projectsquared.com,*.projectsquared.com,*.room.co,room.co,beta.talky.io,talky.io,*.clearslide.com,appear.in,*.appear.in,tokbox.com,*.tokbox.com,*.sso.francetelecom.fr,*.si.francetelecom.fr,*.sso.infra.ftgroup,*.multimedia-conference.orange-business.com,*.espacecollaboration.orange-business.com,free.gotomeeting.com,g2m.me,*.g2m.me,*.mypurecloud.com,*.mypurecloud.com.au,spreed.me,*.spreed.me,*.spreed.com,air.mozilla.org,*.circuit.com,*.yourcircuit.com,circuit.siemens.com,yourcircuit.siemens.com,circuitsandbox.net,*.unify.com,tandi.circuitsandbox.net,*.ericsson.net,*.cct.ericsson.net,*.opentok.com,*.conf.meetecho.com,meet.jit.si,*.meet.jit.si,web.stage.speakeasyapp.net,web.speakeasyapp.net,*.hipchat.me,*.beta-wspbx.com,*.wspbx.com,*.unifiedcloudit.com,*.smartboxuc.com,*.smartbox-uc.com,*.panterranetworks.com,pexipdemo.com,*.pexipdemo.com,pex.me,*.pex.me,*.rd.pexip.com,1click.io,*.1click.io,*.fuze.com,*.fuzemeeting.com,*.thinkingphones.com,gotomeeting.com,*.gotomeeting.com,gotowebinar.com,*.gotowebinar.com,gototraining.com,*.gototraining.com,citrix.com,*.citrix.com,expertcity.com,*.expertcity.com,citrixonline.com,*.citrixonline.com,g2m.me,*.g2m.me,gotomeet.me,*.gotomeet.me,gotomeet.at,*.gotomeet.at,miriadaxdes.miriadax.net,certificacion.miriadax.net,miriadax.net,*.wire.com,sylaps.com,*.sylaps.com,bluejeans.com,*.bluejeans.com,*.a.bluejeans.com</td><td class="dump">webex.com,*.webex.com,ciscospark.com,*.ciscospark.com,projectsquared.com,*.projectsquared.com,*.room.co,room.co,beta.talky.io,talky.io,*.clearslide.com,appear.in,*.appear.in,tokbox.com,*.tokbox.com,*.sso.francetelecom.fr,*.si.francetelecom.fr,*.sso.infra.ftgroup,*.multimedia-conference.orange-business.com,*.espacecollaboration.orange-business.com,free.gotomeeting.com,g2m.me,*.g2m.me,*.mypurecloud.com,*.mypurecloud.com.au,spreed.me,*.spreed.me,*.spreed.com,air.mozilla.org,*.circuit.com,*.yourcircuit.com,circuit.siemens.com,yourcircuit.siemens.com,circuitsandbox.net,*.unify.com,tandi.circuitsandbox.net,*.ericsson.net,*.cct.ericsson.net,*.opentok.com,*.conf.meetecho.com,meet.jit.si,*.meet.jit.si,web.stage.speakeasyapp.net,web.speakeasyapp.net,*.hipchat.me,*.beta-wspbx.com,*.wspbx.com,*.unifiedcloudit.com,*.smartboxuc.com,*.smartbox-uc.com,*.panterranetworks.com,pexipdemo.com,*.pexipdemo.com,pex.me,*.pex.me,*.rd.pexip.com,1click.io,*.1click.io,*.fuze.com,*.fuzemeeting.com,*.thinkingphones.com,gotomeeting.com,*.gotomeeting.com,gotowebinar.com,*.gotowebinar.com,gototraining.com,*.gototraining.com,citrix.com,*.citrix.com,expertcity.com,*.expertcity.com,citrixonline.com,*.citrixonline.com,g2m.me,*.g2m.me,gotomeet.me,*.gotomeet.me,gotomeet.at,*.gotomeet.at,miriadaxdes.miriadax.net,certificacion.miriadax.net,miriadax.net,*.wire.com,sylaps.com,*.sylaps.com,bluejeans.com,*.bluejeans.com,*.a.bluejeans.com,*.bbcollab.com</td></tr><tr class="oldkey"><td>network.<wbr />http.<wbr />spdy.<wbr />enabled.<wbr />v3-1</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>security.<wbr />insecure_<wbr />password.<wbr />ui.<wbr />enabled</td><td>false</td><td>true</td></tr><tr><td>security.<wbr />pki.<wbr />sha1_<wbr />enforcement_<wbr />level</td><td>3</td><td>4</td></tr><tr><td>signon.<wbr />rememberSignons.<wbr />visibilityToggle</td><td>false</td><td>true</td></tr><tr class="oldkey"><td>signon.<wbr />ui.<wbr />experimental</td><td>false</td><td class="undefined">undefined</td></tr><tr><td>startup.<wbr />homepage_<wbr />welcome_<wbr />url</td><td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/firstrun/</td><td></td></tr><tr><td>webgl.<wbr />enable-webgl2</td><td>false</td><td>true</td></tr>
+</tbody>
+</table>
+</div>
+
+<div>
+<table class="diff_firefox51_pref_diff">
+<caption>Default pref Javascript files</caption>
+<thead>
+<tr><td>Pref</td><td>Firefox 50.0.2</td><td>Firefox 51.0 beta 6</td></tr>
+</thead>
+<tbody>
+  <tr><td>browser/omni.ja.d/defaults/preferences/devtools.js</td><td>present</td><td>present</td></tr>
+  <tr><td>browser/omni.ja.d/defaults/preferences/firefox-branding.js</td><td>present</td><td>present</td></tr>
+  <tr><td>browser/omni.ja.d/defaults/preferences/firefox-l10n.js</td><td>present</td><td>present</td></tr>
+  <tr><td>browser/omni.ja.d/defaults/preferences/firefox.js</td><td>present</td><td>present</td></tr>
+  <tr><td>browser/omni.ja.d/defaults/preferences/webide-prefs.js</td><td>present</td><td>present</td></tr>
+  <tr><td>omni.ja.d/defaults/pref/services-sync.js</td><td>present</td><td>present</td></tr>
+  <tr><td>omni.ja.d/greprefs.js</td><td>present</td><td>present</td></tr>
+</tbody>
+</table>
+</div>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox51_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox51_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox51_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox51_pref_diff td.json,
+table.diff_firefox51_pref_diff td.uri,
+table.diff_firefox51_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox51_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox51_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox51_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox51_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox51_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox51_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
