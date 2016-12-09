@@ -1,40 +1,17 @@
+{% stripemptylines %}
 <footer class="site-footer">
-  <div class="wrap" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
-    <h2 class="footer-heading" itemprop="name">{{ site.title }}</h2>
-    <div class="column">
-      <p>
-        Copyright (C)
-        <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
-          <a href="https://twitter.com/{{ site.twitter_username | uri_escape }}/" itemprop="url"><span itemprop="name">@{{ site.twitter_username }}</span></a>
-        </span><br />
-        Content is available under a
-        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
-        unless otherwise noted.
-      </p>
-    </div>
-    <nav class="column">
-      <ul>
-        <li>
-          <a href="https://twitter.com/{{ site.twitter_username | uri_escape }}/">Twitter @{{ site.twitter_username }}</a>
-        </li>
-        <li>
-          <a href="https://addons.mozilla.org/firefox/user/popoki-tom-cat_in_136/">Firefox Addons</a>,
-          <a href="https://addons.mozilla.org/firefox/addon/4420">Configuration Mania</a>
-        </li>
-        <li>
-          <a href="https://github.com/{{ site.github_username | uri_escape }}">Github</a>,
-          <a href="https://gist.github.com/{{ site.github_username | uri_escape }}">Gist</a>
-        </li>
-        <li>
-          <a href="https://bitbucket.org/cat_in_136/">Bitbucket</a>
-        </li>
-        <li>
-          <a href="https://www.flickr.com/photos/27992339@N00/">Flickr</a>
-        </li>
-        <li>
-          <a href="https://gnome-look.org/usermanager/search.php?username=catin136&amp;action=contents">GNOME-LOOK.org</a>
-        </li>
-      </ul>
-    </nav>
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">{{ site.title }}</h2>
+    <p>
+      © {{ site.time | date : '%Y' }}
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">{{ site.twitter_username }}</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
   </div>
 </footer>
+{% endstripemptylines %}

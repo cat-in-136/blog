@@ -1,0 +1,309 @@
+/**
+ * Reset some basic elements
+ */
+body, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, hr,
+dl, dd, ol, ul, figure {
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Basic styling
+ */
+body {
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  font-weight: 300;
+  color: $text-color;
+  background-color: $background-color;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizelegibility;
+  font-kerning: normal;
+}
+
+/**
+ * Set `margin-bottom` to maintain vertical rhythm
+ */
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+ul, ol, dl, figure,
+%vertical-rhythm {
+  margin-bottom: $spacing-unit / 2;
+}
+
+/**
+ * Vertical writing, Base
+ */
+@mixin vertical-writing {
+  @supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
+    @content;
+  }
+}
+@include vertical-writing {
+  html.vertical-writing-recommended {
+    writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+  }
+}
+
+/**
+ * Format
+ */
+em {
+  font-weight: normal;
+  font-style: italic;
+}
+:lang(ja) em {
+  font-style: normal;
+  text-shadow: 0.25px 0 0.125px currentColor;
+  -moz-text-decoration-style: double;
+  text-decoration-style: double;
+  -moz-text-decoration-line: underline;
+  text-decoration-line: underline;
+}
+:lang(ja), :lang(ja) pre, :lang(ja) code {
+  em, strong {
+    -moz-text-decoration-style: double;
+    text-decoration-style: double;
+    -moz-text-decoration-line: underline;
+    text-decoration-line: underline;
+  }
+  em {
+    font-style: normal;
+    text-shadow: 0.25px 0 0.125px currentColor;
+  }
+  strong {
+    color: #c00;
+    text-shadow: 0.5px 0 0.125px #c00;
+  }
+}
+@supports (((text-emphasis-style: sesame) or (-webkit-text-emphasis-style: sesame)) and
+           ((text-emphasis-style: circle) or (-webkit-text-emphasis-style: circle))) {
+  :lang(ja) {
+    em, strong {
+      text-decoration: none;
+      text-shadow: none;
+    }
+    em {
+      -webkit-text-emphasis-style: sesame;
+      text-emphasis-style: sesame;
+    }
+    strong {
+      -webkit-text-emphasis-style: circle;
+      text-emphasis-style: circle;
+    }
+    pre, code {
+      em, strong {
+        -webkit-text-emphasis-style: none;
+        text-emphasis-style: none;
+      }
+    }
+  }
+}
+
+
+/**
+ * Images
+ */
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/**
+ * Figures
+ */
+figure {
+  border: 1px solid $grey-color-light;
+  margin: 1em auto 1em auto;
+  padding: 2px;
+  text-align: center;
+
+  @include vertical-writing {
+    html.vertical-writing-recommended & {
+      margin: auto;
+    }
+  }
+}
+figure > img {
+  display: block;
+  margin: auto;
+}
+
+figcaption {
+  font-size: $small-font-size;
+}
+
+
+
+/**
+ * Lists
+ */
+ul, ol {
+  margin-left: $spacing-unit;
+}
+li {
+  > ul,
+  > ol {
+    margin-bottom: 0;
+  }
+}
+@include vertical-writing {
+  html.vertical-writing-recommended {
+    ul, ol {
+      margin: $spacing-unit auto auto auto;
+    }
+    li {
+      > ul,
+      > ol {
+        margin: auto auto auto 0;
+      }
+    }
+
+    ol > li {
+      list-style-type: cjk-ideographic;
+    }
+  }
+}
+
+
+/**
+ * Headings
+ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+
+  html:not(.vertical-writing-recommended) & {
+   font-variant-east-asian: proportional-width;
+   -moz-font-feature-settings: "pwid";
+   -webkit-font-feature-settings: "pwid";
+   font-feature-settings: "pwid";
+  }
+}
+
+/**
+ * Links
+ */
+a {
+  color: $brand-color;
+  text-decoration: none;
+
+  &:visited {
+    color: darken($brand-color, 15%);
+  }
+
+  &:hover {
+    color: $text-color;
+    text-decoration: underline;
+  }
+}
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  color: $grey-color-dark;
+  border-left: 4px solid $grey-color-light;
+  padding-left: $spacing-unit / 2;
+  //font-size: 18px;
+  //letter-spacing: -1px;
+  //font-style: italic;
+
+  @include vertical-writing {
+    html.vertical-writing-recommended & {
+      border-left: auto none;
+      border-top: 4px solid $grey-color-light;
+      padding: $spacing-unit/2 inherit inherit inherit;
+    }
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+
+/**
+ * Code formatting
+ */
+pre,
+code {
+  font-family: $code-font-family;
+  font-variant-numeric: slashed-zero;
+  -webkit-font-feature-settings: "zero";
+  font-feature-settings: "zero";
+
+  font-size: 15px;
+  border: 1px solid $grey-color;
+  border-radius: 3px;
+  background-color: $grey-color-light;
+}
+
+code {
+  padding: 1px;
+}
+
+pre {
+  padding: 8px 12px;
+  overflow: auto;
+
+  > code {
+    border: 0;
+    padding: 0;
+  }
+}
+
+
+
+/**
+ * Wrapper
+ */
+.wrapper {
+  max-width: -webkit-calc(800px - (#{$spacing-unit} * 2));
+  max-width:         calc(800px - (#{$spacing-unit} * 2));
+  margin: auto;
+  padding: inherit $spacing-unit;
+  @extend %clearfix;
+
+  @include media-query($on-laptop) {
+    max-width: -webkit-calc(800px - (#{$spacing-unit}));
+    max-width:         calc(800px - (#{$spacing-unit}));
+    padding: inherit $spacing-unit/2;
+  }
+
+  @include vertical-writing {
+    html.vertical-writing-recommended & {
+      max-width: none;
+      margin: auto;
+      padding: $spacing-unit inherit;
+
+      max-height: -webkit-calc(640px - (#{$spacing-unit} * 2));
+      max-height:         calc(640px - (#{$spacing-unit} * 2));
+
+      @include media-query(640px) {
+        max-height: -webkit-calc(640px - (#{$spacing-unit}));
+        max-height:         calc(640px - (#{$spacing-unit}));
+        padding: $spacing-unit/2 inherit;
+      }
+    }
+  }
+}
+
+/**
+ * Clearfix
+ */
+%clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+hr {
+  border: solid thin $grey-color;
+  margin: $spacing-unit;
+}

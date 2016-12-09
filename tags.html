@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Tags
+description: All posts sorted by tag
 ---
 {% assign tags = site.tags | sort %}
 <div class="tag-list">
@@ -16,16 +17,13 @@ title: Tags
     </nav>
   </div> 
 
-  <ul class="post-list">
+  <ul>
   {% for tag in tags %}
     <li id="tag_{{ tag[0] }}">
     	<span class="tag">{{ tag[0] }}</span>
-      <ul class="tag-posts">
+      <ul class="tag-posts post-list">
       {% for post in tag[1] %}
-        <li class="post-item">
-          <span class="post-date">{{ post.date | date: "%F" }}</span>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-        </li>
+        {% include postitem.html post=post %}
       {% endfor %}
       </ul>
     </li>

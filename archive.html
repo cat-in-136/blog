@@ -1,10 +1,24 @@
 ---
 layout: default
 title: Archive
+description: All posts sorted by published date
 ---
 {% assign tags = site.tags | sort %}
 <div class="archive">
   <h1>{{ page.title | escape }}</h1>
+  <div class="archive-year-summary">
+  {% assign year = nil %}{% assign month = nil %}
+  {% for post in site.posts %}{% if post.date %}
+    {% capture this_year %}{{ post.date | date: '%Y' }}{% endcapture %}
+    {% capture prev_year %}{{ post.previous.date | date: '%Y' }}{% endcapture %}
+    {% if forloop.first %}
+      <a href="#year{{ this_year }}">{{ this_year }}</a>
+    {% elsif this_year != prev_year %}
+      <a href="#year{{ this_year }}">{{ this_year }}</a>
+    {% endif %}
+  {% endif %}{% endfor %}
+  </div>
+
   {% assign year = nil %}{% assign month = nil %}
   {% for post in site.posts %}{% if post.date %}
     {% capture this_year %}{{ post.date | date: '%Y' }}{% endcapture %}
@@ -13,15 +27,12 @@ title: Archive
     {% capture prev_month %}{{ post.previous.date | date: '%m' }}{% endcapture %}
     {% if forloop.first %}
     <ul class="archive-list">
-      <li class="archive-year">{{ this_year }}
+      <li class="archive-year" id="year{{ this_year }}">{{ this_year }}
         <ul>
-          <li class="archive-month">{{ this_month }}
-            <ul>
+          <li class="archive-month">{{ this_year }}-{{ this_month }}
+            <ul class="post-list">
     {% endif %}
-              <li class="post-item">
-                <span class="post-date">{{ post.date | date: "%F" }}</span>
-                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-              </li>
+              {% include postitem.html post=post %}
     {% if forloop.last %}
             </ul>
           </li>
@@ -33,15 +44,15 @@ title: Archive
           </li>
         </ul>
       </li>
-      <li class="archive-year">{{ prev_year }}
+      <li class="archive-year" id="year{{ prev_year }}">{{ prev_year }}
         <ul>
-          <li class="archive-month">{{ prev_month }}
-            <ul>
+          <li class="archive-month">{{ prev_year }}-{{ prev_month }}
+            <ul class="post-list">
     {% elsif this_month != prev_month %}
             </ul>
           </li>
-          <li class="archive-month">{{ prev_month }}
-            <ul>
+          <li class="archive-month">{{ prev_year }}-{{ prev_month }}
+            <ul class="post-list">
     {% endif %}
   {% endif %}{% endfor %}
 </div>

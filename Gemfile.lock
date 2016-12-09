@@ -1,7 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.4.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     classifier-reborn (2.0.4)
       fast-stemmer (~> 1.0)
     colorator (1.1.0)
@@ -10,7 +11,7 @@ GEM
     forwardable-extended (2.6.0)
     gsl (2.1.0.1)
     imagesize (0.1.1)
-    jekyll (3.3.0)
+    jekyll (3.3.1)
       addressable (~> 2.4)
       colorator (~> 1.0)
       jekyll-sass-converter (~> 1.0)
@@ -21,13 +22,14 @@ GEM
       pathutil (~> 0.9)
       rouge (~> 1.7)
       safe_yaml (~> 1.0)
+    jekyll-feed (0.8.0)
+      jekyll (~> 3.3)
     jekyll-paginate (1.1.0)
-    jekyll-sass-converter (1.4.0)
+    jekyll-sass-converter (1.5.0)
       sass (~> 3.4)
     jekyll-watch (1.5.0)
       listen (~> 3.0, < 3.1)
-    json (2.0.2)
-    kramdown (1.12.0)
+    kramdown (1.13.1)
     liquid (3.0.6)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -35,19 +37,19 @@ GEM
     mercenary (0.3.6)
     pathutil (0.14.0)
       forwardable-extended (~> 2.6)
+    public_suffix (2.0.4)
     rake (11.3.0)
-    rb-fsevent (0.9.7)
+    rb-fsevent (0.9.8)
     rb-gsl (1.16.0.6)
       gsl
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
-    redcarpet (3.3.4)
     rouge (1.11.1)
     safe_yaml (1.0.4)
     sass (3.4.22)
     term-ansicolor (1.4.0)
       tins (~> 1.0)
-    tins (1.12.0)
+    tins (1.13.0)
 
 PLATFORMS
   ruby
@@ -55,10 +57,12 @@ PLATFORMS
 DEPENDENCIES
   classifier-reborn
   imagesize
-  jekyll (>= 3)
+  jekyll (~> 3.3)
+  jekyll-feed (~> 0.8)
   jekyll-paginate
-  json
   rake
   rb-gsl (~> 1.16)
-  redcarpet
   term-ansicolor
+
+BUNDLED WITH
+   1.10.6
