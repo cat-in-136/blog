@@ -1,0 +1,63 @@
+---
+layout: post
+title: 'Tip: How to run Firefox w/ temporary profile w/o jpm/web-ext'
+author: cat_in_136
+tags:
+- mozilla
+date: '2017-01-25T00:48:15+09:00'
+---
+<p>
+How to run a Firefox instance with a temporary profile
+without <a href="https://github.com/mozilla-jetpack/jpm">jpm</a> (<code>jpm run</code>) or
+<a href="https://github.com/mozilla/web-ext">web-ext</a> (<code>web-ext run</code>)
+</p>
+
+<ol>
+  <li>
+    Create a temporary profile using
+    <a href="https://github.com/saadtazi/firefox-profile-js">firefox-profile</a>.
+<pre class="prettyprint"><code>const FirefoxProfile = require("firefox-profile");
+new Promise((resolve, reject) =&gt; {
+  let profile = new FirefoxProfile();
+  profile.setPreference("devtools.chrome.enabled", true);
+  // ..append preferences as you want..
+  profile.updatePreferences();
+
+  profile.encoded((zippedProfile) =&gt; {
+    resolve(profile, zippedProfile);
+    // Note: you can obtain profile directory by `profile.profileDir`!
+  });
+});</code></pre>
+  </li>
+  <li>
+    Run firefox instance using <a href="https://github.com/mozilla-jetpack/node-fx-runner">node-firefo-connect</a>.
+<pre class="prettyprint"><code>const FxRunner = require("fx-runner/lib/run");
+FxRunner({
+  "no-remote": true,
+  "profile": profileDir, // profile.profileDir
+  "env": process.env,
+});</code></pre>
+    <ul>
+      <li>
+        Note: <code>FxRunner</code> returns a Promise object that is
+        resolved <em>just after</em> the Firefox process starts.
+<pre class="prettyprint"><code>FxRunner({ /* ..snip.. */ }).then((results) =&gt; {
+  /* Any Firefox window have not been open yet. */
+  return new Promise((resolve, reject) =&gt; {
+    require("timer").setTimeout(() =&gt; resolve(results), 1000);
+  });
+}).then((results) =&gt; {
+  /* Firefox window is already open. */
+});</code></pre>
+      </li>
+    </ul>
+  </li>
+  <li>
+    You <em>do not have to delete the temporary profile</em>.
+    "firefox-profile" do it on process exit.
+  </li>
+</ol>
+
+<p>
+Example: <a href="https://gist.github.com/cat-in-136/5afab5cb704205d344c75a2902bbb820">Run firefox with remote debugging</a>
+</p>
