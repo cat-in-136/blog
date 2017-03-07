@@ -1,0 +1,220 @@
+---
+layout: post
+title: 日出と日没に関する考察メモ
+author: cat_in_136
+tags:
+- web application
+- チラシの裏
+date: '2017-03-07T12:37:38+09:00'
+---
+<ul>
+<li>日出や日没の最早・最遅は夏至・冬至と一致しない。</li>
+<li>日出や日没の時刻変化量は日々変わる。</li>
+<li>特に2〜5月の日出が早くなるのと、8〜11月の日没が早くなるのは特に日毎の変化量が多い。</li>
+</ul>
+<p>ただし、いずれも日本近辺の場合で書いてある。</p>
+
+<h3>確認用</h3>
+<p>日本近辺のみ正常に動作する。また、<a href="https://www.npmjs.com/package/solar-calc">solar-calc</a>によって計算しているので、他の機関やライブラリによる計算結果と異なる可能性がある。</p>
+<div>
+  <fieldset>
+    <legend>場所</legend>
+    <div>
+      <label for="sunset-sunrise-lat">緯度</label>
+      <input type="number" step="any" id="sunset-sunrise-lat" />
+    </div>
+    <div>
+      <label for="sunset-sunrise-lng">経度</label>
+      <input type="number" step="any" id="sunset-sunrise-lng" />
+    </div>
+    <div id="sunset-sunrise-map" style="width:256px;height:256px;"></div>
+  </fieldset>
+  <fieldset>
+    <legend>特定の日付の日出日没計算</legend>
+    <div>
+      <label for="sunset-sunrise-date">日付</label>
+      <input type="date" id="sunset-sunrise-date" />
+    </div>
+    <button id="sunset-sunrise-calc">日出日没計算</button>
+    <div>
+      <output id="sunset-sunrise-output"></output>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>一括</legend>
+    <button id="sunset-sunrise-gen">日出日没計算</button>
+    <div>
+      <output id="sunset-sunrise-gen-output">
+        <svg xmlns="http://www.w3.org/2000/svg" width="365" height="720" viewBox="0 0 365 720"><rect x="0" y="0" width="365" height="720" style="fill:#004488;stroke:none;"></rect><path style="fill:#88aaff;stroke-width:1px;stroke:#0049ff;stroke-opacity:1;" d="M 0,208 L 1,208 L 2,208 L 3,208 L 4,208 L 5,208 L 6,208.5 L 7,208.5 L 8,208.5 L 9,208.5 L 10,208.5 L 11,208 L 12,208 L 13,208 L 14,208 L 15,208 L 16,207.5 L 17,207.5 L 18,207.5 L 19,207 L 20,207 L 21,207 L 22,206.5 L 23,206.5 L 24,206 L 25,206 L 26,205.5 L 27,205.5 L 28,205 L 29,204.5 L 30,204.5 L 31,204.5 L 32,204 L 33,203.5 L 34,203 L 35,203 L 36,202.5 L 37,202 L 38,201.5 L 39,201 L 40,200.5 L 41,200 L 42,199.5 L 43,199 L 44,198.5 L 45,198 L 46,197.5 L 47,197 L 48,196.5 L 49,196 L 50,195.5 L 51,195 L 52,194.5 L 53,193.5 L 54,193 L 55,192.5 L 56,192 L 57,191.5 L 58,190.5 L 59,188 L 60,187.5 L 61,186.5 L 62,186 L 63,185.5 L 64,184.5 L 65,184 L 66,183.5 L 67,182.5 L 68,182 L 69,181 L 70,180.5 L 71,180 L 72,179 L 73,178.5 L 74,177.5 L 75,177 L 76,176 L 77,175.5 L 78,175 L 79,174 L 80,173.5 L 81,172.5 L 82,172 L 83,171 L 84,170.5 L 85,169.5 L 86,169 L 87,168.5 L 88,167.5 L 89,167 L 90,166 L 91,165.5 L 92,164.5 L 93,164 L 94,163.5 L 95,162.5 L 96,162 L 97,161 L 98,160.5 L 99,160 L 100,159 L 101,158.5 L 102,158 L 103,157 L 104,156.5 L 105,156 L 106,155 L 107,154.5 L 108,154 L 109,153 L 110,152.5 L 111,152 L 112,151.5 L 113,150.5 L 114,150 L 115,149.5 L 116,149 L 117,148.5 L 118,148 L 119,147 L 120,146.5 L 121,146 L 122,145.5 L 123,145 L 124,144.5 L 125,144 L 126,143.5 L 127,143 L 128,142.5 L 129,142 L 130,141.5 L 131,141.5 L 132,141 L 133,140.5 L 134,140 L 135,139.5 L 136,139 L 137,139 L 138,138.5 L 139,138 L 140,138 L 141,137.5 L 142,137 L 143,137 L 144,136.5 L 145,136.5 L 146,136 L 147,136 L 148,135.5 L 149,135.5 L 150,135.5 L 151,135 L 152,135 L 153,135 L 154,134.5 L 155,134.5 L 156,134.5 L 157,134.5 L 158,134.5 L 159,134 L 160,134 L 161,134 L 162,134 L 163,134 L 164,134 L 165,134 L 166,134 L 167,134 L 168,134.5 L 169,134.5 L 170,134.5 L 171,134.5 L 172,134.5 L 173,134.5 L 174,135 L 175,135 L 176,135 L 177,135.5 L 178,135.5 L 179,135.5 L 180,136 L 181,136 L 182,136.5 L 183,136.5 L 184,137 L 185,137 L 186,137.5 L 187,137.5 L 188,138 L 189,138 L 190,138.5 L 191,139 L 192,139 L 193,139.5 L 194,139.5 L 195,140 L 196,140.5 L 197,140.5 L 198,141 L 199,141.5 L 200,142 L 201,142 L 202,142.5 L 203,143 L 204,143 L 205,143.5 L 206,144 L 207,144.5 L 208,144.5 L 209,145 L 210,145.5 L 211,146 L 212,146.5 L 213,146.5 L 214,147 L 215,147.5 L 216,148 L 217,148.5 L 218,148.5 L 219,149 L 220,149.5 L 221,150 L 222,150 L 223,150.5 L 224,151 L 225,151.5 L 226,152 L 227,152 L 228,152.5 L 229,153 L 230,153.5 L 231,154 L 232,154 L 233,154.5 L 234,155 L 235,155.5 L 236,156 L 237,156 L 238,156.5 L 239,157 L 240,157.5 L 241,157.5 L 242,158 L 243,158.5 L 244,159 L 245,159.5 L 246,159.5 L 247,160 L 248,160.5 L 249,161 L 250,161 L 251,161.5 L 252,162 L 253,162.5 L 254,162.5 L 255,163 L 256,163.5 L 257,164 L 258,164.5 L 259,164.5 L 260,165 L 261,165.5 L 262,166 L 263,166 L 264,166.5 L 265,167 L 266,167.5 L 267,168 L 268,168 L 269,168.5 L 270,169 L 271,169.5 L 272,169.5 L 273,170 L 274,170.5 L 275,171 L 276,171.5 L 277,172 L 278,172 L 279,172.5 L 280,173 L 281,173.5 L 282,174 L 283,174.5 L 284,174.5 L 285,175 L 286,175.5 L 287,176 L 288,176.5 L 289,177 L 290,177.5 L 291,178 L 292,178 L 293,178.5 L 294,179 L 295,179.5 L 296,180 L 297,180.5 L 298,181 L 299,181.5 L 300,182 L 301,182.5 L 302,183 L 303,183.5 L 304,184 L 305,184.5 L 306,185 L 307,185.5 L 308,186 L 309,186.5 L 310,187 L 311,187.5 L 312,188 L 313,188.5 L 314,189 L 315,189.5 L 316,190 L 317,190.5 L 318,191 L 319,191.5 L 320,192 L 321,192.5 L 322,193 L 323,193.5 L 324,194 L 325,194.5 L 326,195 L 327,195.5 L 328,196 L 329,196.5 L 330,197 L 331,197 L 332,197.5 L 333,198 L 334,198.5 L 335,199 L 336,199.5 L 337,200 L 338,200.5 L 339,201 L 340,201.5 L 341,201.5 L 342,202 L 343,202.5 L 344,203 L 345,203 L 346,203.5 L 347,204 L 348,204.5 L 349,204.5 L 350,205 L 351,205 L 352,205.5 L 353,206 L 354,206 L 355,206.5 L 356,206.5 L 357,207 L 358,207 L 359,207 L 360,207.5 L 361,207.5 L 362,207.5 L 363,208 L 364,208 L 364,500 L 363,499.5 L 362,499.5 L 361,499 L 360,498.5 L 359,498.5 L 358,498 L 357,497.5 L 356,497.5 L 355,497 L 354,497 L 353,496.5 L 352,496.5 L 351,496.5 L 350,496 L 349,496 L 348,496 L 347,495.5 L 346,495.5 L 345,495.5 L 344,495.5 L 343,495 L 342,495 L 341,495 L 340,495 L 339,495 L 338,495 L 337,495 L 336,495 L 335,495 L 334,495 L 333,495.5 L 332,495.5 L 331,495.5 L 330,495.5 L 329,496 L 328,496 L 327,496 L 326,496.5 L 325,496.5 L 324,497 L 323,497 L 322,497.5 L 321,497.5 L 320,498 L 319,498 L 318,498.5 L 317,499 L 316,499 L 315,499.5 L 314,500 L 313,500.5 L 312,501 L 311,501 L 310,501.5 L 309,502 L 308,502.5 L 307,503 L 306,503.5 L 305,504 L 304,504.5 L 303,505 L 302,505.5 L 301,506 L 300,506.5 L 299,507 L 298,507.5 L 297,508.5 L 296,509 L 295,509.5 L 294,510 L 293,510.5 L 292,511.5 L 291,512 L 290,512.5 L 289,513.5 L 288,514 L 287,514.5 L 286,515 L 285,516 L 284,516.5 L 283,517.5 L 282,518 L 281,518.5 L 280,519.5 L 279,520 L 278,520.5 L 277,521.5 L 276,522 L 275,523 L 274,523.5 L 273,524.5 L 272,525 L 271,526 L 270,526.5 L 269,527 L 268,528 L 267,528.5 L 266,529.5 L 265,530 L 264,531 L 263,531.5 L 262,532.5 L 261,533 L 260,534 L 259,534.5 L 258,535.5 L 257,536 L 256,537 L 255,537.5 L 254,538.5 L 253,539 L 252,540 L 251,540.5 L 250,541.5 L 249,542 L 248,542.5 L 247,543.5 L 246,544 L 245,545 L 244,545.5 L 243,546.5 L 242,547 L 241,547.5 L 240,548.5 L 239,549 L 238,549.5 L 237,550.5 L 236,551 L 235,551.5 L 234,552.5 L 233,553 L 232,553.5 L 231,554.5 L 230,555 L 229,555.5 L 228,556 L 227,557 L 226,557.5 L 225,558 L 224,558.5 L 223,559 L 222,559.5 L 221,560.5 L 220,561 L 219,561.5 L 218,562 L 217,562.5 L 216,563 L 215,563.5 L 214,564 L 213,564.5 L 212,565 L 211,565.5 L 210,565.5 L 209,566 L 208,566.5 L 207,567 L 206,567.5 L 205,567.5 L 204,568 L 203,568.5 L 202,569 L 201,569 L 200,569.5 L 199,569.5 L 198,570 L 197,570.5 L 196,570.5 L 195,570.5 L 194,571 L 193,571 L 192,571.5 L 191,571.5 L 190,571.5 L 189,572 L 188,572 L 187,572 L 186,572.5 L 185,572.5 L 184,572.5 L 183,572.5 L 182,572.5 L 181,572.5 L 180,572.5 L 179,572.5 L 178,572.5 L 177,572.5 L 176,572.5 L 175,572.5 L 174,572.5 L 173,572.5 L 172,572.5 L 171,572 L 170,572 L 169,572 L 168,572 L 167,571.5 L 166,571.5 L 165,571.5 L 164,571 L 163,571 L 162,571 L 161,570.5 L 160,570.5 L 159,570 L 158,570 L 157,569.5 L 156,569.5 L 155,569 L 154,569 L 153,568.5 L 152,568 L 151,568 L 150,567.5 L 149,567 L 148,567 L 147,566.5 L 146,566 L 145,566 L 144,565.5 L 143,565 L 142,564.5 L 141,564.5 L 140,564 L 139,563.5 L 138,563 L 137,563 L 136,562.5 L 135,562 L 134,561.5 L 133,561 L 132,561 L 131,560.5 L 130,560 L 129,559.5 L 128,559 L 127,558.5 L 126,558.5 L 125,558 L 124,557.5 L 123,557 L 122,556.5 L 121,556 L 120,555.5 L 119,555.5 L 118,555 L 117,554.5 L 116,554 L 115,553.5 L 114,553 L 113,552.5 L 112,552.5 L 111,552 L 110,551.5 L 109,551 L 108,550.5 L 107,550 L 106,550 L 105,549.5 L 104,549 L 103,548.5 L 102,548 L 101,547.5 L 100,547 L 99,547 L 98,546.5 L 97,546 L 96,545.5 L 95,545 L 94,544.5 L 93,544.5 L 92,544 L 91,543.5 L 90,543 L 89,542.5 L 88,542 L 87,542 L 86,541.5 L 85,541 L 84,540.5 L 83,540 L 82,539.5 L 81,539.5 L 80,539 L 79,538.5 L 78,538 L 77,537.5 L 76,537 L 75,536.5 L 74,536.5 L 73,536 L 72,535.5 L 71,535 L 70,534.5 L 69,534 L 68,533.5 L 67,533 L 66,533 L 65,532.5 L 64,532 L 63,531.5 L 62,531 L 61,530.5 L 60,530 L 59,529.5 L 58,527.5 L 57,527 L 56,526.5 L 55,526.5 L 54,526 L 53,525.5 L 52,525 L 51,524.5 L 50,524 L 49,523.5 L 48,523 L 47,522.5 L 46,522 L 45,521.5 L 44,521 L 43,520.5 L 42,520 L 41,519 L 40,518.5 L 39,518 L 38,517.5 L 37,517 L 36,516.5 L 35,516 L 34,515.5 L 33,515 L 32,514.5 L 31,514 L 30,514 L 29,513.5 L 28,513 L 27,512.5 L 26,512 L 25,511.5 L 24,511 L 23,510.5 L 22,510 L 21,509.5 L 20,509 L 19,508.5 L 18,508 L 17,507.5 L 16,507 L 15,506.5 L 14,506 L 13,505.5 L 12,505 L 11,504.5 L 10,504 L 9,503.5 L 8,503 L 7,502.5 L 6,502 L 5,501.5 L 4,501.5 L 3,501 L 2,500.5 L 1,500 L 0,500 z"></path><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,0 l 0,720"></path><text x="0" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">1</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 31,0 l 0,720"></path><text x="31" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">2</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 59,0 l 0,720"></path><text x="59" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">3</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 90,0 l 0,720"></path><text x="90" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">4</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 120,0 l 0,720"></path><text x="120" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">5</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 151,0 l 0,720"></path><text x="151" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">6</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 181,0 l 0,720"></path><text x="181" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">7</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 212,0 l 0,720"></path><text x="212" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">8</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 243,0 l 0,720"></path><text x="243" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">9</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 273,0 l 0,720"></path><text x="273" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">10</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 304,0 l 0,720"></path><text x="304" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">11</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 334,0 l 0,720"></path><text x="334" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">12</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,30 l 365,0"></path><text x="0" y="45" style="font-size:14px;fill:#FFFFFF;stroke:none;">1:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,60 l 365,0"></path><text x="0" y="75" style="font-size:14px;fill:#FFFFFF;stroke:none;">2:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,90 l 365,0"></path><text x="0" y="105" style="font-size:14px;fill:#FFFFFF;stroke:none;">3:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,120 l 365,0"></path><text x="0" y="135" style="font-size:14px;fill:#FFFFFF;stroke:none;">4:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,150 l 365,0"></path><text x="0" y="165" style="font-size:14px;fill:#FFFFFF;stroke:none;">5:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,180 l 365,0"></path><text x="0" y="195" style="font-size:14px;fill:#FFFFFF;stroke:none;">6:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,210 l 365,0"></path><text x="0" y="225" style="font-size:14px;fill:#FFFFFF;stroke:none;">7:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,240 l 365,0"></path><text x="0" y="255" style="font-size:14px;fill:#FFFFFF;stroke:none;">8:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,270 l 365,0"></path><text x="0" y="285" style="font-size:14px;fill:#FFFFFF;stroke:none;">9:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,300 l 365,0"></path><text x="0" y="315" style="font-size:14px;fill:#FFFFFF;stroke:none;">10:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,330 l 365,0"></path><text x="0" y="345" style="font-size:14px;fill:#FFFFFF;stroke:none;">11:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,360 l 365,0"></path><text x="0" y="375" style="font-size:14px;fill:#FFFFFF;stroke:none;">12:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,390 l 365,0"></path><text x="0" y="405" style="font-size:14px;fill:#FFFFFF;stroke:none;">13:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,420 l 365,0"></path><text x="0" y="435" style="font-size:14px;fill:#FFFFFF;stroke:none;">14:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,450 l 365,0"></path><text x="0" y="465" style="font-size:14px;fill:#FFFFFF;stroke:none;">15:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,480 l 365,0"></path><text x="0" y="495" style="font-size:14px;fill:#FFFFFF;stroke:none;">16:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,510 l 365,0"></path><text x="0" y="525" style="font-size:14px;fill:#FFFFFF;stroke:none;">17:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,540 l 365,0"></path><text x="0" y="555" style="font-size:14px;fill:#FFFFFF;stroke:none;">18:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,570 l 365,0"></path><text x="0" y="585" style="font-size:14px;fill:#FFFFFF;stroke:none;">19:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,600 l 365,0"></path><text x="0" y="615" style="font-size:14px;fill:#FFFFFF;stroke:none;">20:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,630 l 365,0"></path><text x="0" y="645" style="font-size:14px;fill:#FFFFFF;stroke:none;">21:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,660 l 365,0"></path><text x="0" y="675" style="font-size:14px;fill:#FFFFFF;stroke:none;">22:00</text><path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,690 l 365,0"></path><text x="0" y="705" style="font-size:14px;fill:#FFFFFF;stroke:none;">23:00</text></svg>
+      </output>
+    </div>
+  </fieldset>
+</div>
+<script type="application/javascript"><!-- /* --><![CDATA[ *///
+// Copyright (c) 2015 Jon Hester
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+// 
+// // webpack source
+// window.SolarCalc = require("solar-calc");
+!function(t){function n(e){if(r[e])return r[e].exports;var i=r[e]={exports:{},id:e,loaded:!1};return t[e].call(i.exports,i,i.exports,n),i.loaded=!0,i.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){window.SolarCalc=r(1)},function(t,n,r){"use strict";t.exports=r(2)},function(t,n,r){"use strict";var e=function(){function t(t,n){for(var r in n){var e=n[r];e.configurable=!0,e.value&&(e.writable=!0)}Object.defineProperties(t,n)}return function(n,r,e){return r&&t(n.prototype,r),e&&t(n,e),n}}(),i=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")},o=r(3),a=r(4),u={sunrise:.833,sunriseEnd:.3,twilight:6,nauticalTwilight:12,night:18,goldenHour:-6},s=function(){function t(n,r,e){i(this,t),this.date=n,this.lat=r,this.long=e,this.sun=new o(n,r,e),this.moon=new a(n,r,e)}return e(t,{solarNoon:{get:function(){return this.sun.solarNoon}},sunrise:{get:function(){return this.sun.timeAtAngle(u.sunrise,!0)}},sunset:{get:function(){return this.sun.timeAtAngle(u.sunrise)}},sunriseEnd:{get:function(){return this.sun.timeAtAngle(u.sunriseEnd,!0)}},sunsetStart:{get:function(){return this.sun.timeAtAngle(u.sunriseEnd,!1)}},civilDawn:{get:function(){return this.sun.timeAtAngle(u.twilight,!0)}},dawn:{get:function(){return this.civilDawn}},civilDusk:{get:function(){return this.sun.timeAtAngle(u.twilight,!1)}},dusk:{get:function(){return this.civilDusk}},nauticalDawn:{get:function(){return this.sun.timeAtAngle(u.nauticalTwilight,!0)}},nauticalDusk:{get:function(){return this.sun.timeAtAngle(u.nauticalTwilight,!1)}},nightStart:{get:function(){return this.astronomicalDusk}},astronomicalDusk:{get:function(){return this.sun.timeAtAngle(u.night,!1)}},astronomicalDawn:{get:function(){return this.sun.timeAtAngle(u.night,!0)}},nightEnd:{get:function(){return this.astronomicalDawn}},goldenHourStart:{get:function(){return this.sun.timeAtAngle(u.goldenHour,!1)}},goldenHourEnd:{get:function(){return this.sun.timeAtAngle(u.goldenHour,!0)}},lunarDistance:{get:function(){return this.moon.distance}},lunarIlluminosity:{get:function(){return this.moon.illuminosity}}}),t}();t.exports=s},function(t,n){"use strict";function r(t,n){var r=60*(n-Math.floor(n));return new Date(Date.UTC(t.getFullYear(),t.getMonth(),t.getDate(),0,n,r))}function e(t){var n=(t-2451545)/36525;return n}function i(t){return t%4===0&&t%100!==0||t%400===0}function o(t){var n,r=Math.floor(t+.5),e=t+.5-r;if(r<2299161)n=r;else{var o=Math.floor((r-1867216.25)/36524.25);n=r+1+o-Math.floor(o/4)}var a=n+1524,u=Math.floor((a-122.1)/365.25),s=Math.floor(365.25*u),f=Math.floor((a-s)/30.6001),c=a-s-Math.floor(30.6001*f)+e,h=f<14?f-1:f-13,l=h>2?u-4716:u-4715,g=i(l)?1:2,M=Math.floor(275*h/9)-g*Math.floor((h+9)/12)+c-30;return M}function a(t){return 180*t/Math.PI}function u(t){return Math.PI*t/180}function s(t){for(var n=280.46646+t*(36000.76983+3032e-7*t);n>360;)n-=360;for(;n<0;)n+=360;return n}function f(t){var n=357.52911+t*(35999.05029-1537e-7*t);return n}function c(t){var n=.016708634-t*(42037e-9+1.267e-7*t);return n}function h(t){var n=f(t),r=u(n),e=Math.sin(r),i=Math.sin(r+r),o=Math.sin(r+r+r),a=e*(1.914602-t*(.004817+14e-6*t))+i*(.019993-101e-6*t)+289e-6*o;return a}function l(t){var n=s(t),r=h(t),e=n+r;return e}function g(t){var n=l(t),r=125.04-1934.136*t,e=n-.00569-.00478*Math.sin(u(r));return e}function M(t){var n=21.448-t*(46.815+t*(59e-5-.001813*t)),r=23+(26+n/60)/60;return r}function v(t){var n=M(t),r=125.04-1934.136*t,e=n+.00256*Math.cos(u(r));return e}function d(t){var n=v(t),r=g(t),e=Math.sin(u(n))*Math.sin(u(r)),i=a(Math.asin(e));return i}function w(t){var n=v(t),r=s(t),e=c(t),i=f(t),o=Math.tan(u(n)/2);o*=o;var h=Math.sin(2*u(r)),l=Math.sin(u(i)),g=Math.cos(2*u(r)),M=Math.sin(4*u(r)),d=Math.sin(2*u(i)),w=o*h-2*e*l+4*e*o*l*g-.5*o*o*M-1.25*e*e*d;return 4*a(w)}function A(t,n,r){var e=u(n),i=u(r),o=Math.cos(u(90+t))/(Math.cos(e)*Math.cos(i))-Math.tan(e)*Math.tan(i),a=Math.acos(o);return a}function m(t){for(var n=!1,r=""+t,e=0;e<r.length;e++){var i=r.charAt(e);if(0!==e||"-"!==i&&"+"!==i)if("."!==i||n){if(i<"0"||i>"9")return!1}else n=!0}return!0}function p(t){var n=t.getFullYear(),r=t.getMonth()+1,e=t.getDate(),i=Math.floor(n/100),o=2-i+Math.floor(i/4),a=Math.floor(365.25*(n+4716))+Math.floor(30.6001*(r+1))+e+o-1524.5;return a}function D(t,n,i){var o=e(t-n/360),a=w(o),u=720-4*n-a,s=e(t+u/1440);a=w(s);for(var f=720-4*n-a;f<0;)f+=1440;for(;f>=1440;)f-=1440;return r(i,f)}function b(t){if(t<9e5||t>2817e3)return"error";var n,r=Math.floor(t+.5),e=t+.5-r;if(r<2299161)n=r;else{var i=Math.floor((r-1867216.25)/36524.25);n=r+1+i-Math.floor(i/4)}var o=n+1524,a=Math.floor((o-122.1)/365.25),u=Math.floor(365.25*a),s=Math.floor((o-u)/30.6001),f=o-u-Math.floor(30.6001*s)+e,c=s<14?s-1:s-13,h=c>2?a-4716:a-4715;return new Date(Date.UTC(h,c-1,f,0,0,0))}function P(t,n,r,i,o){var u=e(r),s=w(u),f=d(u),c=A(n,i,f);t||(c=-c);var h=o+a(c),l=720-4*h-s;return l}function x(t,n,e,i,a,u){var s=P(t,n,e,a,u),f=P(t,n,e+s/1440,a,u);if(m(f))return r(i,f);var c,h=o(e);return a>66.4&&h>79&&h<267||a<-66.4&&(h<83||h>263)?(c=y(!t,t,n,e,a,u),b(c)):(c=y(t,t,n,e,a,u),b(c))}function y(t,n,r,e,i,o){for(var a=e,u=t?1:-1,s=P(n,r,a,i,o);!m(s);)a+=u,s=P(n,r,a,i,o);return a}var E=function(){function t(t,n){for(var r in n){var e=n[r];e.configurable=!0,e.value&&(e.writable=!0)}Object.defineProperties(t,n)}return function(n,r,e){return r&&t(n.prototype,r),e&&t(n,e),n}}(),I=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")},T=function(){function t(n,r,e){I(this,t),this.date=n,this.lat=r,this.long=e,this.julianDate=p(n)}return E(t,{solarNoon:{get:function(){return D(this.julianDate,this.long,this.date)}},timeAtAngle:{value:function(t,n){return x(n,t,this.julianDate,this.date,this.lat,this.long)}}}),t}();t.exports=T},function(t,n){"use strict";function r(t){var n=t.getFullYear(),r=t.getMonth()+1,e=t.getDate(),i=Math.floor(n/100),o=2-i+Math.floor(i/4),a=Math.floor(365.25*(n+4716))+Math.floor(30.6001*(r+1))+e+o-1524.5;return a}function e(t){return t-360*Math.floor(t/360)}function i(t){return Math.sin(t*Math.PI/180)}function o(t){return Math.cos(t*Math.PI/180)}function a(t){return Math.tan(t*Math.PI/180)}function u(t){return 180/Math.PI*Math.asin(t)}function s(t,n){return 180/Math.PI*Math.atan(t/n)-180*(n<0)}function f(t){for(var n=r(t)+2451543.5,f=(n-2451545)/36525,c=f*f,h=c*f,l=h*f,g=218.3164477+481267.88123421*f-.0015786*c+h/538841-l/65194e3,y=297.8501921+445267.1114034*f-.0018819*c+h/545868-l/113065e3,E=357.5291092+35999.0502909*f-1536e-7*c+h/2449e4,I=134.9633964+477198.8675055*f+.0087414*c+h/69699-l/14712e3,T=93.272095+483202.0175233*f-.0036539*c-h/3526e3+l/86331e4,j=119.75+131.849*f,k=53.09+479264.29*f,C=313.45+481266.484*f,H=1-.002516*f-74e-7*c,S=H*H,F=0,N=0,O=0;O<60;O++){var Y=1;1===Math.abs(v[O])&&(Y=H),2===Math.abs(v[O])&&(Y=S),F+=A[O]*Y*i(e(M[O]*y+v[O]*E+d[O]*I+w[O]*T)),N+=m[O]*Y*o(e(M[O]*y+v[O]*E+d[O]*I+w[O]*T))}for(var U=0,O=0;O<60;O++){var Y=1;1===Math.abs(D[O])&&(Y=H),2===Math.abs(D[O])&&(Y=S),U+=x[O]*Y*i(e(p[O]*y+D[O]*E+b[O]*I+P[O]*T))}F=F+3958*i(e(j))+1962*i(e(g-T))+318*i(e(k)),U=U-2235*i(e(g))+382*i(e(C))+175*i(e(j-T))+175*i(e(j+T))+127*i(e(g-I))-115*i(e(g+I));var q=e(g+F/1e6),z=e(U/1e6);z>180&&(z-=360);var B=Math.round(385000.56+N/1e3),G=23.4393-3.563e-9*(n-2451543.5),J=e(s(i(q)*o(G)-a(z)*i(G),o(q)))/15,K=e(u(i(z)*o(G)+o(z)*i(G)*i(q)));return K>180&&(K-=360),{ra:J,dec:K,distance:B}}function c(t){var n=r(t)+2451543.5,o=(n-2451545)/36525,a=o*o,u=a*o,s=u*o,f=297.8501921+445267.1114034*o-.0018819*a+u/545868-s/113065e3,c=134.9633964+477198.8675055*o+.0087414*a+u/69699-s/14712e3,h=357.5291092+35999.0502909*o-1536e-7*a+u/2449e4,l=180-f-6.289*i(c)+2.1*i(h)-1.274*i(2*f-c)-.658*i(2*f)-.214*i(2*c)-.11*i(f);return e(l)}var h=function(){function t(t,n){for(var r in n){var e=n[r];e.configurable=!0,e.value&&(e.writable=!0)}Object.defineProperties(t,n)}return function(n,r,e){return r&&t(n.prototype,r),e&&t(n,e),n}}(),l=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")},g=function(){function t(n,e,i){l(this,t),this.date=n,this.lat=e,this.long=i,this.julianDate=r(n)}return h(t,{illuminosity:{get:function(){return c(this.date)/360}},distance:{get:function(){return f(this.date).distance}}}),t}(),M=[0,2,2,0,0,0,2,2,2,2,0,1,0,2,0,0,4,0,4,2,2,1,1,2,2,4,2,0,2,2,1,2,0,0,2,2,2,4,0,3,2,4,0,2,2,2,4,0,4,1,2,0,1,3,4,2,0,1,2,2],v=[0,0,0,0,1,0,0,-1,0,-1,1,0,1,0,0,0,0,0,0,1,1,0,1,-1,0,0,0,1,0,-1,0,-2,1,2,-2,0,0,-1,0,0,1,-1,2,2,1,-1,0,0,-1,0,1,0,1,0,0,-1,2,1,0,0],d=[1,-1,0,2,0,0,-2,-1,1,0,-1,0,1,0,1,1,-1,3,-2,-1,0,-1,0,1,2,0,-3,-2,-1,-2,1,0,2,0,-1,1,0,-1,2,-1,1,-2,-1,-1,-2,0,1,4,0,-2,0,2,1,-2,-3,2,1,-1,3,-1],w=[0,0,0,0,0,2,0,0,0,0,0,0,0,-2,2,-2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,-2,2,0,2,0,0,0,0,0,0,-2,0,0,0,0,-2,-2,0,0,0,0,0,0,0,-2],A=[6288774,1274027,658314,213618,-185116,-114332,58793,57066,53322,45758,-40923,-34720,-30383,15327,-12528,10980,10675,10034,8548,-7888,-6766,-5163,4987,4036,3994,3861,3665,-2689,-2602,2390,-2348,2236,-2120,-2069,2048,-1773,-1595,1215,-1110,-892,-810,759,-713,-700,691,596,549,537,520,-487,-399,-381,351,-340,330,327,-323,299,294,0],m=[-20905355,-3699111,-2955968,-569925,48888,-3149,246158,-152138,-170733,-204586,-129620,108743,104755,10321,0,79661,-34782,-23210,-21636,24208,30824,-8379,-16675,-12831,-10445,-11650,14403,-7003,0,10056,6322,-9884,5751,0,-4950,4130,0,-3958,0,3258,2616,-1897,-2117,2354,0,0,-1423,-1117,-1571,-1739,0,-4421,0,0,0,0,1165,0,0,8752],p=[0,0,0,2,2,2,2,0,2,0,2,2,2,2,2,2,2,0,4,0,0,0,1,0,0,0,1,0,4,4,0,4,2,2,2,2,0,2,2,2,2,4,2,2,0,2,1,1,0,2,1,2,0,4,4,1,4,1,4,2],D=[0,0,0,0,0,0,0,0,0,0,-1,0,0,1,-1,-1,-1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,-1,0,0,0,0,1,1,0,-1,-2,0,1,1,1,1,1,0,-1,1,0,-1,0,0,0,-1,-2],b=[0,1,1,0,-1,-1,0,2,1,2,0,-2,1,0,-1,0,-1,-1,-1,0,0,-1,0,1,1,0,0,3,0,-1,1,-2,0,2,1,-2,3,2,-3,-1,0,0,1,0,1,1,0,0,-2,-1,1,-2,2,-2,-1,1,1,-1,0,0],P=[1,1,-1,-1,1,-1,1,1,-1,-1,-1,-1,1,-1,1,1,-1,-1,-1,1,3,1,1,1,-1,-1,-1,1,-1,1,-3,1,-3,-1,-1,1,-1,1,-1,1,1,1,1,-1,3,-1,-1,1,-1,-1,1,-1,1,-1,-1,-1,-1,-1,-1,1],x=[5128122,280602,277693,173237,55413,46271,32573,17198,9266,8822,8216,4324,4200,-3359,2463,2211,2065,-1870,1828,-1794,-1749,-1565,-1491,-1475,-1410,-1344,-1335,1107,1021,833,777,671,607,596,491,-451,439,422,421,-366,-351,331,315,302,-283,-229,223,223,-220,-220,-185,181,-177,176,166,-164,132,-119,115,107];t.exports=g}]);
+
+window.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  var LatLngMap = {
+    lat: document.getElementById("sunset-sunrise-lat"),
+    lng: document.getElementById("sunset-sunrise-lng"), 
+    init: function () {
+      LatLngMap.map = L.map("sunset-sunrise-map", {
+        layers: [
+          L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 20,
+            attribution: 'map data © <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          }),
+        ],
+        center: LatLngMap.getCenter(),
+        zoom: 5
+      });
+      LatLngMap.crosshair = new L.marker([36.000, 138.750], {clickable: false});
+      LatLngMap.crosshair.addTo(LatLngMap.map);
+      LatLngMap.map.on("move", LatLngMap.onmove, false);
+    },
+    onmove: function () {
+      var center = LatLngMap.map.getCenter();
+      LatLngMap.crosshair.setLatLng(center);
+      LatLngMap.lat.value = center.lat;
+      LatLngMap.lng.value = center.lng;
+    },
+    updateMap: function () {
+      LatLngMap.map.panTo([
+        parseFloat(LatLngMap.lat.value),
+        parseFloat(LatLngMap.lng.value)
+      ]);
+    },
+    getCenter: function () {
+      return {
+        lat: parseFloat(LatLngMap.lat.value),
+        lng: parseFloat(LatLngMap.lng.value)
+      };
+    }
+  };
+  LatLngMap.lat.value = 36.000;
+  LatLngMap.lng.value = 138.750;
+  LatLngMap.lat.addEventListener("change", LatLngMap.updateMap, false);
+  LatLngMap.lat.addEventListener("input", LatLngMap.updateMap, false);
+  LatLngMap.lng.addEventListener("change", LatLngMap.updateMap, false);
+  LatLngMap.lng.addEventListener("input", LatLngMap.updateMap, false);
+
+  var SunsetSunrise_date = document.getElementById("sunset-sunrise-date");
+  var calculateSunsetSunrise = function () {
+    var latlng= LatLngMap.getCenter();
+    var date = new Date();
+    date.setTime(Date.parse(SunsetSunrise_date.value));
+    SunsetSunrise_date.value = date.toISOString().substring(0, 10);
+
+    var solar = new SolarCalc(date, latlng.lat, latlng.lng);
+    return {sunrise: solar.sunrise, sunset: solar.sunset};
+  };
+  SunsetSunrise_date.value = (new Date()).toISOString().substring(0, 10);
+
+  var calculateSunsetSunriseTable = function () {
+    var latlng= LatLngMap.getCenter();
+    var year = (new Date()).getFullYear();
+    var results = [];
+    for (var i = 0; true; i++) {
+      var date = new Date(year, 0, i + 1);
+      if (date.getFullYear() == year) {
+        var solar = new SolarCalc(date, latlng.lat, latlng.lng);
+        results.push({sunrise: solar.sunrise, sunset: solar.sunset, date: date});
+      } else {
+        break;
+      }
+    }
+    return results;
+  };
+
+  var lstyle = document.createElement("link");
+  lstyle.setAttribute("rel", "stylesheet");
+  lstyle.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.css");
+  var lscript = document.createElement("script");
+  lscript.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js");
+  lscript.onload = function () {
+    LatLngMap.init();
+  };
+  document.body.appendChild(lstyle);
+  document.body.appendChild(lscript);
+
+  document.getElementById("sunset-sunrise-calc").addEventListener("click", function () {
+    var result = calculateSunsetSunrise();
+    var html = "日出: " + result.sunrise.getHours() + "時" + result.sunrise.getMinutes() + "分"
+             + "<br />"
+             + "日没: " + result.sunset.getHours() + "時" + result.sunset.getMinutes() + "分";
+    document.getElementById("sunset-sunrise-output").innerHTML = html;
+  }, false);
+
+  document.getElementById("sunset-sunrise-gen").addEventListener("click", function () {
+    var results = calculateSunsetSunriseTable();
+    var output = document.getElementById("sunset-sunrise-gen-output");
+    output.innerHTML = "";
+
+    var svgWidth = results.length;
+    var svgHeight = 24 * 60 / 2;
+
+    var dayTimeD = "";
+    for (var i = 0; i < results.length; i++) {
+      dayTimeD += ((i == 0)? "M" : "L") + " " + [
+        i,
+        (results[i].sunrise.getHours() * 60 + results[i].sunrise.getMinutes()) / 2.0
+      ].join(",") + " ";
+    }
+    for (var i = results.length - 1; i >= 0; i--) {
+      dayTimeD += "L " + [
+        i,
+        (results[i].sunset.getHours() * 60 + results[i].sunset.getMinutes()) / 2.0
+      ].join(",") + " ";
+    }
+    dayTimeD += "z";
+
+    var outerSvg = '';
+    outerSvg += '<svg xmlns="http://www.w3.org/2000/svg" width="%width%" height="%height%" viewBox="0 0 %width% %height%">'.replace(/%width%/g, svgWidth).replace(/%height%/g, svgHeight);
+    outerSvg += '<rect x="0" y="0" width="%width%" height="%height%" style="fill:#004488;stroke:none;"></rect>'.replace(/%width%/g, svgWidth).replace(/%height%/g, svgHeight);
+    outerSvg += '<path style="fill:#88aaff;stroke-width:1px;stroke:#0049ff;stroke-opacity:1;" d="%path%"></path>'.replace(/%path%/g, dayTimeD);
+    for (var i = 0; i < results.length; i++) {
+      if (results[i].date.getDate() == 1) {
+        outerSvg += '<path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M %i%,0 l 0,%height%"></path>'.replace(/%i%/g, i).replace(/%height%/g, svgHeight);
+        outerSvg += '<text x="%i%" y="16" style="font-size:14px;fill:#FFFFFF;stroke:none;">%month%</text>'.replace(/%i%/g, i).replace(/%month%/, results[i].date.getMonth() + 1);
+      }
+    }
+    for (var i = 1; i < 24; i++) {
+      outerSvg += '<path style="fill:none;stroke-width:1px;stroke:#FFFFFF;opacity:0.5;" d="M 0,%y% l %width%,0"></path>'.replace(/%y%/g, i*svgHeight/24).replace(/%width%/g, svgWidth);
+      outerSvg += '<text x="0" y="%y%" style="font-size:14px;fill:#FFFFFF;stroke:none;">%hour%:00</text>'.replace(/%y%/g, i*svgHeight/24+15).replace(/%hour%/, i);
+    }
+    outerSvg += '</svg>';
+
+    output.innerHTML = outerSvg;
+  }, false);
+});
+/* ]]><!-- */ --></script>
+
+<h3>参考文献</h3>
+<ul>
+<li><a href="http://www.nao.ac.jp/faq/a0104.html">質問1-4）1年のうちで、日の出、日の入が一番早い日(遅い日) はいつ？</a>, 国立天文台</li>
+<li><a href="http://koyomi.vis.ne.jp/reki_doc/doc_0508.htm">冬至は一年で一番日の出の遅い日か？・・・均時差の話</a>, こよみのページ</li>
+</ul>
+
