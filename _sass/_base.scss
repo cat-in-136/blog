@@ -176,10 +176,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 
   html:not(.vertical-writing-recommended) & {
-   font-variant-east-asian: proportional-width;
-   -moz-font-feature-settings: "pwid";
-   -webkit-font-feature-settings: "pwid";
-   font-feature-settings: "pwid";
+    font-variant-east-asian: proportional-width;
+    font-variant-ligatures: common-ligatures;
+    -webkit-font-feature-settings: "pwid", "palt", "liga", "clig";
+    font-feature-settings: "pwid", "palt", "liga", "clig";
+    text-align: initial;
   }
 }
 
