@@ -1,0 +1,101 @@
+---
+layout: post
+title: trad とかいう需要がよくわからん機能について
+author: cat_in_136
+tags: font 旧字
+vertical-writing: true
+date: '2017-04-23T10:19:20+09:00'
+---
+<p>
+いくつかのフォントでは、<code>trad</code> feature tag を有効にすると、
+いわゆる旧字に置換してくれる。
+</p>
+
+<blockquote>
+  <div>
+    <p>中国語簡体字または日本語の漢字を、対応する旧字体に置き換えます（<a target="_blank" href="https://www.microsoft.com/typography/otspec/features_pt.htm#trad">出典</a>）。</p>
+  </div>
+  <div>
+    <pre class="prettyprint lang-css">.class {
+  font-variant-east-asian: traditional;
+  -moz-font-feature-settings: &#34;trad&#34;;
+  -webkit-font-feature-settings: &#34;trad&#34;;
+  font-feature-settings: &#34;trad&#34;;
+}</pre>
+  </div>
+  <div>
+    <p>旧字体の機能は<strong>デフォルトで無効</strong>であり、Mac OS または iOS の Safari のどのバージョンでもサポートされていません。font-variant プロパティまたは font-variant-east-asian サブプロパティでこの機能を有効にするには、traditional 値を使用します。font-feature-settings で同じ効果を得るには、「trad」機能タグを使用します。</p>
+  </div>
+  <footer>
+    ――引用元：Adobe Typekit ヘルプ「<a href="https://helpx.adobe.com/jp/typekit/using/open-type-syntax.html">CSS での OpenType 機能の構文</a>」
+  </footer>
+</blockquote>
+
+<hr />
+
+<p>
+<code>trad</code>に対応しているフォントは、
+一般に使われていそうなフォントでいうと、游ゴシック/明朝、IPAexゴシック/明朝。
+"ex"が付かないIPAゴシック/明朝は対応していない。
+源ノ角ゴシック/明朝（Source Han Sans/Serif）も対応していない。
+他にも、小塚ゴシック/明朝など対応しているフォントがあるらしい。
+</p>
+
+<figure class="trad-font-feature-tag-live-preview">
+  <table>
+    <tr style="font-family: 'YuGothic', 'Yu Gothic', sans-serif;">
+      <td>桜咲く</td>
+      <td>游ゴシック</td>
+    </tr>
+    <tr style="font-family: 'YuMincho', 'Yu Mincho', serif;">
+      <td>桜咲く</td>
+      <td>游明朝</td>
+    </tr>
+    <tr style="font-family: 'IPAexGothic', sans-serif;">
+      <td>桜咲く</td>
+      <td>IPAexゴシック</td>
+    </tr>
+    <tr style="font-family: 'IPAexMincho', serif;">
+      <td>桜咲く</td>
+      <td>IPAex明朝</td>
+    </tr>
+  </table>
+  <figcaption>「桜咲く」の<code>trad</code> font feature tag のライブプレビュー</figcaption>
+</figure>
+
+<style scoped="scoped">
+  .trad-font-feature-tag-live-preview {
+    -webkit-writing-mode: inherit;
+    writing-mode: inherit;
+
+    font-variant-east-asian: traditional;
+    -moz-font-feature-settings: "trad";
+    -webkit-font-feature-settings: "trad";
+    font-feature-settings: "trad";
+  }
+  .trad-font-feature-tag-live-preview td {
+    font-size: larger;
+  }
+</style>
+
+<p>
+「&#x53f0;(<a href="http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=53F0&amp;useutf8=true">U+53F0</a>)」
+は「&#x81fa;(<a href="http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=81FA&amp;useutf8=true">U+81FA</a>)」に
+置換されるようであるが、旧字としては他に、
+「&#x98B1;(<a href="http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=98B1&amp;useutf8=true">U+98B1</a>)」
+がある。
+ゆえに、本当は文脈に即して「<em>臺</em>灣」と「<em>颱</em>風」と使い分ける必要がある。
+この<code>trad</code> font feature tag が行っているのは、あくまで簡易的な置換である。
+素人考えとしては、漢字入力時に旧字にすればいいじゃん、と思うが…。
+この機能は実際どんなときに使うんだろうな。
+</p>
+
+<hr />
+<p>
+特記事項：
+中華圏における中国語（中文）の簡体字→繁体字変換も
+<a href="https://www.microsoft.com/typography/otspec/features_pt.htm#trad">同じ <code>trad</code> font feature tag が使われる</a>。
+日本の旧字体使用者数よりも繁体字使用者数が多く、現在も常用しているため用途として価値はある。
+また、中国語の繁体字と日本語の旧字は一致しないものもあるので一概に
+<code>trad</code> font feature tag を使うべきかは一考を要すが、未研究である。
+</p>
