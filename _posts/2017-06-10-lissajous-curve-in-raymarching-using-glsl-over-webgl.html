@@ -1,0 +1,68 @@
+---
+layout: post
+title: Lissajous curve in raymarching using GLSL over WebGL
+date: '2017-06-10T23:30:18+09:00'
+tags:
+- javascript
+- GLSL
+- raymarching
+---
+
+<div id="lissajous-curve-raymarching-container">
+</div>
+
+<pre id="lissajous-curve-raymarching-shader"><code class="prettyprint">uniform vec2 resolution;
+uniform float time;
+
+void main() {
+  vec2 pos = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+
+  float v = 0.0;
+  for (int i = 0; i &lt; 500; i++) {
+    float s = time + float(i) * 0.0075;
+    vec2 mpos = 0.8 * vec2(sin(s * 5.0), - cos(s * 6.0));
+    float t = 0.01 / length(mpos - pos);
+    v += pow(t, 2.0) * float(i + 1) / 100.0;
+  }
+
+  gl_FragColor = 1.0 * vec4(vec3(v), 1.0);
+}
+</code></pre>
+
+<script type="application/javascript">
+window.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+
+  var container = document.getElementById("lissajous-curve-raymarching-container");
+  var shader = document.getElementById("lissajous-curve-raymarching-shader").textContent;
+
+  var rm = new RayMarcher();
+  rm.setFragmentShader(shader);
+  container.appendChild(rm.domElement);
+
+  function onResize(event) {
+    rm.setSize(container.clientWidth - 4, 320);
+  }
+  window.addEventListener("resize", onResize, false);
+  onResize();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    rm.render();
+  }
+  animate();
+}, false);
+</script>
+
+<h3>See also</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Lissajous_curve">Lissajous curve</a> - wikipedia</li>
+<li><a href="http://www.ip.uec.ac.jp/ipo/archive/logo.html">電気通信大学校章(リサジュー図形)</a>(Japanese)</li>
+<li>nico, "<a href="http://barradeau.com/blog/?p=575">ray marching (with THREE.js)</a>", Youpi!, Dec 8 2015.</li>
+</ul>
+
+<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js" defer="defer"></script>
+<script type="application/javascript" src="https://cdn.rawgit.com/nicoptere/raymarching-for-THREE/953a55bee100c145686df9b1273de05eb2b5c0e9/raymarcher.js" defer="defer"></script>
+
+
+
