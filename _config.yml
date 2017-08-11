@@ -19,7 +19,7 @@ paginate_path: "/page:num"
 #markdown: kramdown
 #theme: minima
 permalink: /:year/:month/:title.html
-gems:
+plugins:
   - jekyll-feed
   - jekyll-paginate
 exclude:

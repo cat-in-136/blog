@@ -7,19 +7,21 @@ drafts_dir = '_drafts'
 deploy_dir = '_deploy'
 deploy_branch = 'master'
 
+jekyll_rb = Pathname.new(File.join(Gem.bindir, 'jekyll')).relative_path_from(Pathname.pwd).to_path
+
 desc "Draft jekyll site"
 task :preview do
-  system "jekyll serve --watch --drafts #{ENV['JEKYLL_ARGS']}"
+  system "ruby #{jekyll_rb} serve --watch --drafts #{ENV['JEKYLL_ARGS']}"
 end
 
 desc "Generate jekyll site"
 task :generate do
-  system "jekyll build --lsi #{ENV['JEKYLL_ARGS']}"
+  system "ruby #{jekyll_rb} build --lsi #{ENV['JEKYLL_ARGS']}"
 end
 
 desc "Watch the site and regenerate when it changes"
 task :watch do
-  system "jekyll serve --watch #{ENV['JEKYLL_ARGS']}"
+  system "ruby #{jekyll_rb} serve --watch #{ENV['JEKYLL_ARGS']}"
 end
 
 desc "Begin a new content"
@@ -188,7 +190,5 @@ class String
     self.gsub('&', ' and ').gsub(/[^\w\-\s]/, '').strip.gsub(/\s+/, '-').downcase
   end
 end
-
-
 
 

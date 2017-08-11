@@ -1,12 +1,16 @@
 source "https://rubygems.org"
 ruby RUBY_VERSION
 
-gem "jekyll", "~>3.3"
+gem "jekyll", "~>3.5"
 
 # If you have any plugins, put them here!
-gem "jekyll-feed", "~> 0.8"
+group :jekyll_plugins do
+  gem "jekyll-feed", "~> 0.8"
+  gem "jekyll-paginate"
+end
+
 gem "imagesize"
-gem "jekyll-paginate"
+
 group :lsi do
   gem 'rb-gsl', '~> 1.16'
   gem 'classifier-reborn'
@@ -14,3 +18,9 @@ end
 
 gem "rake"
 gem "term-ansicolor"
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+
