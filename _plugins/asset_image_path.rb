@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Title: Simple Image Path URL expansion tag
 # Author: @cat_in_136
 #

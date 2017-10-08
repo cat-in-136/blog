@@ -1,11 +1,11 @@
 source "https://rubygems.org"
 ruby RUBY_VERSION
 
-gem "jekyll", "~>3.5"
+gem "jekyll", "~>3.6"
 
 # If you have any plugins, put them here!
 group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.8"
+  gem "jekyll-feed", "~> 0.9"
   gem "jekyll-paginate"
 end
 
@@ -22,5 +22,5 @@ gem "term-ansicolor"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'wdm', '>= 0.1.1' if Gem.win_platform?
 

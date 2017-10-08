@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Jekyll
   class StripEmptyLinesTag < Liquid::Block
     REGEXP = /(\n\s*\n)+/
