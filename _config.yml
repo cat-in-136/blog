@@ -20,7 +20,6 @@ paginate_path: "/page:num"
 #theme: minima
 permalink: /:year/:month/:title.html
 plugins:
-  - jekyll-feed
   - jekyll-paginate
 exclude:
   - Gemfile
