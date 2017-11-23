@@ -1,0 +1,315 @@
+---
+layout: post
+title: ベジェ曲線で描く円と真円の面積について
+tags: Math Bézier
+thumbnail: "{% asset_image_path circle-in-bezeir.svg %}"
+date: '2017-11-24T00:28:20+09:00'
+---
+<p>
+しばしば話題に上がるベジェ曲線で描く円と正円の差の話題、
+円弧の差分に注目してきたけれど正円よりも大きい部分があるのは
+「<a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}">ベジェ曲線で描く円と真円の差について</a>」で既述のとおりである。
+</p>
+<p>
+すると、
+円を円として扱わずベジェ曲線として使うツールを使って円を描いたあとに、
+円を印刷すると真円よりもインク代がかかったり
+3Dプリントすると真円よりもフィラメントを消費するということが
+考えられるのだが、それはどのくらいになるのであろうか?
+そこで、面積を計算してみた。
+</p>
+
+<aside>
+<div style="background: #ffd; border: solid 3px #ff8">
+この記事を読むにはMathMLをレンダリングできるFirefoxといったブラウザが
+必要です
+もし数式部分が読めない場合は
+<a href="http://getfirefox.com/">Firefoxをインストールする</a>か
+<button onclick="var a=document.createElement(&quot;script&quot;);a.setAttribute(&quot;type&quot;,&quot;application/javascript&quot;);a.setAttribute(&quot;src&quot;,&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;);document.body.appendChild(a);">このボタンをクリックしてMathJaxを使って無理矢理表示する</button>
+などしてください。
+</div>
+</aside>
+
+<h4>ベジェ曲線で描く円の面積求め方</h4>
+
+<p>
+中心角&#x03B8;の円弧は次の制御点A, A', B, B'で書き表せる。
+</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\begin{aligned}
+\text{A:}&amp;(\cos\theta,\sin\theta)\\
+\text{B:}&amp;(1,0)\\
+\text{A':}&amp;(\cos\theta+\kappa\sin\theta,\sin\theta-\kappa\cos\theta)\\
+\text{B':}&amp;(1,\kappa)\\
+\end{aligned}"><semantics><mtable columnspacing="0em"><mtr><mtd><mtext>A:</mtext></mtd><mtd><mo stretchy="false">(</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>,</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>B:</mtext></mtd><mtd><mo stretchy="false">(</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>A':</mtext></mtd><mtd><mo stretchy="false">(</mo><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo>+</mo><mi>&#x03BA;</mi><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>,</mo><mo rspace="0.5ex" lspace="0em">sin</mo><mi>&#x03B8;</mi><mo>-</mo><mi>&#x03BA;</mi><mo rspace="0.5ex" lspace="0em">cos</mo><mi>&#x03B8;</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mtext>B':</mtext></mtd><mtd><mo stretchy="false">(</mo><mn>1</mn><mo>,</mo><mi>&#x03BA;</mi><mo stretchy="false">)</mo></mtd></mtr></mtable><annotation encoding="TeX">\begin{aligned}
+\text{A:}&amp;(\cos\theta,\sin\theta)\\
+\text{B:}&amp;(1,0)\\
+\text{A':}&amp;(\cos\theta+\kappa\sin\theta,\sin\theta-\kappa\cos\theta)\\
+\text{B':}&amp;(1,\kappa)\\
+\end{aligned}
+</annotation></semantics></math>
+</td>
+<td>(5.1)</td>
+</tr>
+</tbody>
+</table>
+
+<p>where,</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML" title="\kappa=\frac{4}{3}\cdot\tan\frac\theta4"><semantics><mrow><mi>&#x03BA;</mi><mo>=</mo><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>&#x00B7;</mo><mo rspace="0.5ex" lspace="0em">tan</mo><mfrac><mi>&#x03B8;</mi><mn>4</mn></mfrac></mrow><annotation encoding="TeX">\kappa=\frac{4}{3}\cdot\tan\frac\theta4</annotation></semantics></math>
+</td>
+<td>(5.2)</td>
+</tr>
+</tbody>
+</table>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag generic-kappa.svg %}
+<figcaption>135degree arc using Bézier</figcaption>
+</figure>
+
+<p>ベジェ曲線の定義より、この曲線の任意の点はパラメータ<math xmlns="http://www.w3.org/1998/Math/MathML" title="u (0\leq u \leq 1)" display="inline">
+  <semantics>
+    <mrow><mi>u</mi><mo stretchy="false">(</mo><mn>0</mn><mo>&#x2264;</mo><mi>u</mi><mo>&#x2264;</mo><mn>1</mn><mo stretchy="false">)</mo></mrow>
+    <annotation encoding="TeX">u(0\leq u \leq 1)</annotation>
+  </semantics>
+</math>を使って、下記の通り表現できる。</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3">
+  <semantics>
+    <mrow><mi mathvariant="bold">P</mi><mo>&#x2061;</mo><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="bold">A</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup><mo>+</mo><mi mathvariant="bold">A</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><mi>u</mi><mo>&#x2062;</mo><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi mathvariant="bold">B</mi><mo>′</mo><mo>&#x2062;</mo><mn>3</mn><mo>&#x2062;</mo><msup><mi>u</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mn>1</mn><mo>-</mo><mi>u</mi><mo stretchy="false">)</mo><mo>+</mo><mi mathvariant="bold">B</mi><mo>&#x2062;</mo><msup><mi>u</mi><mn>3</mn></msup></mrow>
+    <annotation encoding="TeX">\bm{P}(u)=\bm{A}(1-u)^3+\bm{A}'3u(1-u)^2+\bm{B}'3u^2(1-u)+\bm{B}u^3</annotation>
+  </semantics>
+</math>
+</td>
+<td>(5.3)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="\bm{P}(u)=\left(P_x(u),P_y(u)\right)" display="inline">
+  <semantics>
+    <mrow>
+      <mi mathvariant="bold">P</mi>
+      <mo>&#x2061;</mo>
+      <mo stretchy="false">(</mo>
+      <mi>u</mi>
+      <mo stretchy="false">)</mo>
+      <mo>=</mo>
+      <mo>(</mo>
+      <mrow>
+        <msub>
+          <mi>P</mi>
+          <mi>x</mi>
+        </msub>
+        <mo>&#x2061;</mo>
+        <mo stretchy="false">(</mo>
+        <mi>u</mi>
+        <mo stretchy="false">)</mo>
+        <mo separator="true">,</mo>
+        <msub>
+          <mi>P</mi>
+          <mi>y</mi>
+        </msub>
+        <mo>&#x2061;</mo>
+        <mo stretchy="false">(</mo>
+        <mi>u</mi>
+        <mo stretchy="false">)</mo>
+      </mrow>
+      <mo>)</mo>
+    </mrow>
+    <annotation encoding="TeX">\bm{P}(u)=\left(P_x(u),P_y(u)\right)</annotation>
+  </semantics>
+</math>
+とすると、よく下記の式で面積が求められる：
+</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="S = \int_{u=0}^{u=1} P_y(u)\,dx = \int_0^1 P_y(u)\cdot\frac{d P_x(u)}{du}\,du" display="block">
+  <semantics>
+    <mrow>
+      <mi>S</mi>
+      <mo>=</mo>
+      <msubsup>
+        <mo>&#x222B;<!-- ∫ --></mo>
+        <mrow>
+          <mi>u</mi>
+          <mo>=</mo>
+          <mn>0</mn>
+        </mrow>
+        <mrow>
+          <mi>u</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+        </mrow>
+      </msubsup>
+      <msub>
+        <mi>P</mi>
+        <mi>y</mi>
+      </msub>
+      <mo stretchy="false">(</mo>
+      <mi>u</mi>
+      <mo stretchy="false">)</mo>
+      <mspace width="thinmathspace" />
+      <mi>d</mi>
+      <mi>x</mi>
+      <mo>=</mo>
+      <msubsup>
+        <mo>&#x222B;<!-- ∫ --></mo>
+        <mn>0</mn>
+        <mn>1</mn>
+      </msubsup>
+      <msub>
+        <mi>P</mi>
+        <mi>y</mi>
+      </msub>
+      <mo stretchy="false">(</mo>
+      <mi>u</mi>
+      <mo stretchy="false">)</mo>
+      <mo>&#x22C5;<!-- ⋅ --></mo>
+      <mfrac>
+        <mrow>
+          <mi>d</mi>
+          <msub>
+            <mi>P</mi>
+            <mi>x</mi>
+          </msub>
+          <mo stretchy="false">(</mo>
+          <mi>u</mi>
+          <mo stretchy="false">)</mo>
+        </mrow>
+        <mrow>
+          <mi>d</mi>
+          <mi>u</mi>
+        </mrow>
+      </mfrac>
+      <mspace width="thinmathspace" />
+      <mi>d</mi>
+      <mi>u</mi>
+    </mrow>
+    <annotation encoding="TeX">S = \int_{u=0}^{u=1} P_y(u)\,dx = \int_0^1 P_y(u)\cdot\frac{d P_x(u)}{du}\,du</annotation>
+  </semantics>
+</math>
+</td>
+<td>(5.4)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+(5.1),(5.2),(5.3)式を(5.4)式に適用することで面積を求めることができる。
+</p>
+
+<h4>ベジェ曲線で描く円の面積</h4>
+
+<p>
+(5.4)式を計算すればいいのだが、手計算を早速諦めて
+<a href="http://maxima.sourceforge.net/" title="Maxima, a Computer Algebra System">maxima</a>使って解いてみる。
+</p>
+<pre class="maxima-output"><samp>(%i1) <kbd>P(u):=A*(1-u)^3+Ac*3*u*(1-u)^2+Bc*3*u^2*(1-u)+B*u^3;</kbd>
+                          3                 2         2              3
+(%o1)    P(u) := A (1 - u)  + Ac 3 u (1 - u)  + Bc 3 u  (1 - u) + B u
+(%i2) <kbd>Px(u):=sublis([A = cos(theta),B = 1,Ac = cos(theta)+k*sin(theta),Bc = 1],P(u));</kbd>
+(%o2) Px(u) := sublis([A = cos(theta), B = 1, Ac = cos(theta) + k sin(theta), 
+                                                                 Bc = 1], P(u))
+(%i3) <kbd>Py(u):=sublis([A = sin(theta),B = 0,Ac = sin(theta)-k*cos(theta),Bc = k],P(u));</kbd>
+(%o3) Py(u) := sublis([A = sin(theta), B = 0, Ac = sin(theta) - k cos(theta), 
+                                                                 Bc = k], P(u))
+(%i4) <kbd>integrate(Py(u)*diff(Px(u), u), u, 0, 1);</kbd>
+              2                                  2
+(%o4) (6 k sin (theta) + ((- 10 cos(theta)) - 3 k  + 10) sin(theta)
+                                           2
+                                  + 6 k cos (theta) - 12 k cos(theta) + 6 k)/20
+</samp></pre>
+
+<p>
+中心角が一般なときであっても一応は解析的に解けるようであり、面積は
+</p>
+
+<table style="width: 100%">
+<tbody>
+<tr>
+<td style="width: 100%">
+<math xmlns="http://www.w3.org/1998/Math/MathML" title="S=6\kappa\sin ^2\theta+\left(-10\cos \theta-3\kappa^2+10\right)\sin \theta+6\kappa\cos ^2\theta-12\kappa\cos \theta+6\kappa" display="block">
+  <semantics>
+  <mrow><mi>S</mi><mo>=</mo><mfrac><mrow><mn>6</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mspace width="thinmathspace" /><msup><mrow><mi>sin</mi></mrow><mn>2</mn></msup><mi>&#x03B8;</mi><mo>+</mo><mfenced separators=""><mo>-</mo><mn>10</mn><mo>&#x2062;</mo><mi>cos</mi><mi>&#x03B8;</mi><mo>-</mo><mn>3</mn><mo>&#x2062;</mo><msup><mrow><mi>&#x03BA;</mi></mrow><mn>2</mn></msup><mo>+</mo><mn>10</mn></mfenced><mo>&#x2062;</mo><mi>sin</mi><mi>&#x03B8;</mi><mo>+</mo><mn>6</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><msup><mrow><mi>cos</mi></mrow><mn>2</mn></msup><mi>&#x03B8;</mi><mo>-</mo><mn>12</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi><mo>&#x2062;</mo><mi>cos</mi><mi>&#x03B8;</mi><mo>+</mo><mn>6</mn><mo>&#x2062;</mo><mi>&#x03BA;</mi></mrow><mrow><mn>20</mn></mrow></mfrac></mrow>
+    <annotation encoding="TeX">S=6\kappa\sin ^2\theta+\left(-10\cos \theta-3\kappa^2+10\right)\sin \theta+6\kappa\cos ^2\theta-12\kappa\cos \theta+6\kappa</annotation>
+  </semantics>
+</math>
+</td>
+<td>(5.5)</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+ところで典型的なベクトル画像ソフトは下図のように中心角90度で分割している。
+</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag circle-in-bezeir.svg %}
+<figcaption>A circle using Bézier generated by typical vector graphic editor</figcaption>
+</figure>
+
+<p>
+(5.5)式に<math xmlns="http://www.w3.org/1998/Math/MathML" title="\theta=\pi/2" display="inline">
+  <semantics>
+    <mrow><mi>&#x03B8;</mi><mo>=</mo><mn>&#x03C0;</mn><mo>/</mo><mn>2</mn></mrow>
+    <annotation encoding="TeX">\theta=\pi/2</annotation>
+  </semantics>
+</math>を代入して4倍にすればベジェ曲線で描く円の面積がわかって
+</p>
+
+<pre class="maxima-output"><samp>(%i5) <kbd>sublis([k = 4/3*(sqrt(2)-1), theta=%pi/2], %o4) * 4;</kbd>
+                                                      2
+                                      16 (sqrt(2) - 1)
+                   16 (sqrt(2) - 1) - ----------------- + 10
+                                              3
+(%o5)              -----------------------------------------
+                                       5
+(%i6) <kbd>float(%o5);</kbd>
+(%o6)                          3.142472332656507
+</samp></pre>
+
+<p>
+半径1の円の面積は当然円周率であって、3.141592653589793...であるから、
+0.00028%ぐらい真円よりも面積が大きいということになる。
+</p>
+
+<h4>結論</h4>
+
+<p>
+ベジェ曲線で描かれた円は、真円よりも0.00028%ぐらい余計に大きい。
+円を円として扱わずベジェ曲線として使うツールを使って円を描いたあとに、
+プリントしたらそれだけ余計にインク代も消費するし、
+3Dプリントすると真円よりもそれだけフィラメントを消費するらしい。
+</p>
+
+<style type="text/css" scoped="scoped"><!--
+.maxima-output {
+  background-color: #fff;
+  color: #000;
+  font-size: smaller;
+  border: solid 1px #888;
+}
+.maxima-output kbd {
+  color: #008;
+}
+--></style>

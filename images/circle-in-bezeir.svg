@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="222" height="222" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(110.5,110.5)">
+  <circle cx="0" cy="0" r="100" fill="#ccc"/>
+  <g fill="#00f" stroke="#000">
+   <rect x="-105" y="-5" width="11" height="11"/>
+   <rect x="95" y="-5" width="11" height="11"/>
+   <rect x="-5" y="95" width="11" height="11"/>
+   <rect x="-5" y="-105" width="11" height="11"/>
+  </g>
+  <g fill="#fff" stroke="#000">
+   <circle cx="-100" cy="-55.228" r="3"/>
+   <circle cx="-100" cy="55.228" r="3"/>
+   <circle cx="100" cy="-55.228" r="3"/>
+   <circle cx="100" cy="55.228" r="3"/>
+   <circle cx="-55.228" cy="-100" r="3"/>
+   <circle cx="55.228" cy="-100" r="3"/>
+   <circle cx="-55.228" cy="100" r="3"/>
+   <circle cx="55.228" cy="100" r="3"/>
+  </g>
+  <g fill="none" stroke="#88f" stroke-width="1px">
+   <path d="m-100-55.228v110.46"/>
+   <path d="m100-55.228v110.46"/>
+   <path d="m-55.228-100h110.46"/>
+   <path d="m-55.228 100h110.46"/>
+  </g>
+ </g>
+</svg>
