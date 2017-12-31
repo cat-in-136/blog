@@ -1,0 +1,206 @@
+---
+layout: post
+title: 新年の挨拶（とウェブフォント）
+vertical-writing: true
+tags: font webfont html 縦書き
+date: '2018-01-01T01:41:08+09:00'
+---
+<style type="text/css" scoped="scoped"><!-- /* --><![CDATA[ /* */
+@font-face {
+  font-family: "Gantan2018catin136";
+  src: url("{% asset_image_path 201801_newyearmessage2018_gantan2018catin136.woff2 %}") format("woff2"),
+       url("{% asset_image_path 201801_newyearmessage2018_gantan2018catin136.woff  %}") format("woff");
+}
+
+@supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
+  .newyearmessage2018_message div {
+    font-family: "Gantan2018catin136";
+    font-size: xx-large;
+    margin: 10px;
+  
+    font-variant-ligatures: contextual;
+    font-feature-settings: "liga", "dlig";
+    text-rendering: optimizeLegibility;
+  }
+  .newyearmessage2018_message div:last-child {
+    direction: rtl;
+  }
+
+  @supports (-ms-ime-align: auto) {
+    /* Disable ligature for MS Edge. It is too buggy. */
+    .newyearmessage2018_message div {
+      font-feature-settings: normal ! important;
+    }
+  }
+
+  .newyearmessage2018_preview {
+    font-family: "Gantan2018catin136";
+    text-rendering: optimizeLegibility;
+  }
+}
+/* ]]><!-- */ --></style>
+
+<div class="newyearmessage2018_message">
+  <div>あけましておめでとうございます</div>
+  <br />
+  <div>平成三十年元旦</div>
+</div>
+
+<hr />
+
+<h3>あらまし</h3>
+
+<p>
+年始の挨拶を電子化された<ruby>媒体<rp>（</rp><rt>メディア</rt><rp>）</rp></ruby>で行うようになって久しい。
+伝統的には、手書きで挨拶の文（賀詞も含む）を紙に書くのだが、手書きという<em>工程</em>はそのままに電子化したい。
+単に電子化するだけならば画像でいいのだが、文字列データは保持したほうがより電子化されたデータとの相性が良く有意義である。
+しかるに、手書きをしてフォントを作成することとした。
+</p>
+
+<h3>要求</h3>
+
+<ul>
+<li>挨拶が行う者自身の直筆をスキャンして作ったフォントであること</li>
+<li>文字は汚くて良い&#x2e3a;きれいな美文字が欲しければ市販のフォントを使えば良いだけである</li>
+<li>フォントに含まれるグリフは、挨拶の文に含まれる文字だけでよい</li>
+<li>伝統に基づき、縦書きとする</li>
+<li>伝統に基づき、それぞれの字の大きさは同一ではなくともよい</li>
+<li>挨拶の文の文字列そのもの自体はありのまま使用し特殊記号などは極力避ける</li>
+</ul>
+
+<h3>工程</h3>
+
+<p>
+適当に書いた文字をベースとしたので筆順や崩しが間違っているかもしれない。
+技術力・デザイン力不足のためカーニングなどの微調整は<em>一切</em>やっていない。
+欲が出て仮名連綿に手を出したが、後述のとおり一部環境ではうまく再現できないまま作業を終えている。
+</p>
+
+<ol>
+<li>紙に筆ペン（毛筆の代替）で、挨拶の文を書く</li>
+<li>前項の紙をスキャンする</li>
+<li>画像から文字ごとに切り出す</li>
+<li><a href="https://inkscape.org/">inkscape</a> のベクトル化ツール（potrace）でベクトル化。必要あれば、この時点でグリフの形状を編集する</li>
+<li>前項で作成したベクトルデータを <a href="https://fontforge.github.io/">fontforge</a> で読み込み、フォント化</li>
+<li>…しようと思ったが正しいフォントが生成されなかったので ttx (<a href="https://github.com/fonttools/fonttools">fonttools</a>) を用いて TTX ファイルを生成した後、改造を施して、TTX ファイルから ttx で WOFF/WOFF2 フォントを作成した</li>
+</ol>
+<p>
+ベクトル化するところまでは、手作業ですべて行ったため特段技術的高度なことをやったわけではないため省略する。
+</p>
+
+<p>
+もととなった ttx ファイルは <a href="https://gist.github.com/cat-in-136/d3561c7a30982d2b20825223e6fcf8b2">gist:cat-in-136/d3561c7a30982d2b20825223e6fcf8b2</a>に置いた。
+</p>
+
+<h3>GSUB</h3>
+
+<p>
+欲を出て連綿を導入するために GSUB の <ruby>Ligature<rp>（</rp><rt>合字</rt><rp>）</rp></ruby>をいじることとした。
+ただこれをするために Adobe-Identity-0 を使ったりする羽目になった。
+</p>
+<p>
+用意した四つの仮名連綿を、下記の通り U+E900〜3 という私用領域に割り当てた：
+</p>
+
+<table>
+  <thead>
+    <tr><td>仮名連綿</td><td>割り当てたコード</td><td>仮名</td></tr>
+  </thead>
+  <tbody>
+    <tr><td class="newyearmessage2018_preview">&#xe900;</td><td>U+E900</td><td>まして</td></tr>
+    <tr><td class="newyearmessage2018_preview">&#xe901;</td><td>U+E901</td><td>めで</td></tr>
+    <tr><td class="newyearmessage2018_preview">&#xe902;</td><td>U+E902</td><td>とう</td></tr>
+    <tr><td class="newyearmessage2018_preview">&#xe903;</td><td>U+E903</td><td>ます</td></tr>
+  </tbody>
+</table>
+
+<p>
+これを「まして」→「U+E900」という風に置換する Lookup Table を定義することで実現している。
+なお、<code>cid12358</code> のように unicode charcode の十進の名前をそのまま CID の番号として割り当てているがこうする必要はない。
+単に作業の簡便のためこのように振っただけである。
+</p>
+<p>
+OpenType の仕様上「まして」「ます」のように最初の字を共用するものはまとめて管理される（<code>LigatureSet[glyph=&quot;cid12414&quot;]</code>）。
+これをバラして別要素とすると、片方の ligature は無視されてしまう。
+</p>
+
+<pre class="prettyprint"><code>&lt;Lookup index=&quot;0&quot;&gt;
+  &lt;LookupType value=&quot;4&quot;/&gt;
+  &lt;LookupFlag value=&quot;0&quot;/&gt;
+  &lt;!-- SubTableCount=1 --&gt;
+  &lt;LigatureSubst index=&quot;0&quot; Format=&quot;1&quot;&gt;
+    &lt;LigatureSet glyph=&quot;cid12392&quot;&gt;
+      &lt;Ligature components=&quot;cid12358&quot; glyph=&quot;cid59650&quot;/&gt;
+    &lt;/LigatureSet&gt;
+    &lt;LigatureSet glyph=&quot;cid12414&quot;&gt;
+      &lt;Ligature components=&quot;cid12375,cid12390&quot; glyph=&quot;cid59648&quot;/&gt;
+      &lt;Ligature components=&quot;cid12377&quot; glyph=&quot;cid59651&quot;/&gt;
+    &lt;/LigatureSet&gt;
+    &lt;LigatureSet glyph=&quot;cid12417&quot;&gt;
+      &lt;Ligature components=&quot;cid12391&quot; glyph=&quot;cid59649&quot;/&gt;
+    &lt;/LigatureSet&gt;
+  &lt;/LigatureSubst&gt;
+&lt;/Lookup&gt;
+</code></pre>
+
+<p>
+Edge は仮名連綿を正しくレンダリングできず、文字がひどく崩れるようであった。
+次善策として、Edge 向けには liga を無効にするように CSS で工夫をこらしておいてある。
+</p>
+<p>
+Google Chrome も私が作成したフォントでは GSUB がうまく働かなかった。
+&quot;<a href="https://tategaki.github.io/awards2016/">たてよこWebアワード(2016)</a>&quot;だったり、
+嵯峨本フォントプロトタイプは正しく仮名連綿がレンダリングできるのでフォントの問題と思われる。
+</p>
+
+<p>
+ブラウザではないが pango-view で試したところ、仮名連綿は正しくレンダリングされた。
+環境依存つらみある。
+</p>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_object_tag 201801_newyearmessage2018_pangorender.svg %}
+<figcaption>pango-view レンダリングから構成した図</figcaption>
+</figure>
+
+<h3>WOFF</h3>
+
+<p>
+OpenType をそのままだと容量上非効率なのでウェブフォントに特化した WOFF あるいは WOFF2 が推奨される。
+ttx だと必要な python パッケージさえ入っていればそのまま出力できた。
+</p>
+<pre class="console"><samp>% ttx -q --flavor woff2 Gantan2018CatIn136.ttx
+% ttx -q --flavor woff --with-zopfli Gantan2018CatIn136.ttx
+</samp></pre>
+<p>
+WOFF2 の方がサイズ的に有利なのでそちらの方を使うのが好ましい。
+だが <a href="https://caniuse.com/#search=woff2">WOFF2 に対応していないブラウザ</a>もいまだ生き残っているため WOFF も作成した。
+WOFF さえ対応していないブラウザは縦書きをろくに対応していると言い難いとおもうので、ばっざりと切っている。
+</p>
+
+<h3>おわりに</h3>
+
+<p>
+手書きという工程を通じて、画面上に現れ、またそれがテキスト選択できるというのは、興味深い製作体験であった。
+</p>
+<p>
+横書きの手書きフォントのノウハウは数多あるが、縦書きのフォントや特に連綿は時代が浅いこともあり情報収集は大変な上に、完全なものは結局つくることはできなかった。
+嵯峨本フォントプロトタイプの実装は、大いに参考になった。
+</p>
+
+<h3>参考文献</h3>
+
+<ul>
+<li>Microsoft, &quot;<a href="https://www.microsoft.com/en-us/Typography/OpenTypeSpecification.aspx">OpenType specification</a>&quot;<ul>
+<li><a href="https://www.microsoft.com/typography/otspec/chapter2.htm">Chapter2 OpenType Layout Common Table Formats</a></li>
+<li><a href="https://www.microsoft.com/typography/otspec/GSUB.htm">GSUB - Glyph Substitution Table</a></li>
+</ul>
+</li>
+<li>Adobe, &quot;<a href="https://helpx.adobe.com/jp/typekit/using/open-type-syntax.html">CSS での OpenType 機能の構文</a>&quot;</li>
+<li>漢字データベース, &quot;<a href="http://kanji-database.sourceforge.net/fonts/opentype.html">OpenType</a>&quot;</li>
+<li>mashabow, &quot;<a href="http://shiromoji.net/tegaki/tktf.html">てきとうに書いて作ったフォント</a>&quot;, しろもじ作業室, 2008</li>
+<li>縦書きWeb普及委員会, &quot;<a href="https://tategaki.github.io/awards2016/">たてよこWebアワード</a>&quot;, 2016<ul>
+<li><a href="https://github.com/tategaki/tategaki.github.io/tree/master/awards2016">https://github.com/tategaki/tategaki.github.io/tree/master/awards2016</a></li>
+</ul>
+</li>
+<li>嵯峨本フォントプロジェクト, &quot;<a href="http://epublishing.jp/sagabon/">嵯峨本フォントプロトタイプ</a>&quot;, 2012</li>
+</ul>
