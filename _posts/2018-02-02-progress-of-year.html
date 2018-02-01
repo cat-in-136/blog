@@ -1,0 +1,65 @@
+---
+layout: post
+title: 年の進捗
+date: '2018-02-02T01:05:22+09:00'
+tags:
+- web application
+- svg
+- チラシの裏
+---
+<p>
+今年がはじまって一年のうち何パーセントおわったかを円グラフを確認して見るために作ってみた。
+</p>
+<p>
+が、作ってからアナログ時計が12等分だからそれで概算をかんたんに把握できるじゃんと気づいた。
+</p>
+<!--more-->
+
+<noscript>このコンテテンツを見るのはJavaScriptを有効にしてください</noscript>
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller; max-width: 100vh;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <circle fill="#eee" stroke="none" cx="50" cy="50" r="40" />
+    <path id="201802_progress_cal_piechart" fill="#f88" stroke="none" d="M 50 50 L 50 10 A 40 40 0 1 1 50 10 Z" />
+    <text id="201802_progress_cal_label" fill="#000" stroke="none" x="50" y="50" text-anchor="middle"></text>
+  </svg>
+</figure>
+
+<script type="application/javascript"><!-- /* --><![CDATA[ *///
+window.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+
+  function getPathForPieChart(percent, cw, ch) {
+    const r = cw / 2 * 0.8;
+    const cx = cw / 2;
+    const cy = ch / 2;
+    const sx = cx + r * Math.sin(0 * 2 * Math.PI / 100);
+    const sy = cy - r * Math.cos(0 * 2 * Math.PI / 100);
+    const ex = cx + r * Math.sin(percent * 2 * Math.PI / 100);
+    const ey = cy - r * Math.cos(percent * 2 * Math.PI / 100);
+    const arcFlag = (percent < 50)? 0 : 1;
+
+    return `M ${cx} ${cy} L ${sx} ${sy} A ${r} ${r} 0 ${arcFlag} 1 ${ex} ${ey} Z`;
+  }
+
+  function getPercentOfThisYear(now) {
+    const firstDayOfThisYear = new Date(now.getFullYear(), 0, 1);
+    const firstDayOfNextYear = new Date(now.getFullYear() + 1, 0, 1);
+
+    return 100.0 * (now.getTime() - firstDayOfThisYear.getTime()) / (firstDayOfNextYear.getTime() - firstDayOfThisYear.getTime());
+  }
+
+  function updatePieChart() {
+    const now = new Date();
+    const percent = getPercentOfThisYear(now);
+    const path = getPathForPieChart(percent, 100, 100);
+
+    document.getElementById("201802_progress_cal_piechart").setAttribute("d", path);
+    const oText = document.getElementById("201802_progress_cal_label");
+    while (oText.firstChild) { oText.removeChild(oText.firstChild); }
+    oText.appendChild(document.createTextNode(`${parseInt(percent)}%`));
+  }
+
+  updatePieChart();
+
+}, false);
+/* ]]><!-- */// --></script>
