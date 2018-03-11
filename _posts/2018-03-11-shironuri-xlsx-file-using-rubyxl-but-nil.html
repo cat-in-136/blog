@@ -1,0 +1,131 @@
+---
+layout: post
+title: 白塗りの xlsx ファイルを rubyXL で作ろうとしたワイ、無を見る
+date: '2018-03-11T22:27:27+09:00'
+thumbnail: "{% asset_image_path 201803_shironurixlsx_nil_viewer_ss.png %}"
+tags:
+- excel
+- チラシの裏
+---
+
+<p>Excel （や互換のスプレッドシート）で背景色を白で塗りつぶすと罫線が消える。
+これを個人的に <em>白塗り</em> と呼んでいる。</p>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201803_shironurixlsx_shironuri_example_ss.svg %}
+<figcaption><em>白塗り</em>の例</figcaption>
+</figure>
+
+<p>罫線を非表示にする設定をすればいいだけなのだが、
+あまり方法が周知されていないため
+<span style="vertical-align: super !important;font-size: smaller;">[要出典]</span>、
+ブック間をまたいだコピペでも自然に使用できる
+この白塗りをいまーだ使ってしまっている。</p>
+
+<p><em>白塗り</em> Excel ファイル (xlsx) を作るにあたり、
+簡単のため何もデータを含まないファイルをベースとして考える。
+作成したライブラリは <a href="https://rubygems.org/gems/rubyXL">rubyXL</a> である。</p>
+
+<pre class="prettyprint"><code>require "rubyXL"
+
+workbook = RubyXL::Workbook.new
+workbook.write("/path/to/blank_nonshironuri.xlsx")
+</code></pre>
+<div>Output file: <a href="https://gist.githubusercontent.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5/raw/blank_nonshironuri.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">blank_nonshironuri.xlsx</a></div>
+ 
+<p>xlsx ファイルは所詮 xml ファイルを zip で固めたものなので、
+Excel（など）で出力した xlsx ファイルを展開して xml ファイルを比較することで
+どういう風に編集すればいいかがわかる。</p>
+
+<p>確認してみたところ <code class="highlighter-rouge">xl\worksheets\sheet1.xml</code> に下記のような
+col 要素を投入すればよいことが分かった。</p>
+
+<pre class="prettyprint"><code>&lt;worksheet&gt;&lt;!-- worksheet 要素の属性値略 --&gt;
+  &lt;!-- 略 --&gt;
+  &lt;cols&gt;&lt;col min="1" max="16384" style="1"/&gt;&lt;/cols&gt;
+  &lt;sheetData&gt;&lt;!-- 略 --&gt;&lt;/sheetData&gt;
+&lt;/worksheet&gt;</code></pre>
+
+<p>ここで 16384 というのは、Excel 2007 以降から現在の Excel のバージョンに
+おける<a href="https://office.microsoft.com/ja-jp/excel-help/HP010073849.aspx" title="Excel の仕様および制限 - Excel - Office Support - Office 365">最大列数であり仕様に基づく</a>（それ以前は 256 列）。
+つまりすべての列に背景白のスタイルを設定すればよい。</p>
+
+<p>そこで、</p>
+
+<pre class="prettyprint"><code>require "rubyXL"
+
+workbook = RubyXL::Workbook.new
+worksheet = workbook[0]
+shironuri_style_index = workbook.modify_fill(nil, "ffffff")
+worksheet.cols &lt;&lt; RubyXL::ColumnRange.new(
+    :min =&gt; 1,
+    :max =&gt; 16384, # 0x4000
+    :style_index =&gt; shironuri_style_index,
+)
+workbook.write("/path/to/nil_shironuri.xlsx")</code></pre>
+<div>Output file: <a href="https://gist.githubusercontent.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5/raw/nil_shironuri.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">nil_shironuri.xlsx</a></div>
+
+<p>とやってみたら、LibreOffice Calc で開けたんだが Excel で開くと
+何も表示されない <em>無</em> の画面が広がった…。</p>
+
+<p>なお厳密には、下記の通りでオンライン版では開けもしない。</p>
+
+<ul>
+  <li>デスクトップ版 Excel （Excel Viewer も含む） : <em>無</em> の画面</li>
+  <li>オンライン office.com の Excel : そもそも開けない</li>
+</ul>
+
+<figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+{% asset_image_tag 201803_shironurixlsx_nil_viewer_ss.png %}
+<figcaption><em>無</em>の画面</figcaption>
+</figure>
+
+<p>とやってみたら、LibreOffice で開けたんだが Excel で開くと
+何も表示されない <em>無</em> の画面が広がった…。</p>
+
+<p>なお厳密には、下記の通りでオンライン版では開けもしない。</p>
+
+<ul>
+  <li>デスクトップ版 Excel （Excel Viewer も含む） : <em>無</em> の画面</li>
+  <li>オンライン office.com の Excel : そもそも開けない</li>
+</ul>
+
+<pre class="prettyprint"><code>&lt;worksheet&gt;&lt;!-- worksheet 要素の属性値略 --&gt;
+  &lt;!-- 略 --&gt;
+  &lt;cols&gt;&lt;col min="1" max="16384" <ins>width="9"</ins> style="1"/&gt;&lt;/cols&gt;
+  &lt;sheetData&gt;&lt;!-- 略 --&gt;&lt;/sheetData&gt;
+&lt;/worksheet&gt;</code></pre>
+
+<p>これを実現するコードとしては…</p>
+
+<pre class="prettyprint"><code>require "rubyXL"
+
+workbook = RubyXL::Workbook.new
+worksheet = workbook[0]
+shironuri_style_index = workbook.modify_fill(nil, "ffffff")
+worksheet.cols &lt;&lt; RubyXL::ColumnRange.new(
+    :min =&gt; 1,
+    :max =&gt; 16384, # 0x4000
+    :style_index =&gt; shironuri_style_index,
+    <ins>:width =&gt; 9,</ins>
+)
+workbook.write("/path/to/blank_shironuri.xlsx")</code></pre>
+<div>Output file: <a href="https://gist.githubusercontent.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5/raw/blank_shironuri.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">blank_shironuri.xlsx</a></div>
+
+<h3>成果物</h3>
+
+<ul>
+  <li>本記事のコード <a href="https://gist.github.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5">
+  https://gist.github.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5</a></li>
+  <li>本記事の内容の適用例 <a href="https://github.com/cat-in-136/htot_conv/pull/8">Shironuri by cat-in-136 · Pull Request #8 · cat-in-136/htot_conv</a></li>
+</ul>
+
+<h3>感想</h3>
+
+<ul>
+  <li>はじめて Excel (デスクトップ)、Office.com の Excel (オンライン版)、
+LibreOffice Calc で挙動が異なるのを見た</li>
+  <li>xlsx ファイルは xml ファイルを zip で固めたものなので意外と融通が利く</li>
+  <li>もうちょっとまとめて書いて Qiita あたりに投稿しようと思ったが、
+まとまりのない文章に相成ったので essay としてここのブログに書くことにした</li>
+</ul>
