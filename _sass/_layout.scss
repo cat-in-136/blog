@@ -288,26 +288,26 @@
       h1, h2, h3, h4, h5, h6 {
         margin: 0 40px 0 20px;
       }
-    }
-    p {
-      margin: auto 10px;
-    }
-    .fitcontain {
-      /* As of firefox 46, vertical-rl may conflict with object-fit. */
-      object-fit: unset;
-      width: auto;
-      height: auto;
-    }
+      p {
+        margin: auto 10px;
+      }
+      .fitcontain {
+        /* As of firefox 46, vertical-rl may conflict with object-fit. */
+        object-fit: unset;
+        width: auto;
+        height: auto;
+      }
 
-    blockquote, math, > table, > figure {
-      margin: auto 1px;
-    }
-    figure {
-      writing-mode: horizontal-tb;
-      -webkit-writing-mode: horizontal-tb;
+      blockquote, math, > table, > figure {
+        margin: auto 1px;
+      }
+      figure {
+        writing-mode: horizontal-tb;
+        -webkit-writing-mode: horizontal-tb;
 
-      /* As of Mar 2016, Edge fails to calculate the width of horizontal-tb block within vertical-rl block. */
-      max-width: 100vh;
+        /* As of Mar 2016, Edge fails to calculate the width of horizontal-tb block within vertical-rl block. */
+        max-width: 100vh;
+      }
     }
   }
   &:lang(en) {
