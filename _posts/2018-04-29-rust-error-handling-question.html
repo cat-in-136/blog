@@ -1,0 +1,481 @@
+---
+layout: post
+title: rustのエラー処理と疑問符演算子
+tags:
+- rustlang
+date: '2018-04-29T20:14:03+09:00'
+---
+
+<p>
+以下のようなファイルを読み取って出力するプログラムを考える。
+</p>
+
+{% highlight rust %}
+use std::fs::File;
+use std::io::BufReader;
+use std::io::BufRead;
+use std::env;
+
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    let filename = args[1].clone();
+    let f = File::open(filename).unwrap();
+    let reader = BufReader::new(f);
+
+    for c in reader.lines() {
+        println!("{}", c.unwrap());
+    }
+}
+{% endhighlight %}
+
+<h3>エラー処理〜ベタ書き</h3>
+
+<p>
+これは一切のエラー処理をしていないので、例えば下記のときに異常終了する。
+</p>
+<ul>
+  <li>プログラム実行時の引数が指定されていない時</li>
+  <li>ファイルが存在しない、または読み取り権限がない場合</li>
+  <li>ファイル読み込み時に何らかのエラーが発生した時</li>
+</ul>
+
+<p>
+例えば引数を指定しないと下記のように異常終了する。
+</p>
+
+<pre class="terminal">% target/debug/foobar
+<samp>thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', /builddir/build/BUILD/rustc-1.25.0-src/src/liballoc/vec.rs:1551:10
+note: Run with `RUST_BACKTRACE=1` for a backtrace.</samp></pre>
+
+<p>
+現代的な言語ではこれの対処をかんたんに書くことができる。
+それは <code>try</code>, <code>catch</code> があるから。
+</p>
+
+{% highlight c# %}
+// vim: set ft=cs
+using System;
+using System.IO;
+
+public class Hoge
+{
+  static void Main(string[] args)
+  {
+    try {
+      string filepath = args[0];
+      using (StreamReader sr = new StreamReader(filepath)) {
+        while (sr.EndOfStream == false) {
+          string line = sr.ReadLine();
+          Console.WriteLine(line);
+        }
+      }
+    } catch (Exception ex) {
+      Console.WriteLine("Error: {0}", ex.Message);
+      Environment.Exit(1);
+    }
+  }
+}
+{% endhighlight %}
+
+<p>
+しかし rust に例外はない。さらに言えば導入するつもりもない。
+理由はマルチスレッドを主要な目的として内部制御をシンプルにしたいことのようだ。
+</p>
+
+<blockquote cite="https://www.rust-lang.org/en-US/faq.html#why-doesnt-rust-have-exceptions">
+  <p>Exceptions complicate understanding of control-flow, they express validity/invalidity outside of the type system, and they interoperate poorly with multithreaded code (a major focus of Rust).</p>
+</blockquote>
+
+<p>
+Rust は例外に対応していないので、いちいち戻り値を確認することになる。
+これを単純にコードに書き換えていくと下記のようになる。
+</p>
+
+{% highlight rust %}
+use std::fs::File;
+use std::io::BufReader;
+use std::io::BufRead;
+use std::env;
+use std::process;
+
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    let filename = if args.len() >= 2 {
+        args[1].clone()
+    } else {
+        eprintln!("Error: file not specified");
+        process::exit(1);
+    };
+    let f = match File::open(filename) {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            process::exit(1);
+        }
+    };
+    let reader = BufReader::new(f);
+
+    for c in reader.lines() {
+        let c = match c {
+            Ok(v) => v,
+            Err(e) => {
+                eprintln!("Error: {}", e);
+                process::exit(1);
+            }
+        };
+        println!("{}", c);
+    }
+}
+{% endhighlight %}
+
+<p>
+このコードは単に書き出しただけで特に何もテクニックを使っておらず、
+そしてエラー処理のせいで非常に長いコードとなってしまった。
+なお、C 言語でのコード（下記）とほぼ同じでなり、
+こんなのでは Rust で書く気力も失せてしまう。
+</p>
+
+{% highlight c %}
+/* vim: set ft=c */
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+
+int main(int argc, char *argv[])
+{
+  const char *filename;
+  FILE *f;
+  int c;
+
+  if (argc >= 2) {
+    filename = argv[1];
+  } else {
+    fprintf(stderr, "Error: file not specified\n");
+    return 1;
+  }
+
+  f = fopen(filename, "r");
+  if (f == NULL) {
+    fprintf(stderr, "Error: %s\n", strerror(errno));
+    return 1;
+  }
+
+  while ((c = fgetc(f)) != EOF) {
+    printf("%c", (char) c);
+  }
+  if (ferror(f) != 0) {
+    fprintf(stderr, "Error: I/O Error\n");
+    clearerr(f);
+    fclose(f);
+    return 1;
+  }
+
+  fclose(f);
+  return 0;
+}
+{% endhighlight %}
+
+<h3>エラー処理〜早期リターンとtry!</h3>
+
+<p>
+前節の処理はプログラムを終了させていたが、一般化するとエラーのときはエラーを
+早期リターンすればよいことになる。戻り値の型としては std ライブラリで提供されている
+<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> を使う。
+</p>
+
+{% highlight rust %}
+pub enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+{% endhighlight %}
+
+<p>
+これをそのまま利用すると、処理の本体を別関数に分けた上で下記のようなコードになる：
+</p>
+
+{% highlight rust %}
+use std::fs::File;
+use std::io::BufReader;
+use std::io::BufRead;
+use std::env;
+use std::process;
+
+fn open_file(args: Vec<String>) -> Result<i8, String> {
+    let filename = if args.len() >= 2 {
+        args[1].clone()
+    } else {
+        return Err("file not specified".to_string());
+    };
+    let f = match File::open(filename) {
+        Ok(v) => v,
+        Err(e) => return Err(format!("{}", e)),
+    };
+    let reader = BufReader::new(f);
+
+    for c in reader.lines() {
+        let c = match c {
+            Ok(v) => v,
+            Err(e) => return Err(format!("{}", e)),
+        };
+        println!("{}", c);
+    }
+    Ok(0)
+}
+
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    match open_file(args) {
+        Ok(_) => (),
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            process::exit(1);
+        }
+    };
+}
+{% endhighlight %}
+
+<p>
+より現実的にエラーの扱いを独自クラスに移行すると、下記にまとめる。
+</p>
+
+{% highlight rust %}
+use std::fs::File;
+use std::fmt;
+use std::io;
+use std::io::BufReader;
+use std::io::BufRead;
+use std::env;
+use std::process;
+
+#[derive(Debug)]
+enum CliError {
+    Io(io::Error),
+    FileNotSpecified,
+}
+
+impl fmt::Display for CliError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            CliError::Io(ref err) => write!(f, "{}", err),
+            CliError::FileNotSpecified => write!(f, "file not specified"),
+        }
+    }
+}
+
+fn open_file(args: Vec<String>) -> Result<i8, CliError> {
+    let filename = if args.len() >= 2 {
+        args[1].clone()
+    } else {
+        return Err(CliError::FileNotSpecified);
+    };
+    let f = match File::open(filename) {
+        Ok(v) => v,
+        Err(e) => return Err(CliError::Io(e)),
+    };
+    let reader = BufReader::new(f);
+
+    for c in reader.lines() {
+        let c = match c {
+            Ok(v) => v,
+            Err(e) => return Err(CliError::Io(e)),
+        };
+        println!("{}", c);
+    }
+    Ok(0)
+}
+
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    match open_file(args) {
+        Ok(_) => (),
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            process::exit(1);
+        }
+    };
+}
+{% endhighlight %}
+
+<p>
+さてこれでも長い。結局のところ <code>match</code> して <code>return Err(...)</code> しているところが
+多いのである。
+エラークラスの実装の手間（オリジナルのエラーから独自エラーの
+変換処理として <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a>
+を実装）と引き換えに、
+<code>try!</code> という macro を使うことでかなり書く分量を減らすことができる。
+</p>
+
+{% highlight rust %}
+use std::fs::File;
+use std::fmt;
+use std::io;
+use std::io::BufReader;
+use std::io::BufRead;
+use std::env;
+use std::process;
+
+#[derive(Debug)]
+enum CliError {
+    Io(io::Error),
+    FileNotSpecified,
+}
+
+impl fmt::Display for CliError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            CliError::Io(ref err) => write!(f, "{}", err),
+            CliError::FileNotSpecified => write!(f, "file not specified"),
+        }
+    }
+}
+
+impl From<io::Error> for CliError {
+    fn from(err: io::Error) -> CliError {
+        CliError::Io(err)
+    }
+}
+
+fn open_file(args: Vec<String>) -> Result<i8, CliError> {
+    let filename = try!(args.get(1).ok_or(CliError::FileNotSpecified));
+    let f = try!(File::open(filename));
+    let reader = BufReader::new(f);
+
+    for c in reader.lines() {
+        println!("{}", try!(c));
+    }
+    Ok(0)
+}
+
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    match open_file(args) {
+        Ok(_) => (),
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            process::exit(1);
+        }
+    };
+}
+{% endhighlight %}
+
+<h3>エラー処理〜"?"演算子</h3>
+
+<p>
+このペースで書いていくと <code>try!</code> だらけになってしまう。
+これじゃまずいと rust 開発者も気づいたらしく、
+<code>try!</code> の（ほぼほぼ）糖衣構文の <code>?</code> 演算子が導入された。
+これで書き換えるとコードの見た目がスッキリとする。
+</p>
+
+{% highlight rust %}
+use std::fs::File;
+use std::fmt;
+use std::io;
+use std::io::BufReader;
+use std::io::BufRead;
+use std::env;
+use std::process;
+
+#[derive(Debug)]
+enum CliError {
+    Io(io::Error),
+    FileNotSpecified,
+}
+
+impl fmt::Display for CliError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            CliError::Io(ref err) => write!(f, "{}", err),
+            CliError::FileNotSpecified => write!(f, "file not specified"),
+        }
+    }
+}
+
+impl From<io::Error> for CliError {
+    fn from(err: io::Error) -> CliError {
+        CliError::Io(err)
+    }
+}
+
+fn open_file(args: Vec<String>) -> Result<i8, CliError> {
+    let filename = args.get(1).ok_or(CliError::FileNotSpecified)?;
+    let f = File::open(filename)?;
+    let reader = BufReader::new(f);
+
+    for c in reader.lines() {
+        println!("{}", c?);
+    }
+    Ok(0)
+}
+
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    match open_file(args) {
+        Ok(_) => (),
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            process::exit(1);
+        }
+    };
+}
+{% endhighlight %}
+
+<hr />
+
+<p>
+…という流れで説明してくれたほうがわかりやすいと思うんだが、
+ココらへんが妙に細かく書いてくれている（それはそれでよいが）
+ドキュメントやハウツーが多くてかえって理解に苦労した。
+</p>
+
+<p>
+ただ、ここらへんの理解の仕方は古めかしい C 言語のコードで
+条件分岐しまくったコードを書いたことがあるかどうかに依るのかもしれない。
+</p>
+
+<h3>余談: try catch 的な使い方</h3>
+
+<p>
+その上でクロージャ使えば関数で切り出さずに内部に処理をいれたまま扱えて、
+一般的な言語の <code>try</code> <code>catch</code> みたいに使えるよね?
+と思って試したら一応書けた。
+</p>
+
+<p>
+ただキモいコードであることは否めない。
+</p>
+
+{% highlight rust %}
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    match (|args: Vec<_>| -> Result<_, CliError> {
+        let filename = args.get(1).ok_or(CliError::FileNotSpecified)?;
+        let f = File::open(filename)?;
+        let reader = BufReader::new(f);
+
+        for c in reader.lines() {
+            println!("{}", c?);
+        }
+        Ok(0)
+    })(args)
+    {
+        Ok(_) => (),
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            process::exit(1);
+        }
+    };
+}
+{% endhighlight %}
+
+<h3>参考文献</h3>
+
+<ul>
+  <li><a href="https://www.rust-lang.org/en-US/faq.html#why-doesnt-rust-have-exceptions">"Why doesn't Rust have exceptions?", Frequency Ascked Questions</a>, The Rust Programming Language</li>
+  <li><a href="https://doc.rust-lang.org/book/first-edition/error-handling.html">"The Rust Programming Language", First Edition, section 4.7. Error Handling</a></li>
+  <li><a href="https://doc.rust-lang.org/rust-by-example/error.html">"Rust By Example", chapter 18. Error Handling</a></li>
+  <li>m4rw3r, <a href="https://m4rw3r.github.io/rust-questionmark-operator">"Rust: The `?` operator", The blog of Martin Wernstål</a>, 28 Jan 2016.</li>
+  <li><a href="https://github.com/rust-lang/rust/issues/12037">rust-lang/rust#12037</a> Rename the `if_ok!` macro</li>
+</ul>
+
