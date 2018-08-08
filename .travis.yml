@@ -7,7 +7,7 @@ addons:
     - libgsl0-dev
 cache: bundler
 rvm:
-- 2.4
+- 2.5
 before_script:
 - bundle exec rake setup[https://${GH_TOKEN}@github.com/cat-in-136/cat-in-136.github.io.git]
 script:
