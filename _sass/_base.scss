@@ -9,6 +9,16 @@ dl, dd, ol, ul, figure {
 }
 
 /**
+ * revert reset.scss
+ */
+sup {
+  vertical-align: super;
+}
+sub {
+  vertical-align: sub;
+}
+
+/**
  * Basic styling
  */
 body {
@@ -55,7 +65,7 @@ em {
   font-weight: normal;
   font-style: italic;
 }
-:lang(ja) em {
+em:lang(ja) {
   font-style: normal;
   text-shadow: 0.25px 0 0.125px currentColor;
   -moz-text-decoration-style: double;
@@ -63,7 +73,7 @@ em {
   -moz-text-decoration-line: underline;
   text-decoration-line: underline;
 }
-:lang(ja), :lang(ja) pre, :lang(ja) code {
+pre:lang(ja), code:lang(ja) {
   em, strong {
     -moz-text-decoration-style: double;
     text-decoration-style: double;
@@ -81,24 +91,22 @@ em {
 }
 @supports (((text-emphasis-style: sesame) or (-webkit-text-emphasis-style: sesame)) and
            ((text-emphasis-style: circle) or (-webkit-text-emphasis-style: circle))) {
-  :lang(ja) {
+  em:lang(ja), strong:lang(ja) {
+    text-decoration: none;
+    text-shadow: none;
+  }
+  em:lang(ja) {
+    -webkit-text-emphasis-style: sesame;
+    text-emphasis-style: sesame;
+  }
+  strong:lang(ja) {
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+  }
+  pre:lang(ja), code:lang(ja) {
     em, strong {
-      text-decoration: none;
-      text-shadow: none;
-    }
-    em {
-      -webkit-text-emphasis-style: sesame;
-      text-emphasis-style: sesame;
-    }
-    strong {
-      -webkit-text-emphasis-style: circle;
-      text-emphasis-style: circle;
-    }
-    pre, code {
-      em, strong {
-        -webkit-text-emphasis-style: none;
-        text-emphasis-style: none;
-      }
+      -webkit-text-emphasis-style: none;
+      text-emphasis-style: none;
     }
   }
 }

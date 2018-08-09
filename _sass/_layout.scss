@@ -282,6 +282,9 @@
     > pre+p, > math+p, > ul+p, > ol+p {
       text-indent: inherit ! important;
     }
+    :not(:lang(ja)) {
+      text-align: left;
+    }
   }
   @include vertical-writing {
     html.vertical-writing-recommended & {
