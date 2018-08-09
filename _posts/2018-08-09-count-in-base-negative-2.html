@@ -1,0 +1,633 @@
+---
+layout: post
+title: マイナス2進数の考察
+tags:
+- math
+- チラシの裏
+- rustlang
+- wasm
+- web application
+date: '2018-08-09T18:49:40+09:00'
+---
+<p>
+古くはビル・ゲイツの試験、最近だと <a href="https://turingcomplete.fm/">#tcfm</a> で
+話題になった「マイナス2進数」が興味深い。
+</p>
+
+<h3>導入</h3>
+
+<blockquote lang="en">
+  <p>Answer 33 Count in base <em>negative</em> 2.</p>
+  <p>...</p>
+  <p>
+    In general, any base works like a set of building blocks of differnt sizes.
+    In base 10, the blocks come in sizes 1, 10, 100, 1,000, etc.
+    In base 2, the blocks come in sizes 1, 2, 4, 8, 16, etc.
+    Combining units in these standard sizes creates any desired number.
+  </p>
+  <p>
+    So what would base -2 notation be?
+  </p>
+  <p>...</p>
+  <footer>
+    — <cite>"How Would You Move Mount Fuji?: Microsoft's Cult of the Puzzle - How the World's Smartest Companies Select the Most Creative Thinkers"</cite>
+  </footer>
+</blockquote>
+
+<p>
+  2進数は、一番右のビット(LSB)を2<sup>0</sup>、その次が2<sup>1</sup>、その次が2<sup>2</sup>…
+  と表現することだが、ここでのマイナス2進数とは「メカニカルに」2→-2に置き換えたものだ。
+  すなわち、一番右のビット(LSB)を(-2)<sup>0</sup>、その次が(-2)<sup>1</sup>、その次が(-2)<sup>2</sup>…
+  と表現することだ。
+</p>
+
+<p>
+  マイナス2進数のLSBから0番目として桁を振っていったとしてマイナス2進数の各桁を
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow>
+      <msub>
+        <mi>n</mi>
+        <mrow>
+          <mi>k</mi>
+        </mrow>
+      </msub>
+    </mrow>
+    <mo>&#x2208;</mo>
+    <mfenced open="{" close="}">
+      <mrow>
+         <mn>0</mn>
+         <mo>,</mo>
+         <mn>1</mn>
+      </mrow>
+    </mfenced>
+    <mspace width="1em" />
+    <mfenced open="(" close=")">
+      <mrow>
+         <mn>0</mn>
+         <mo>&#x2264;</mo>
+         <mi>k</mi>
+         <mo>&#x2264;</mo>
+         <mi>L</mi>
+         <mo>-</mo>
+         <mn>1</mn>
+      </mrow>
+    </mfenced>
+  </math>
+  すなわち数値を
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow>
+      <msub>
+        <mi>n</mi>
+        <mrow>
+          <mi>L</mi>
+          <mo>-</mo>
+          <mn>1</mn>
+        </mrow>
+      </msub>
+      <msub>
+        <mi>n</mi>
+        <mrow>
+          <mi>L</mi>
+          <mo>-</mo>
+          <mn>2</mn>
+        </mrow>
+      </msub>
+      <msub>
+        <mi>n</mi>
+        <mrow>
+          <mi>L</mi>
+          <mo>-</mo>
+          <mn>3</mn>
+        </mrow>
+      </msub>
+      <mo>...</mo>
+      <msub>
+        <mi>n</mi>
+        <mn>1</mn>
+      </msub>
+      <msub>
+        <mi>n</mi>
+        <mn>0</mn>
+      </msub>
+    </mrow>
+  </math>
+  と表すとすると、10進数への変換式は
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow>
+    <mstyle displaystyle="true">
+      <munderover>
+        <mo>&#x02211;</mo>
+        <mrow>
+          <mi>k</mi>
+          <mo>=</mo>
+          <mn>0</mn>
+        </mrow>
+        <mrow>
+          <mi>L</mi>
+          <mo>-</mo>
+          <mn>1</mn>
+        </mrow>
+      </munderover>
+    </mstyle>
+    <msub>
+      <mi>n</mi>
+      <mi>k</mi>
+    </msub>
+    <msup>
+      <mrow>
+        <mo form="prefix">(</mo>
+        <mo>-</mo>
+        <mn>2</mn>
+        <mo form="postfix">)</mo>
+      </mrow>
+      <mi>k</mi>
+    </msup>
+  </mrow>
+</math>
+
+<p>
+  ちなみに4桁のマイナス2進数と10進数の関係は下記のようになる。
+</p>
+
+<figure>
+  <table>
+    <caption>count base negative 2 in 4-bits</caption>
+    <thead>
+      <tr><td>decimal</td><td>base negative 2</td></tr>
+    </thead>
+    <tbody>
+      <tr><td>-10</td><td>1010</td></tr>
+      <tr><td>-9</td><td>1011</td></tr>
+      <tr><td>-8</td><td>1000</td></tr>
+      <tr><td>-7</td><td>1001</td></tr>
+      <tr><td>-6</td><td>1110</td></tr>
+      <tr><td>-5</td><td>1111</td></tr>
+      <tr><td>-4</td><td>1100</td></tr>
+      <tr><td>-3</td><td>1101</td></tr>
+      <tr><td>-2</td><td>0010</td></tr>
+      <tr><td>-1</td><td>0011</td></tr>
+      <tr><td>0</td><td>0000</td></tr>
+      <tr><td>1</td><td>0001</td></tr>
+      <tr><td>2</td><td>0110</td></tr>
+      <tr><td>3</td><td>0111</td></tr>
+      <tr><td>4</td><td>0100</td></tr>
+      <tr><td>5</td><td>0101</td></tr>
+    </tbody>
+  </table>
+</figure>
+
+<p>
+  これの逆変換式を求めたい。
+</p>
+
+<h3>補題：ビット幅で表現できる数値</h3>
+
+<p>
+  手計算すると感覚的に下記の通りビット幅拡張によって表現できる範囲が、
+  正の方向と負の方向の交互に隙間なく広がることがわかる。
+</p>
+
+<figure>
+  <table>
+    <caption>bit length vs range of "base negative 2"</caption>
+    <thead>
+      <tr>
+        <th>bit length: L</th>
+        <td>minimal</td>
+        <td>MAXIMUM</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>1</th>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <th>2</th>
+        <td>-2</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <th>3</th>
+        <td>-2</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <th>4</th>
+        <td>-10</td>
+        <td>5</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+<p>
+  Lビット列のマイナス2進数で表現できる値の最大値と最小値は、
+  手続き的に書くとそれぞれ下記の通り。
+</p>
+
+{% highlight rust %}
+fn mbin_positive_max(l: u32) -> i32 {
+    let mut val = 0;
+    for i in 0..l {
+        if i % 2 == 0 {
+            val = val + pow2u32(i) as i32;
+        }
+    }
+    val
+}
+
+fn mbin_negative_min(l: u32) -> i32 {
+    let mut val = 0;
+    for i in 0..l {
+        if i % 2 == 1 {
+            val = val - pow2u32(i) as i32;
+        }
+    }
+    val
+}
+
+#[inline]
+fn pow2u32(exp: u32) -> u32 {
+    1 << exp
+}
+{% endhighlight %}
+
+<p>
+  なお、等比級数の和であるのだから数式としては
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow>
+    <mfrac>
+      <mrow>
+        <msup>
+          <mn>4</mn>
+          <mfenced open="&#x2308;" close="&#x2309;">
+            <mfrac>
+              <mi>L</mi>
+              <mn>2</mn>
+            </mfrac>
+          </mfenced>
+        </msup>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+      <mn>3</mn>
+    </mfrac>
+    <mo>,</mo>
+    <mspace width="1em" />
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mn>2</mn>
+        <mfenced open="(" close=")">
+          <mrow>
+            <msup>
+              <mn>4</mn>
+              <mfenced open="&#x230A;" close="&#x230B;">
+                <mfrac>
+                  <mi>L</mi>
+                  <mn>2</mn>
+                </mfrac>
+              </mfenced>
+            </msup>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </mfenced>
+      </mrow>
+      <mn>3</mn>
+    </mfrac>
+  </mrow>
+</math>
+
+<p>
+  注意すべき点としては、
+  Lが奇数ならば、Lビットのときの最大値はL+1ビットの最大値と同じで
+  Lビットのときの最小値はL-1ビットの最小値と同じである。
+  また、Lが偶数ならば、Lビットのときの最大値はL-1ビットの最大値と同じで
+  Lビットのときの最小値はL+1ビットの最小値と同じである。
+</p>
+
+<p>
+  実のところマイナス2進数では、上述の範囲内の数値は隙間なくすべて表現できる。
+  Lの数値が小さいときは手作業で確認できるとして、このルールが続くことを下記に示す。
+</p>
+
+<p>
+  Lが奇数のとき、L-1ビットからLビットに拡張したときに広がる数値の範囲の最小値は、
+  最も左のビット(MSB)が1となる数値の値に、L-1ビットのときの最小値(これはLビットのときの最小値と同じであるが)を
+  加算した値である。
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow>
+    <msup>
+      <mn>2</mn>
+      <mrow>
+        <mi>L</mi>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mn>2</mn>
+        <mfenced open="(" close=")">
+          <mrow>
+            <msup>
+              <mn>4</mn>
+              <mfrac>
+                <mrow>
+                  <mi>L</mi>
+                  <mo>-</mo>
+                  <mn>1</mn>
+                </mrow>
+                <mn>2</mn>
+              </mfrac>
+            </msup>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </mfenced>
+      </mrow>
+      <mn>3</mn>
+    </mfrac>
+  </mrow>
+</math>
+
+<p>
+  これを解くと
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>...</mi>
+  <mo>=</mo>
+  <mfrac>
+    <mrow>
+      <msup>
+        <mn>2</mn>
+        <mrow>
+          <mi>L</mi>
+          <mo>-</mo>
+          <mn>1</mn>
+        </mrow>
+      </msup>
+      <mo>+</mo>
+      <mn>2</mn>
+    </mrow>
+    <mn>3</mn>
+  </mfrac>
+  <mo>=</mo>
+  <mfrac>
+    <mrow>
+      <msup>
+        <mn>2</mn>
+        <mrow>
+          <mi>L</mi>
+          <mo>-</mo>
+          <mn>1</mn>
+        </mrow>
+      </msup>
+      <mo>-</mo>
+      <mn>1</mn>
+    </mrow>
+    <mn>3</mn>
+  </mfrac>
+  <mo>+</mo>
+  <mn>1</mn>
+  <mo>=</mo>
+  <mfrac>
+    <mrow>
+      <msup>
+        <mn>4</mn>
+        <mfrac>
+          <mrow>
+            <mi>L</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+          <mn>2</mn>
+        </mfrac>
+      </msup>
+      <mo>-</mo>
+      <mn>1</mn>
+    </mrow>
+    <mn>3</mn>
+  </mfrac>
+  <mo>+</mo>
+  <mn>1</mn>
+</math>
+
+<p>
+  であるから、L-1ビットのときの最大値(これはL-2ビットのときの最大値に同じ)に
+  +1加算したものと等しい。
+</p>
+<p>
+  よって、Lが奇数のとき、L-1ビットのとき隙間なくすべて表現できるのならば、
+  Lビットのときも隙間なくすべて表現できる。
+</p>
+
+<p>
+  Lが偶数のとき(ただし0は除く)も同様に、L-1ビットからLビットに拡張したときに広がる数値の範囲の最大値は、
+</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow>
+    <mo>-</mo>
+    <msup>
+      <mn>2</mn>
+      <mrow>
+        <mi>L</mi>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+    </msup>
+    <mo>+</mo>
+    <mfrac>
+      <mrow>
+        <msup>
+          <mn>4</mn>
+          <mfrac>
+            <mi>L</mi>
+            <mn>2</mn>
+          </mfrac>
+        </msup>
+        <mo>-</mo>
+        <mn>1</mn>
+      </mrow>
+      <mn>3</mn>
+    </mfrac>
+    <mo>=</mo>
+    <mo>...</mo>
+    <mo>=</mo>
+    <mo>-</mo>
+    <mfrac>
+      <mrow>
+        <mn>2</mn>
+        <mfenced open="(" close=")">
+          <mrow>
+            <msup>
+              <mn>4</mn>
+              <mfrac>
+                <mi>L</mi>
+                <mn>2</mn>
+              </mfrac>
+            </msup>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </mfenced>
+      </mrow>
+      <mn>3</mn>
+    </mfrac>
+    <mo>-</mo>
+    <mn>1</mn>
+  </mrow>
+</math>
+
+
+<p>
+  であり、L-1ビットのときの最小値(これはLビットのときの最小値に同じ)に
+  -1したものと等しい。
+</p>
+<p>
+  よって、Lが偶数のとき、L-1ビットのとき隙間なくすべて表現できるのならば、
+  Lビットのときも隙間なくすべて表現できる。
+</p>
+
+<p>
+  したがってLが偶数であっても奇数であっても、帰納的に隙間なく表現できる、
+  すなわちビット幅拡張によって表現できる範囲が隙間なく広がっていくことを示せた。
+</p>
+
+<h3>10進数→マイナス2進数変換アルゴリズム</h3>
+
+<p>
+  既述の補題の考察より、(有界な数値であるならば、)
+  MSB側からビットが立つか判定していけば良いことがわかる。
+</p>
+
+<ol>
+  <li>r=10進数の値</li>
+  <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi><mo>=</mo><mi>L</mi><mo>-</mo><mn>1</mn><mo>,</mo><mi>L</mi><mo>-</mo><mn>2</mn><mo>,</mo><mo>...</mo><mo>,</mo><mn>1</mn><mo>,</mo><mn>0</mn></math>について繰り返し:
+    <ol>
+      <li>kビットからk+1ビットで拡張される値の範囲内に属するならば、kビット目の値<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>m</mi><mi>k</mi></msub><mo>=</mo><mn>1</mn></math>。そうでなければ0</li>
+      <li>rから<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>m</mi><mi>k</mi></msub><msup><mfenced open="(" close=")"><mrow><mo>-</mo><mn>2</mn></mrow></mfenced><mi>k</mi></msup></math>を引く</li>
+    </ol>
+  </li>
+  <li>
+    おわり。変換された値は
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mrow>
+        <msub>
+          <mi>n</mi>
+          <mrow>
+            <mi>L</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <msub>
+          <mi>n</mi>
+          <mrow>
+            <mi>L</mi>
+            <mo>-</mo>
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <msub>
+          <mi>n</mi>
+          <mrow>
+            <mi>L</mi>
+            <mo>-</mo>
+            <mn>3</mn>
+          </mrow>
+        </msub>
+        <mo>...</mo>
+        <msub>
+          <mi>n</mi>
+          <mn>1</mn>
+        </msub>
+        <msub>
+          <mi>n</mi>
+          <mn>0</mn>
+        </msub>
+      </mrow>
+    </math>
+  </li>
+</ol>
+
+<h3>オンライン変換サンプル(powered by WebAssembly)</h3>
+
+<p>
+  仕様：オーバーフローを考慮していないので<strong>絶対値の大きな値だとエラーが出たり
+  不正な値がでる</strong>。やろうと思えばなんとか対処できそうだが本題ではないので
+  省いた。
+</p>
+
+<div style="border: solid thin #000; margin: 1ex; padding: 1ex;">
+  <label for="minus-binary-string-input">10進数を入力</label>
+  <input type="number" id="minus-binary-string-input" value="0" />
+  <br />
+  <label for="minus-binary-string-output">マイナス2進数計算結果</label>
+  <input type="text" id="minus-binary-string-output" maxlength="32" readonly="readonly" />
+</div>
+<script type="application/javascript">
+window.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  fetch("data:application/wasm;base64,AGFzbQEAAAABCQJgAABgAX8BfwMDAgABBQMBABEHFQIGbWVtb3J5AgAIZGVjMm1iaW4AAQqsAgJSAQF/AkACQEGACCgCAEEBRgRAQYQIQYQIKAIAQQFqIgA2AgAgAEEDSQ0BDAILQYAIQoGAgIAQNwMAC0GMCCgCACIAQX9MDQBBjAggADYCAAsAC9YBAQV/AkADQAJAAkBBHyAEayIFBEAgBUEBcQ0BQQAhAkEAIQEDQCACQQBBASABdCABQQFxG2ohAiAEIAFBAWoiAWpBH0cNAAsgACACTA0CIABBASAFdCIBayEAIAEgA2ohAwwCCyAAQQFLDQMgAyAAaiEDQQAhAAwBC0EAIQJBACEBA0AgAkEAIAFBAXFrQQEgAXRxayECIAQgAUEBaiIBakEfRw0ACyAAIAJODQBBASAFdCIBIABqIQAgASADaiEDCyAEQQFqIgRBIEkNAAsgAw8LEAAACwALB2xpbmtpbmcDARE=").then(response => {
+    return response.arrayBuffer();
+  }).then(bytes => WebAssembly.instantiate(bytes)).then(results => {
+    const instance = results.instance;
+
+    const onchange = function minus_binary_string_on_change (event) {
+      try {
+        const decval = parseInt(document.getElementById("minus-binary-string-input").value);
+        const mbinval = instance.exports.dec2mbin(decval).toString(2);
+        document.getElementById("minus-binary-string-output").value = mbinval;
+      } catch (e) {
+        document.getElementById("minus-binary-string-output").value = "ERR";
+        console.error(e);
+      }
+    }
+    onchange();
+    document.getElementById("minus-binary-string-input").addEventListener("change", onchange, false);
+  }).catch(console.error);
+});
+</script>
+
+<p>
+  ソースは rust で書いた後、WebAssembly に変換している。
+  変換前のソースコードは <a href="https://gist.github.com/cat-in-136/d0efb4879290b09c8cebb358632d8749">gist:cat-in-136/d0efb4879290b09c8cebb358632d8749</a> においてある。
+  test code も書いてあり（WebAssembly からは取り除かれている）、
+  こちらは official release (WebAssembly 非対応) の rust でも動作する。
+</p>
+
+<p>
+  なお WebAssembly の仕様上、文字列の引き渡しに問題があるので整数(<code>u32</code>)を
+  単なる bitstring を表現するものとして扱ってやり取りしている。
+</p>
+
+<h3>10進法→マイナス2進法の変換の考察</h3>
+
+<ul>
+  <li>確かに数式としては数字の表現方法としては成り立つ</li>
+  <li>でもむちゃくちゃ計算とかがやりづらい</li>
+</ul>
+
+<h3>参考文献</h3>
+
+<ul>
+  <li>梶谷通稔, "<a href="http://www.arp-nt.co.jp/rensai/index-sono1.html">連載　その1　あなたはビルゲイツの試験に受かる?</a>", 株式会社あーぷ</li>
+  <li>Poundstone, W., "How Would You Move Mount Fuji?: Microsoft's Cult of the Puzzle - How the World's Smartest Companies Select the Most Creative Thinkers", Little Brown &amp; Co., 2003. (ISBN 978-0-7595-2802-4)</li>
+  <li>Rui Ueyama, hikalium, "<a href="https://turingcomplete.fm/29">Turing Complete FM, 29. ユタ・ティーポット、Cコンパイラ開発の授業、中学生時代のOS自作エピソード</a>", 2018.</li>
+  <li>ichirin2501, "<a href="https://ichirin2501.hatenablog.com/entry/20100306/1267818827">マイナス2進数を求めるプログラムを書いてみた。</a>", ichirin2501's diary, 2010. (注：負数に非対応)</li>
+</ul>
+
+<script type="application/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=MML_CHTML"></script>
