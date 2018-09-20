@@ -12,15 +12,19 @@ encoding: utf-8
 
 sass:
   style: :compact
-paginate: 20
-paginate_path: "/page:num"
+
+pagination:
+  enabled: true
+  per_page: 20
+  permalink: '/page:num/'
+  sort_reverse: true
 
 # Build settings
 #markdown: kramdown
 #theme: minima
 permalink: /:year/:month/:title.html
 plugins:
-  - jekyll-paginate
+  - jekyll-paginate-v2
 exclude:
   - Gemfile
   - Gemfile.lock
