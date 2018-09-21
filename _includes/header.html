@@ -6,7 +6,7 @@
       <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
       <div class="trigger">
         {% for page in site.pages %}
-        {% if page.title and page.autogen == nil and page.url != "/index.html" %}
+        {% if page.title and page.autogen == nil and page.url != "/index.html" and page.type != "tag" %}
         <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title | escape_once }}</a>
         {% endif %}
         {% endfor %}

@@ -18,6 +18,12 @@ pagination:
   per_page: 20
   permalink: '/page:num/'
   sort_reverse: true
+jekyll-archives:
+  enabled: [year, month, tags]
+  permalinks:
+    year: '/:year/'
+    month: '/:year/:month/'
+    tag: '/tags/:name/'
 
 # Build settings
 #markdown: kramdown
@@ -25,6 +31,7 @@ pagination:
 permalink: /:year/:month/:title.html
 plugins:
   - jekyll-paginate-v2
+  - jekyll-archives
 exclude:
   - Gemfile
   - Gemfile.lock
