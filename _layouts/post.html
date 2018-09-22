@@ -16,7 +16,7 @@ layout: default
     <div class="post-meta">Tags:
       <span itemprop="keywords">
       {% for tag in page.tags %}
-      <a class="tag" href="{{ site.baseurl }}/tags.html#tag_{{ tag | handleize | downcase | uri_escape }}">{{ tag | capitalize }}</a>
+      <a class="tag" href="{{ site.baseurl }}/tags/{{ tag | slugify | uri_escape }}">{{ tag | capitalize }}</a>
       {% endfor %}
       </span>
       {% comment %}
