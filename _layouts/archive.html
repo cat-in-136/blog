@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{% if page.type == "tags" or page.type == "categories" %}
+{% assign div_class = "tags" %}
+{% else %}
+{% assign div_class = "archive" %}
+{% endif %}
+<div class="{{ div_class }}">
+  {% case page.type %}
+  {% when "year" %}{% assign archive_date_format = "%Y" %}
+  {% when "month" %}{% assign archive_date_format = "%Y-%m" %}
+  {% when "date" %}{% assign archive_date_format = "%Y-%m-%d" %}
+  {% endcase %}
+  {% if archive_date_format %}
+  <h1>Archive of posts from {{ page.date | date: archive_date_format }}</h1>
+  {% elsif page.title %}
+  <h1>{{ page.title }}</h1>
+  {% endif %}
+  <ul class="post-list">
+  {% for post in page.posts %}
+  {% include postitem.html post=post %}
+  {% endfor %}
+  </ul>
+</div>

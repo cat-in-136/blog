@@ -10,23 +10,10 @@ description: All posts sorted by tag
     <nav>
     {% for tag in tags %}
       {% assign fontsize = tag[1] | size | times: 225 | divided_by: tags.size | plus: 75 %}
-      <a class="tag" href="#tag_{{ tag[0] | handleize | downcase | uri_escape }}" style="font-size: {{ fontsize }}%">
+      <a class="tag" href="/tags/{{ tag[0] | handleize | downcase | uri_escape }}" style="font-size: {{ fontsize }}%">
         {{ tag[0] | capitalize }}({{ tag[1] | size }})
       </a>
     {% endfor %}
     </nav>
   </div> 
-
-  <ul>
-  {% for tag in tags %}
-    <li id="tag_{{ tag[0] }}">
-    	<span class="tag">{{ tag[0] }}</span>
-      <ul class="tag-posts post-list">
-      {% for post in tag[1] %}
-        {% include postitem.html post=post %}
-      {% endfor %}
-      </ul>
-    </li>
-  {% endfor %}
-  </ul>
 </div>
