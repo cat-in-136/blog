@@ -4,8 +4,9 @@ title: pango で縦書きとその能力
 author: cat_in_136
 tags: font 縦書き howto 変体かな
 date: '2016-04-23T03:00:34+09:00'
-last_modified_at: '2016-11-18T15:10:12+09:00'
-thumbnail: "{% asset_image_path 201604_pango_view_vertical_writing_sagabon_render002.svg %}"
+last_modified_at: '2018-11-04T23:12:48+09:00'
+thumbnail: "{% asset_image_path 201604_pango_view_vertical_writing_sagabon_render002.svg
+  %}"
 vertical-writing: true
 ---
 
@@ -81,6 +82,17 @@ Pango の gravity 指定で縦書きが実現できる。
 <p>
 このバグがあるせいで pango の縦書き利用の利便性が大幅に下がって残念仕様。
 </p>
+
+<ins datetime="2018-11-04T23:12:48+09:00">
+  <p>
+    2018-11-04追記: 現在の pango だと、この文字崩れのバグは直っているようだ。(Pango 1.42現在)
+  </p>
+
+  <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
+  {% asset_image_object_tag 201604_pango_view_vertical_writing_sagabon_render002_pango142.svg %}
+  <figcaption><code>'いとおかし　&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;' (Pango 1.42)</code></figcaption>
+  </figure>
+</ins>
 
 <h3>参考文献</h3>
 <ul>
