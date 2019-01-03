@@ -19,6 +19,9 @@
   .menu-icon {
     display: none;
   }
+  .page-link {
+    margin: 3px;
+  }
 }
 @include media-query($on-palm) {
   .site-nav {
@@ -247,9 +250,9 @@
   @include media-query(480px) {
     .fitcontain {
       object-fit: scale-down;
-      width: -webkit-available;
+      width: -webkit-fill-available;
       width: -moz-available;
-      width: available;
+      width: stretch;
       height: auto;
     }
   }
@@ -335,6 +338,16 @@
  */
 .tag-cloud {
   margin-bottom: $spacing-unit;
+}
+.tag {
+  margin: 1px;
+}
+.archive {
+  .archive-year-summary, .archive-month-summary {
+    a {
+      margin: 2px;
+    }
+  }
 }
 
 /*

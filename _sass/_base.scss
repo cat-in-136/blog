@@ -68,16 +68,12 @@ em {
 em:lang(ja) {
   font-style: normal;
   text-shadow: 0.25px 0 0.125px currentColor;
-  -moz-text-decoration-style: double;
   text-decoration-style: double;
-  -moz-text-decoration-line: underline;
   text-decoration-line: underline;
 }
 pre:lang(ja), code:lang(ja) {
   em, strong {
-    -moz-text-decoration-style: double;
     text-decoration-style: double;
-    -moz-text-decoration-line: underline;
     text-decoration-line: underline;
   }
   em {
@@ -273,15 +269,13 @@ pre {
  * Wrapper
  */
 .wrapper {
-  max-width: -webkit-calc(800px - (#{$spacing-unit} * 2));
-  max-width:         calc(800px - (#{$spacing-unit} * 2));
+  max-width: calc(800px - (#{$spacing-unit} * 2));
   margin: auto;
   padding: inherit $spacing-unit;
   @extend %clearfix;
 
   @include media-query($on-laptop) {
-    max-width: -webkit-calc(800px - (#{$spacing-unit}));
-    max-width:         calc(800px - (#{$spacing-unit}));
+    max-width: calc(800px - (#{$spacing-unit}));
     padding: inherit $spacing-unit/2;
   }
 
@@ -291,12 +285,10 @@ pre {
       margin: auto;
       padding: $spacing-unit inherit;
 
-      max-height: -webkit-calc(640px - (#{$spacing-unit} * 2));
-      max-height:         calc(640px - (#{$spacing-unit} * 2));
+      max-height: calc(640px - (#{$spacing-unit} * 2));
 
       @include media-query(640px) {
-        max-height: -webkit-calc(640px - (#{$spacing-unit}));
-        max-height:         calc(640px - (#{$spacing-unit}));
+        max-height: calc(640px - (#{$spacing-unit}));
         padding: $spacing-unit/2 inherit;
       }
     }
