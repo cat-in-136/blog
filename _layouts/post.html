@@ -36,7 +36,7 @@ layout: default
     </div>
   </header>
 
-  <div class="post-content" itemprop="articleBody"{%- if content contains "。" and content contains "、" -%} lang="ja"{%- endif -%}>
+  <div class="post-content" itemprop="articleBody"{% if content contains "。" and content contains "、" %} lang="ja"{% endif %}>
     {{ content }}
   </div>
 
