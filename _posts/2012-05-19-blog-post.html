@@ -7,7 +7,7 @@ tags:
 - geolocation
 - river
 - チラシの裏
-last_modified_at: '2014-11-10T00:02:36+09:00'
+last_modified_at: '2019-01-03T16:23:11+09:00'
 thumbnail: '{% asset_image_path ksj_w15_52l_2k_chofu.png %}'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-8675152587646212501
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/05/blog-post.html
@@ -34,7 +34,19 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/05/blog-post.html
 河川台帳によると流路延長10.2kmであり結構長い。</p>
 
 <figure style="display: block; margin: 1em; font-size: smaller;">
-<a href="https://maps.google.co.jp/maps?q=https%3A%2F%2Ffriendpaste.com%2F4s7gmjxAeyHTrqA0ZlmBFF%2Fraw%3Frev%3D393734376564" imageanchor="1" style="margin-left: auto; margin-right: auto;" rel="nofollow,noindex"><img alt="清水川の流路をGoogle Maps上に起こしたもの" src="https://maps.google.com/maps/api/staticmap?sensor=false&amp;size=400x400&amp;path=color:0x0000FF88%7Cenc:ualxEkacsYg@rJwAzFcB%60D%7DAdCBlBpDrAfEfLdCrJ%7D@%7EH_DnAsAzG_DbDyFtA_FvRkH[CrFiFjC%60@lFKjEmFrCmEzD%60@fBcBdJoBjArBbBTzGwAhC%7EB%7EFgEbF[rE%7BDbDK%7CH%7D@t@kDnEcCrBmQ%60JwEtEqD%7EDySdX%7BGhJuLrI_B%7ED_HlR_GlReHd%5CaHj_@sFpWuHpf@gDrQyCdM_CpFkDxHqD%7EFyBtCqGjJ%7BDbH" title="多摩川水系清水川概略（出典：国土数値情報（流路データ）　国土交通省" /></a>
+<!--a href="https://maps.google.co.jp/maps?q=https%3A%2F%2Ffriendpaste.com%2F4s7gmjxAeyHTrqA0ZlmBFF%2Fraw%3Frev%3D393734376564" imageanchor="1" style="margin-left: auto; margin-right: auto;" rel="nofollow,noindex"><img alt="清水川の流路をGoogle Maps上に起こしたもの" src="https://maps.google.com/maps/api/staticmap?sensor=false&amp;size=400x400&amp;path=color:0x0000FF88%7Cenc:ualxEkacsYg@rJwAzFcB%60D%7DAdCBlBpDrAfEfLdCrJ%7D@%7EH_DnAsAzG_DbDyFtA_FvRkH[CrFiFjC%60@lFKjEmFrCmEzD%60@fBcBdJoBjArBbBTzGwAhC%7EB%7EFgEbF[rE%7BDbDK%7CH%7D@t@kDnEcCrBmQ%60JwEtEqD%7EDySdX%7BGhJuLrI_B%7ED_HlR_GlReHd%5CaHj_@sFpWuHpf@gDrQyCdM_CpFkDxHqD%7EFyBtCqGjJ%7BDbH" title="多摩川水系清水川概略（出典：国土数値情報（流路データ）　国土交通省" /></a-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" crossorigin="" defer="defer"></script>
+<div id="blog20120519_shimizu_river_path" style="width:100%; height: 250px; border: solid 1px currentColor;"></div>
+<script type="application/javascript"><!-- /* --><![CDATA[ *///
+window.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  var map = L.map("blog20120519_shimizu_river_path");
+  map.setView([35.6346516,139.5767597], 12);
+  L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png", {minZoom: 2, attribution: '<a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html" target="_blank">国土地理院</a>'}).addTo(map);
+  L.polyline([[35.6202778,139.6125488],[35.6204722,139.6106873],[35.6209167,139.6094208],[35.6214167,139.6086121],[35.6218889,139.6079407],[35.6218611,139.6073914],[35.6209722,139.6069794],[35.6199722,139.6048584],[35.6193056,139.6029968],[35.6196111,139.6013947],[35.6204167,139.6009979],[35.6208333,139.5995789],[35.6216389,139.5987549],[35.6228889,139.5983276],[35.624,139.5951691],[35.6255,139.5953064],[35.6255278,139.5940857],[35.6266944,139.5933838],[35.6265278,139.5921936],[35.6265833,139.5911713],[35.6277778,139.5904388],[35.6288056,139.5894928],[35.6286389,139.588974],[35.6291389,139.5871887],[35.6296944,139.5868073],[35.6291111,139.5863037],[35.629,139.5848846],[35.6294444,139.584198],[35.6288056,139.5829163],[35.6298056,139.5817719],[35.6299444,139.580719],[35.6308889,139.579895],[35.6309444,139.5783081],[35.63125,139.5780334],[35.6321111,139.5769958],[35.6327778,139.576416],[35.6343611,139.57547],[35.6357222,139.574646],[35.6368056,139.5735779],[35.6376944,139.5726166],[35.6410278,139.5685883],[35.6424444,139.5667725],[35.6437222,139.5657806],[35.6446389,139.5650787],[35.6451111,139.5641174],[35.6465556,139.5610046],[35.6478333,139.5578918],[35.6493056,139.5532227],[35.65075,139.5480499],[35.6519722,139.5441132],[35.6535278,139.5377808],[35.6543611,139.5348053],[35.6551389,139.5325317],[35.6557778,139.5313263],[35.6566389,139.5297546],[35.6575278,139.5284729],[35.6581389,139.5277252],[35.6595,139.5259094],[35.6604444,139.5244446]], {weight: 5}).addTo(map);
+});
+/* ]]><!-- */// --></script>
 <figcaption style="display: block;">多摩川水系清水川概略（出典：国土数値情報（流路データ）　国土交通省</figcaption>
 </figure>
 
