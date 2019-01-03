@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"{% if page.vertical-writing %} class="vertical-writing-recommended"{% endif %}>
-  {% include head.html %}
+<html xmlns="http://www.w3.org/1999/xhtml"{%- if page.vertical-writing -%} class="vertical-writing-recommended"{%- endif -%}>
+  {%- include head.html -%}
   <body>
-    {% renderonceusecache header.html %}
-    {% include header.html %}
-    {% endrenderonceusecache %}
+    {%- renderonceusecache header.html -%}
+    {%- include header.html -%}
+    {%- endrenderonceusecache -%}
     <div class="page-content">
       <div class="wrapper">
         {{ content }}
       </div>
     </div>
-    {% renderonceusecache footer.html %}
-    {% include footer.html %}
-    {% endrenderonceusecache %}
+    {%- renderonceusecache footer.html -%}
+    {%- include footer.html -%}
+    {%- endrenderonceusecache -%}
   </body>
 </html>

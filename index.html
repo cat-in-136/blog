@@ -4,32 +4,30 @@ description: Home of the site
 pagination:
   enabled: true
 ---
-{% stripemptylines %}
 <div class="home">
   <ul class="post-list">
-  {% for post in paginator.posts %}
-  {% include postitem.html post=post %}
-  {% endfor %}
+  {%- for post in paginator.posts -%}
+  {%- include postitem.html post=post -%}
+  {%- endfor -%}
   </ul>
 
   <nav class="pagination">
-    {% if paginator.previous_page %}
+    {%- if paginator.previous_page -%}
     <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="prev">&#x2190;Newer</a>
-    {% endif %}
+    {%- endif -%}
 
-    {% for page in (1..paginator.total_pages) %}
-    {% if page == paginator.page %}
+    {%- for page in (1..paginator.total_pages) -%}
+    {%- if page == paginator.page -%}
     {{ page }}
-    {% elsif page == 1 %}
+    {%- elsif page == 1 -%}
     <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
-    {% else %}
+    {%- else -%}
     <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-    {% endif %}
-    {% endfor %}
+    {%- endif -%}
+    {%- endfor -%}
 
-    {% if paginator.next_page %}
+    {%- if paginator.next_page -%}
     <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="next">Older&#x2192;</a>
-    {% endif %}
+    {%- endif -%}
   </nav>
 </div>
-{% endstripemptylines %}

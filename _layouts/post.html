@@ -2,43 +2,41 @@
 layout: default
 ---
 <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
-  {% stripemptylines %}
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="{{ page.url }}" itemprop="url">{{ page.title | escape }}</a></h1>
 
     <div class="post-meta">Post date: <span itemprop="datePublished" content="{{ page.date | date_to_xmlschema }}">{{ page.date | date_to_xmlschema }}</span></div>
-    {% if page.last_modified_at != null %}
+    {%- if page.last_modified_at != null -%}
     <div class="post-meta">Modified at: <span itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date_to_xmlschema }}</span></div>
-    {% endif %}
-    {% if page.author %}
+    {%- endif -%}
+    {%- if page.author -%}
     <div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author | escape }}</span></span></div>
-    {% endif %}
+    {%- endif -%}
     <div class="post-meta">Tags:
       <span itemprop="keywords">
-      {% for tag in page.tags %}
+      {%- for tag in page.tags -%}
       <a class="tag" href="{{ site.baseurl }}/tags/{{ tag | slugify | uri_escape }}">{{ tag | capitalize }}</a>
-      {% endfor %}
+      {%- endfor -%}
       </span>
-      {% comment %}
-      {% for category in page.categories %}
+      {%- comment -%}
+      {%- for category in page.categories -%}
       <a class="category" href="{{ site.baseurl }}/categories/{{ category | handleize | downcase }}">{{ category | capitalize }}</a>
-      {% endfor %}
-      {% endcomment %}
+      {%- endfor -%}
+      {%- endcomment -%}
     </div>
-    {% if site.github_username %}
+    {%- if site.github_username -%}
     <div class="post-meta">
       Github source: <a href="https://github.com/{{ site.source_repo_name }}/blob/{{ site.source_repo_branch }}/{{ page.path }}" class="source-path">{{ page.path | escape }}</a>
         (<a href="https://github.com/{{ site.source_repo_name }}/commits/{{ site.source_repo_branch }}/{{ page.path }}">History</a>)
     </div>
-    {% endif %}
+    {%- endif -%}
     <div class="post-meta">
       Comments: <a href="#disqus_thread">↓</a>
       <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
     </div>
   </header>
-  {% endstripemptylines %}
 
-  <div class="post-content" itemprop="articleBody"{% if content contains "。" and content contains "、" %} lang="ja"{% endif %}>
+  <div class="post-content" itemprop="articleBody"{%- if content contains "。" and content contains "、" -%} lang="ja"{%- endif -%}>
     {{ content }}
   </div>
 
@@ -49,15 +47,13 @@ layout: default
     <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </footer>
 </article>
-{% stripemptylines %}
-{% if site.related_posts %}
+{%- if site.related_posts -%}
 <aside class="post-related">
   <h2>Related Posts</h2>
   <ul class="post-list">
-    {% for post in site.related_posts limit:8 %}
-    {% include postitem.html post=post %}
-    {% endfor %}
+    {%- for post in site.related_posts limit:8 -%}
+    {%- include postitem.html post=post -%}
+    {%- endfor -%}
   </ul>
 </aside>
-{% endif %}
-{% endstripemptylines %}
+{%- endif -%}

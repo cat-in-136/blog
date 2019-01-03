@@ -1,17 +1,15 @@
-{% stripemptylines %}
 <header class="site-header">
   <div class="wrapper">
     <a class="site-title" href="{{ site.baseurl }}/">{{ site.title | escape_once }}</a>
     <nav class="site-nav">
       <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
       <div class="trigger">
-        {% for page in site.pages %}
-        {% if page.title and page.autogen == nil and page.url != "/index.html" and page.type != "tag" %}
+        {%- for page in site.pages -%}
+        {%- if page.title and page.autogen == nil and page.url != "/index.html" and page.type != "tag" -%}
         <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title | escape_once }}</a>
-        {% endif %}
-        {% endfor %}
+        {%- endif -%}
+        {%- endfor -%}
       </div>
     </nav>
   </div>
 </header>
-{% endstripemptylines %}

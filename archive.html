@@ -3,29 +3,27 @@ layout: default
 title: Archive
 description: All posts sorted by published date
 ---
-{% stripemptylines %}
 <div class="archive">
   <h1>{{ page.title | escape }}</h1>
 
-  {% assign archives = site.archives | reverse %}
+  {%- assign archives = site.archives | reverse -%}
 
   <div class="archive-year-summary">
-  {% for archive in archives %}
-  {% if archive.type == "year" %}
+  {%- for archive in archives -%}
+  {%- if archive.type == "year" -%}
     <a href="{{ archive.url }}">{{ archive.date | date: "%Y" }}({{ archive.posts.size }})</a>
-  {% endif %}
-  {% endfor %}
+  {%- endif -%}
+  {%- endfor -%}
   </div>
 
   <div class="archive-month-summary">
-  {% for archive in archives %}
-  {% if archive.type == "month" %}
-    {% assign this_year = archive.date | date: "%Y" %}
-    {% if previous_year != "" and previous_year != this_year %}<br />{% endif %}
+  {%- for archive in archives -%}
+  {%- if archive.type == "month" -%}
+    {%- assign this_year = archive.date | date: "%Y" -%}
+    {%- if previous_year != "" and previous_year != this_year -%}<br />{%- endif -%}
     <a href="{{ archive.url }}">{{ archive.date | date: "%Y-%m" }}({{ archive.posts.size }})</a>
-    {% assign previous_year = archive.date | date: "%Y" %}
-  {% endif %}
-  {% endfor %}
+    {%- assign previous_year = archive.date | date: "%Y" -%}
+  {%- endif -%}
+  {%- endfor -%}
   </div>
 </div>
-{% endstripemptylines %}
