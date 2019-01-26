@@ -87,22 +87,26 @@ pre:lang(ja), code:lang(ja) {
 }
 @supports (((text-emphasis-style: sesame) or (-webkit-text-emphasis-style: sesame)) and
            ((text-emphasis-style: circle) or (-webkit-text-emphasis-style: circle))) {
-  em:lang(ja), strong:lang(ja) {
-    text-decoration: none;
-    text-shadow: none;
-  }
-  em:lang(ja) {
-    -webkit-text-emphasis-style: sesame;
-    text-emphasis-style: sesame;
-  }
-  strong:lang(ja) {
-    -webkit-text-emphasis-style: circle;
-    text-emphasis-style: circle;
-  }
-  pre:lang(ja), code:lang(ja) {
-    em, strong {
-      -webkit-text-emphasis-style: none;
-      text-emphasis-style: none;
+  @include vertical-writing {
+    html.vertical-writing-recommended {
+      em:lang(ja), strong:lang(ja) {
+        text-decoration: none;
+        text-shadow: none;
+      }
+      em:lang(ja) {
+        -webkit-text-emphasis-style: sesame;
+        text-emphasis-style: sesame;
+      }
+      strong:lang(ja) {
+        -webkit-text-emphasis-style: circle;
+        text-emphasis-style: circle;
+      }
+      pre:lang(ja), code:lang(ja) {
+        em, strong {
+          -webkit-text-emphasis-style: none;
+          text-emphasis-style: none;
+        }
+      }
     }
   }
 }
