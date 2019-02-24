@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.5.2)
+    addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
     classifier-reborn (2.2.0)
       fast-stemmer (~> 1.0)
@@ -12,7 +12,7 @@ GEM
       http_parser.rb (~> 0.6.0)
     eventmachine (1.2.7)
     fast-stemmer (1.0.2)
-    ffi (1.9.25)
+    ffi (1.10.0)
     forwardable-extended (2.6.0)
     gsl (2.1.0.3)
     http_parser.rb (0.6.0)
@@ -34,7 +34,7 @@ GEM
       safe_yaml (~> 1.0)
     jekyll-archives (2.1.1)
       jekyll (>= 2.4)
-    jekyll-paginate-v2 (2.0.0)
+    jekyll-paginate-v2 (2.1.0)
       jekyll (~> 3.0)
     jekyll-sass-converter (1.5.2)
       sass (~> 3.4)
@@ -58,13 +58,13 @@ GEM
       ffi (~> 1.0)
     rouge (3.3.0)
     ruby_dep (1.5.0)
-    safe_yaml (1.0.4)
-    sass (3.7.2)
+    safe_yaml (1.0.5)
+    sass (3.7.3)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    term-ansicolor (1.7.0)
+    term-ansicolor (1.7.1)
       tins (~> 1.0)
     tins (1.20.2)
 
@@ -74,7 +74,7 @@ PLATFORMS
 DEPENDENCIES
   classifier-reborn
   imagesize
-  jekyll (~> 3.8)
+  jekyll (~> 3.8.5)
   jekyll-archives
   jekyll-paginate-v2
   rake
