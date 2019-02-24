@@ -183,6 +183,10 @@
   margin: $spacing-unit;
 }
 
+.pagination > * {
+  margin: auto 0.2ex;
+}
+
 /*
  * Post Layout
  */
