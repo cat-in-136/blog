@@ -8,6 +8,8 @@ addons:
 cache: bundler
 rvm:
 - 2.5
+before_install:
+- gem install bundler --no-document
 before_script:
 - bundle exec rake setup[https://${GH_TOKEN}@github.com/cat-in-136/cat-in-136.github.io.git]
 script:
