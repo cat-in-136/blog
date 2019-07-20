@@ -3,8 +3,8 @@ addons:
   apt:
     packages:
     - ruby-dev
-    - libgsl0ldbl
-    - libgsl0-dev
+    - libgsl2
+    - libgsl-dev
 cache: bundler
 rvm:
 - 2.5
