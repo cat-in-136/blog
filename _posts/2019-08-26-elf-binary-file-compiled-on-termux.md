@@ -9,7 +9,7 @@ date: '2019-08-26T00:07:15+09:00'
 (なお、gccは提供されていない)
 
 <figure>
-{% asset_image_tag fitcontain 2019-08-25-screen.png 360 640 %}
+{% asset_image_tag fitcontain 2019-08-26-screen.png 360 640 %}
 <figcaption>"Hello, world."コンパイルと実行の様子</figcaption>
 </figure>
 
