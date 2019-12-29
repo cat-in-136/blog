@@ -13,14 +13,15 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/mingw32undefined-refere
 ---
 
 <p>Unicode有効（<code>-DUNICODE -D_UNICODE</code>）時に下記のコードをmingw32-gccでビルドしようとすると"WinMain"が未定義ですという旨のリンクエラーが出てしまう。</p>
-<pre class="prettyprint"><code>#include &lt;windows.h&gt;
-#include &lt;tchar.h&gt;
+{% highlight c %}
+#include <windows.h>
+#include <tchar.h>
 
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
     return 0;
 }
-</code></pre>
+{% endhighlight %}
 <pre style="background-color: #000; color: #fff; overflow: auto; padding: 2px;"><code>$ gcc -o foobar.exe foobar.c -D_UNICODE -DUNICODE -mwindows -lmingw32 -lkernel32
 /usr/i686-pc-mingw32/sys-root/mingw/lib/libmingw32.a(main.o):(.text+0xd2): undefined reference to `WinMain@16'
 $ </code></pre>
@@ -36,11 +37,14 @@ $ </code></pre>
 <p>
 このコンパイルオプションとき、<code>TCHAR</code>は<code>CHAR</code>に、<code>_tWinMain</code>関数は<code>WinMain</code>関数とみなされる。これは<code>tchar.h</code>での単純な<code>#define</code>で実現されている。
 </p>
-<blockquote><pre class="prettyprint"><code>#define _tmain      main
+<blockquote>
+{% highlight c %}
+#define _tmain      main
 #define _tWinMain   WinMain
 #define _tenviron  _environ
 #define __targv     __argv
-</code></pre></blockquote>
+{% endhighlight %}
+</blockquote>
 <p>
 そしてこのとき、エントリーポイント<code>WinMain</code>から実行されることとなり、実際そのように動作する。
 </p>
@@ -48,14 +52,17 @@ $ </code></pre>
 <p>
 冒頭で示したUnicodeのコンパイルオプションのとき、<code>TCHAR</code>は<code>WCHAR</code>に、<code>_tWinMain</code>関数は<code>wWinMain</code>関数とみなされるのが正しい動作である。同様に<code>tchar.h</code>を参照すると下記の通りになっている。
 </p>
-<blockquote><pre class="prettyprint"><code>/*  for porting from other Windows compilers */
+<blockquote>
+{% highlight c %}
+/*  for porting from other Windows compilers */
 #if 0  /* no  wide startup module */
 #define _tmain      wmain
 #define _tWinMain   wWinMain
 #define _tenviron   _wenviron
 #define __targv     __wargv
 #endif
-</code></pre></blockquote>
+{% endhighlight %}
+</blockquote>
 <p>
 ここにはmingw32 が「<em>no</em> wide startup module（Unicode向けスタートアップモジュールが<em>未実装</em>）」だということがかかれている。つまり、プログラムやコンパイルオプションなどは正しいが、mingw32 の未実装機能を使っているコードになっているのが正確な回答であって、簡単に言えば<code>_tWinMain</code>および<code>wWinMain</code>は mingw32 では現状使用できないのである。この対策として<code>main</code>関数をエントリーポイントにすることが多く行われるようである。
 </p>

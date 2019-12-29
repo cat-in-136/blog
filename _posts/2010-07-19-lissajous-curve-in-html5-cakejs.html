@@ -3875,7 +3875,7 @@ This program use <a href="http://code.google.com/p/cakejs/">cakejs</a> (2D scene
 <p>
 Source code is straightforward. A object with radial gradient moves along the curve. Frequency ratio is 5:6.
 </p>
-<pre class="prettyprint"><code>
+{% highlight javascript %}
     var rect = new Rectangle(20, 20, {centered: true});
     var g = new Gradient({
         type: "radial",
@@ -3892,7 +3892,7 @@ Source code is straightforward. A object with radial gradient moves along the cu
         rect.x = cx + a * Math.sin((5) * t * 0.0005);
         rect.y = cy + a * Math.sin((6) * t * 0.0005 + phase);
     });
-</code></pre>
+{% endhighlight %}
 <p>
 Cakejs's demo is very very cool. I like <a href="http://glimr.rubyforge.org/cake/missile_fleet.html">Missile Fleet</a> game demo.
 </p>

@@ -13,12 +13,13 @@ HTML のルビには、古典的な "Basic Ruby" と新し目の文法の "Compl
 <p>
 "Complex Ruby" は、間に&lt;rbc&gt;要素と&lt;rtc&gt;要素をはさむ方の文法のこと。
 </p>
-<pre class="prettyprint lang-html"><code>&lt;!-- Basic Ruby --&gt;
-&lt;ruby&gt;&lt;rb&gt;法華経&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ほけきょう&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;
+{% highlight html %}
+<!-- Basic Ruby -->
+<ruby><rb>法華経</rb><rp>(</rp><rt>ほけきょう</rt><rp>)</rp></ruby>
 
-&lt;!-- Complex Ruby --&gt;
-&lt;ruby&gt;&lt;rbc&gt;&lt;rb&gt;法華経&lt;/rb&gt;&lt;/rbc&gt;&lt;rtc&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ほけきょう&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-</code></pre>
+<!-- Complex Ruby -->
+<ruby><rbc><rb>法華経</rb></rbc><rtc><rp>(</rp><rt>ほけきょう</rt><rp>)</rp></rtc></ruby>
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 <figcaption>Live sample</figcaption>

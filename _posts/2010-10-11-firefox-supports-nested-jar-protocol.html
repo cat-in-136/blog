@@ -42,9 +42,10 @@ This nested <code>jar:</code> protocol is supported on Firefox (and maybe all of
 <p>
 Note that Java does not treat nested <code>jar:</code> protocol. When open the URL, <code>MalformedURLException</code> was thrown.
 </p>
-<pre class="prettyprint"><code>URL url = new URL("jar:jar:file:///tmp/test.jar.jar!/test.jar!/test.txt");
+{% highlight java %}
+URL url = new URL("jar:jar:file:///tmp/test.jar.jar!/test.jar!/test.txt");
 InputStream is = url.openStream(); # throws MalformedURLException : "no !/ in spec"
-</code></pre>
+{% endhighlight %}
 
 <h4>Reference</h4>
 <ul>

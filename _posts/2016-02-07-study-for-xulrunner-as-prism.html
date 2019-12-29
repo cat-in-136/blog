@@ -46,44 +46,50 @@ And then <code>app.xul</code> load the web page – <code>https://www.google.com
   <li>
     <p>application.ini</p>
 
-    <div><pre class="prettyprint"><code>[App]
+    <div>
+{% highlight ini %}
+[App]
 Vendor=cat_in_136
 Name=XULRunner_as_prism
 Version=0.0
 BuildID=20160206
 Copyright=Copyright (c) 2016 @cat_in_136
 ID=xulrunner_as_prism@cat-in-136.github.io
-   
+
 [Gecko]
 MinVersion=38
 MaxVersion=*
-</code></pre>
+{% endhighlight %}
     </div>
   </li>
   <li>
     <p>defaults/preferences/prefs.js</p>
 
-    <div><pre class="prettyprint"><code>pref("toolkit.defaultChromeURI", "chrome://xrap/content/app.xul");
-</code></pre>
+    <div>
+{% highlight javascript %}
+pref("toolkit.defaultChromeURI", "chrome://xrap/content/app.xul");
+{% endhighlight %}
     </div>
   </li>
   <li>
     <p>chrome.manifest</p>
 
-    <div><pre class="prettyprint"><code>content xrap content/
+    <div><pre><code>content xrap content/
 </code></pre>
     </div>
   </li>
   <li>
     <p>content/app.xul</p>
 
-    <div><pre class="prettyprint"><code>&lt;?xml version="1.0"?&gt;
-&lt;?xml-stylesheet href="chrome://global/skin/" type="text/css"?&gt;
-&lt;window id="main" width="400" height="300" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
-&lt;browser id="browser" flex="1" type="content-primary" src="https://www.google.co.jp/"/&gt;
-&lt;findbar id="findbar" hidden="false" browserid="browser"/&gt;
-&lt;/window&gt;
-</code></pre>
+    <div>
+{% highlight xml %}
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="main" width="400" height="300" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<browser id="browser" flex="1" type="content-primary" src="https://www.google.co.jp/"/>
+<findbar id="findbar" hidden="false" browserid="browser"/>
+</window>
+{% endhighlight %}
     </div>
   </li>
 </ul>
@@ -110,25 +116,29 @@ MaxVersion=*
   <li>
     <p>application.ini (No Change)</p>
 
-    <div><pre class="prettyprint"><code>[App]
+    <div>
+{% highlight ini %}
+[App]
 Vendor=cat_in_136
 Name=XULRunner_as_prism
 Version=0.0
 BuildID=20160206
 Copyright=Copyright (c) 2016 @cat_in_136
 ID=xulrunner_as_prism@cat-in-136.github.io
-   
+
 [Gecko]
 MinVersion=38
 MaxVersion=*
-</code></pre>
+{% endhighlight %}
     </div>
   </li>
   <li>
     <p>defaults/preferences/prefs.js</p>
 
-    <div><pre class="prettyprint"><code>pref("toolkit.defaultChromeURI", "https://www.google.com/");
-</code></pre>
+    <div>
+{% highlight javascript %}
+pref("toolkit.defaultChromeURI", "https://www.google.com/");
+{% endhighlight %}
     </div>
   </li>
 </ul>

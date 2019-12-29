@@ -58,36 +58,37 @@ CSS zoomをCSS3 transformの<code>scale()</code>関数に置き換える。IE&am
 このようなものに他の各種ブラウザの vender prefix をつけた。なお、使用しているブラウザ以外の vender prefix は無視されるので、何も考えずに追記すればよい。
 </p>
 
-<pre class="prettyprint"><code>  -webkit-transition: opacity 0.5s linear;
-<ins>  -moz-transition: opacity 0.5s linear;</ins>
-<ins>  -ms-transition: opacity 0.5s linear;</ins>
-<ins>  -o-transition: opacity 0.5s linear;</ins>
-}
-</code></pre>
+{% highlight patch %}
+   -webkit-transition: opacity 0.5s linear;
++  -moz-transition: opacity 0.5s linear;
++  -ms-transition: opacity 0.5s linear;
++  -o-transition: opacity 0.5s linear;
+{% endhighlight %}
 
 <p>
 なお、JavaScriptでアクセスする場合はラクダ文字(camelCase)にしなければならないが、このときは<code>WebkitTransition</code>,<code>MozTransition</code>と書く。以上を踏まえるとCSS zoomをJavaScriptで設定しているコードは下記のようになった：
 </p>
 
-<pre class="prettyprint"><code><ins>    var transform = ["scale(", (scale-4)/100.0, ",", (scale-4)/100.0, ")"].join('');</ins>
-    $('article > section').css({
-<del>      width: [scale-2, '%'].join(''),</del>
-<del>      height: [scale-2, '%'].join(''),</del>
-<del>      zoom: [scale-4, '%'].join(''),</del>
-<ins>      WebkitTransform: transform,</ins>
-<ins>      MozTransform: transform,</ins>
-<ins>      MsTransform: transform,</ins>
-<ins>      OTransform: transform,</ins>
-<ins>      transform: transform,</ins>
-<ins>      WebkitTransformOrigin: "0 0",</ins>
-<ins>      MozTransformOrigin: "0 0",</ins>
-<ins>      MsTransformOrigin: "0 0",</ins>
-<ins>      OTransformOrigin: "0 0",</ins>
-<ins>      transformOrigin: transform,</ins>
-      margin: '2%',
-      padding: 0
-});
-</code></pre>
+{% highlight patch %}
++    var transform = ["scale(", (scale-4)/100.0, ",", (scale-4)/100.0, ")"].join('');
+     $('article > section').css({
+-      width: [scale-2, '%'].join(''),
+-      height: [scale-2, '%'].join(''),
+-      zoom: [scale-4, '%'].join(''),
++      WebkitTransform: transform,
++      MozTransform: transform,
++      MsTransform: transform,
++      OTransform: transform,
++      transform: transform,
++      WebkitTransformOrigin: "0 0",
++      MozTransformOrigin: "0 0",
++      MsTransformOrigin: "0 0",
++      OTransformOrigin: "0 0",
++      transformOrigin: transform,
+       margin: '2%',
+       padding: 0
+ });
+{% endhighlight %}
 
 <h4>その他・課題</h4>
 

@@ -30,7 +30,8 @@ on bootstrapped (restartless) addon.</p>
   <li>
     <p>Create the component code (in the bootstrap.js).</p>
 
-    <pre class="prettyprint"><code>const Cc = Components.classes;
+{% highlight javascript %}
+const Cc = Components.classes;
 const Ci = Components.interfaces;
 const Cu = Components.utils;
 const Cr = Components.results;
@@ -55,7 +56,7 @@ const ComponentFooBarFactory = Object.freeze({
   loadFactory: function (aLock) { /* unused */ },
   QueryInterface: XPCOMUtils.generateQI([Ci.nsIFactory])
 });
-</code></pre>
+{% endhighlight %}
 
     <ul>
       <li>You may specify base interface to <code>ComponentFooBar.prototype.QueryInterface</code> and implement methods.</li>
@@ -64,24 +65,26 @@ const ComponentFooBarFactory = Object.freeze({
   <li>
     <p>To regist the component on startup, add the following codes to the <code>startup()</code> in bootstrap.js:</p>
 
-    <pre class="prettyprint"><code>function startup(params, aReason) {
+{% highlight javascript %}
+function startup(params, aReason) {
   const registrar = Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
   registrar.registerFactory(ComponentFooBar.prototype.classID,
                             ComponentFooBar.prototype.classDescription,
                             ComponentFooBar.prototype.contractID,
                             ComponentFooBarFactory);
 }
-</code></pre>
+{% endhighlight %}
   </li>
   <li>
     <p>To release the component on shutdown, add the following codes to the <code>shutdown()</code> in bootstrap.js:</p>
 
-    <pre class="prettyprint"><code>function shutdown(params, aReason) {
+{% highlight javascript %}
+function shutdown(params, aReason) {
   const registrar = Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
   registrar.unregisterFactory(ComponentFooBar.prototype.classID,
                               ComponentFooBarFactory);
 }
-</code></pre>
+{% endhighlight %}
 
     <ul>
       <li>Note: bootstrapped add-ons <em>must</em> take care to clean up any component registrations at shutdown. So you must not miss this clean-up code.</li>
@@ -104,7 +107,8 @@ contract @mozilla.org/foo/var;1 {22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}
   <li>
     <p>Create the component code in components/FooBar.js</p>
 
-    <pre class="prettyprint"><code>const Cc = Components.classes;
+{% highlight javascript %}
+const Cc = Components.classes;
 const Ci = Components.interfaces;
 const Cu = Components.utils;
 const Cr = Components.results;
@@ -121,7 +125,8 @@ ComponentFooBar.prototype = {
   // members to implement...
 };
 this.NSGetFactory = XPCOMUtils.generateNSGetFactory([ComponentFooBar]);
-</code></pre>
+
+{% endhighlight %}
   </li>
 </ol>
 

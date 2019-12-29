@@ -31,7 +31,8 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/08/javaguisvg.html
 
 <p>つまり、前回のソースに対して、以下のような document に描画情報を出力した後ファイル出力するコードをねじ込んだ。</p>
 
-<pre class="prettyprint"><code>DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+{% highlight java %}
+DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 DocumentBuilder builder = factory.newDocumentBuilder();
 Document document = builder.getDOMImplementation().createDocument("http://www.w3.org/2000/svg", "svg", null);
 SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
@@ -41,7 +42,8 @@ for (int i = 0; printable.print((Graphics)svgGenerator, pagefmt, i) == Printable
     // do nothing
 }
 svgGenerator.stream(filewriter, true);
-</code></pre>
+
+{% endhighlight %}
 
 <p>これはなかなか強力で、テキストがテキストのままで出力された。
 テキスト描画がそのまま&lt;text&gt;要素でSVGに変換されていた。</p>

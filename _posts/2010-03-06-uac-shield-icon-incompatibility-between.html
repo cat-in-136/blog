@@ -31,15 +31,18 @@ Why <code>SystemIcons.Shield</code> has incompatibility? <code>SystemIcons.Shiel
 Using <a href="http://msdn.microsoft.com/en-us/library/bb762205(VS.85).aspx"><code>SHGetStockIconInfo()</code></a> with <code>SIID_SHIELD</code> seems to be a correct answer. This code return the UAC shield icon colored with blue and yellow on windows 7, and colored with four colors on Vista. Example code is as follows:
 
 </p>
-<pre class="prettyprint"><code>SHSTOCKICONINFO sii;
+{% highlight csharp %}
+SHSTOCKICONINFO sii;
 sii.cbSize = sizeof(SHSTOCKICONINFO);
 SHGetStockIconInfo(SIID_SHIELD, SHGSI_ICON, &amp;sii);
 sii.hIcon; // this is a UAC shield icon handler!
-</code></pre>
+
+{% endhighlight %}
 <p>
 If your program is a .NET Framework application, P/Invoke is required such as following code. Another example code is also available at <a href="http://www.codeproject.com/KB/vista-security/UAC__The_Definitive_Guide.aspx">CodeProject</a>.
 </p>
-<pre class="prettyprint"><code>[StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
+{% highlight csharp %}
+[StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
 struct SHSTOCKICONINFO
 {
     public Int32 cbSize;
@@ -53,7 +56,7 @@ struct SHSTOCKICONINFO
 [DllImport("shell32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
 static extern void SHGetStockIconInfo(UInt32 siid, UInt32 uFlags,
                                       ref SHSTOCKICONINFO sii);
-</code></pre>
+{% endhighlight %}
 <p>
 Note that SIID_SHIELD shall be used for UAC prompts only, which is written at <a href="http://msdn.microsoft.com/en-us/library/bb762542%28VS.85%29.aspx">SIID_SHIELD description at MSDN</a>.
 </p>

@@ -18,14 +18,16 @@ last_modified_at: '2017-06-19T00:05:45+09:00'
 <div id="lissajous-curve-raymarching-container">
 </div>
 
-<pre id="lissajous-curve-raymarching-shader"><code class="prettyprint">uniform vec2 resolution;
+<div id="lissajous-curve-raymarching-shader">
+{% highlight glsl %}
+uniform vec2 resolution;
 uniform float time;
 
 void main() {
   vec2 pos = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
 
   float v = 0.0;
-  for (int i = 0; i &lt; 500; i++) {
+  for (int i = 0; i < 500; i++) {
     float s = time + float(i) * 0.0075;
     vec2 mpos = 0.8 * vec2(sin(s * 5.0), - cos(s * 6.0));
     float t = 0.01 / length(mpos - pos);
@@ -34,7 +36,8 @@ void main() {
 
   gl_FragColor = 1.0 * vec4(vec3(v), 1.0);
 }
-</code></pre>
+{% endhighlight %}
+</div>
 
 <script type="application/javascript">
 window.addEventListener("DOMContentLoaded", function () {

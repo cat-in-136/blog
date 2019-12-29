@@ -17,7 +17,8 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/01/javaswinglookandfeel.ht
 <p>先日こんなJavaソースコードのファイルを自分のHDDもといSSDの中から発掘した。
 それなりにおもしろい内容になりそうだったのでここに書いておく。</p>
 
-<pre class="prettyprint"><code>import javax.swing.plaf.basic.BasicLookAndFeel;
+{% highlight java %}
+import javax.swing.plaf.basic.BasicLookAndFeel;
 
 public class VerySimpleLookAndFeel extends BasicLookAndFeel {
 
@@ -30,7 +31,7 @@ public class VerySimpleLookAndFeel extends BasicLookAndFeel {
     }
 
     public String getName() {
-        return "Very Simple Look &amp; Feel";
+        return "Very Simple Look & Feel";
     }
 
     public boolean isNativeLookAndFeel() {
@@ -41,7 +42,8 @@ public class VerySimpleLookAndFeel extends BasicLookAndFeel {
         return true;
     }
 }
-</code></pre>
+
+{% endhighlight %}
 
 <p>このクラスは <a href="http://java.sun.com/javase/ja/6/docs/ja/api/javax/swing/plaf/basic/BasicLookAndFeel.html" title="javax.swing.plaf.BasicLookAndFeel"><code>BasicLookAndFeel</code></a> クラスの派生クラスになっていて、
 オーバライドすべきメソッドだけをオーバライドしたものになっている。</p>

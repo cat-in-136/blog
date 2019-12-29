@@ -43,12 +43,13 @@ This removal would be captured in upcoming Firefox 31.</p>
 <figcaption style="display: block; text-align: center;"></figcaption>
 </figure>
 
-<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+{% highlight css %}
+@-moz-document url(chrome://browser/content/browser.xul) {
   .tab-close-button:not([selected]) {
     display: none;
   }
 }
-</code></pre>
+{% endhighlight %}
 
 <h5>Value=1: Display close buttons on All tabs</h5>
 
@@ -67,12 +68,13 @@ This removal would be captured in upcoming Firefox 31.</p>
 <figcaption style="display: block; text-align: center;"></figcaption>
 </figure>
 
-<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+{% highlight css %}
+@-moz-document url(chrome://browser/content/browser.xul) {
   .tab-close-button {
     display: none;
   }
 }
-</code></pre>
+{% endhighlight %}
 
 <h5>Value=3: Display a close button at the end of the tab strip (Firefox 1.x behavior)</h5>
 
@@ -87,7 +89,8 @@ Therefore, some sorta addon would be needed.</p>
 
 <p>For example, to get back the close button, add following user script using <a href="http://userchromejs.mozdev.org/">userChrome.js</a>.</p>
 
-<pre class="prettyprint"><code>// ==UserScript==
+{% highlight javascript %}
+// ==UserScript==
 // @name close_btn_end_tab_strip.uc.js
 // @include main
 // ==/UserScript==
@@ -103,7 +106,7 @@ Therefore, some sorta addon would be needed.</p>
   var tabsToolbar = document.getElementById("TabsToolbar");
   tabsToolbar.appendChild(tabsCloseButton);
 })();
-</code></pre>
+{% endhighlight %}
 
 <p>(Note: To hide close buttons on tabs, the user CSS rule described in value=2 is also required.)</p>
 
@@ -111,7 +114,8 @@ Therefore, some sorta addon would be needed.</p>
 
 <p>Example 1. Display close button when the cursor hovers over the tab, even if tab width is smaller than <code>browser.tabs.tabClipWidth</code>.</p>
 
-<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+{% highlight css %}
+@-moz-document url(chrome://browser/content/browser.xul) {
   tab:hover .tab-close-button {
     display: -moz-box ! important;
   }
@@ -119,11 +123,12 @@ Therefore, some sorta addon would be needed.</p>
     display: none ! important;
   }
 }
-</code></pre>
+{% endhighlight %}
 
 <p>Example 2. Display close button when the cursor hovers near the tabbar, even if tab width is smaller than <code>browser.tabs.tabClipWidth</code>.</p>
 
-<pre class="prettyprint"><code>@-moz-document url(chrome://browser/content/browser.xul) {
+{% highlight css %}
+@-moz-document url(chrome://browser/content/browser.xul) {
   .tabbrowser-tabs[closebuttons="activetab"] .tab-close-button {
     display: -moz-box ! important;
   }
@@ -131,7 +136,7 @@ Therefore, some sorta addon would be needed.</p>
     display: none ! important;
   }
 }
-</code></pre>
+{% endhighlight %}
 
 <h4>Reference</h4>
 

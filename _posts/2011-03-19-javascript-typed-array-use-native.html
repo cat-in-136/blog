@@ -11,11 +11,11 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2011/03/javascript-typed-array-
 ---
 
 <div>
-<pre class="prettyprint"><code id="js_uint8_array_test_code">var a = new Uint8Array([0x12, 0x34]);
+{% highlight javascript %}
+var a = new Uint8Array([0x12, 0x34]);
 var b = new Uint16Array(a.buffer);
 alert("0x" + (b[0]).toString(16)); // #=> 0x3412 or 0x1234 ?
-</code></pre>
-<button onclick="eval(document.getElementById('js_uint8_array_test_code').textContent); void(0);">Run above code (for Modern browser : Firefox4, Chrome10...)</button>
+{% endhighlight %}
 </div>
 
 <div>

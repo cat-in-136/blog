@@ -23,7 +23,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2014/04/c-struct-with-doxygen-x
 <p>で生成された Doxyfile ないしすでにある Doxyfile において
 <code>GENERATE_XML</code> を <code>YES</code> にして、</p>
 
-<pre class="prettyprint"><code># If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
+<pre><code># If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
 # captures the structure of the code including all documentation.
 # The default value is: NO.
 
@@ -40,7 +40,8 @@ html 出力などほかの出力も有効にしているならば、一緒に出
 
 <p>構造体 <code>struct _Foo</code> にどんなメンバがあるかを構造分析したい：</p>
 
-<pre class="prettyprint lang-c"><code>// foobar.h
+{% highlight c %}
+// foobar.h
 typedef enum _BarType {
   BAR_TYPE_A,
   BAR_TYPE_B
@@ -57,7 +58,7 @@ typedef struct _Foo {
   BarType bartype;
   Bar bar;
 } Foo;
-</code></pre>
+{% endhighlight %}
 
 <p>doxygen の実行</p>
 
@@ -86,63 +87,64 @@ compound.xsd  index.xml      struct__Foo.xml
 
 <p>構造体 <code>struct _Foo</code> の構造を見るには <code>struct__Foo.xml</code> を見るという風な単純な構造となっている：</p>
 
-<pre class="prettyprint lang-xml"><code>&lt;?xml version='1.0' encoding='UTF-8' standalone='no'?&gt;
-&lt;doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6"&gt;
-  &lt;compounddef id="struct__Foo" kind="struct" prot="public"&gt;
-    &lt;compoundname&gt;_Foo&lt;/compoundname&gt;
-      &lt;sectiondef kind="public-attrib"&gt;
-      &lt;memberdef kind="variable" id="struct__Foo_1a8f8833abcfaa7b946be2b13d9e4ef73d" prot="public" static="no" mutable="no"&gt;
-        &lt;type&gt;BarType&lt;/type&gt;
-        &lt;definition&gt;BarType _Foo::bartype&lt;/definition&gt;
-        &lt;argsstring&gt;&lt;/argsstring&gt;
-        &lt;name&gt;bartype&lt;/name&gt;
-        &lt;briefdescription&gt;
-        &lt;/briefdescription&gt;
-        &lt;detaileddescription&gt;
-        &lt;/detaileddescription&gt;
-        &lt;inbodydescription&gt;
-        &lt;/inbodydescription&gt;
-        &lt;location file="/tmp/doxytest/foobar.h" line="12" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="12" bodyend="-1"/&gt;
-      &lt;/memberdef&gt;
-      &lt;memberdef kind="variable" id="struct__Foo_1a21f3b7dab2816e7ea7938baf94e643c8" prot="public" static="no" mutable="no"&gt;
-        &lt;type&gt;&lt;ref refid="union__Bar" kindref="compound"&gt;Bar&lt;/ref&gt;&lt;/type&gt;
-        &lt;definition&gt;Bar _Foo::bar&lt;/definition&gt;
-        &lt;argsstring&gt;&lt;/argsstring&gt;
-        &lt;name&gt;bar&lt;/name&gt;
-        &lt;briefdescription&gt;
-        &lt;/briefdescription&gt;
-        &lt;detaileddescription&gt;
-        &lt;/detaileddescription&gt;
-        &lt;inbodydescription&gt;
-        &lt;/inbodydescription&gt;
-        &lt;location file="/tmp/doxytest/foobar.h" line="13" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="13" bodyend="-1"/&gt;
-      &lt;/memberdef&gt;
-      &lt;/sectiondef&gt;
-    &lt;briefdescription&gt;
-    &lt;/briefdescription&gt;
-    &lt;detaileddescription&gt;
-    &lt;/detaileddescription&gt;
-    &lt;collaborationgraph&gt;
-      &lt;node id="4"&gt;
-        &lt;label&gt;_Bar&lt;/label&gt;
-        &lt;link refid="union__Bar"/&gt;
-      &lt;/node&gt;
-      &lt;node id="3"&gt;
-        &lt;label&gt;_Foo&lt;/label&gt;
-        &lt;link refid="struct__Foo"/&gt;
-        &lt;childnode refid="4" relation="usage"&gt;
-          &lt;edgelabel&gt;bar&lt;/edgelabel&gt;
-        &lt;/childnode&gt;
-      &lt;/node&gt;
-    &lt;/collaborationgraph&gt;
-    &lt;location file="/tmp/doxytest/foobar.h" line="11" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="11" bodyend="14"/&gt;
-    &lt;listofallmembers&gt;
-      &lt;member refid="struct__Foo_1a21f3b7dab2816e7ea7938baf94e643c8" prot="public" virt="non-virtual"&gt;&lt;scope&gt;_Foo&lt;/scope&gt;&lt;name&gt;bar&lt;/name&gt;&lt;/member&gt;
-      &lt;member refid="struct__Foo_1a8f8833abcfaa7b946be2b13d9e4ef73d" prot="public" virt="non-virtual"&gt;&lt;scope&gt;_Foo&lt;/scope&gt;&lt;name&gt;bartype&lt;/name&gt;&lt;/member&gt;
-    &lt;/listofallmembers&gt;
-  &lt;/compounddef&gt;
-&lt;/doxygen&gt;
-</code></pre>
+{% highlight xml %}
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="struct__Foo" kind="struct" prot="public">
+    <compoundname>_Foo</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct__Foo_1a8f8833abcfaa7b946be2b13d9e4ef73d" prot="public" static="no" mutable="no">
+        <type>BarType</type>
+        <definition>BarType _Foo::bartype</definition>
+        <argsstring></argsstring>
+        <name>bartype</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/doxytest/foobar.h" line="12" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct__Foo_1a21f3b7dab2816e7ea7938baf94e643c8" prot="public" static="no" mutable="no">
+        <type><ref refid="union__Bar" kindref="compound">Bar</ref></type>
+        <definition>Bar _Foo::bar</definition>
+        <argsstring></argsstring>
+        <name>bar</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/tmp/doxytest/foobar.h" line="13" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="4">
+        <label>_Bar</label>
+        <link refid="union__Bar"/>
+      </node>
+      <node id="3">
+        <label>_Foo</label>
+        <link refid="struct__Foo"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>bar</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/tmp/doxytest/foobar.h" line="11" column="1" bodyfile="/tmp/doxytest/foobar.h" bodystart="11" bodyend="14"/>
+    <listofallmembers>
+      <member refid="struct__Foo_1a21f3b7dab2816e7ea7938baf94e643c8" prot="public" virt="non-virtual"><scope>_Foo</scope><name>bar</name></member>
+      <member refid="struct__Foo_1a8f8833abcfaa7b946be2b13d9e4ef73d" prot="public" virt="non-virtual"><scope>_Foo</scope><name>bartype</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
+{% endhighlight %}
 
 <p><code>memberdef</code> 要素の中身を探していけば良い。他のファイルにその定義がある場合は <code>ref</code> 要素
 があるようなので再帰的に処理を行えば探せる。</p>
@@ -150,7 +152,8 @@ compound.xsd  index.xml      struct__Foo.xml
 <p>というわけで、さくっと doxygen の xml 出力を利用して、<a href="https://gist.github.com/cat-in-136/11336549">C言語構造体の構造を JSON で吐き出すスクリプトを書いてみた</a>。
 100 行未満で書けるのだから doxygen の xml 出力は強力である。</p>
 
-<pre class="prettyprint lang-ruby"><code>#!/usr/bin/ruby
+{% highlight ruby %}
+#!/usr/bin/ruby
 # vim: filetype=ruby fileencoding=UTF-8 shiftwidth=2 tabstop=2 autoindent expandtab
 # 
 # MIT License
@@ -182,12 +185,12 @@ class DoxyStructXml
         member[:argsstring] = elem.elements['argsstring'].text
         member[:name] = elem.elements['name'].text
 
-        members &lt;&lt; member
+        members << member
       end
 
       @structs[id] = {
-        :name =&gt; doc.elements['doxygen/compounddef/compoundname'].text,
-        :members =&gt; members
+        :name => doc.elements['doxygen/compounddef/compoundname'].text,
+        :members => members
       }
     end
   end
@@ -201,11 +204,11 @@ class DoxyStructXml
       m = {}
       m[:name] = member[:name]
       m[:type] = member[:type]
-      m[:name] &lt;&lt; member[:argsstring] if member[:argsstring]
+      m[:name] << member[:argsstring] if member[:argsstring]
       if member[:typeref]
         m[:type_data] = data(member[:typeref])
       end
-      d[:members] &lt;&lt; m
+      d[:members] << m
     end
 
     d
@@ -221,24 +224,24 @@ if $0 == __FILE__
   struct_id = ARGV[0]
 
   unless struct_id
-    $stderr &lt;&lt; "Usage: ruby #{$0} struct_id\n"
-    $stderr &lt;&lt; "struct_id: "
+    $stderr << "Usage: ruby #{$0} struct_id\n"
+    $stderr << "struct_id: "
     doxy_struct_xml.structs.each do |key,value|
-      $stderr &lt;&lt; key &lt;&lt; "  "
+      $stderr << key << "  "
     end
-    $stderr &lt;&lt; "\n\n"
+    $stderr << "\n\n"
     exit 1
   end
 
   if doxy_struct_xml.structs[struct_id]
-    $stdout &lt;&lt; JSON.dump(doxy_struct_xml.data(struct_id))
-    $stdout &lt;&lt; "\n"
+    $stdout << JSON.dump(doxy_struct_xml.data(struct_id))
+    $stdout << "\n"
   else
-    $stderr &lt;&lt; "#{struct_id} does not found"
+    $stderr << "#{struct_id} does not found"
     exit 1
   end
 end
-</code></pre>
+{% endhighlight %}
 
 <p>列挙体が扱えないことが残念なことこの上ない。</p>
 

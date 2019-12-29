@@ -62,15 +62,17 @@ last_modified_at: '2016-11-18T15:10:11+09:00'
 単純に横書き→縦書き→横書きの順番で文章が並んだHTMLファイルを用意した。
 </p>
 
-<pre class="prettyprint lang-html"><code>&lt;p&gt;(横書きのコンテンツ)...&lt;/p&gt;
-&lt;p class="vertical-writing"&gt;(縦書きのコンテンツ)...&lt;/p&gt;
-&lt;p&gt;(横書きのコンテンツ)...&lt;/p&gt;
-</code></pre>
+{% highlight html %}
+<p>(横書きのコンテンツ)...</p>
+<p class="vertical-writing">(縦書きのコンテンツ)...</p>
+<p>(横書きのコンテンツ)...</p>
+{% endhighlight %}
 
 <p>
 これに対して、適切なCSSルールを定義した。
 </p>
-<pre class="prettyprint lang-css"><code>.vertical-writing {
+{% highlight css %}
+.vertical-writing {
   -webkit-writing-mode: vertical-rl;
   writing-mode: vertical-rl;
   width: 100%; /* 縦書き部の横幅 */
@@ -81,7 +83,7 @@ last_modified_at: '2016-11-18T15:10:11+09:00'
   column-gap: 20px;
   column-rule: 2px dashed #000;
 }
-</code></pre>
+{% endhighlight %}
 
 <p>
 段組の指定には、段数 (<code>column-count</code>) を使うこともできるが、

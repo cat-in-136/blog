@@ -26,11 +26,12 @@ tags:
 簡単のため何もデータを含まないファイルをベースとして考える。
 作成したライブラリは <a href="https://rubygems.org/gems/rubyXL">rubyXL</a> である。</p>
 
-<pre class="prettyprint"><code>require "rubyXL"
+{% highlight ruby %}
+require "rubyXL"
 
 workbook = RubyXL::Workbook.new
 workbook.write("/path/to/blank_nonshironuri.xlsx")
-</code></pre>
+{% endhighlight %}
 <div>Output file: <a href="https://gist.githubusercontent.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5/raw/blank_nonshironuri.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">blank_nonshironuri.xlsx</a></div>
  
 <p>xlsx ファイルは所詮 xml ファイルを zip で固めたものなので、
@@ -40,11 +41,13 @@ Excel（など）で出力した xlsx ファイルを展開して xml ファイ�
 <p>確認してみたところ <code class="highlighter-rouge">xl\worksheets\sheet1.xml</code> に下記のような
 col 要素を投入すればよいことが分かった。</p>
 
-<pre class="prettyprint"><code>&lt;worksheet&gt;&lt;!-- worksheet 要素の属性値略 --&gt;
-  &lt;!-- 略 --&gt;
-  &lt;cols&gt;&lt;col min="1" max="16384" style="1"/&gt;&lt;/cols&gt;
-  &lt;sheetData&gt;&lt;!-- 略 --&gt;&lt;/sheetData&gt;
-&lt;/worksheet&gt;</code></pre>
+{% highlight xml %}
+<worksheet><!-- worksheet 要素の属性値略 -->
+  <!-- 略 -->
+  <cols><col min="1" max="16384" style="1"/></cols>
+  <sheetData><!-- 略 --></sheetData>
+</worksheet>
+{% endhighlight %}
 
 <p>ここで 16384 というのは、Excel 2007 以降から現在の Excel のバージョンに
 おける<a href="https://office.microsoft.com/ja-jp/excel-help/HP010073849.aspx" title="Excel の仕様および制限 - Excel - Office Support - Office 365">最大列数であり仕様に基づく</a>（それ以前は 256 列）。
@@ -52,17 +55,19 @@ col 要素を投入すればよいことが分かった。</p>
 
 <p>そこで、</p>
 
-<pre class="prettyprint"><code>require "rubyXL"
+{% highlight ruby %}
+require "rubyXL"
 
 workbook = RubyXL::Workbook.new
 worksheet = workbook[0]
 shironuri_style_index = workbook.modify_fill(nil, "ffffff")
-worksheet.cols &lt;&lt; RubyXL::ColumnRange.new(
-    :min =&gt; 1,
-    :max =&gt; 16384, # 0x4000
-    :style_index =&gt; shironuri_style_index,
+worksheet.cols << RubyXL::ColumnRange.new(
+    :min => 1,
+    :max => 16384, # 0x4000
+    :style_index => shironuri_style_index,
 )
-workbook.write("/path/to/nil_shironuri.xlsx")</code></pre>
+workbook.write("/path/to/nil_shironuri.xlsx")
+{% endhighlight %}
 <div>Output file: <a href="https://gist.githubusercontent.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5/raw/nil_shironuri.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">nil_shironuri.xlsx</a></div>
 
 <p>とやってみたら、LibreOffice Calc で開けたんだが Excel で開くと
@@ -90,26 +95,30 @@ workbook.write("/path/to/nil_shironuri.xlsx")</code></pre>
   <li>オンライン office.com の Excel : そもそも開けない</li>
 </ul>
 
-<pre class="prettyprint"><code>&lt;worksheet&gt;&lt;!-- worksheet 要素の属性値略 --&gt;
-  &lt;!-- 略 --&gt;
-  &lt;cols&gt;&lt;col min="1" max="16384" <ins>width="9"</ins> style="1"/&gt;&lt;/cols&gt;
-  &lt;sheetData&gt;&lt;!-- 略 --&gt;&lt;/sheetData&gt;
-&lt;/worksheet&gt;</code></pre>
+{% highlight xml %}
+<worksheet><!-- worksheet 要素の属性値略 -->
+  <!-- 略 -->
+  <cols><col min="1" max="16384" width="9" style="1"/></cols>
+  <sheetData><!-- 略 --></sheetData>
+</worksheet>
+{% endhighlight %}
 
 <p>これを実現するコードとしては…</p>
 
-<pre class="prettyprint"><code>require "rubyXL"
+{% highlight ruby %}
+require "rubyXL"
 
 workbook = RubyXL::Workbook.new
 worksheet = workbook[0]
 shironuri_style_index = workbook.modify_fill(nil, "ffffff")
-worksheet.cols &lt;&lt; RubyXL::ColumnRange.new(
-    :min =&gt; 1,
-    :max =&gt; 16384, # 0x4000
-    :style_index =&gt; shironuri_style_index,
-    <ins>:width =&gt; 9,</ins>
+worksheet.cols << RubyXL::ColumnRange.new(
+    :min => 1,
+    :max => 16384, # 0x4000
+    :style_index => shironuri_style_index,
+    :width => 9, # ** 差分箇所はここ
 )
-workbook.write("/path/to/blank_shironuri.xlsx")</code></pre>
+workbook.write("/path/to/blank_shironuri.xlsx")
+{% endhighlight %}
 <div>Output file: <a href="https://gist.githubusercontent.com/cat-in-136/0cf92ed96ee88cf65a3bcba0676986b5/raw/blank_shironuri.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">blank_shironuri.xlsx</a></div>
 
 <h3>成果物</h3>

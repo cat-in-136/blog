@@ -22,10 +22,11 @@ Firefox 3.0+ supports <code>Components.utils.reportError()</code>. This function
 <p>
 If you don't hope debugging message displayed as a error, <a href="https://developer.mozilla.org/en/nsIConsoleService#logStringMessage()">nsIConsoleService#logStringMessage()</a> is better.
 </p>
-<pre class="prettyprint"><code>Components.classes["@mozilla.org/consoleservice;1"]
+{% highlight javascript %}
+Components.classes["@mozilla.org/consoleservice;1"]
  .getService(Components.interfaces.nsIConsoleService)
  .logStringMessage("a debugging message");
-</code></pre>
+{% endhighlight %}
 <p>
 yields following message to the Error Console:
 </p>

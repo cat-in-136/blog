@@ -48,7 +48,8 @@ v
 <p>
 Micropolis's cty file format is as following:
 </p>
-<pre class="prettyprint"><code>#define WORLD_X     120
+{% highlight c %}
+#define WORLD_X     120
 #define WORLD_Y     120
 #define HISTLEN     480
 #define MISCHISTLEN 240
@@ -63,7 +64,7 @@ typedef struct {
     short   MiscHis[MISCHISTLEN/2];
     short   Map[WORLD_X * WORLD_Y];
 } CTY_DATA;
-</code></pre>
+{% endhighlight %}
 <p>
 Note: <code>short</code> is a Big-Endian (signed) 16-bits number.
 </p>
@@ -73,21 +74,21 @@ For example, <code>Map</code> data is written in cty file at offset 0x0C30.
 </p>
 <p>
 Total funds is <code>MiscHis[50]</code> and <code>MiscHis[51]</code>
-as a signed 32-bit number. 
-<code>MiscHis[50]</code> is high-order word and <code>MiscHis[51]</code> is 
+as a signed 32-bit number.
+<code>MiscHis[50]</code> is high-order word and <code>MiscHis[51]</code> is
 low-order word.
 This is written at micropolis's source code
 (<code>src/sim/s_fileio.c#loadFile(char*)</code>) as follows:
 </p>
-<pre class="prettyprint"><code>
+{% highlight c  %}
    /* total funds is a long.....    MiscHis is array of shorts */
-   /* total funds is being put in the 50th &amp; 51th word of MiscHis */
+   /* total funds is being put in the 50th & 51th word of MiscHis */
    /* find the address, cast the ptr to a lontPtr, take contents */
- 
+
    l = *(QUAD *)(MiscHis + 50);
-   HALF_SWAP_LONGS(&amp;l, 1);
+   HALF_SWAP_LONGS(&l, 1);
    SetFunds(l);
-</code></pre>
+{% endhighlight %}
 
 <h4>See also</h4>
 <ul>

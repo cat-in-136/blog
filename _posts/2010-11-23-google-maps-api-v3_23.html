@@ -56,15 +56,16 @@ Googleマップでのその画像は"<code>http://mt0.google.com/mapslt?lyrs=tra
 というわけで、結局以下のとおりカスタムマップを使って、地下鉄の路線図を簡単に利用することができる。
 
 </p>
-<pre class="prettyprint"><code>    var subwayMapType = new google.maps.ImageMapType({
+{% highlight javascript %}
+var subwayMapType = new google.maps.ImageMapType({
         name: "地下鉄", alt: "地下鉄を見る",
         tileSize: new google.maps.Size(256,256),
         isPng: true,
         maxZoom: 22,
         minZoom: 10,
         getTileUrl: function(coord, zoom) {
-            var mt = ((coord.y &amp; 0x1 == 0)? 0 : 2) | (coord.x &amp; 0x1);
-            var url = "http://mt%m.google.com/mapslt?lyrs=transit&amp;x=%x&amp;y=%y&amp;z=%z&amp;w=256&amp;h=256&amp;style=1"
+            var mt = ((coord.y & 0x1 == 0)? 0 : 2) | (coord.x & 0x1);
+            var url = "http://mt%m.google.com/mapslt?lyrs=transit&x=%x&y=%y&z=%z&w=256&h=256&style=1"
               .replace("%m", mt)
               .replace("%x", coord.x).replace("%y", coord.y)
               .replace("%z", zoom);
@@ -72,7 +73,7 @@ Googleマップでのその画像は"<code>http://mt0.google.com/mapslt?lyrs=tra
         }
     });
     map.overlayMapTypes.insertAt(0, subwayMapType); // オーバーレイ表示するときの例
-</code></pre>
+{% endhighlight %}
 <p>
 なお、このコードでは画像をダウンロードするURLにおいて、ドメイン名を<code>mt0</code>～<code>mt3</code>まで分散する仕掛けを入れてある。これはGoogleのサーバのロードバランスや画像ファイルのダウンロードの速度の向上に役に立つはずだが、検証はしていない。
 

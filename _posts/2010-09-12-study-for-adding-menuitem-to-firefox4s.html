@@ -16,23 +16,25 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/09/study-for-adding-menuit
 <p>
 A few day ago, I received <a href="http://bitbucket.org/cat_in_136/configuration-mania/issue/15/config-mania-option-on-fx-40-new-menu">issue#15 Config mania option on Fx 4.0 new Menu button</a>. I found Firefox 4.0b5 new menu is changed to 2-column.
 </p>
-<pre class="prettyprint"><code>&lt;!-- Firefox 4.0b4 --&gt;
- &lt;menupopup id="appmenu-popup" ... &gt;
+{% highlight xml %}
+<!-- Firefox 4.0b4 -->
+ <menupopup id="appmenu-popup" ... >
    ...
- &lt;/menupopup&gt;
-</code></pre>
-<pre class="prettyprint"><code>&lt;!-- Firefox 4.0b5 --&gt;
- &lt;menupopup id="appmenu-popup" ... &gt;
-   &lt;hbox&gt;
-     &lt;vbox id="appmenuPrimaryPane"&gt;
+ </menupopup>
+{% endhighlight %}
+{% highlight xml %}
+ <!-- Firefox 4.0b5 -->
+ <menupopup id="appmenu-popup" ... >
+   <hbox>
+     <vbox id="appmenuPrimaryPane">
        ...
-     &lt;/vbox&gt;
-     &lt;vbox id="appmenuSecondaryPane"&gt;
+     </vbox>
+     <vbox id="appmenuSecondaryPane">
        ...
-     &lt;/vbox&gt;
-   &lt;/hbox&gt;
- &lt;/menupopup&gt;
-</code></pre>
+     </vbox>
+   </hbox>
+ </menupopup>
+{% endhighlight %}
 <p>
 Configuration Mania 1.12.2010082901 append "Configuration Mania" menu item is append on "<code>appmenu-popup</code>". On Firefox 4.0b5, it does not work well:
 </p>

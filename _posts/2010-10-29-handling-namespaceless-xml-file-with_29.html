@@ -14,10 +14,11 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/10/handling-namespaceless-
 <p>
 After last post, I found SAX namespace handling method can be changed with <a href="http://download.oracle.com/javase/6/docs/api/javax/xml/parsers/SAXParserFactory.html#setNamespaceAware%28boolean%29"><code>SAXParserFactory#setNamespaceAware()</code> function</a>.
 </p>
-<pre class="prettyprint"><code>    SAXParserFactory factory = SAXParserFactory.newInstance();
-<em style="font-style:normal; background-color: #ff0;">    factory.setNamespaceAware(true);</em>
+{% highlight java %}
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    factory.setNamespaceAware(true); // Added
     SAXParser parser = factory.newSAXParser();
-</code></pre>
+{% endhighlight %} 
 <p>
 This setting specify whether the parser supports XML namespaces or not and default value is <code>false</code>.
 </p>

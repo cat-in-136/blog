@@ -12,9 +12,10 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/how-to-launch-applicati
 
 <p><code>system(3)</code> executes an external command. This is an example that the external command is a CUI application.</p>
 
-<pre class="prettyprint"><code>int ret;
+{% highlight c %}
+int ret;
 ret = system("/path/to/shellscript.sh");
-</code></pre>
+{% endhighlight %}
 
 <p>If <code>system(3)</code> is called from CUI application, standard output can be write to the <em>terminal</em> and standard input can be read from the <em>terminal</em>. But GTK+ applications (or any other typical GUI application) don't have the <em>terminal</em>.</p>
 
@@ -22,15 +23,17 @@ ret = system("/path/to/shellscript.sh");
 
 <p>Here is a simple example of launching <code>/path/to/shellscript.sh</code> with terminal emulator.</p>
 
-<pre class="prettyprint"><code>int ret;
+{% highlight c %}
+int ret;
 ret = system("xterm -e /path/to/shellscript.sh");
-</code></pre>
+{% endhighlight %}
 
 <p>It's simple. But hard-coding <code>"xterm -e "</code> is not smart.</p>
 
 <p>Following example is depends on User's terminal emulator preference (e.g. <a href="http://library.gnome.org/users/user-guide/2.27/prefs-preferredapps.html.en">Gnome Preferred Applications preference tool</a>):</p>
 
-<pre class="prettyprint"><code>GAppInfo *appinfo = NULL;
+{% highlight c %}
+GAppInfo *appinfo = NULL;
 gboolean ret = FALSE;
 
 appinfo = g_app_info_create_from_commandline("/path/to/shellscript.sh",
@@ -41,7 +44,7 @@ g_assert(appinfo != NULL); // TODO error handling is not implemented.
 
 ret = g_app_info_launch(appinfo, NULL, NULL, NULL);
 g_assert(ret == TRUE); // TODO error handling is not implemented.
-</code></pre>
+{% endhighlight %}
 
 <p>Note that:</p>
 <ul>
@@ -49,9 +52,10 @@ g_assert(ret == TRUE); // TODO error handling is not implemented.
 <li>On my environment, following code does not work (segmentation fault at calling <code>g_app_info_create_from_commandline()</code>). GTK seems to be required.</li>
 </ul>
 
-<pre class="prettyprint"><code>#include &lt;glib.h&gt;
-#include &lt;gio/gio.h&gt;
-//#include &lt;gtk/gtk.h&gt;// !! HERE is required!
+{% highlight c %}
+#include <glib.h>
+#include <gio/gio.h>
+//#include <gtk/gtk.h>// !! HERE is required!
 
 static const gchar *SCRIPT_PATH = "/path/to/shellscript.sh";
 
@@ -60,7 +64,7 @@ int main(int argc, char *argv[])
     GAppInfo *appinfo = NULL;
     gboolean ret = FALSE;
 
-    //gtk_init(&amp;argc, &amp;argv);// !! HERE is required!
+    //gtk_init(&argc, &argv);// !! HERE is required!
 
     appinfo = g_app_info_create_from_commandline(SCRIPT_PATH,
                                                  NULL,
@@ -75,7 +79,8 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-</code></pre>
+
+{% endhighlight %}
 
 <h4>See also</h4>
 <ul>

@@ -22,7 +22,8 @@ Mingw32 は完全には Unicode に対応していない。いくつかよく知
 </p>
 
 <h4><code>wWinMain</code>が使えない</h4>
-<pre class="prettyprint"><code>// NG:
+{% highlight c %}
+// NG:
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 //...
@@ -31,7 +32,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 int main(int argc, char** argv)
 {
 //...
-</code></pre>
+
+{% endhighlight %}
 <p>
 Mingw32では、<code>wWinMain</code>関数は使えない<span style="font-size: smaller;">（→<a href="http://cat-in-136.blogspot.jp/2010/03/mingw32undefined-reference-to-winmain16.html" title="mingw32での「undefined reference to `WinMain@16'」" rel="nofollow">以前の記事</a>で述べたとおり）</span>。さらに<code>wmain</code>関数も同じく使えない。なので Unicode 環境においては、エントリー関数(entry function)として<code>main</code>関数を使うしかない。
 </p>
@@ -40,10 +42,12 @@ Mingw32では、<code>wWinMain</code>関数は使えない<span style="font-size
 </p>
 
 <h5><code>hInstance</code>を<code>main</code>関数でどうやって取得するのか?</h5>
-<pre class="prettyprint"><code>HINSTANCE hInstance;
+{% highlight c %}
+HINSTANCE hInstance;
 
 hInstance = GetModuleHandle(NULL);
-</code></pre>
+
+{% endhighlight %}
 <p>
 なお、<code>wWinMain</code>の引数<code>hPrevInstance</code>は Win32 環境では常に<code>NULL</code>であることに留意すること。
 </p>
@@ -55,8 +59,9 @@ hInstance = GetModuleHandle(NULL);
 </p>
 
 <h4><code>__wargv</code>も使えないがどうするのか?</h4>
-<pre class="prettyprint"><code>// NG:
-for (i = 0; i &lt; __argc; i++) {
+{% highlight c %}
+// NG:
+for (i = 0; i < __argc; i++) {
     arg = __wargv[i];
     //...
 }
@@ -64,20 +69,22 @@ for (i = 0; i &lt; __argc; i++) {
 // OK:
 INT argc;
 WCHAR **argv;
-wargv = CommandLineToArgvW(GetCommandLineW(), &amp;argc);
-for (i = 0; i &lt; argc; i++) {
+wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+for (i = 0; i < argc; i++) {
     arg = wargv[i];
     //...
 }
 LocalFree(wargv);
-</code></pre>
+
+{% endhighlight %}
 <p>
 <code>__wargv</code>もMingw32では使えない。引数リストを取得するには<code>CommandLineToArgvW</code> 関数と<code>GetCommandLineW</code>関数を使う。
 なお、ここで<code>CommandLineToArgv<strong>A</strong></code>という名前の関数は Win32 API には定義されていないので注意すること。
 </p>
 
 <h4>例：_tMainWin問題の私なりの解決策</h4>
-<pre class="prettyprint"><code>int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+{% highlight c %}
+int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
     // ...
 }
@@ -95,7 +102,8 @@ int main(int argc, char **argv)
 }
 #endif
 #endif /* _UNICODE */
-</code></pre>
+
+{% endhighlight %}
 
 <p>
 なお、概述のように<code>lpCmdLine</code>と完全に同じものは簡単には得られないので<code>lpCmdLine</code>は使わない、という前提で使う。

@@ -39,7 +39,8 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
 
 <h4 id="firefox_send_fileSender_upload_1">first Promise : Generate Key and Load File</h4>
 
-<pre class="prettyprint"><code>    return Promise.all([
+{% highlight javascript %}
+return Promise.all([
       window.crypto.subtle.generateKey(
         {
           name: 'AES-GCM',
@@ -48,7 +49,7 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
         true,
         ['encrypt', 'decrypt']
       ),
-      new Promise((resolve, reject) =&gt; {
+      new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsArrayBuffer(this.file);
         reader.onload = function(event) {
@@ -60,7 +61,7 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
         };
       })
 ])
-</code></pre>
+{% endhighlight %}
 
 <p>The first promise is resolved when both of following two procedures are completed:</p>
 <ul>
@@ -76,7 +77,8 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
 
 <h4 id="firefox_send_fileSender_upload_2">second Promise : Encrypt and Export key</h4>
 
-<pre class="prettyprint"><code>      .then(([secretKey, plaintext]) =&gt; {
+{% highlight javascript %}
+.then(([secretKey, plaintext]) => {
         self.emit('encrypting');
         return Promise.all([
           window.crypto.subtle.encrypt(
@@ -90,7 +92,7 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
           ),
           window.crypto.subtle.exportKey('jwk', secretKey)
 ]);
-</code></pre>
+{% endhighlight %}
 
 
 <p>The second promise is resolved when both of following two procedures are completed:</p>
@@ -111,8 +113,9 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
 
 <h4 id="firefox_send_fileSender_upload_3">third Promise : Upload</h4>
 
-<pre class="prettyprint"><code>      .then(([encrypted, keydata]) =&gt; {
-        return new Promise((resolve, reject) =&gt; {
+{% highlight javascript %}
+.then(([encrypted, keydata]) => {
+       return new Promise((resolve, reject) => {
           const file = this.file;
           const fileId = arrayToHex(this.iv);
           const dataView = new DataView(encrypted);
@@ -132,7 +135,8 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
           );
           xhr.send(fd);
         });
-});</code></pre>
+});
+{% endhighlight %}
 
 <p>The third promise executes the following procedure:</p>
 <ul>
@@ -151,7 +155,8 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
 
 <h4 id="firefox_send_fileSender_upload_4">return value: File Parameters</h4>
 
-<pre class="prettyprint"><code>          xhr.onreadystatechange = () =&gt; {
+{% highlight javascript %}
+xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
               if (xhr.status === 200) {
                 const responseObj = JSON.parse(xhr.responseText);
@@ -164,7 +169,8 @@ This clause describes <code>FileSender#upload()</code> method defined in <a href
               }
               reject(xhr.status);
             }
-};</code></pre>
+};
+{% endhighlight %}
 
 <p>The final promise returns following parameters:</p>
 <ul>
@@ -185,7 +191,8 @@ See <a href="https://github.com/mozilla/send/blob/v1.1.0/frontend/src/upload.js"
 This clause describes "POST <code>/upload/</code>" handler defined in <a href="https://github.com/mozilla/send/blob/v1.1.0/server/server.js">server/server.js</a> (to store).
 </p>
 
-<pre class="prettyprint"><code>app.post('/upload', (req, res, next) =&gt; {
+{% highlight javascript %}
+app.post('/upload', (req, res, next) => {
   const newId = crypto.randomBytes(5).toString('hex');
 
   // ***** snip *****
@@ -193,7 +200,7 @@ This clause describes "POST <code>/upload/</code>" handler defined in <a href="h
   meta.delete = crypto.randomBytes(10).toString('hex');
   req.pipe(req.busboy);
 
-  req.busboy.on('file', async (fieldname, file, filename) =&gt; {
+  req.busboy.on('file', async (fieldname, file, filename) => {
     try {
       await storage.set(newId, file, filename, meta);
 
@@ -214,7 +221,7 @@ This clause describes "POST <code>/upload/</code>" handler defined in <a href="h
 
   // ***** snip *****
 });
-</code></pre>
+{% endhighlight %}
 
 <p>Server stores:</p>
 <ul>
@@ -248,7 +255,8 @@ This clause describes <code>FileReceiver#download()</code> method defined in <a 
 
 <h4 id="firefox_send_fileReceiver_download_1">first Promise : Import Key</h4>
 
-<pre class="prettyprint"><code>window.crypto.subtle
+{% highlight javascript %}
+window.crypto.subtle
       .importKey(
         'jwk',
         {
@@ -262,7 +270,8 @@ This clause describes <code>FileReceiver#download()</code> method defined in <a 
         },
         true,
         ['encrypt', 'decrypt']
-)</code></pre>
+)
+{% endhighlight %}
 
 <p>The first promise is resolved when following procedure is completed:</p>
 <ul>
@@ -278,8 +287,9 @@ This clause describes <code>FileReceiver#download()</code> method defined in <a 
 
 <h4 id="firefox_send_fileReceiver_download_2">second Promise : Download</h4>
 
-<pre class="prettyprint"><code>      .then(key =&gt; {
-        return new Promise((resolve, reject) =&gt; {
+{% highlight javascript %}
+.then(key => {
+        return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
 
           // ***** snip *****
@@ -310,7 +320,8 @@ This clause describes <code>FileReceiver#download()</code> method defined in <a 
           xhr.responseType = 'blob';
           xhr.send();
         });
-})</code></pre>
+})
+{% endhighlight %}
 
 <p>The second promise is resolved when following procedure is completed:</p>
 <ul>
@@ -332,7 +343,8 @@ This clause describes <code>FileReceiver#download()</code> method defined in <a 
 <h4 id="firefox_send_fileReceiver_download_3">third Promise : Decrypt</h4>
 
 
-<pre class="prettyprint"><code>      .then(([fdata, key]) =&gt; {
+{% highlight javascript %}
+.then(([fdata, key]) => {
         this.emit('decrypting');
         return Promise.all([
           window.crypto.subtle
@@ -345,7 +357,7 @@ This clause describes <code>FileReceiver#download()</code> method defined in <a 
               key,
               fdata.data
             )
-            .then(decrypted =&gt; {
+            .then(decrypted => {
               return Promise.resolve(decrypted);
             }),
           {
@@ -353,7 +365,8 @@ This clause describes <code>FileReceiver#download()</code> method defined in <a 
             type: fdata.type
           }
         ]);
-});</code></pre>
+});
+{% endhighlight %}
 
 
 <p>The third promise is resolved when following procedure is completed:</p>

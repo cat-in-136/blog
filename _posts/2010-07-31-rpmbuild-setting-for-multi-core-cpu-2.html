@@ -16,14 +16,12 @@ According to <a href="http://fedoraproject.org/wiki/Packaging/Guidelines">Fedora
 <blockquote cite="http://fedoraproject.org/wiki/Packaging/Guidelines#Parallel_make">
 <p>Whenever possible, invocations of <code>make</code> should be done as
 </p>
-<pre class="prettyprint">make&nbsp;%{?_smp_mflags}
-</pre>
+<pre><code>make&nbsp;%{?_smp_mflags}</code></pre>
 <p>This generally speeds up builds and especially on SMP machines.
 </p><p>Do make sure, however, that the package builds cleanly this way as some make files do not support parallel building. Therefore you should consider adding
 </p>
 
-<pre class="prettyprint">%_smp_mflags -j3
-</pre>
+<pre><code>%_smp_mflags -j3</code></pre>
 <p>to your <code>~/.rpmmacros</code> file -- even on UP machines -- as this will expose most of these errors.
 </p>
 </blockquote>

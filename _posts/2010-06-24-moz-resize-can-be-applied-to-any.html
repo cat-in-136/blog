@@ -14,15 +14,21 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/moz-resize-can-be-appli
 ---
 
 <p>Firefox 3.7 alpha release (or Firefox 4.0) introduced support for re-sizable textareas. <code>-moz-resize</code> property controls whether or not the textarea is resizable.
-</p><pre class="prettyprint"><code>&lt;textarea style="-moz-resize: vertical; width: 100%;"&gt;
+</p>
+{% highlight xml %}
+<textarea style="-moz-resize: vertical; width: 100%;">
 vertical resizing only textarea
-&lt;/textarea&gt;
-</code></pre><fieldset><legend>-moz-resize sample (only for firefox 3.7a/4.0+)</legend>
+</textarea>
+{% endhighlight %}
+<fieldset><legend>-moz-resize sample (only for firefox 3.7a/4.0+)</legend>
 <textarea style="-moz-resize: vertical; width: 100%;">vertical resizing only textarea</textarea></fieldset><p>In addition, <code>-moz-resize</code> seems to be applied to any element!
-</p><pre class="prettyprint"><code>&lt;div style="<strong>-moz-resize: both; overflow: auto</strong>; background-color: #ffeeee; color: black;"&gt;
+</p>
+{% highlight xml %}
+<div style="-moz-resize: both; overflow: auto; background-color: #ffeeee; color: black;">
 foobar
-&lt;/div&gt;
-</code></pre><p>A resizer is displayed at end of <code>div</code> element area!
+</div>
+{% endhighlight %}
+<p>A resizer is displayed at end of <code>div</code> element area!
 </p><div style="clear: both; text-align: center;">{% asset_image_tag resizer_is_displayed_at_div_element.png %}
 </div><div>-moz-resize sample (only for firefox 3.7a/4.0+)
 <div style="-moz-resize: both; overflow: auto; background-color: #ffeeee; color: black;">foobar</div></div><p>It is required to set "overflow" CSS property. It is written in MDC <a href="https://developer.mozilla.org/en/CSS/-moz-resize">-moz-resize</a> page.

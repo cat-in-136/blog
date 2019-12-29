@@ -14,11 +14,13 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/10/handling-namespaceless-
 <p>
 On the <abbr title="Simple API for XML">SAX</abbr> handlers' function, 3 element name present:
 </p>
-<pre class="prettyprint"><code>void startElement(<strong>String uri</strong>,
-                  <strong>String localName</strong>,
-                  <strong>String qName</strong>,
+{% highlight java %}
+void startElement(String uri,
+                  String localName,
+                  String qName,
                   Attributes atts)
-                  throws SAXException</code></pre>
+                  throws SAXException
+{% endhighlight %}
 <p>
 For example, when <code>&lt;foobar:test xmlns:foobar="http://example.com/foobar"&gt;</code> tag is seeked, SAX call <code>startElement</code> function with following parameters:
 
@@ -84,10 +86,11 @@ When handling the Namespaceless XML documents, only <var>qName</var> seems to be
 <p>
 Sourcecode for Android 2.2/1.5 is as following:
 </p>
-<pre class="prettyprint"><code>public void testSAX() throws Exception {
+{% highlight java %}
+public void testSAX() throws Exception {
     final TextView tv = new TextView(this);
 
-    ByteArrayInputStream input = new ByteArrayInputStream("&lt;test&gt;&lt;/test&gt;".getBytes());
+    ByteArrayInputStream input = new ByteArrayInputStream("<test></test>".getBytes());
 
     SAXParserFactory factory = SAXParserFactory.newInstance();
     SAXParser parser = factory.newSAXParser();
@@ -98,7 +101,7 @@ Sourcecode for Android 2.2/1.5 is as following:
             System.out.println("uri: " + uri);
             System.out.println("localName: " + localName);
             System.out.println("qName: " + qName);
-     
+
             tv.setText(
                 "uri: " + uri + "\n" +
                 "localName: " + localName + "\n" +
@@ -110,4 +113,5 @@ Sourcecode for Android 2.2/1.5 is as following:
     });
 
     setContentView(tv);
-}</code></pre>
+}
+{% endhighlight %}

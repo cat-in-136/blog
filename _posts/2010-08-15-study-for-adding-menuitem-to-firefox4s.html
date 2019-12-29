@@ -39,16 +39,17 @@ ID of "Firefox button" is "<code>appmenu-button</code>", and its <code>&lt;menup
 <p>
 To add a menuitem "<code>appmenu-foobar</code>", write the following overlay:
 </p>
-<pre class="prettyprint"><code>&lt;?xml version="1.0"?&gt;
-&lt;overlay id="foobarOverlay"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
-  &lt;menupopup id="appmenu-popup"&gt;
+{% highlight xml %}
+<?xml version="1.0"?>
+<overlay id="foobarOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <menupopup id="appmenu-popup">
 
-      &lt;menuitem id="appmenu_foobar" command="FooBarCmd"
-                label="Foobar"/&gt;
-  &lt;/menupopup&gt;
-&lt;/overlay&gt;
-</code></pre>
+      <menuitem id="appmenu_foobar" command="FooBarCmd"
+                                    label="Foobar"/>
+  </menupopup>
+</overlay>
+{% endhighlight %}
 
 <p>
 Note: if the browser does not have "Firefox Button" (e.g. older Firefox, current Firefox 4.0b3 build on Linux, etc...), this overlay is ignored and does not occur error.
@@ -66,25 +67,26 @@ Note: if the browser does not have "Firefox Button" (e.g. older Firefox, current
 <li>Two menuitems share a same command "<code>ConfMania:Open</code>".</li>
 </ul>
 
-<pre class="prettyprint"><code>&lt;overlay id="confmania-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+{% highlight xml %}
+<overlay id="confmania-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  &lt;script type="application/x-javascript" src="chrome://confmania/content/browser-Overlay.js"&gt;&lt;/script&gt;
-  &lt;commandset id="mainCommandSet"&gt;
-    &lt;command id="ConfMania:Open" oncommand="window['ConfMania'].open()"/&gt;
-  &lt;/commandset&gt;
-  &lt;menupopup id="menu_ToolsPopup"&gt;
-    &lt;menuitem id="confmania" command="ConfMania:Open"
-              label="&amp;confmania.label;" insertafter="menu_preferences"/&gt;
+  <script type="application/x-javascript" src="chrome://confmania/content/browser-Overlay.js"></script>
+  <commandset id="mainCommandSet">
+    <command id="ConfMania:Open" oncommand="window['ConfMania'].open()"/>
+  </commandset>
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="confmania" command="ConfMania:Open"
+     label="&amp;confmania.label;" insertafter="menu_preferences"/>
 
-  &lt;/menupopup&gt;
+  </menupopup>
 
-<ins>  &lt;menupopup id="appmenu-popup"&gt;</ins>
-<ins>    &lt;menuitem id="appmenu_confmania" command="ConfMania:Open"</ins>
-<ins>              label="&amp;confmania.label;" insertafter="appmenu_preferences"/&gt;</ins>
-<ins>  &lt;/menupopup&gt;</ins>
+  <menupopup id="appmenu-popup">
+    <menuitem id="appmenu_confmania" command="ConfMania:Open"
+        label="&confmania.label;" insertafter="appmenu_preferences"/>
+  </menupopup>
 
-&lt;/overlay&gt;
-</code></pre>
+</overlay>
+{% endhighlight %}
 
 <ul>
 <li>"<code>menu_ToolsPopup</code>" is the "Tools" menupopup of the menubar.</li>

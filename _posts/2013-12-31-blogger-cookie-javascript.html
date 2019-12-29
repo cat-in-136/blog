@@ -11,7 +11,6 @@ last_modified_at: '2013-12-31T15:34:22.015+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-3162900503194357319
 blogger_orig_url: http://cat-in-136.blogspot.com/2013/12/blogger-cookie-javascript.html
 ---
-
 <p>
 言われて、たった今知りましたので首釣ってきます。
 （修正して、該当コードは削除しました）
@@ -33,10 +32,11 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/12/blogger-cookie-javascri
 下記コードを投入して、<code>.com</code> にドメイン名を強制するようにした。
 そういえば、暫定的な対処だった。</p>
 
-<pre class="prettyprint"><code>&lt;script type='text/javascript'&gt;
+{% highlight html %}
+<script type='text/javascript'>
   if (location.host.indexOf('.com') == -1) location.href = location.href.replace(location.host + '/', 'cat-in-136.blogspot.com/ncr/');
-&lt;/script&gt;
-</code></pre>
+</script>
+{% endhighlight %}
 
 <p>方法は簡単で <code>http://ほげほげ.blogspot.jp/</code> →<code>http://ほげほげ.blogspot.com/ncr/</code> にリダイレクトしてやると、
 その後 <code>http://ほげほげ.blogspot.com/</code> になるという作戦。</p>
@@ -67,7 +67,8 @@ JavaScript を介しているのでこれが効かない。</p>
 <p>たぶん上の施策をするとしてもクッキーの有無（<code>navigator.cookieEnabled</code>）を確認するべきであった。
 ただしが、これでも <code>blogspot.com</code> は許可していても国別ドメインの方は許可していないならば、やはり無限 redirect する。</p>
 
-<pre class="prettyprint"><code>if (navigator.cookieEnabled) {
+{% highlight javascript %}
+if (navigator.cookieEnabled) {
   if (location.host.indexOf('.com') == -1) {
     location.href = location.href.replace(location.host + '/', 'ほげほげ.blogspot.com/ncr/');
   }
@@ -75,7 +76,7 @@ JavaScript を介しているのでこれが効かない。</p>
   // この処理が呼ばれるときに cookieEnabled が無効だった場合は対策方法はない。
   // 独自ドメインを取得するか、Blogger から逃げるかのみ。
 }
-</code></pre>
+{% endhighlight %}
 
 <h4>参考文献</h4>
 

@@ -46,27 +46,28 @@ Atom 形式で<a href="https://support.google.com/blogger/answer/97416?hl=ja" ti
 
 <p>具体的には HTML/JavaScript のウィジットで下記を表示するようにした。</p>
 
-<pre class="prettyprint lang-html"><code>
-This blog has moved to github page (&lt;a href="http://cat-in-136.github.io/"&gt;http://cat-in-136.github.io/&lt;/a&gt;).
-&lt;script&gt;
+{% highlight html %}
+This blog has moved to github page (<a href="http://cat-in-136.github.io/">http://cat-in-136.github.io/</a>).
+<script>
 (function (){
   var oLink = document.querySelector("link[rel=canonical]");
   if (oLink) {
     var canoUrl = oLink.getAttribute("href");
     if (canoUrl != "http://cat-in-136.github.io/") {
-      document.writeln("&lt;br /&gt;" + "The content would be available at new blog site".link(canoUrl));
+      document.writeln("<br />" + "The content would be available at new blog site".link(canoUrl));
     }
   }
 })();
-&lt;/script&gt;
-</code></pre>
+</script>
+{% endhighlight %}
 
 <p>なお、<code>link[rel=canonical]</code>は、下記のような JavaScript で生成するコードを入れている。</p>
 
-<pre class="prettyprint lang-html"><code>&lt;script&gt;
-document.writeln("&lt;link href='" + location.href.replace(location.host + "/", "cat-in-136.github.io/") +"' rel='canonical'/&gt;");
-&lt;/script&gt;
-</code></pre>
+{% highlight html %}
+<script>
+document.writeln("<link href='" + location.href.replace(location.host + "/", "cat-in-136.github.io/") +"' rel='canonical'/>");
+</script>
+{% endhighlight %}
 
 <p>このようなことをするため記事のパーマリンクは Blogger と合わせた
 <code>/:year/:month/:title.html</code> としている。
@@ -89,23 +90,24 @@ document.writeln("&lt;link href='" + location.href.replace(location.host + "/", 
 link[rel=canonical] を入れるようにした。
 </p>
 
-<pre class="prettyprint lang-html"><code>&lt;b:if cond='data:blog.pageType == &amp;quot;index&amp;quot;'&gt;
-  &lt;link href='http://cat-in-136.github.io/' rel='canonical'/&gt;
-  &lt;meta content='http://cat-in-136.github.io/' property='og:url'/&gt;
-&lt;/b:if&gt;
-&lt;b:if cond='data:blog.pageType == &amp;quot;archive&amp;quot;'&gt;
-  &lt;link href='http://cat-in-136.github.io/archive.html' rel='canonical'/&gt;
-  &lt;meta content='http://cat-in-136.github.io/archive.html' property='og:url'/&gt;
-&lt;/b:if&gt;
-&lt;b:if cond='data:blog.pageType == &amp;quot;item&amp;quot;'&gt;
-  &lt;script&gt;
-    document.writeln(&amp;quot;&lt;link href='&amp;quot; + location.href.replace(location.host + &amp;quot;/&amp;quot;, &amp;quot;cat-in-136.github.io/&amp;quot;) +&amp;quot;' rel='canonical'/&gt;&amp;quot;);
-    document.writeln(&amp;quot;&lt;meta content='&amp;quot; + location.href.replace(location.host + &amp;quot;/&amp;quot;, &amp;quot;cat-in-136.github.io/&amp;quot;) +&amp;quot;' property='og:url'/&gt;&amp;quot;);
-  &lt;/script&gt;
+{% highlight xml %}
+<b:if cond='data:blog.pageType == &quot;index&quot;'>
+  <link href='http://cat-in-136.github.io/' rel='canonical'/>
+  <meta content='http://cat-in-136.github.io/' property='og:url'/>
+</b:if>
+<b:if cond='data:blog.pageType == &quot;archive&quot;'>
+  <link href='http://cat-in-136.github.io/archive.html' rel='canonical'/>
+  <meta content='http://cat-in-136.github.io/archive.html' property='og:url'/>
+</b:if>
+<b:if cond='data:blog.pageType == &quot;item&quot;'>
+  <script>
+    document.writeln(&quot;<link href='&quot; + location.href.replace(location.host + &quot;/&quot;, &quot;cat-in-136.github.io/&quot;) +&quot;' rel='canonical'/>&quot;);
+    document.writeln(&quot;<meta content='&quot; + location.href.replace(location.host + &quot;/&quot;, &quot;cat-in-136.github.io/&quot;) +&quot;' property='og:url'/>&quot;);
+  </script>
 
-  &lt;!-- snip --&gt;
-&lt;/b:if&gt;
-</code></pre>
+  <!-- snip -->
+</b:if>
+{% endhighlight %}
 </ins>
 
 <h3>DISQUS</h3>

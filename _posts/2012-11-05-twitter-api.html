@@ -28,23 +28,24 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/11/twitter-api.html
 ただ、JavaScript が動かなくともツイートのテキストを含めるような仕組みになっている。
 以下にソースコードの例を示す（読みやすさのためにインデントと改行を挿入してある）。</p>
 
-<pre class="prettyprint"><code>&lt;blockquote class="twitter-tweet"&gt;
-  &lt;p&gt;
+{% highlight html %}
+<blockquote class="twitter-tweet">
+  <p>
     プライバシー等の問題を抜きにしてもビッグデータのビジネスは日本（特に大手企業）からは生まれなさそうだ。何らかのサービスを提供する手段であるはずが目的になってしまっている。 
-    &lt;a href="https://twitter.com/search/%23ビッグデータ"&gt;
+    <a href="https://twitter.com/search/%23ビッグデータ">
       #ビッグデータ
-    &lt;/a&gt;
-    &lt;a href="http://t.co/yl6s6sma" title="http://twitter.com/cat_in_136/status/176199889313734657/photo/1"&gt;
+    </a>
+    <a href="http://t.co/yl6s6sma" title="http://twitter.com/cat_in_136/status/176199889313734657/photo/1">
       twitter.com/cat_in_136/sta…
-    &lt;/a&gt;
-  &lt;/p&gt;
-  &amp;mdash; cat_in_136 (@cat_in_136) 
-  &lt;a href="https://twitter.com/cat_in_136/status/176199889313734657" data-datetime="2012-03-04T06:58:22+00:00"&gt;
+    </a>
+  </p>
+  &mdash; cat_in_136 (@cat_in_136) 
+  <a href="https://twitter.com/cat_in_136/status/176199889313734657" data-datetime="2012-03-04T06:58:22+00:00">
     March 4, 2012
-  &lt;/a&gt;
-&lt;/blockquote&gt;
-&lt;script src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
-</code></pre>
+  </a>
+</blockquote>
+<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+{% endhighlight %}
 
 <p>なお、JavaScript が無効にした場合やソースコードを貼りつけた場合、<a href="https://dev.twitter.com/terms/display-requirements" title="Developer Display Requirements | Twitter Developers">Developer Display Requirements</a>の下記に違反することとなってしまうが、Twitter 標準機能がそうなっているんだからしょうがない。</p>
 

@@ -41,38 +41,41 @@ To make a bootstrapped extension, you need:
 <p>
 There is no difference from traditional extensions... Only one exception is to add <code>em:bootstrap="true"</code>.
 </p>
-<pre class="prettyprint"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:em="http://www.mozilla.org/2004/em-rdf#"&gt;
-  &lt;Description about="urn:mozilla:install-manifest"&gt;
-     &lt;em:id&gt;bootstraptest@cat-in-136.blogspot.com&lt;/em:id&gt;
-     &lt;em:version&gt;1.0&lt;/em:version&gt;
-     &lt;em:type&gt;2&lt;/em:type&gt;&lt;!-- extension! --&gt;
-<span style="background:#ff0">     &lt;em:bootstrap&gt;true&lt;/em:bootstrap&gt;</span>
+{% highlight xml %}
+<?xml version="1.0" encoding="utf-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <Description about="urn:mozilla:install-manifest">
+     <em:id>bootstraptest@cat-in-136.blogspot.com</em:id>
+     <em:version>1.0</em:version>
+     <em:type>2</em:type><!-- extension! -->
+     <em:bootstrap>true</em:bootstrap>
 
-     &lt;!-- Firefox --&gt;
-     &lt;em:targetApplication&gt;
-        &lt;Description&gt;
-            &lt;em:id&gt;{ec8030f7-c20a-464f-9b0e-13a3a9e97384}&lt;/em:id&gt;
-            &lt;em:minVersion&gt;4.0b5&lt;/em:minVersion&gt;
-            &lt;em:maxVersion&gt;4.0&lt;/em:maxVersion&gt;
-        &lt;/Description&gt;
-     &lt;/em:targetApplication&gt;
+     <!-- Firefox -->
+     <em:targetApplication>
+        <Description>
+            <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+            <em:minVersion>4.0b5</em:minVersion>
+            <em:maxVersion>4.0</em:maxVersion>
+        </Description>
+     </em:targetApplication>
 
-     &lt;em:name&gt;bootstraptest&lt;/em:name&gt;
-     &lt;em:description&gt;bootstraptest&lt;/em:description&gt;
-     &lt;em:creator&gt;@cat_in_136&lt;/em:creater&gt;
-     &lt;em:iconURL/&gt;
-     &lt;em:optionsURL/&gt;
-  &lt;/Description&gt;
-&lt;/RDF&gt;</code></pre>
+     <em:name>bootstraptest</em:name>
+     <em:description>bootstraptest</em:description>
+     <em:creator>@cat_in_136</em:creater>
+     <em:iconURL/>
+     <em:optionsURL/>
+  </Description>
+</RDF>
+{% endhighlight %}
 
 <h5>Step2. Write bootstrap.js</h5>
 
 <p>
 This file shall contains entry point functions : <code>install(data,reason)</code>, <code>startup(data,reason)</code>, <code>shutdown(data,reason)</code> and <code>uninstall(data,reason)</code>.
 </p>
-<pre class="prettyprint"><code>unction install(data, reason) {
+{% highlight javascript %}
+function install(data, reason) {
 }
 
 function startup(data, reason) {
@@ -93,7 +96,8 @@ function shutdown(data, reason) {
 
 function uninstall(data, reason) {
 }
-</code></pre>
+
+{% endhighlight %}
 <p>
 This extension says "Hello world." after it is installed and/or enabled, and "Good bye." after it is uninstalled and/or disabled.
 </p>

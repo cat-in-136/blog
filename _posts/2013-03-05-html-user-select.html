@@ -75,38 +75,40 @@ Also on the news Web page there are some
 
 <p>例えば、twitter.com のリンクの部分はこのようになっている：</p>
 
-<pre class="prettyprint"><code>&lt;a href="https://t.co/qcITCzV8Mt"
+{% highlight html %}
+<a href="https://t.co/qcITCzV8Mt"
    class="twitter-timeline-link"
    target="_blank"
    data-expanded-url="https://developer.mozilla.org/en/docs/CSS/user-select"
    title="https://developer.mozilla.org/en/docs/CSS/user-select"
-   dir="ltr"&gt;
-  &lt;span class="invisible"&gt;
+   dir="ltr">
+  <span class="invisible">
     https://
-  &lt;/span&gt;
-  &lt;span class="js-display-url"&gt;
+  </span>
+  <span class="js-display-url">
     developer.mozilla.org/en/docs/CSS/us
-  &lt;/span&gt;
-  &lt;span class="invisible"&gt;
+  </span>
+  <span class="invisible">
     er-select
-  &lt;/span&gt;
-  &lt;span class="tco-ellipsis"&gt;
-    &lt;span class="invisible"&gt;
-      &amp;nbsp;
-    &lt;/span&gt;
+  </span>
+  <span class="tco-ellipsis">
+    <span class="invisible">
+      &nbsp;
+    </span>
     …
-  &lt;/span&gt;
-&lt;/a&gt;
-</code></pre>
+  </span>
+</a>
+{% endhighlight %}
 
 <p><code>invisible</code>クラスについては下記の通り、表示をしないように
 <a href="https://abs.twimg.com/a/1362168403/t1/css/t1_core.bundle.css" rel="nofollow">twitter の CSS</a> で設定している。</p>
 
-<pre class="prettyprint"><code>.tweet a .invisible,.dm-message a .invisible,.bio a .invisible{
+{% highlight css %}
+.tweet a .invisible,.dm-message a .invisible,.bio a .invisible{
     font-size:0;
     line-height:0
 }
-</code></pre>
+{% endhighlight %}
 
 <p>よって、twitter.com のリンクをコピーすると、
 画面上には https:// や省略部分は表示されないが、</p>
@@ -119,41 +121,43 @@ Also on the news Web page there are some
 <p>惜しむらくは、省略記号はコピーできないようになっていないところ。
 つまり、<code>user-select: none</code> を以下のように適用して欲しいところだ。</p>
 
-<pre class="prettyprint"><code>&lt;a href="https://t.co/qcITCzV8Mt"
+{% highlight html %}
+<a href="https://t.co/qcITCzV8Mt"
    class="twitter-timeline-link"
    target="_blank"
    data-expanded-url="https://developer.mozilla.org/en/docs/CSS/user-select"
    title="https://developer.mozilla.org/en/docs/CSS/user-select"
-   dir="ltr"&gt;
-  &lt;span class="invisible"&gt;
+   dir="ltr">
+  <span class="invisible">
     https://
-  &lt;/span&gt;
-  &lt;span class="js-display-url"&gt;
+  </span>
+  <span class="js-display-url">
     developer.mozilla.org/en/docs/CSS/us
-  &lt;/span&gt;
-  &lt;span class="invisible"&gt;
+  </span>
+  <span class="invisible">
     er-select
-  &lt;/span&gt;
-  &lt;span class="tco-ellipsis"&gt;
-    &lt;span class="invisible"&gt;
-      &amp;nbsp;
-    &lt;/span&gt;
-    &lt;span class="unselectable"&gt;
+  </span>
+  <span class="tco-ellipsis">
+    <span class="invisible">
+      &nbsp;
+    </span>
+    <span class="unselectable">
       …
-    &lt;/span&gt;
-  &lt;/span&gt;
-&lt;/a&gt;
-</code></pre>
+    </span>
+  </span>
+</a>
+{% endhighlight %}
 
 <p><code>unselectable</code> という class は <a href="https://abs.twimg.com/a/1362168403/t1/css/t1_core.bundle.css">twitter.com の CSS</a> には既に入っているのだからね。</p>
 
-<pre class="prettyprint"><code>.unselectable{
+{% highlight css %}
+.unselectable{
     -webkit-user-select:none;
     -moz-user-select:none;
     -o-user-select:none;
     user-select:none
 }
-</code></pre>
+{% endhighlight %}
 
 <p>このようにすれば、表示は&#8230;で後ろが省略された URL が表示され、
 コピーするときはフルのURLが（&#8230; も付かずに）そのままコピーされるので

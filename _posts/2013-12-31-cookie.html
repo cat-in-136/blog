@@ -31,7 +31,8 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/12/cookie.html
 
 <h4>Solution</h4>
 
-<pre class="prettyprint"><code>document.cookie = "cookie-block-check=a;max-age=1;domain=%DOMAIN%;path=%PATH%%SECURE%"
+{% highlight javascript %}
+document.cookie = "cookie-block-check=a;max-age=1;domain=%DOMAIN%;path=%PATH%%SECURE%"
                   .replace("%DOMAIN%", location.host)
                   .replace("%PATH%", location.pathname)
                   .replace("%SECURE%", (location.protocol == "https:")? ";secure" : "")
@@ -40,7 +41,8 @@ if (document.cookie == "") {
 } else {
     alert("Cookie is allowed");
 }
-</code></pre>
+
+{% endhighlight %}
 
 <p>Cookie の受け入れをON/OFFするなり、ドメイン指定で拒否/許可を切り替えるなりして、
 下記ボタンを押すと動作が変わると思う。</p>

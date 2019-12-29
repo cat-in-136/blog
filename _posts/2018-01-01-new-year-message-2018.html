@@ -124,24 +124,25 @@ OpenType の仕様上「まして」「ます」のように最初の字を共�
 これをバラして別要素とすると、片方の ligature は無視されてしまう。
 </p>
 
-<pre class="prettyprint"><code>&lt;Lookup index=&quot;0&quot;&gt;
-  &lt;LookupType value=&quot;4&quot;/&gt;
-  &lt;LookupFlag value=&quot;0&quot;/&gt;
-  &lt;!-- SubTableCount=1 --&gt;
-  &lt;LigatureSubst index=&quot;0&quot; Format=&quot;1&quot;&gt;
-    &lt;LigatureSet glyph=&quot;cid12392&quot;&gt;
-      &lt;Ligature components=&quot;cid12358&quot; glyph=&quot;cid59650&quot;/&gt;
-    &lt;/LigatureSet&gt;
-    &lt;LigatureSet glyph=&quot;cid12414&quot;&gt;
-      &lt;Ligature components=&quot;cid12375,cid12390&quot; glyph=&quot;cid59648&quot;/&gt;
-      &lt;Ligature components=&quot;cid12377&quot; glyph=&quot;cid59651&quot;/&gt;
-    &lt;/LigatureSet&gt;
-    &lt;LigatureSet glyph=&quot;cid12417&quot;&gt;
-      &lt;Ligature components=&quot;cid12391&quot; glyph=&quot;cid59649&quot;/&gt;
-    &lt;/LigatureSet&gt;
-  &lt;/LigatureSubst&gt;
-&lt;/Lookup&gt;
-</code></pre>
+{% highlight xml %}
+<Lookup index="0">
+  <LookupType value="4"/>
+  <LookupFlag value="0"/>
+  <!-- SubTableCount=1 -->
+  <LigatureSubst index="0" Format="1">
+    <LigatureSet glyph="cid12392">
+      <Ligature components="cid12358" glyph="cid59650"/>
+    </LigatureSet>
+    <LigatureSet glyph="cid12414">
+      <Ligature components="cid12375,cid12390" glyph="cid59648"/>
+      <Ligature components="cid12377" glyph="cid59651"/>
+    </LigatureSet>
+    <LigatureSet glyph="cid12417">
+      <Ligature components="cid12391" glyph="cid59649"/>
+    </LigatureSet>
+  </LigatureSubst>
+</Lookup>
+{% endhighlight %}
 
 <p>
 Edge は仮名連綿を正しくレンダリングできず、文字がひどく崩れるようであった。

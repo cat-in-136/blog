@@ -16,12 +16,14 @@ date: '2017-04-23T10:19:20+09:00'
     <p>中国語簡体字または日本語の漢字を、対応する旧字体に置き換えます（<a target="_blank" href="https://www.microsoft.com/typography/otspec/features_pt.htm#trad">出典</a>）。</p>
   </div>
   <div>
-    <pre class="prettyprint lang-css">.class {
+{% highlight css %}
+.class {
   font-variant-east-asian: traditional;
-  -moz-font-feature-settings: &#34;trad&#34;;
-  -webkit-font-feature-settings: &#34;trad&#34;;
-  font-feature-settings: &#34;trad&#34;;
-}</pre>
+  -moz-font-feature-settings: "trad";
+  -webkit-font-feature-settings: "trad";
+  font-feature-settings: "trad";
+}
+{% endhighlight %}
   </div>
   <div>
     <p>旧字体の機能は<strong>デフォルトで無効</strong>であり、Mac OS または iOS の Safari のどのバージョンでもサポートされていません。font-variant プロパティまたは font-variant-east-asian サブプロパティでこの機能を有効にするには、traditional 値を使用します。font-feature-settings で同じ効果を得るには、「trad」機能タグを使用します。</p>

@@ -17,8 +17,9 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/12/xmlserializerserializet
 </p>
 
 <div>
-<pre class="prettyprint"><code>(new XMLSerializer()).serializeToString(document.documentElement)
-</code></pre>
+{% highlight javascript %}
+(new XMLSerializer()).serializeToString(document.documentElement)
+{% endhighlight %}
 <a href="javascript:(function(){prompt('', (new XMLSerializer()).serializeToString(document.documentElement))})();">bookmarklet</a>
 </div>
 

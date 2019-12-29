@@ -112,7 +112,8 @@ PQI Air Card の IP アドレスがわかる。</p>
 
 <p>下記のとおり C 言語で書いた：</p>
 
-<pre class="prettyprint lang-c"><code>/* yo_service.c
+{% highlight c %}
+/* yo_service.c
  * under MIT license
  * 
  * Copyright (c) 2014 @cat_in_136
@@ -135,15 +136,15 @@ PQI Air Card の IP アドレスがわかる。</p>
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;signal.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;sys/socket.h&gt;
-#include &lt;netinet/in.h&gt;
-#include &lt;arpa/inet.h&gt;
-#include &lt;unistd.h&gt;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 /** Have SIGTERM been received? */
 static int isTermReceived = 0;
@@ -166,11 +167,11 @@ static int open_udp_conn(in_addr_t b_addr, u_short port)
     return sock;
   }
 
-  memset(&amp;addr, 0, sizeof(addr));
+  memset(&addr, 0, sizeof(addr));
   addr.sin_family = AF_INET;
   addr.sin_port = htons(port);
   addr.sin_addr.s_addr = b_addr;
-  ret = bind(sock, (struct sockaddr *) &amp;addr, sizeof(addr));
+  ret = bind(sock, (struct sockaddr *) &addr, sizeof(addr));
   if (ret == -1) {
     perror("bind error.");
     close(sock);
@@ -196,7 +197,7 @@ static void handle_udp_conn(int sock, const char *msg, size_t msg_len)
 
   // receive a packet
   memset(buf, 0, sizeof(buf));
-  s = recvfrom(sock, buf, sizeof(buf), 0, (struct sockaddr *) &amp;src_addr, &amp;addrlen);
+  s = recvfrom(sock, buf, sizeof(buf), 0, (struct sockaddr *) &src_addr, &addrlen);
   if (s == 0) {
     perror("empty message received");
     return;
@@ -205,14 +206,14 @@ static void handle_udp_conn(int sock, const char *msg, size_t msg_len)
   //puts(buf);
   
   // build response message
-  if ((s + strlen(CRLF) + msg_len) &lt; sizeof(buf)) {
-    memcpy(&amp;buf[s], CRLF, strlen(CRLF));
+  if ((s + strlen(CRLF) + msg_len) < sizeof(buf)) {
+    memcpy(&buf[s], CRLF, strlen(CRLF));
     s += strlen(CRLF);
 
-    memcpy(&amp;buf[s], msg, msg_len);
+    memcpy(&buf[s], msg, msg_len);
     s += msg_len;
 
-    sendto(sock, buf, s, 0, (struct sockaddr *) &amp;src_addr, addrlen);
+    sendto(sock, buf, s, 0, (struct sockaddr *) &src_addr, addrlen);
   }
 }
 
@@ -255,7 +256,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  ret = inet_aton(argv[1], (struct in_addr *) &amp;b_addr);
+  ret = inet_aton(argv[1], (struct in_addr *) &b_addr);
   if (ret == 0) {
     perror("Invalid IP address");
     return EXIT_FAILURE;
@@ -288,7 +289,8 @@ int main(int argc, char *argv[]) {
 }
 
 /* vim:set tabstop=2 expandtab shiftwidth=2 softtabstop=0: */
-</code></pre>
+
+{% endhighlight %}
 
 <p>これを PQI Air Card 向けにコンパイルをした。
 商用であるが無料で使える <a href="http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/" title="Sourcery CodeBench Lite Edition including ARM GCC IDE - Mentor Graphics">Sourcery CodeBench Lite</a> という
@@ -307,7 +309,8 @@ PC上でデバッグ検証をするのならば普通に x86_64 の gcc など�
 
 <p>そしてSDカードのルートの<code>autorun.sh</code>には下記を記述する（または追記する）。</p>
 
-<pre class="prettyprint lang-sh"><code>#!/bin/sh
+{% highlight sh %}
+#!/bin/sh
 
 sleep 5
 
@@ -315,8 +318,8 @@ ln -s /mnt/sd/path/to/yo_service /bin/yo_service
 chmod +x /bin/yo_service
 sync; sync; sync
 
-yo_service 0.0.0.0 10091 "Yo from PQI_AIR_CARD" &amp;
-</code></pre>
+yo_service 0.0.0.0 10091 "Yo from PQI_AIR_CARD" &
+{% endhighlight %}
 
 <p>あとはカメラの電源を入れたときに <code>yo_service</code> が起動し常駐するようになる。</p>
 
@@ -325,7 +328,8 @@ yo_service 0.0.0.0 10091 "Yo from PQI_AIR_CARD" &amp;
 <p>機器（サービス）側の実装とデプロイで疲れてしまったので、
 クライアント側は下記のような適当な ruby コードで確認した。</p>
 
-<pre class="prettyprint lang-ruby"><code>#!/usr/bin/ruby
+{% highlight ruby %}
+#!/usr/bin/ruby
 require "socket"
 
 udp = nil
@@ -343,7 +347,8 @@ begin
 ensure
   udp.close unless udp.nil?
 end
-</code></pre>
+
+{% endhighlight %}
 
 <p>カメラに電源を入れた後しばらく待って (PQI Air Card の WiFi が確立する時間)
 下記実行したらきちんと “Yo” が帰ってきた。</p>

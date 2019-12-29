@@ -16,9 +16,8 @@ Usually rpmbuild's build process is running with only one CPU.
 But it is possible to run with more than one CPU.
 To run with more than one CPU, edit <code>~/.rpmmacros</code> and add:
 </p>
-<code class="prettyprint"><pre>
-%__make         /usr/bin/make -j <var>6</var>
-</pre></code>
+<pre><code>%__make         /usr/bin/make -j <var>6</var>
+</code></pre>
 <p>
 Specify <code>-j <em>6</em></code> if you have a hexa-core CPU. Specify <code>-j <em>4</em></code> if dual-core.
 <ins date="2011-04-16T04:08:18Z">Clearer advices that just only <code>-j</code> make to create as many threads as it feels like.</ins>

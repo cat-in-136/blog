@@ -73,8 +73,9 @@ Note that pref "<code>general.useragent.security</code>" was also removed at <a 
 An error was occurs whenever the dialog initialized.
 Following code on Configuration Mania (version 1.12.2010071001) throws <code>NS_ERROR_UNEXPECTED</code> since <code>"general.useragent.security"</code> does not exist on Firefox 4.0b2.
 </p>
-<pre class="prettyprint"><code>     var mSecurity = prefBranch.getCharPref("general.useragent.security");
-</code></pre>
+{% highlight javascript %}
+var mSecurity = prefBranch.getCharPref("general.useragent.security");
+{% endhighlight %}
 <p>
 Fixed patch has been pushed on <a href="http://bitbucket.org/cat_in_136/configuration-mania/changesets">bitbucket's repository</a>.
 </p>

@@ -42,22 +42,23 @@ last_modified_at: '2016-11-18T15:10:12+09:00'
 
 <p>具体的には下記の通りとなる</p>
 
-<pre class="prettyprint lang-html"><code>&lt;ruby&gt;
-  &lt;rb&gt;以&lt;/rb&gt;
-  &lt;rb class="kaeriten"&gt;&#12696;&lt;/rb&gt;
-  &lt;rtc&gt;
-    &lt;rt&gt;もつ&lt;/rt&gt;
-    &lt;rt&gt;テ&lt;/rt&gt;
-  &lt;/rtc&gt;
-&lt;/ruby&gt;
-&lt;style&gt;
+{% highlight html %}
+<ruby>
+  <rb>以</rb>
+  <rb class="kaeriten">&#12696;</rb>
+  <rtc>
+    <rt>もつ</rt>
+    <rt>テ</rt>
+  </rtc>
+</ruby>
+<style>
 .kaeriten {
   font-size: xx-small;
   vertical-align: sub;
   ruby-align: start;
 }
-&lt;/style&gt;
-</code></pre>
+</style>
+{% endhighlight %}
 
 <p>
 ここで&lt;rb&gt;要素を緑枠、&lt;rt&gt;要素を青枠で囲んで図に示すと次のようになる。
@@ -94,13 +95,13 @@ last_modified_at: '2016-11-18T15:10:12+09:00'
   <li>送り仮名は、&lt;sup&gt;として扱う。</li>
 </ul>
 
-<pre class="prettyprint lang-html"><code>
-如何&lt;sup&gt;ニシテ&lt;/sup&gt;
-用&lt;sub class="kaeriten"&gt;&#12691;&lt;/sub&gt;&lt;sup&gt;ヒテ&lt;/sup&gt;
-HTML5 Complex Ruby&lt;sub class="kaeriten"&gt;&#12690;&lt;/sub&gt;&lt;sup&gt;ヲ&lt;/sup&gt;
-寫&lt;sub class="kaeriten"&gt;&#12691;&lt;/sub&gt;&lt;sup&gt;スカ&lt;/sup&gt;
-漢文訓讀文&lt;sub class="kaeriten"&gt;&#12690;&lt;/sub&gt;&lt;sup&gt;ヲ&lt;/sup&gt;。
-</code></pre>
+{% highlight html %}
+如何<sup>ニシテ</sup>
+用<sub class="kaeriten">&#12691;</sub><sup>ヒテ</sup>
+HTML5 Complex Ruby<sub class="kaeriten">&#12690;</sub><sup>ヲ</sup>
+寫<sub class="kaeriten">&#12691;</sub><sup>スカ</sup>
+漢文訓讀文<sub class="kaeriten">&#12690;</sub><sup>ヲ</sup>。
+{% endhighlight %}
 
 <figure class="kanbun">
 <p class="kanbun" style="margin: 1em;">
@@ -172,48 +173,48 @@ Complex Ruby を使わない場合との差、おわかりいただけるであ�
 
 <p>これは次のソースから得られる。</p>
 
-<pre class="prettyprint lang-html"><code>
-&lt;p class="kanbun" style="margin: 1em;"&gt;
-&lt;ruby&gt;&lt;rb&gt;荷宇&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ハ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;生&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;マレテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;十月&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ニシテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;而&lt;/rb&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;喪&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;うしな&lt;/rt&gt;&lt;rt&gt;フ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;其&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ノ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;母&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;。
-&lt;ruby&gt;&lt;rb&gt;及&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ビ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;有&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ルニ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;知&lt;/rb&gt;&lt;/ruby&gt;、
-&lt;ruby&gt;&lt;rb&gt;即&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;チ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;時時&lt;/rb&gt;&lt;/ruby&gt;、
-&lt;ruby&gt;&lt;rb&gt;念&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;おも&lt;/rt&gt;&lt;rt&gt;ヒテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;母&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;不&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;置&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;カ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;、
-&lt;ruby&gt;&lt;rb&gt;弥&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;いよいよ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;久&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;シクシテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;弥&lt;/rb&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;篤&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;あつ&lt;/rt&gt;&lt;rt&gt;シ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;。
-&lt;ruby&gt;&lt;rb&gt;哀&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;かな&lt;/rt&gt;&lt;rt&gt;シム&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;其&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ノ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;身&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ノ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;不&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;能&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12692;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ハ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;一日&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;トシテ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;事&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;フル&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;乎&lt;/rb&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;母&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ニ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;也&lt;/rb&gt;&lt;/ruby&gt;。
-&lt;ruby&gt;&lt;rb&gt;哀&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12691;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;かな&lt;/rt&gt;&lt;rt&gt;シム&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;母之言語動作&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;モ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;亦&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;ま&lt;/rt&gt;&lt;rt&gt;タ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;未&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12690;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ダ&lt;/rt&gt;&lt;/rtc&gt;&lt;rtc class="okurikana-2nd"&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ルヲ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;能&lt;/rb&gt;&lt;rb class="kaeriten"&gt;&amp;#12689;&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;&lt;/rt&gt;&lt;rt&gt;ハ&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;識&lt;/rb&gt;&lt;rtc&gt;&lt;rt&gt;し&lt;/rt&gt;&lt;rt&gt;ル&lt;/rt&gt;&lt;/rtc&gt;&lt;/ruby&gt;
-&lt;ruby&gt;&lt;rb&gt;也&lt;/rb&gt;&lt;/ruby&gt;。
-&lt;/p&gt;
+{% highlight html %}
+<p class="kanbun" style="margin: 1em;">
+<ruby><rb>荷宇</rb><rtc><rt></rt><rt>ハ</rt></rtc></ruby>
+<ruby><rb>生</rb><rtc><rt></rt><rt>マレテ</rt></rtc></ruby>
+<ruby><rb>十月</rb><rtc><rt></rt><rt>ニシテ</rt></rtc></ruby>
+<ruby><rb>而</rb></ruby>
+<ruby><rb>喪</rb><rb class="kaeriten">&#12691;</rb><rtc><rt>うしな</rt><rt>フ</rt></rtc></ruby>
+<ruby><rb>其</rb><rtc><rt></rt><rt>ノ</rt></rtc></ruby>
+<ruby><rb>母</rb><rb class="kaeriten">&#12690;</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>。
+<ruby><rb>及</rb><rb class="kaeriten">&#12689;</rb><rtc><rt></rt><rt>ビ</rt></rtc></ruby>
+<ruby><rb>有</rb><rb class="kaeriten">&#12689;</rb><rtc><rt></rt><rt>ルニ</rt></rtc></ruby>
+<ruby><rb>知</rb></ruby>、
+<ruby><rb>即</rb><rtc><rt></rt><rt>チ</rt></rtc></ruby>
+<ruby><rb>時時</rb></ruby>、
+<ruby><rb>念</rb><rb class="kaeriten">&#12689;</rb><rtc><rt>おも</rt><rt>ヒテ</rt></rtc></ruby>
+<ruby><rb>母</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>
+<ruby><rb>不</rb><rb class="kaeriten">&#12689;</rb></ruby>
+<ruby><rb>置</rb><rtc><rt></rt><rt>カ</rt></rtc></ruby>、
+<ruby><rb>弥</rb><rtc><rt>いよいよ</rt></rtc></ruby>
+<ruby><rb>久</rb><rtc><rt></rt><rt>シクシテ</rt></rtc></ruby>
+<ruby><rb>弥</rb></ruby>
+<ruby><rb>篤</rb><rtc><rt>あつ</rt><rt>シ</rt></rtc></ruby>。
+<ruby><rb>哀</rb><rb class="kaeriten">&#12691;</rb><rtc><rt>かな</rt><rt>シム</rt></rtc></ruby>
+<ruby><rb>其</rb><rtc><rt></rt><rt>ノ</rt></rtc></ruby>
+<ruby><rb>身</rb><rtc><rt></rt><rt>ノ</rt></rtc></ruby>
+<ruby><rb>不</rb><rb class="kaeriten">&#12690;&#12689;</rb><rtc><rt></rt><rt>ヲ</rt></rtc></ruby>
+<ruby><rb>能</rb><rb class="kaeriten">&#12692;</rb><rtc><rt></rt><rt>ハ</rt></rtc></ruby>
+<ruby><rb>一日</rb><rtc><rt></rt><rt>トシテ</rt></rtc></ruby>
+<ruby><rb>事</rb><rb class="kaeriten">&#12691;</rb><rtc><rt></rt><rt>フル</rt></rtc></ruby>
+<ruby><rb>乎</rb></ruby>
+<ruby><rb>母</rb><rb class="kaeriten">&#12690;</rb><rtc><rt></rt><rt>ニ</rt></rtc></ruby>
+<ruby><rb>也</rb></ruby>。
+<ruby><rb>哀</rb><rb class="kaeriten">&#12691;</rb><rtc><rt>かな</rt><rt>シム</rt></rtc></ruby>
+<ruby><rb>母之言語動作</rb><rtc><rt></rt><rt>モ</rt></rtc></ruby>
+<ruby><rb>亦</rb><rtc><rt>ま</rt><rt>タ</rt></rtc></ruby>
+<ruby><rb>未</rb><rb class="kaeriten">&#12690;&#12689;</rb><rtc><rt></rt><rt>ダ</rt></rtc><rtc class="okurikana-2nd"><rt></rt><rt>ルヲ</rt></rtc></ruby>
+<ruby><rb>能</rb><rb class="kaeriten">&#12689;</rb><rtc><rt></rt><rt>ハ</rt></rtc></ruby>
+<ruby><rb>識</rb><rtc><rt>し</rt><rt>ル</rt></rtc></ruby>
+<ruby><rb>也</rb></ruby>。
+</p>
 
-&lt;style scope="scope"&gt;
+<style scope="scope">
 .kanbun {
   line-height: 150%;
 }
@@ -225,8 +226,8 @@ Complex Ruby を使わない場合との差、おわかりいただけるであ�
 .kanbun .okurikana-2nd {
   ruby-position: under;
 }
-&lt;/style&gt;
-</code></pre>
+</style>
+{% endhighlight %}
 
 <style scope="scope">
 figure.kanbun {

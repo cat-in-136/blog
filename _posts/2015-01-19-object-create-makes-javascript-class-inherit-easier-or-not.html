@@ -11,7 +11,8 @@ last_modified_at: '2015-01-19T00:53:10+09:00'
 下記のようなクラス継承のコードは…
 </p>
 
-<pre class="prettyprint"><code>class Pet {
+{% highlight javascript %}
+class Pet {
     name: string;
     age: number;
     constructor(name: string) {
@@ -33,7 +34,7 @@ var cat = new Cat("Cathy");
 cat.countAge();
 cat.sleep();
 alert(cat.name + " is " + cat.age + " y.o.");
-</code></pre>
+{% endhighlight %}
 
 <p>
 伝統的には<code>prototype</code>をコピーして継承をするのが、
@@ -41,7 +42,8 @@ JavaScript のやり方。
 流派はあるが大体下記のような感じじゃないだろうか：
 </p>
 
-<pre class="prettyprint"><code>function Pet(name) {
+{% highlight javascript %}
+function Pet(name) {
     this.name = name;
     this.age = 0;
 }
@@ -62,7 +64,7 @@ var cat = new Cat("Cathy");
 cat.countAge();
 cat.sleep();
 alert(cat.name + " is " + cat.age + " y.o.");
-</code></pre>
+{% endhighlight %}
 
 <p>
 最近の JavaScript (ECMA Script 5) では、<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.3.5"><code>Object.create( O [, Properties] )</code></a>というのがある。
@@ -90,7 +92,8 @@ alert(cat.name + " is " + cat.age + " y.o.");
 要するに下記のように使って欲しいらしい。
 </p>
 
-<pre class="prettyprint"><code>var Cat = {
+{% highlight javascript %}
+var Cat = {
     age: 0,
     countAge: function () {
         this.age += 1;
@@ -104,7 +107,7 @@ var cat = Object.create(Cat, {name: {value: "Cathy"}});
 cat.countAge();
 cat.sleep();
 alert(cat.name + " is " + cat.age + " y.o.");
-</code></pre>
+{% endhighlight %}
 
 <p>
 なお <code>cat.name = "Cathy"</code>を改名可能なようにするためには、
@@ -125,7 +128,8 @@ alert(cat.name + " is " + cat.age + " y.o.");
 結構冗長。
 </p>
 
-<pre class="prettyprint"><code>function Pet(name) {
+{% highlight javascript %}
+function Pet(name) {
     this.name = name;
     this.age = 0;
 }
@@ -166,7 +170,7 @@ var cat = new Cat("Cathy");
 cat.countAge();
 cat.sleep();
 alert(cat.name + " is " + cat.age + " y.o.");
-</code></pre>
+{% endhighlight %}
 
 <p>
 prototype を<code>Object.create()</code> するという業!
@@ -188,7 +192,8 @@ ECMA Script 6 ないし TypeScript となっていて、
 JavaScript に変換すると下のようになる。
 </p>
 
-<pre class="prettyprint"><code>var __extends = this.__extends || function (d, b) {
+{% highlight javascript %}
+var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -218,7 +223,7 @@ var cat = new Cat("Cathy");
 cat.countAge();
 cat.sleep();
 alert(cat.name + " is " + cat.age + " y.o.");
-</code></pre>
+{% endhighlight %}
 
 <p>参考文献</p>
 

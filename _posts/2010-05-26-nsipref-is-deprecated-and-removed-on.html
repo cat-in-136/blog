@@ -13,9 +13,10 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/05/nsipref-is-deprecated-a
 
 <p>On firefox 3.7a4, following code throws a exception:</p>
 
-<pre class="prettyprint"><code>Components.classes["@mozilla.org/preferences;1"]
+{% highlight javascript%}
+Components.classes["@mozilla.org/preferences;1"]
   .getService(Components.interfaces.nsIPref);
-</code></pre>
+{% endhighlight %}
 
 <p>Thrown exception is:</p>
 
@@ -35,33 +36,37 @@ Error: uncaught exception: [Exception... "Component returned failure code: 0x805
 
 <p><code>nsIPref#getBranch</code> -&gt; <code>nsIPrefService#getBranch</code></p>
 
-<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences;1"]
+{% highlight javascript %}
+var pref = Components.classes["@mozilla.org/preferences;1"]
   .getService(Components.interfaces.nsIPref);
  var branch = pref.getBranch("browser");
-</code></pre>
+{% endhighlight %}
 
 <p>shall be replaced with</p>
 
-<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences-service;1"]
+{% highlight javascript %}
+var pref = Components.classes["@mozilla.org/preferences-service;1"]
   .getService(Components.interfaces.nsIPrefService);
  var branch = pref.getBranch("browser");
-</code></pre>
+{% endhighlight %}
 
 <h4>Example#2</h4>
 
 <p><code>nsIPref#getBoolPref</code> -&gt; <code>nsIPrefBranch#getBoolPref</code></p>
 
-<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences;1"]
+{% highlight javascript %}
+var pref = Components.classes["@mozilla.org/preferences;1"]
   .getService(Components.interfaces.nsIPref);
  var autoHide = pref.getBoolPref("browser.tabs.autoHide");
-</code></pre>
+{% endhighlight %}
 
 <p>shall be replaced with</p>
 
-<pre class="prettyprint"><code> var pref = Components.classes["@mozilla.org/preferences-service;1"]
+{% highlight javascript %}
+var pref = Components.classes["@mozilla.org/preferences-service;1"]
   .getService(Components.interfaces.nsIPrefBranch);
  var autoHide = pref.getBoolPref("browser.tabs.autoHide");
-</code></pre>
+{% endhighlight %}
 
 <h4>See Also</h4>
 

@@ -17,9 +17,10 @@ Q. HTML のコピー禁止をするにはどうすればいいですか?
 
 <p>古典的な回答：</p>
 
-<pre class="prettyprint lang-html"><code>&lt;body oncopy="return false;"
-      oncontextmenu="return false;"&gt;
-</code></pre>
+{% highlight html %}
+<body oncopy="return false;"
+  oncontextmenu="return false;">
+{% endhighlight %}
 
 <p>要するにコピーイベントおよびポップアップメニューを無効(<code>return false</code>)にしてしまう。
 なお、<code>div</code>要素など個別に指定もできるので、
@@ -75,9 +76,10 @@ HTML 5 標準には含まれていないが、最近は <a href="https://develop
 
 <p>さらに IE9 以前には <code>selectstart</code> イベントが捕捉できるので、これをキャンセルすればよい。</p>
 
-<pre class="prettyprint lang-html"><code>&lt;body style="-webkit-user-select: none; -khtml-user-select: none; -ms-user-select: none; -moz-user-select: none; user-select: none;"
-      onselectstart="return false;"&gt;
-</code></pre>
+{% highlight html %}
+<body style="-webkit-user-select: none; -khtml-user-select: none; -ms-user-select: none; -moz-user-select: none; user-select: none;"
+      onselectstart="return false;">
+{% endhighlight %}
 
 <p>なお、<code>onselectstart</code> の動作に目をつぶれば、 
 下記のように指定区域のみ禁止的なこともできる。</p>
@@ -92,8 +94,9 @@ Q. `user-select: none` 指定されたテキストをコピーするにはどう
 <p>たとえば、Firefox だったら <a href="https://developer.mozilla.org/ja/docs/Tools/Web_Console">Web Console</a> なり <a href="https://developer.mozilla.org/ja/docs/Tools/Scratchpad">Scratch Pad</a> なりに
 以下を入力して実行。</p>
 
-<pre class="prettyprint lang-js"><code>Array.forEach(window.document.getElementsByTagName("*"), function(v){v.style.MozUserSelect="";}));
-</code></pre>
+{% highlight javascript %}
+Array.forEach(window.document.getElementsByTagName("*"), function(v){v.style.MozUserSelect="";}));
+{% endhighlight %}
 
 <p>なにはともあれいかなる努力を持ってしても、
 ソースコードなりDOM 構文木にアクセスできる術があるので、

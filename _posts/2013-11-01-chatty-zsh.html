@@ -63,7 +63,8 @@ Line 284
 <p>で、<code>self-insert</code>, <code>magic-space</code>, <code>backward-delete-char</code>, <code>delete-char-or-list</code> をホックして、
 そのときの入力コマンド(<code>$BUFFER</code>)を毎度条件判定してメッセージを表示するという方法に至った。</p>
 
-<pre class="prettyprint"><code># chatty: 小うるさい端末 のzsh版 
+{% highlight zsh %}
+# chatty: 小うるさい端末 のzsh版 
 #
 # 元ネタ：http://0xcc.net/chatty/
 # 
@@ -116,7 +117,7 @@ chatty-info() {
   elif [[ "$BUFFER" =~ "^ *vi ?$" ]]; then
     zle -M "emacsは嫌いなのね"
   elif [[ "$BUFFER" =~ "^ *vim ?$" ]]; then
-    zle -M "お〜れだっけ V.I.M. &lt;http://www.taiyaki.org/misc/vim/&gt;"
+    zle -M "お〜れだっけ V.I.M. <http://www.taiyaki.org/misc/vim/>"
   elif [[ "$BUFFER" =~ "^ *sudo ?$" ]]; then
     zle -M "他人のメールでも見るんでしょ〜"
   elif [[ "$BUFFER" =~ "^ *vipw ?$" ]]; then
@@ -163,7 +164,8 @@ chatty-info() {
 
 # Handle zsh autoloading conventions
 chatty-on "$@"
-</code></pre>
+
+{% endhighlight %}
 
 <p>使い方は <code>chatty-on</code> というファイル名で <code>/usr/share/zsh/site-functions</code> (などの<code>$fpath</code>が通っているフォルダ)に置いた上で、下記を実行する。</p>
 

@@ -44,7 +44,8 @@ Exif.Photo.LensModel                         Ascii      21  EF85mm f/1.2L II USM
 Exif.Photo.LensModel から取得できない時は Maker Note を見て試してみるようにしてある。
 </p>
 
-<pre class="prettyprint lang-sh"><code>#!/bin/sh
+{% highlight sh %}
+#!/bin/sh
 
 for i in `find . -iname "*.jpg"`; do
   cap_time=`exiv2 -g Exif.Photo.DateTimeOriginal -Pv $i`
@@ -61,7 +62,7 @@ for i in `find . -iname "*.jpg"`; do
 
   echo $i,$cap_time,$lens_name
 done
-</code></pre>
+{% endhighlight %}
 
 <p>
 上記を適当な名前で保存して（仮に ichigen_taihen.sh とでもする）画像ファイルがあるディレクトリをカレントディレクトリとして、

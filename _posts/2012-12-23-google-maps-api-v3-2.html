@@ -93,7 +93,8 @@ ImageMapType クラスの作り方は下記の通り。
 あとは、この MapType を登録する（登録処理部のソース略）。
 </p>
 
-<pre class="prettyprint"><code>function createTransitMapType (styleId, name, alt) {
+{% highlight javascript %}
+function createTransitMapType (styleId, name, alt) {
   if (name == undefined) name = "style="+styleId;
   return new google.maps.ImageMapType({
     name: name, alt: alt,
@@ -102,8 +103,8 @@ ImageMapType クラスの作り方は下記の通り。
     maxZoom: 22,
     minZoom: 10,
     getTileUrl: function(coord, zoom) {
-      var mt = ((coord.y &amp; 0x1 == 0)? 0 : 2) | (coord.x &amp; 0x1);
-      var url = "http://mts%m.google.com/mapslt?lyrs=transit:prev|pm:1|vm:1,m&amp;x=%x&amp;y=%y&amp;z=%z&amp;w=256&amp;h=256&amp;style=%s"
+      var mt = ((coord.y & 0x1 == 0)? 0 : 2) | (coord.x & 0x1);
+      var url = "http://mts%m.google.com/mapslt?lyrs=transit:prev|pm:1|vm:1,m&x=%x&y=%y&z=%z&w=256&h=256&style=%s"
         .replace("%m", mt)
         .replace("%x", coord.x).replace("%y", coord.y)
         .replace("%z", zoom)
@@ -112,7 +113,7 @@ ImageMapType クラスの作り方は下記の通り。
     }
   });
 }
-</code></pre>
+{% endhighlight %}
 
 <p>
 なお、これはドキュメント化されていない非公式なものなので、

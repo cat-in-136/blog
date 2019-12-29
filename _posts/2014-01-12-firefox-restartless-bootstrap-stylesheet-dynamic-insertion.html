@@ -42,10 +42,11 @@ stylesheet の動的追加の方法を以下に示す。</p>
 <p>この<code>&lt;?xml-stylesheet ...&gt;</code> -- XML の規格にそうと <a href="http://www.w3.org/TR/2004/REC-xml-infoset-20040204#sec-pi" title="Processing Instructions - Extensible Markup Language (XML) 1.0">processing instruction</a> という --
 は下記のようにして動的に追加できる。</p>
 
-<pre class="prettyprint lang-js"><code>var pi = document.createProcessingInstruction('xml-stylesheet',
+{% highlight javascript %}
+var pi = document.createProcessingInstruction('xml-stylesheet',
           'href="chrome://foobar/skin/foobar.css" type="text/css"');
 document.insertBefore(pi, document.documentElement);
-</code></pre>
+{% endhighlight %}
 
 <p>一般に processing instruction は任意の場所に挿入できるのだが、
 <code>xml-stylesheet</code> の場合はルート要素（ドキュメント要素）の前に入れないといけない。
@@ -60,11 +61,12 @@ DOM で XUL 要素を削除するが、これと同じタイミングで stylesh
 この処理は、
 普通に要素を探して <code>removeChild()</code> すればよい。</p>
 
-<pre class="prettyprint lang-js"><code>for (var i = 0; document.childNodes.length; i++) {
+{% highlight javascript %}
+for (var i = 0; i < document.childNodes.length; i++) {
   var child = document.childNodes[i];
   if (child.nodeType == Element.PROCESSING_INSTRUCTION_NODE) {
-    if ((child.nodeName == 'xml-stylesheet') &amp;&amp;
-        (child.nodeValue.indexOf('href="chrome://foobar/skin/foobar.css"') &gt;= 0)) {
+    if ((child.nodeName == 'xml-stylesheet') &&
+      (child.nodeValue.indexOf('href="chrome://foobar/skin/foobar.css"') >= 0)) {
       document.removeChild(child);
       break;
     }
@@ -72,7 +74,7 @@ DOM で XUL 要素を削除するが、これと同じタイミングで stylesh
     break;
   }
 }
-</code></pre>
+{% endhighlight %}
 
 <h4>余計な補足（念の為）</h4>
 

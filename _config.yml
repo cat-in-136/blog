@@ -6,6 +6,7 @@ twitter_username: cat_in_136
 github_username: cat-in-136
 source_repo_name: cat-in-136/blog
 source_repo_branch: master
+excerpt_separator: "<!--more-->"
 
 timezone: Japan
 encoding: utf-8

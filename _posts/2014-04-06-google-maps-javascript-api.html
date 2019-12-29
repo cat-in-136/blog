@@ -148,7 +148,7 @@ PNG ファイルまたは JPEG ファイルをドラッグアンドドロップ�
 
 <p>以下のタイトル部分をお好みのタイトルに変える：</p>
 
-<pre class="prettyprint lang-html"><code>  &lt;title&gt;＿タイトル＿&lt;/title&gt;
+<pre><code>  &lt;title&gt;＿タイトル＿&lt;/title&gt;
 ↓
   &lt;title&gt;<ins>私の想像地図</ins>&lt;/title&gt;
 </code></pre>
@@ -157,7 +157,7 @@ PNG ファイルまたは JPEG ファイルをドラッグアンドドロップ�
 環境とかのために何らかのリンクを貼ったほうがよいと思われる。
 （検索エンジン最適化も兼ねる）</p>
 
-<pre class="prettyprint lang-html"><code> &lt;div id="map_canvas"&gt;
+<pre><code> &lt;div id="map_canvas"&gt;
    JavaScript を有効にしてください。
  &lt;/div&gt;
 ↓
@@ -176,14 +176,14 @@ PNG ファイルまたは JPEG ファイルをドラッグアンドドロップ�
 <p>以下の部分をあなたのウェブページなどに変える。
 私だったら下記のように変える：</p>
 
-<pre class="prettyprint lang-js"><code>  copyrightSpan.innerHTML = "地図データ &amp;#169; " + "＿地図製作者＿".link("http://example.com/＿地図製作者のページへのリンク＿");
+<pre><code>  copyrightSpan.innerHTML = "地図データ &amp;#169; " + "＿地図製作者＿".link("http://example.com/＿地図製作者のページへのリンク＿");
 ↓
   copyrightSpan.innerHTML = "地図データ &amp;#169; " + "<ins>@cat_in_136</ins>".link("<ins>http://cat-in-136.blogspot.com/</ins>");
 </code></pre>
 
 <p>余計な注釈：地図画像を上の例とは違った置き方やファイル名とした場合は下記の箇所を変えると動作する。html ファイルからの相対パスかあるいは絶対パスを指定する。以下は変更例：</p>
 
-<pre class="prettyprint lang-js"><code>      return "../tile/custom_map_tile_%y_%x.png"
+<pre><code>      return "../tile/custom_map_tile_%y_%x.png"
        .replace("%x", x.toString())
        .replace("%y", y.toString());
 ↓

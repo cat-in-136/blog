@@ -38,23 +38,25 @@ android アプリの一部にも細いフォントを指定しているのがあ
 <p>ここには、下記のように <code>NotoSansJP-Regular.otf</code> というのが書かれているため、
 Noto Sans JP が使われるように見える。</p>
 
-<pre class="prettyprint lang-xml"><code>    &lt;family&gt;
-        &lt;fileset&gt;
-            &lt;file lang="ja"&gt;NotoSansJP-Regular.otf&lt;/file&gt;
-        &lt;/fileset&gt;
-    &lt;/family&gt;
-</code></pre>
+{% highlight xml %}
+    <family>
+        <fileset>
+            <file lang="ja">NotoSansJP-Regular.otf</file>
+        </fileset>
+    </family>
+{% endhighlight %} 
 
 <p>が、標準で入っていた <code>/system/fonts/NotoSansJP-Regular.otf</code> は、特殊な文字が入っているだけの168kB程度のファイルであった。
 なので、この記述よりも後ろの下記の内容が有効となるので日本語は特に断りがなければ、
 <code>/system/fonts/MTLmr3m.ttf</code> (モトヤLマルベリ3) で表示されるのである。</p>
 
-<pre class="prettyprint lang-xml"><code>    &lt;family&gt;
-        &lt;fileset&gt;
-            &lt;file lang="ja"&gt;MTLmr3m.ttf&lt;/file&gt;
-        &lt;/fileset&gt;
-    &lt;/family&gt;
-</code></pre>
+{% highlight xml %}
+    <family>
+        <fileset>
+            <file lang="ja">MTLmr3m.ttf</file>
+        </fileset>
+    </family>
+{% endhighlight %} 
 
 <p>よって、<code>NotoSansJP-*.otf</code> として日本語フォントを送り込み、 
 <code>fallback_fonts.xml</code> で追加した方のフォントにフォールバックするように設定すれば良い。</p>
@@ -76,37 +78,39 @@ Noto Sans JP が使われるように見える。</p>
     <p><code>/system/etc/fallback_fonts.xml</code> に上記で追加したフォントへの fallback を記述し、既存の日本語フォントへの fallback を削除する。
 例えば、下記のようにする。</p>
 
-    <pre class="prettyprint lang-xml"><code>&lt;!-- 既存の日本語フォントへの fallback を削除 --&gt;
-&lt;!--family&gt;
-    &lt;fileset&gt;
-        &lt;file lang="ja"&gt;MTLmr3m.ttf&lt;/file&gt;
-    &lt;/fileset&gt;
-&lt;/family--&gt;
-&lt;!-- ここ以下を追加 --&gt;
-&lt;family&gt;
-    &lt;fileset&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Light.otf&lt;/file&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Regular.otf&lt;/file&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Bold.otf&lt;/file&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Black.otf&lt;/file&gt;
-    &lt;/fileset&gt;
-&lt;/family&gt;
-</code></pre>
+{% highlight xml %}
+<!-- 既存の日本語フォントへの fallback を削除 -->
+<!--family>
+    <fileset>
+        <file lang="ja">MTLmr3m.ttf</file>
+    </fileset>
+</family-->
+<!-- ここ以下を追加 -->
+<family>
+    <fileset>
+        <file lang="ja">NotoSansCJKJP-Light.otf</file>
+        <file lang="ja">NotoSansCJKJP-Regular.otf</file>
+        <file lang="ja">NotoSansCJKJP-Bold.otf</file>
+        <file lang="ja">NotoSansCJKJP-Black.otf</file>
+    </fileset>
+</family>
+{% endhighlight %}
   </li>
   <li>
     <p><code>/system/etc/fonts.xml</code> に上記で追加したフォントの内容を登録する。
 ここで weight なども設定することとなる。
 例えば、下記を追加する。</p>
 
-    <pre class="prettyprint lang-xml"><code>&lt;family&gt;
-    &lt;fileset&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Light.otf&lt;/file&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Regular.otf&lt;/file&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Bold.otf&lt;/file&gt;
-        &lt;file lang="ja"&gt;NotoSansCJKJP-Black.otf&lt;/file&gt;
-    &lt;/fileset&gt;
-&lt;/family&gt;
-</code></pre>
+{% highlight xml %}
+<family>
+    <fileset>
+        <file lang="ja">NotoSansCJKJP-Light.otf</file>
+        <file lang="ja">NotoSansCJKJP-Regular.otf</file>
+        <file lang="ja">NotoSansCJKJP-Bold.otf</file>
+        <file lang="ja">NotoSansCJKJP-Black.otf</file>
+    </fileset>
+</family>
+{% endhighlight %}
   </li>
   <li>最後に再起動をする。</li>
 </ol>
@@ -160,7 +164,7 @@ Noto Sans JP が使われるように見える。</p>
 
 <p>updates-script:</p>
 
-<pre class="prettyprint"><code>ui_print("=== Japanese-NotoSans-install ===");
+<pre><code>ui_print("=== Japanese-NotoSans-install ===");
 ui_print("Mounting file system...");
 run_program("/sbin/mount", "/system");
 ui_print("Installing...");

@@ -24,22 +24,25 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/12/tip-how-to-run-new-fire
 
 <p>Are you a linux/unix user? If so, you can easily do it with the following shell script:</p>
 
-<pre class="prettyprint"><code class="lang-sh">#!/bin/sh
+{% highlight sh %}
+#!/bin/sh
 PROFILEDIR=/tmp/tmp-fx-profile.$$.d
 
 mkdir $PROFILEDIR
 firefox -profile $PROFILEDIR -no-remote -new-instance
 rm -rf $PROFILEDIR
-</code></pre>
+
+{% endhighlight %}
 
 <ins datetime="2015-12-29T09:45:14+09:00">
 <p>
 According to the Sangye's comment,
 using <a href="http://www.gnu.org/software/autogen/mktemp.html">mktemp(1)</a> is more better:
 </p>
-<pre class="prettyprint"><code class="lang-sh">#!/bin/sh
+{% highlight sh %}
+#!/bin/sh
 PROFILEDIR=`mktemp -p /tmp -d tmp-fx-profile.XXXXXX.d`
 firefox -profile $PROFILEDIR -no-remote -new-instance
 rm -rf $PROFILEDIR
-</code></pre>
+{% endhighlight %}
 </ins>

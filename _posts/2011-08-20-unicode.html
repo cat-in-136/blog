@@ -36,7 +36,9 @@ U+30A7 KATAKANA LETTER SMALL E + U+0301 COMBINING ACUTE ACCENT
 の形にすれば、Unicode 的に理にかなった方法で
 サンマルクカフェをエンコードできるとおもいやってみた。
 </p>
-<pre class="prettyprint"><code>サンマルクカフェ&amp;#x0301; Saint Marc Cafe&amp;#x0301;</code></pre>
+{% highlight html %}
+サンマルクカフェ&#x0301; Saint Marc Cafe&#x0301;
+{% endhighlight %}
 <div style="background-color: #FBF1DC; color: #5D310B; border: solid 2px #EBDEC4;">
 サンマルクカフェ&#x0301; Saint Marc Cafe&#x0301;
 </div>
@@ -46,7 +48,9 @@ U+30A7 KATAKANA LETTER SMALL E + U+0301 COMBINING ACUTE ACCENT
 さらに英語部分についても然り。
 どうやら言語を日本語以外にしないといけないらしい。
 </p>
-<pre class="prettyprint"><code>サンマルクカフ&lt;span lang="en"&gt;ェ&amp;#x0301;&lt;/span&gt; &lt;span lang="en"&gt;Saint Marc Cafe&amp;#x0301;&lt;/span&gt;</code></pre>
+{% highlight html %}
+サンマルクカフ<span lang="en">ェ&#x0301;</span> <span lang="en">Saint Marc Cafe&#x0301;</span>
+{% endhighlight %}
 <div style="background-color: #FBF1DC; color: #5D310B; border: solid 2px #EBDEC4;">
 サンマルクカフ<span lang="en">ェ&#x0301;</span> <span lang="en">Saint Marc Cafe&#x0301;</span>
 </div>

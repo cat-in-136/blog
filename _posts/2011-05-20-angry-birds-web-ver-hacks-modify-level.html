@@ -29,7 +29,7 @@ Bookmarklet:
 
 <h3>Original source code</h3>
 
-<code><pre class="prettyprint">
+{% highlight javascript %}
 (function () {
     var RealXMLHttpRequest = XMLHttpRequest;
     var FakeXMLHttpRequest = function () {
@@ -109,13 +109,13 @@ Bookmarklet:
         },
         _modifyAngryBirdLevel: function(jsonData) {
             // Add 10 more BIRD_BLACK.
-            for (var i = 0; i &lt; 10; i++) {
+            for (var i = 0; i < 10; i++) {
                 jsonData.counts.birds ++;
-                jsonData.world[&quot;bird_&quot; + jsonData.counts.birds] = {
-                    &quot;angle&quot;: 0,
-                    &quot;id&quot;: &quot;BIRD_BLACK&quot;,
-                    &quot;x&quot;: jsonData.world[&quot;bird_1&quot;].x,
-                    &quot;y&quot;: jsonData.world[&quot;bird_1&quot;].y
+                jsonData.world["bird_" + jsonData.counts.birds] = {
+                    "angle": 0,
+                    "id": "BIRD_BLACK",
+                    "x": jsonData.world["bird_1"].x,
+                    "y": jsonData.world["bird_1"].y
                 };
             }
             return jsonData;
@@ -125,7 +125,7 @@ Bookmarklet:
     };
     window.XMLHttpRequest = FakeXMLHttpRequest;
 })();
-</pre></code>
+{% endhighlight %}
 
 <h3>Principle: Hooking XMLHttpRequest</h3>
 
@@ -147,24 +147,25 @@ So, I hooked <code>XMLHttpRequest</code> class to modify the level data.
 <p>
 You can also modify blocks. Following example converts stone and wood blocks to ice blocks.
 </p>
+{% highlight javascript %}
 
-<code><pre class="prettyprint">
         _modifyAngryBirdLevel: function(jsonData) {
             // ...
             
             // Add 10 more BIRD_BLACK.
             for (var i = 1; i &lt; jsonData.counts.blocks; i++) {
-                jsonData.world[&quot;block_&quot; + i].id = jsonData.world[&quot;block_&quot; + i].id.replace(/(STONE|WOOD)_BLOCK/, "ICE_BLOCK");
+                jsonData.world["block_" + i].id = jsonData.world["block_" + i].id.replace(/(STONE|WOOD)_BLOCK/, "ICE_BLOCK");
             }
             return jsonData;
         },
-</pre></code>
+
+{% endhighlight %}
 
 <p>
 You can also make your <em>own</em> custom levels!!
 </p>
 
-<code><pre class="prettyprint">
+{% highlight javascript %}
         _modifyAngryBirdLevel: function(jsonData) {
             // A very very simple level: 1 black bird vs 1 pig.
             return {
@@ -213,7 +214,8 @@ You can also make your <em>own</em> custom levels!!
               }
             };
         },
-</pre></code>
+
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_tag VerySimpleLevelExample.png %}

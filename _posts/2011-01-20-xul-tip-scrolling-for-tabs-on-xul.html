@@ -15,21 +15,22 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2011/01/xul-tip-scrolling-for-t
 <p>
 The solution using <code>&lt;arrowscrollbox&gt;</code>.
 </p>
-<pre class="prettyprint"><code>&lt;tabbox&gt;
-  &lt;arrowscrollbox clicktoscroll="true" orient="horizontal"&gt;
-    &lt;tabs&gt;
-      &lt;tab label="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/&gt;
-      &lt;tab label="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"/&gt;
-      &lt;tab label="cccccccccccccccccccccccccccccccccccccccccccccccccccc"/&gt;
-    &lt;/tabs&gt;
-  &lt;/arrowscrollbox&gt;
-  &lt;tabpanels&gt;
-    &lt;label value="a"/&gt;
-    &lt;label value="b"/&gt;
-    &lt;label value="c"/&gt;
-  &lt;/tabpanels&gt;
-&lt;/tabbox&gt;
-</code></pre>
+{% highlight xml %}
+<tabbox>
+  <arrowscrollbox clicktoscroll="true" orient="horizontal">
+    <tabs>
+      <tab label="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
+      <tab label="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"/>
+      <tab label="cccccccccccccccccccccccccccccccccccccccccccccccccccc"/>
+    </tabs>
+  </arrowscrollbox>
+  <tabpanels>
+    <label value="a"/>
+    <label value="b"/>
+    <label value="c"/>
+  </tabpanels>
+</tabbox>
+{% endhighlight %}
 <p>
 When some of tabs are not visible, arrow-scroll-button is shown:
 </p>
@@ -42,15 +43,16 @@ Note that <code>arrowscrollbox</code> element surrounds <code>tabs</code> elemen
 If <code>arrowscrollbox</code> element is child of <code>tabs</code> element,
 tabbox does not work properly.
 </p>
-<pre class="prettyprint"><code>&lt;!-- Note: Does not work! --&gt;
-  &lt;tabs&gt;
-    &lt;arrowscrollbox clicktoscroll="true" orient="horizontal"&gt;
-      &lt;tab label="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/&gt;
-      &lt;tab label="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"/&gt;
-      &lt;tab label="cccccccccccccccccccccccccccccccccccccccccccccccccccc"/&gt;
-    &lt;/arrowscrollbox&gt;
-  &lt;/tabs&gt;
-</code></pre>
+{% highlight xml %}
+<!-- Note: Does not work! -->
+  <tabs>
+    <arrowscrollbox clicktoscroll="true" orient="horizontal">
+      <tab label="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
+      <tab label="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"/>
+      <tab label="cccccccccccccccccccccccccccccccccccccccccccccccccccc"/>
+    </arrowscrollbox>
+  </tabs>
+{% endhighlight %} 
 
 
 <h4>Issue of this solution</h4>

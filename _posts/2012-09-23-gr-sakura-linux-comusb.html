@@ -22,7 +22,8 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/09/gr-sakura-linux-comusb.
 
 <p>単にシリアル出力するだけならばプログラム（スケッチ）はこんな程度のを書けば良い。</p>
 
-<pre class="prettyprint"><code>#include &lt;rxduino.h&gt;
+{% highlight c %}
+#include <rxduino.h>
 
 void setup() {
     Serial.begin(38400, SCI_USB0);
@@ -30,7 +31,7 @@ void setup() {
 }
 void loop() {
 }
-</code></pre>
+{% endhighlight %}
 
 <p style="font-size: x-large; font-weight: light;">でも、実はUSBで繋ぐだけ、設定しなくてもよい。</p>
 
@@ -72,7 +73,7 @@ crw-rw----. 1 root dialout 166, 0  9月 22 23:29 /dev/ttyACM0
 加えて <code>ttyACM0</code> という名前も気に食わない。
 そう思う人は以下のような udev スクリプトを作って、<code>/etc/udev/rules.d/51-gr-sakura.rules</code> に放り込んでやればよい。</p>
 
-<pre class="prettyprint"><code># Gadget Renesas SAKURA (idVendor=2129, idProduct=0531)
+<pre><code># Gadget Renesas SAKURA (idVendor=2129, idProduct=0531)
 KERNEL=="ttyACM[0-9]*", ATTRS{product}=="Gadget Renesas SAKURA", MODE="0660", GROUP="plugdev", SYMLINK+="ttyUSB-Sakura"
 </code></pre>
 

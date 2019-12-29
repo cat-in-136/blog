@@ -45,7 +45,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2011/01/pov-ray.html
 
 <p>水面は真っ平らな無限平面(plane)で実現した。水面の傾きを実現するためには法線ベクトルを設定する方法を使った。それが<code>#if Wavelet</code>〜<code>#end</code>で囲った部分である。その他肝心のフレネル反射をするようにも設定した(<code>fresnel on</code>の箇所)。</p>
 
-<pre class="prettyprint"><code>#include "colors.inc"
+<pre><code>#include "colors.inc"
 
 global_settings {
     charset utf8

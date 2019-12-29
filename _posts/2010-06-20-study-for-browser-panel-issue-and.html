@@ -25,10 +25,11 @@ I found:
 <li>Attribute <code>animated="true"</code> and internal flag <code>_shouldAnimate=true</code> is set on <code>prefwindow</code> element when the option is enabled.</li>
 <li>If <code>_shouldAnimate</code> is true and prefpane is changed, the <code>prefpane</code>'s <code>flex</code> attribute is removed. So we cannot use <code>flex</code> for <code>prefpane</code>!!</li>
 </ul>
-<pre class="prettyprint"><code>if (aPaneElement.hasAttribute("flex") &amp;&amp; this._shouldAnimate &amp;&amp;
-  prefpanes.length &gt; 1)
+{% highlight javascript %}
+if (aPaneElement.hasAttribute("flex") && this._shouldAnimate &&
+  prefpanes.length > 1)
   aPaneElement.removeAttribute("flex");
-</code></pre>
+{% endhighlight %}
 <p>
 <code>_selectPane()</code> removes <code>flex</code> attribute so as to calculate size of contents.
 </p>

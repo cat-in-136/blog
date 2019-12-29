@@ -10,16 +10,17 @@ date: '2016-05-06T23:18:26+09:00'
 どっちが良いか云々とかいう定番な話があるが…
 </p>
 
-<pre class="prettyprint"><code>unsigned int div2ui(unsigned int x) {
+{% highlight c %}
+unsigned int div2ui(unsigned int x) {
   return x / 2;
 }
 int div2si(int x) {
   return x / 2;
 }
 unsigned int shiftdiv2ui(unsigned int x) {
-  return x &gt;&gt; 1;
+  return x >> 1;
 }
-</code></pre>
+{% endhighlight %}
 
 <p>
 なお、ここではC言語を前提としているため、
@@ -44,7 +45,8 @@ If <code>E1</code> has a signed type and a negative value, the resulting value i
 <pre class="console"><samp>% clang -c -S -emit-llvm hoge.c
 % </samp></pre>
 
-<pre class="prettyprint"><code>; Function Attrs: nounwind uwtable
+{% highlight llvm %}
+; Function Attrs: nounwind uwtable
 define i32 @div2ui(i32 %x) #0 {
   %1 = alloca i32, align 4
   store i32 %x, i32* %1, align 4
@@ -70,7 +72,8 @@ define i32 @shiftdiv2ui(i32 %x) #0 {
   %3 = lshr i32 %2, 1
   ret i32 %3
 }
-</code></pre>
+
+{% endhighlight %}
 
 <p>
 LLIR を見るまでもなく予見できたことではあるが、
@@ -90,7 +93,8 @@ clang は LLVM IR によりプロセッサに独立したレベルでの最適�
 <pre class="console"><samp>% clang -c -S -emit-llvm hoge.c -O
 % </samp></pre>
 
-<pre class="prettyprint"><code>; Function Attrs: nounwind optsize readnone uwtable
+{% highlight llvm %}
+; Function Attrs: nounwind optsize readnone uwtable
 define i32 @div2ui(i32 %x) #0 {
   %1 = lshr i32 %x, 1
   ret i32 %1
@@ -107,7 +111,7 @@ define i32 @shiftdiv2ui(i32 %x) #0 {
   %1 = lshr i32 %x, 1
   ret i32 %1
 }
-</code></pre>
+{% endhighlight %}
 
 <p>
 敢えて <code>-O</code> と最も最適化レベルが低いものを指定したが、
@@ -127,7 +131,7 @@ define i32 @shiftdiv2ui(i32 %x) #0 {
 <pre class="console"><samp>% clang -c -S hoge.c -O
 % </samp></pre>
 
-<pre class="prettyprint"><code>
+{% highlight nasm %}
 	.globl	div2ui
 	.type	div2ui,@function
 div2ui:                                 # @div2ui
@@ -165,7 +169,7 @@ shiftdiv2ui:                            # @shiftdiv2ui
 .Lfunc_end2:
 	.size	shiftdiv2ui, .Lfunc_end2-shiftdiv2ui
 	.cfi_endproc
-</code></pre>
+{% endhighlight %}
 
 <p>
 当然のことながら、<code>div2ui:</code> と <code>shiftdiv2ui:</code> とで
@@ -200,17 +204,19 @@ shiftdiv2ui:                            # @shiftdiv2ui
 考えられるが、これも同様にして解析することができる。
 </p>
 
-<pre class="prettyprint"><code>unsigned int mul10ui(unsigned int x) {
+{% highlight c %}
+unsigned int mul10ui(unsigned int x) {
   return x * 10;
 }
-</code></pre>
-<pre class="prettyprint"><code>; Function Attrs: nounwind readnone uwtable
+{% endhighlight %}
+{% highlight llvm %}
+; Function Attrs: nounwind readnone uwtable
 define i32 @mul10ui(i32 %x) #0 {
   %1 = mul i32 %x, 10
   ret i32 %1
 }
-</code></pre>
-<pre class="prettyprint"><code>
+{% endhighlight %}
+{% highlight nasm %}
 	.globl	mul10ui
 	.align	16, 0x90
 	.type	mul10ui,@function
@@ -223,7 +229,7 @@ mul10ui:                                # @mul10ui
 .Lfunc_end0:
 	.size	mul10ui, .Lfunc_end0-mul10ui
 	.cfi_endproc
-</code></pre>
+{% endhighlight %}
 
 <p>
 この場合、<code>x * 10</code>が<code>(x + x) + (x + x) * 4</code>と展開されていることがわかる。

@@ -48,7 +48,8 @@ PDF へは直接出力する機能を Java の API は有していないため P
 <p>大枠は下記の通りで、
 <code>outputFile</code>に<code>createPrintable()</code>メソッド(後述)で得られた印刷ドキュメントをPostScript形式で書き込む。</p>
 
-<pre class="prettyprint"><code>final DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
+{% highlight java %}
+final DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
 StreamPrintServiceFactory[] serviceFactories;
 PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
 File outputFile = ...; // 保存先ファイル new File("….ps);
@@ -59,7 +60,7 @@ try {
     serviceFactories = StreamPrintServiceFactory
         .lookupStreamPrintServiceFactories(flavor,
                 DocFlavor.BYTE_ARRAY.POSTSCRIPT.getMimeType());
-    if (serviceFactories != null &amp;&amp; serviceFactories.length &gt; 0) {
+    if (serviceFactories != null && serviceFactories.length > 0) {
         StreamPrintService service = serviceFactories[0]
             .getPrintService(fos);
         if (ServiceUI.printDialog(null, 0, 0,
@@ -83,7 +84,8 @@ try {
     } catch (IOException e1) {
     }
 }
-</code></pre>
+
+{% endhighlight %}
 
 <p>流れをざっと説明すると</p>
 
@@ -105,10 +107,11 @@ PostScript(<code>DocFlavor.BYTE_ARRAY.POSTSCRIPT.getMimeType()</code>)を指定�
 
 <p>次は、<code>createPrintJob()</code>の中身を記載する。</p>
 
-<pre class="prettyprint"><code>private Printable createPrintable() {
+{% highlight java %}
+private Printable createPrintable() {
     Window[] windows = Window.getWindows();
-    ArrayList&lt;Component&gt; list = new ArrayList&lt;Component&gt;();
-    for (int i = 0; i &lt; windows.length; i++) {
+    ArrayList<Component> list = new ArrayList<Component>();
+    for (int i = 0; i < windows.length; i++) {
         if (windows[i].isVisible()) {
             list.add(windows[i]);
         }
@@ -116,8 +119,7 @@ PostScript(<code>DocFlavor.BYTE_ARRAY.POSTSCRIPT.getMimeType()</code>)を指定�
 
     return new ComponentPrintableWrapper(list.toArray(new Component[list.size()]));
 }
-
-</code></pre>
+{% endhighlight %}
 
 <p><a href="http://java.sun.com/javase/ja/6/docs/ja/api/java/awt/Window.html#getWindows()"><code>Window.getWindows()</code></a>で、Java プログラムから開いたすべてのウィンドウの配列が得られる。
 これらのうち可視、すなわち<code>isVisible()</code>が真となるウィンドウをリストアップしていく。
@@ -126,7 +128,8 @@ PostScript(<code>DocFlavor.BYTE_ARRAY.POSTSCRIPT.getMimeType()</code>)を指定�
 <p>このウィンドウの配列をそのまま印刷サービスに流し込めればいいのだが、印刷用のインスタンス<a href="http://java.sun.com/javase/ja/6/docs/ja/api/java/awt/print/Printable.html"><code>Printable</code></a>の形にしなければならない。
 であるので、<code>ComponentPrintableWrapper</code>クラスという<del datetime="2013-03-04T20:37:59+09:00">ワッパー</del><ins datetime="2013-03-04T20:37:59+09:00">ラッパー</ins>を作った。</p>
 
-<pre class="prettyprint"><code>import java.awt.Component;
+{% highlight java %}
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
@@ -147,7 +150,7 @@ class ComponentPrintableWrapper implements Printable {
             throws PrinterException {
         Graphics2D g2 = (Graphics2D) g;
 
-        if (pageIndex &lt; component.length) {
+        if (pageIndex < component.length) {
             Component paintComponent = component[pageIndex];
 
             g2.translate(format.getImageableX(), format.getImageableY()); // 位置調整
@@ -162,8 +165,7 @@ class ComponentPrintableWrapper implements Printable {
         }
     }
 }
-
-</code></pre>
+{% endhighlight %}
 
 <p>プリンタジョブへの印刷指示<code>job.print(doc, aset)</code>では、プリンタジョブから本クラスの<code>print()</code>メソッドが呼ばれる。
 ページ(<code>pageIndex</code>)が変わるごとに<code>print()</code>メソッドが呼ばれるので、このコードは1ページあたり1個のウィンドウが描き込まれる。</p>

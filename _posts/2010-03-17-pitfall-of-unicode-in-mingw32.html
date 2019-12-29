@@ -17,7 +17,8 @@ Mingw32 (version 3.15) does not fully support Unicode. There are a few all-too-c
 </p>
 
 <h4><code>wWinMain</code> shall not be used</h4>
-<pre class="prettyprint"><code>// NG:
+{% highlight c %}
+// NG:
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 //...
@@ -26,7 +27,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 int main(int argc, char** argv)
 {
 //...
-</code></pre>
+{% endhighlight %}
 <p>
 On Mingw32, <code>wWinMain</code> function is not supported. <code>wmain</code> function is also not supported. So, the entry function must be <code>main</code> function in Unicode.
 
@@ -36,10 +37,11 @@ In addition, <code>_tWinMain</code> and <code>_tmain</code> function are only av
 </p>
 
 <h5>How to get <code>hInstance</code> from main function?</h5>
-<pre class="prettyprint"><code>HINSTANCE hInstance;
+{% highlight c %}
+HINSTANCE hInstance;
 
 hInstance = GetModuleHandle(NULL);
-</code></pre>
+{% endhighlight %}
 <p>
 Note that <code>hPrevInstance</code> of <code>wWinMain</code> arguments is always <code>NULL</code> on Win32.
 
@@ -52,8 +54,9 @@ Use <code>GetCommandLine()</code> function. Unlike <code>lpCmdLine</code>, the r
 </p>
 
 <h4><code>__wargv</code> shall not be used</h4>
-<pre class="prettyprint"><code>// NG:
-for (i = 0; i &lt; __argc; i++) {
+{% highlight c %}
+// NG:
+for (i = 0; i < __argc; i++) {
     arg = __wargv[i];
     //...
 }
@@ -61,20 +64,21 @@ for (i = 0; i &lt; __argc; i++) {
 // OK:
 INT argc;
 WCHAR **argv;
-wargv = CommandLineToArgvW(GetCommandLineW(), &amp;argc);
-for (i = 0; i &lt; argc; i++) {
+wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+for (i = 0; i < argc; i++) {
     arg = wargv[i];
     //...
 }
 LocalFree(wargv);
-</code></pre>
+{% endhighlight %}
 <p>
 <code>__wargv</code> is also not supported. To get argument list, use <code>CommandLineToArgvW</code> and <code>GetCommandLineW</code> function. Note that <code>CommandLineToArgv<strong>A</strong></code> is not defined on win32api.
 
 </p>
 
 <h4>My solution of above pitfalls</h4>
-<pre class="prettyprint"><code>int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+{% highlight c %}
+int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
     // ...
 }
@@ -92,7 +96,7 @@ int main(int argc, char **argv)
 }
 #endif
 #endif /* _UNICODE */
-</code></pre>
+{% endhighlight %}
 
 <h4>See also</h4>
 <ul>

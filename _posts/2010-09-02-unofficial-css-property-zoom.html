@@ -19,9 +19,11 @@ I found unofficial CSS property "<code>zoom</code>" is implemented on WebKit (Sa
 Here is test of CSS <code>zoom</code>. (scale by 200%.)
 </div>
 <div>
-<pre class="prettyprint"><code>&lt;div style="zoom: 2.0; background-color: #ff8;"&gt;
-Here is test of CSS &lt;code&gt;zoom&lt;/code&gt;. (scale by 200%.)
-&lt;/div&gt;</code></pre>
+{% highlight html %}
+<div style="zoom: 2.0; background-color: #ff8;">
+Here is test of CSS <code>zoom</code>. (scale by 200%.)
+</div>
+{% endhighlight %}
 </div>
 
 <p>
@@ -30,10 +32,11 @@ I think if you wanna scale you SHALL use CSS3 transform as follows:
 <div style="transform: scale(2); -webkit-transform: scale(2); -webkit-transform-origin: 0 0; -moz-transform: scale(2); -moz-transform-origin: 0 0; -o-transform: scale(2); -o-transform-origin: 0 0; -ms-transform: scale(2); -ms-transform-origin: 0 0;">
 Here is test of CSS3 <code>transform</code>. (scale by 200%.)
 </div>
-<pre class="prettyprint"><code>&lt;div style="transform: scale(2); -webkit-transform: scale(2); -webkit-transform-origin: 0 0; -moz-transform: scale(2); -moz-transform-origin: 0 0; -o-transform: scale(2); -o-transform-origin: 0 0; -ms-transform: scale(2); -ms-transform-origin: 0 0;"&gt;
-Here is test of CSS &lt;code&gt;transform&lt;/code&gt;. (scale by 200%.)
-&lt;/div&gt;
-</code></pre>
+{% highlight html %}
+<div style="transform: scale(2); -webkit-transform: scale(2); -webkit-transform-origin: 0 0; -moz-transform: scale(2); -moz-transform-origin: 0 0; -o-transform: scale(2); -o-transform-origin: 0 0; -ms-transform: scale(2); -ms-transform-origin: 0 0;">
+Here is test of CSS3 <code>transform</code>. (scale by 200%.)
+</div>
+{% endhighlight %}
 <p>
 Note that...
 </p>

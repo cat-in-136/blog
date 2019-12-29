@@ -18,7 +18,8 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/css.html
 <blockquote>
   <p>Here is a more complex example. The first two pairs of curly braces are inside a string, and do not mark the end of the selector. This is a valid CSS 2.1 rule.</p>
 
-<pre class="prettyprint lang-css"><code>p[example="public class foo\
+{% highlight css %}
+p[example="public class foo\
 {\
     private int x;\
 \
@@ -27,13 +28,14 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/css.html
     }\
 \
 }"] { color: red }
-</code></pre>
+{% endhighlight %}
 </blockquote>
 
 <p>いかにも以下のような要素が赤色で表示されそうに期待するところだが、
 実際はそうならない。</p>
 
-<pre class="prettyprint lang-xhtml"><code>&lt;p example="public class foo
+{% highlight html %}
+<p example="public class foo
 {
     private int x;
 
@@ -41,39 +43,42 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2013/03/css.html
         this.x = x;
     }
 
-}"&gt;test&lt;/p&gt;
-</code></pre>
+}">test</p>
+{% endhighlight %}
 
 <p>これは引っかけ問題だ。「バックスラッシュ+改行」は改行をなくす
 意味があると<a href="http://www.w3.org/TR/CSS21/syndata.html#strings" title="4.3.7 Strings - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification">CSS 2.1 spec 4.3.7節</a>にあるんので、
 以下と同じだ。</p>
 
-<pre class="prettyprint lang-xhtml"><code> p[example="public class foo{    private int x;    foo(int x) {        this.x = x;    }}"][
+{% highlight css %}
+p[example="public class foo{    private int x;    foo(int x) {        this.x = x;    }}"]{
      color: red;
- }
-</code></pre>
+}
+{% endhighlight %}
 
 <p>つまり、対象となる要素も以下のように<code>example</code>属性値をダラダラ長く
 続けた感じになる。</p>
 
-<pre class="prettyprint lang-css"><code> &lt;p example="public class foo{    private int x;    foo(int x) {        this.x = x;    }}"&gt;test&lt;/p&gt;
-</code></pre>
+{% highlight html %}
+<p example="public class foo{    private int x;    foo(int x) {        this.x = x;    }}">test</p>
+{% endhighlight %}
 
 <p>改行を含むルールにするにも、ルールのテキスト列について、
 改行コードを <code>\00000A</code> や <code>\A</code> として加えてやらないといけない。</p>
 
 <p>例えば以下のようになる。</p>
 
-<pre class="prettyprint lang-xhtml"><code>&lt;p example="foo
-bar"&gt;
+{% highlight html %}
+<p example="foo
+bar">
 test
-&lt;/p&gt;
-&lt;style&gt;
+</p>
+<style>
 p[example="foo\00000Abar"] { color: red }
 /* 別解： */
 p[example="foo\A bar"] { color: red }
-&lt;/style&gt;
-</code></pre>
+</style>
+{% endhighlight %}
 
 <p>なお、ここで改行コードが <abbr title="Line Feed">LF</abbr> (<code>U+000A</code>) でなくとも、
 この指定でダイジョブらしい旨が、<a href="http://www.w3.org/TR/CSS21/syndata.html#strings" title="4.3.7 Strings - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification">CSS 2.1 spec 4.3.7節</a>に書いてある。（参考訳は <a href="http://momdo.s35.xrea.com/web-html-test/spec/CSS21/syndata.html#strings" title="4.3.7 文字列 - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification">http://momdo.s35.xrea.com/web-html-test/spec/CSS21/syndata.html#strings</a> から。）</p>
@@ -84,7 +89,8 @@ p[example="foo\A bar"] { color: red }
 
 <p>というわけで、以下（再掲）の要素をスタイリングするには、</p>
 
-<pre class="prettyprint lang-xhtml"><code>&lt;p example="public class foo
+{% highlight html %}
+<p example="public class foo
 {
     private int x;
 
@@ -92,12 +98,13 @@ p[example="foo\A bar"] { color: red }
         this.x = x;
     }
 
-}"&gt;test&lt;/p&gt;
-</code></pre>
+}">test</p>
+{% endhighlight %}
 
 <p>以下のようなCSSを書けばよい。</p>
 
-<pre class="prettyprint lang-css"><code>p[example="public class foo\A \
+{% highlight css %}
+p[example="public class foo\A \
 {\A \
     private int x;\A \
 \A \
@@ -106,7 +113,7 @@ p[example="foo\A bar"] { color: red }
     }\A \
 \A \
 }"] { color: red }
-</code></pre>
+{% endhighlight %}
 
 <h4>参考文献</h4>
 

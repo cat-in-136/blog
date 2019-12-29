@@ -43,7 +43,7 @@ FileName         : foobar.txt
 <p>
 You can see "0x0001000000000023" is this file's FileRef#. Same FileRef# value was obtained by using <code>GetFileInformationByHandle()</code> function:
 </p>
-<pre class="prettyprint"><code>
+{% highlight c %}
 BY_HANDLE_FILE_INFORMATION fileInfo;
 HANDLE hFile;
 
@@ -54,9 +54,9 @@ hFile = CreateFile(TEXT("f:\\foobar.txt"),
                    OPEN_EXISTING,
                    FILE_FLAG_BACKUP_SEMANTICS | FILE_ATTRIBUTE_READONLY,
                    NULL);
-GetFileInformationByHandle(hFile, &amp;fileInfo);
-fileID = (ULONGLONG)((fileInfo.nFileIndexLow) | (((ULONGLONG)fileInfo.nFileIndexHigh) &lt;&lt; 32));
-</code></pre>
+GetFileInformationByHandle(hFile, &fileInfo);
+fileID = (ULONGLONG)((fileInfo.nFileIndexLow) | (((ULONGLONG)fileInfo.nFileIndexHigh) << 32));
+{% endhighlight %}
 <p>
 In addition, I obtained inode number with MSYS's ls command.
 </p>

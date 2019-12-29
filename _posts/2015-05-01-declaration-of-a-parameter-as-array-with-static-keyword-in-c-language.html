@@ -60,7 +60,8 @@ elements as specified by the size expression.</p>
 
 <p>要するに下記のとおりということだ:</p>
 
-<pre class="prettyprint lang-c"><code>void f(int a[static 3]);
+{% highlight c %}
+void f(int a[static 3]);
 void g(void) {
       int x2[2] = {0};
       int x3[3] = {0};
@@ -70,7 +71,7 @@ void g(void) {
       f(x3); // OK
       f(x2); // NG
 }
-</code></pre>
+{% endhighlight %}
 
 <h4>課題コード EXAMPLE 4</h4>
 
@@ -81,7 +82,8 @@ void g(void) {
 <blockquote>
   <p>EXAMPLE 4 The following prototype has a variably modified parameter.</p>
 
-  <pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[n][n*m+300], double x);
 int main()
 {
@@ -97,7 +99,8 @@ void addscalar(int n, int m,
                   // a is a pointer to a VLA with n*m+300 elements
                   a[i][j] += x;
 }
-</code></pre>
+
+{% endhighlight %}
 
   <footer>- <cite>6.7.6.3 Function declarators (including prototypes) - 20, <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf" title="WG14/N1570">N1570 C11 Commitee Draft</a></cite></footer>
 </blockquote>
@@ -107,19 +110,21 @@ void addscalar(int n, int m,
 <blockquote>
   <p>EXAMPLE 5 The following are all compatible function prototype declarators.</p>
 
-  <pre class="prettyprint lang-c"><code>double maximum(int n, int m, double a[n][m]);
+{% highlight c %}
+double maximum(int n, int m, double a[n][m]);
 double maximum(int n, int m, double a[*][*]);
 double maximum(int n, int m, double a[ ][*]);
 double maximum(int n, int m, double a[ ][m]);
-</code></pre>
+{% endhighlight %}
 
   <p>as are:</p>
 
-  <pre class="prettyprint lang-c"><code>void f(double (* restrict a)[5]);
+{% highlight c %}
+void f(double (* restrict a)[5]);
 void f(double a[restrict][5]);
 void f(double a[restrict 3][5]);
 void f(double a[restrict static 3][5]);
-</code></pre>
+{% endhighlight %}
 
   <p>(Note that the last declaration also specifies that the argument corresponding to <code>a</code> in any call to <code>f</code> must be a
 non-null pointer to the first of at least three arrays of 5 doubles, which the others do not.)</p>
@@ -129,51 +134,56 @@ non-null pointer to the first of at least three arrays of 5 doubles, which the o
 
 <p>よって、<code>addscalar</code> のプロトタイプ宣言は下記のようにも変更可能。</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[][*], double x);
-</code></pre>
+{% endhighlight %}
 
 <p>ところで下記のようにすると、<code>a</code> は不完全型ということでコンパイルが通らない。</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[][], double x); // compile error!
-</code></pre>
+{% endhighlight %}
 
 <p>少なくともふたつ目の<code>[</code>〜<code>]</code>の間には数字を入れなくてはいけない。</p>
 
 <p>単純に定数値を入れるとすると例えば下記のような感じになると思われる。
 （C言語規格解釈のためのコードであって使い物にならないコードスニペットになってしまっているが。）</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[][308], double x);
 // (snip)
 void addscalar(int n, int m,
       double a[][308], double x)
 {
       // assert(n*m+300 == 308);
-      for (int i = 0; i &lt; n; i++)
-            for (int j = 0, k = 308; j &lt; k; j++)
+      for (int i = 0; i <; n; i++)
+            for (int j = 0, k = 308; j <; k; j++)
                   a[i][j] += x;
 }
-</code></pre>
+{% endhighlight %}
 
 <p>ここで308を<code>n*m+300</code>に可変長配列化したものがExample 4のコードということみたいだ。</p>
 
 <p>そもそもひとつ目は単なるqualified pointerに過ぎないのだから</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double (* const a)[n*m+300], double x);
 // (snip)
 void addscalar(int n, int m,
       double (* const a)[n*m+300], double x)
 {
-      for (int i = 0; i &lt; n; i++)
-            for (int j = 0, k = n*m+300; j &lt; k; j++)
+      for (int i = 0; i <; n; i++)
+            for (int j = 0, k = n*m+300; j <; k; j++)
                   // a is a pointer to a VLA with n*m+300 elements
                   // i.e. *(a + i) is a VLA with n*m+300 elements
                   (* (a + i))[j] += x;
 }
-</code></pre>
+
+{% endhighlight %}
 
 <p>と書けば、”<code>a</code> is a pointer to a VLA …” であって “<code>a</code> is a VLA …” ではないことが明瞭にわかる。</p>
 
@@ -181,9 +191,10 @@ void addscalar(int n, int m,
 
 <p>まず、本節のタイトル通りのことを何も考えずにやると</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[static n][static n*m+300], double x); // compile error!
-</code></pre>
+{% endhighlight %}
 
 <p>というコードになるが、コンパイルエラーになる。
 前節で書いたとおり <code>n*m+300</code> は(可変長)配列長そのものだからである。</p>
@@ -192,41 +203,45 @@ void addscalar(int n, int m,
 規格としては最初に挙げたものの<cite>only in the outermost array type derivation.</cite>に
 あるように、<code>[</code>〜<code>]</code>の間に <code>static</code> を入れるとしても一番左の<code>[</code>〜<code>]</code>だけである。</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[static n][n*m+300], double x);
-</code></pre>
+{% endhighlight %}
 
 <p>さて、一番左の<code>[</code>〜<code>]</code>における <code>static</code> のない配列長の指定は、
 特に意味のないものとして知られている。
 例えば、下記コード中の <code>sizeof()</code> はすべて同じ値を返す。</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[n][n*m+300], double x)
 {
       sizeof(a);
       sizeof(double (*)[n*m+300]);
       sizeof(void*);
 }
-</code></pre>
+{% endhighlight %}
 
 <p>ここで例え <code>a[static n][10]</code> としても配列長が<code>n</code>以上としか意味しない。
 よって、下記コード中の <code>sizeof()</code> はやはりすべて同じ値を返す。</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[static n][n*m+300], double x)
 {
       sizeof(a);
       sizeof(double (*)[n*m+300]);
       sizeof(void*);
 }
-</code></pre>
+{% endhighlight %}
 
 <p>であるならば <code>[static n]</code> が意味がありそうなのは、
 呼び出し時の範囲確認ぐらいである。</p>
 
 <p>試しに下記のようなコードにしてみた。</p>
 
-<pre class="prettyprint lang-c"><code>void addscalar(int n, int m,
+{% highlight c %}
+void addscalar(int n, int m,
       double a[static n][n*m+300], double x);
 int main()
 {
@@ -234,7 +249,7 @@ int main()
       addscalar(4, 2, b, 2.17); // NG
       return 0;
 }
-</code></pre>
+{% endhighlight %}
 
 <p>このとき、明らかに <code>addscalar()</code> の呼び出し引数の配列サイズはオーバーしているので、
 なんとかしてほしいものであったが、LLVM Clang も GCC も何も警告はなかった。</p>

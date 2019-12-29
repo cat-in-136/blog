@@ -37,7 +37,8 @@ When a browser window is closed, everything injected shall be removed.</p>
 
 <p>Source code:</p>
 
-<pre class="prettyprint"><code>function BrowserWindowObserver(handlers) {
+{% highlight javascript %}
+function BrowserWindowObserver(handlers) {
     this.handlers = handlers;
 }
 BrowserWindowObserver.prototype = {
@@ -61,7 +62,7 @@ BrowserWindowObserver.prototype = {
         }
     }
 };
-</code></pre>
+{% endhighlight %}
 
 <p>Note that:</p>
 
@@ -87,7 +88,8 @@ BrowserWindowObserver.prototype = {
 
 <p>Source code:</p>
 
-<pre class="prettyprint"><code>var _gWindowListener = null;
+{% highlight javascript %}
+var _gWindowListener = null;
 
 function startup(params, aReason) {
     // do something...
@@ -110,7 +112,7 @@ function startup(params, aReason) {
         browserWindowShutdownFunc(winenu.getNext());
     }
 }
-</code></pre>
+{% endhighlight %}
 
 <p>Note that:</p>
 
@@ -130,7 +132,8 @@ function startup(params, aReason) {
 
 <p>Source code:</p>
 
-<pre class="prettyprint"><code>function shutdown(params, aReason) {
+{% highlight javascript %}
+function shutdown(params, aReason) {
     // do something ...
 
     let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
@@ -147,7 +150,7 @@ function startup(params, aReason) {
         browserWindowShutdownFunc(winenu.getNext());
     }
 }
-</code></pre>
+{% endhighlight %}
 
 <h4>4. inject and remove</h4>
 
@@ -155,7 +158,8 @@ function startup(params, aReason) {
 
 <p>Source code:</p>
 
-<pre class="prettyprint"><code>function browserWindowStartupFunc(aWindow) {
+{% highlight javascript %}
+function browserWindowStartupFunc(aWindow) {
     let contextMenu = aWindow.document.getElementById("contentAreaContextMenu");
     let menuitem = aWindow.document.createElement("menuitem");
     menuitem.label = "Foobar";
@@ -168,7 +172,7 @@ function browserWindowShutdownFunc(aWindow) {
     let menuitem = aWindow.document.getElementById("foobar_menuitem");
     contextMenu.removeChild(menuitem);
 }
-</code></pre>
+{% endhighlight %}
 
 <h4>References</h4>
 

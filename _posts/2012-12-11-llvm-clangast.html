@@ -45,8 +45,9 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/12/llvm-clangast.html
 <p>最も安直な構文のなぞり方は、下記のように
 <code>clang_visitChildren()</code> で各要素ごとにウォークスルーする。</p>
 
-<pre class="prettyprint"><code>#include &lt;stdio.h&gt;
-#include &lt;clang-c/Index.h&gt;
+{% highlight c %}
+#include <stdio.h>
+#include <clang-c/Index.h>
 
 CXChildVisitResult visitChildrenCallback(CXCursor cursor, CXCursor parent, CXClientData client_data)
 {
@@ -76,7 +77,8 @@ int main(int argc, char *argv[])
 
   clang_disposeIndex(index);
 }
-</code></pre>
+
+{% endhighlight %}
 
 <p>なお、コンパイルは以下のように。
 (Clang でコンパイルしたかったが、なんかうまくリンクが通らなかったので GCC でやった。)</p>
@@ -95,10 +97,11 @@ int main(int argc, char *argv[])
 
 <p>XML 出力には libxml2 使って</p>
 
-<pre class="prettyprint"><code>#include &lt;clang-c/Index.h&gt;
-#include &lt;libxml/encoding.h&gt;
-#include &lt;libxml/xmlwriter.h&gt;
-#include &lt;stdio.h&gt;
+{% highlight c %}
+#include <clang-c/Index.h>
+#include <libxml/encoding.h>
+#include <libxml/xmlwriter.h>
+#include <stdio.h>
 
 xmlChar *getLocationAsString(CXCursor cursor)
 {
@@ -110,7 +113,7 @@ xmlChar *getLocationAsString(CXCursor cursor)
   CXString filename;
   unsigned lineno;
   unsigned column;
-  clang_getPresumedLocation(loc, &amp;filename, &amp;lineno, &amp;column);
+  clang_getPresumedLocation(loc, &filename, &lineno, &column);
 
   xmlStrPrintf(locStr, BUFSIZ-1,
                BAD_CAST "%s:%d:%d",
@@ -126,7 +129,7 @@ xmlChar *getLocationAsString(CXCursor cursor)
 
 CXChildVisitResult visitChildrenCallback(CXCursor cursor, CXCursor parent, CXClientData client_data)
 {
-  xmlTextWriterPtr xmlWriter = static_cast&lt;xmlTextWriterPtr&gt;(client_data);
+  xmlTextWriterPtr xmlWriter = static_cast<xmlTextWriterPtr>(client_data);
 
   CXString usrStr = clang_getCursorUSR(cursor);
   CXString kindStr = clang_getCursorKindSpelling(clang_getCursorKind(cursor));
@@ -192,18 +195,20 @@ int main(int argc, char *argv[])
 
   return 0;
 }
-</code></pre>
+
+{% endhighlight %}
 
 <p>Makefile は、例えば、</p>
 
-<pre class="prettyprint"><code>CXX             = g++
+{% highlight makefile %}
+CXX             = g++
 CXXFLAGS        = -O2 -g
 CLANGFLAGS      = -L/usr/lib64/llvm -lclang
 LIBXML2FLAGS    = `pkg-config --libs --cflags libxml-2.0`
 
 astana: astana.cpp
     $(CXX) $(CXXFLAGS) -o $@ $^ $(CLANGFLAGS) $(LIBXML2FLAGS)
-</code></pre>
+{% endhighlight %}
 
 <p>使い方は、前のと同じく</p>
 

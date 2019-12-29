@@ -23,9 +23,5 @@
   <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" />
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} &raquo; Feed" href="/feed.xml" />
-  {%- if page and page.content contains 'class="prettyprint' -%}
-  <script type="application/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/prettify.js" defer="defer"></script>
-  <script type="application/javascript" src="data:application/javascript,window.addEventListener(%22DOMContentLoaded%22%2Cfunction(e)%7BprettyPrint()%3B%7D%2Cfalse)%3B" defer="defer"></script>
-  {%- endif -%}
   <script type="application/javascript" src="/javascript/blog.js" defer="defer" async="async"></script>
 </head>

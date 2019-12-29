@@ -16,39 +16,45 @@ without <a href="https://github.com/mozilla-jetpack/jpm">jpm</a> (<code>jpm run<
   <li>
     Create a temporary profile using
     <a href="https://github.com/saadtazi/firefox-profile-js">firefox-profile</a>.
-<pre class="prettyprint"><code>const FirefoxProfile = require("firefox-profile");
-new Promise((resolve, reject) =&gt; {
+{% highlight javascript %}
+const FirefoxProfile = require("firefox-profile");
+new Promise((resolve, reject) => {
   let profile = new FirefoxProfile();
   profile.setPreference("devtools.chrome.enabled", true);
   // ..append preferences as you want..
   profile.updatePreferences();
 
-  profile.encoded((zippedProfile) =&gt; {
+  profile.encoded((zippedProfile) => {
     resolve(profile, zippedProfile);
     // Note: you can obtain profile directory by `profile.profileDir`!
   });
-});</code></pre>
+});
+{% endhighlight %}
   </li>
   <li>
     Run firefox instance using <a href="https://github.com/mozilla-jetpack/node-fx-runner">node-firefo-connect</a>.
-<pre class="prettyprint"><code>const FxRunner = require("fx-runner/lib/run");
+{% highlight javascript %}
+const FxRunner = require("fx-runner/lib/run");
 FxRunner({
   "no-remote": true,
   "profile": profileDir, // profile.profileDir
   "env": process.env,
-});</code></pre>
+});
+{% endhighlight %}
     <ul>
       <li>
         Note: <code>FxRunner</code> returns a Promise object that is
         resolved <em>just after</em> the Firefox process starts.
-<pre class="prettyprint"><code>FxRunner({ /* ..snip.. */ }).then((results) =&gt; {
+{% highlight javascript %}
+FxRunner({ /* ..snip.. */ }).then((results) => {
   /* Any Firefox window have not been open yet. */
-  return new Promise((resolve, reject) =&gt; {
-    require("timer").setTimeout(() =&gt; resolve(results), 1000);
+  return new Promise((resolve, reject) => {
+    require("timer").setTimeout(() => resolve(results), 1000);
   });
-}).then((results) =&gt; {
+}).then((results) => {
   /* Firefox window is already open. */
-});</code></pre>
+});
+{% endhighlight %}
       </li>
     </ul>
   </li>

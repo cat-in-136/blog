@@ -22,11 +22,12 @@ XUL &lt;expander&gt; had been used for the Preference window on Firefox <em>1.0<
 <p>
 &lt;expander&gt; element still exist at <code>chrome://global/content/xul.css</code> in Firefox 3.7a5. We seem to continue to use it.
 </p>
-<pre class="prettyprint"><code>expander {
+{% highlight css %}
+expander {
   -moz-binding: url("chrome://global/content/bindings/expander.xml#expander");
   -moz-box-orient: vertical;
 }
-</code></pre>
+{% endhighlight %}
 <p>
 But today <em>no</em> &lt;expander&gt; is used on mozilla-central (firefox main stream). I searched for "&lt;expander" on MXR [<a href="http://mxr.mozilla.org/mozilla-central/search?string=%3Cexpander">*</a>], and no result found.
 </p>

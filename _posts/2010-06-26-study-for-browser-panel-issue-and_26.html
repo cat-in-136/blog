@@ -24,14 +24,15 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2010/06/study-for-browser-panel
 
 <p>If <code>browser.preferences.animateFadeIn</code> is set <code>true</code>, "Browser" panel is <em>fixed</em> height.</p>
 
-<pre class="prettyprint"><code>prefwindow[animated="true"] #paneBrowserBoxContainer .subtabpanel {
+{% highlight css %}
+prefwindow[animated="true"] #paneBrowserBoxContainer .subtabpanel {
     /* For animated or Mac, specify fixed height */
     max-height: 390px;
     min-height: 390px;
 
     /* *snip* */
 }
-</code></pre>
+{% endhighlight %}
 
 <ul>
 <li>Flexible panel height make the window too big or too small vertically.</li>
