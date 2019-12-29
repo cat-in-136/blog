@@ -11,19 +11,19 @@ thumbnail: "{% asset_image_path generic-theta-tile.png %}"
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-6565037743517885288
 blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-4-diff.html
 ---
-<p><a href="{{ site.baseurl }}{% post_url 2014-03-05-bezier-1-kappa %}" title="ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?">ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?</a>から始まり
+<p><a href="{% post_url 2014-03-05-bezier-1-kappa %}" title="ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?">ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?</a>から始まり
 ベジェ曲線で描く円の誤差について
-<a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>
+<a href="{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>
 にて議論した。
 次に、ドローソフトで一般的な中心角90度に注目し、これを一般化したのが
-<a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>
+<a href="{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>
 ということであった。</p>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 <a href="{% asset_image_path generic-theta-tile.png %}">{% asset_image_tag generic-theta-tile.png 320 320 %}</a>
 </figure>
 
-<p>しかし<a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>では、
+<p>しかし<a href="{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>では、
 中心角の大きさとベジェ曲線で描く円と真円の誤差の関係について定式化をしていなかった。
 これは数式の途中式が複雑だったら投げ出していたのだが、
 改めて<a href="http://maxima.sourceforge.net/" title="Maxima, a Computer Algebra System">maxima</a>使って解いてみるとシンプルにまとまった。</p>
@@ -35,7 +35,7 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2014/03/bezier-4-diff.html
 <figcaption>135degree arc using Bézier</figcaption>
 </figure>
 
-<p><a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">前回</a>とかぶるがまずは制御点の位置、要するに<var>&#x03BA;</var>を求める。</p>
+<p><a href="{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">前回</a>とかぶるがまずは制御点の位置、要するに<var>&#x03BA;</var>を求める。</p>
 
 <table style="width: 100%">
 <tbody>
@@ -128,7 +128,7 @@ x座標成分<code>Px(u)</code>と<code>Py(u)</code>を求める。</p>
 
 <h4>ベジェ曲線で描く円と真円の差、一般化。</h4>
 
-<p><a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>と同じように解く、力技で。</p>
+<p><a href="{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>と同じように解く、力技で。</p>
 
 <p>ベジェ曲線の近似円弧の半径方向の大きさ<code>Pp(u)</code>は：</p>
 
@@ -197,7 +197,7 @@ x座標成分<code>Px(u)</code>と<code>Py(u)</code>を求める。</p>
 </tbody>
 </table>
 
-<p>これは<a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>の(2.7)式と完全に同一であり、
+<p>これは<a href="{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>の(2.7)式と完全に同一であり、
 ベジェ曲線で描く円と真円の差が最大となる位置に中心角<var>&#x03B8;</var>が依存していない
 ことがいま示された。</p>
 
@@ -226,7 +226,7 @@ x座標成分<code>Px(u)</code>と<code>Py(u)</code>を求める。</p>
 </table>
 
 <p>なお、中心角90度について求めると、
-<a href="{{ site.baseurl }}{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>の(2.8)式と同一の結果が得られるので
+<a href="{% post_url 2014-03-06-bezier-2-diff %}" title="ベジェ曲線で描く円と真円の差について">ベジェ曲線で描く円と真円の差について</a>の(2.8)式と同一の結果が得られるので
 確かに一般化した式であるとわかる。</p>
 
 <pre class="maxima-output"><samp>(%i14) <kbd>limit((%o13), t, %pi/2/4)$</kbd>
@@ -254,7 +254,7 @@ x座標成分<code>Px(u)</code>と<code>Py(u)</code>を求める。</p>
 
 <p>単調増加で中心角が増えると急激に1から離れていく様子がわかる。
 前回
-<a href="{{ site.baseurl }}{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>
+<a href="{% post_url 2014-03-07-bezier-3-general-theta %}" title="ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない">ベジェ曲線の円の近似で90度以外でもよいが180度以上はよくない</a>
 といったが、これは<strong>撤回、
 実際にどこまで誤差を認めるかをベースに考えるのが良さそう</strong>だ。</p>
 
