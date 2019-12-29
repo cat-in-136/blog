@@ -1,4 +1,6 @@
+
 # Created by https://www.gitignore.io/api/vim,emacs,visualstudiocode,ruby,jekyll
+# Edit at https://www.gitignore.io/?templates=vim,emacs,visualstudiocode,ruby,jekyll
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
@@ -47,9 +49,14 @@ flycheck_*.el
 # directory configuration
 .dir-locals.el
 
+# network security
+/network-security.data
+
+
 ### Jekyll ###
 _site/
 .sass-cache/
+.jekyll-cache/
 .jekyll-metadata
 
 ### Ruby ###
@@ -68,6 +75,9 @@ _site/
 # Used by dotenv library to load environment variables.
 # .env
 
+# Ignore Byebug command history file.
+.byebug_history
+
 ## Specific to RubyMotion:
 .dat*
 .repl_history
@@ -81,7 +91,6 @@ build-iPhoneSimulator/
 # We recommend against adding the Pods directory to your .gitignore. However
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
 # vendor/Pods/
 
 ## Documentation cache and generated files:
@@ -104,18 +113,33 @@ build-iPhoneSimulator/
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 
+### Ruby Patch ###
+# Used by RuboCop. Remote config files pulled in from inherit_from directive.
+# .rubocop-https?--*
+
 ### Vim ###
-# swap
+# Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
-[._]s[a-v][a-z]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
 [._]sw[a-p]
-# session
+
+# Session
 Session.vim
-# temporary
+Sessionx.vim
+
+# Temporary
 .netrwhist
-# auto-generated tag files
+
+# Auto-generated tag files
 tags
+
+# Persistent undo
+[._]*.un~
+
+# Coc configuration directory
+.vim
 
 ### VisualStudioCode ###
 .vscode/*
@@ -123,6 +147,9 @@ tags
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
 .history
 
 # End of https://www.gitignore.io/api/vim,emacs,visualstudiocode,ruby,jekyll
