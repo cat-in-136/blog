@@ -25,7 +25,6 @@ body {
   font-family: $base-font-family;
   font-size: $base-font-size;
   line-height: $base-line-height;
-  font-weight: 300;
   color: $text-color;
   background-color: $background-color;
   -webkit-text-size-adjust: 100%;
@@ -62,7 +61,6 @@ ul, ol, dl, figure,
  * Format
  */
 em {
-  font-weight: normal;
   font-style: italic;
 }
 em:lang(ja) {
@@ -139,6 +137,9 @@ figure > img {
   display: block;
   margin: auto;
 }
+figure.highlight {
+  border: 0;
+}
 
 figcaption {
   font-size: $small-font-size;
@@ -181,8 +182,7 @@ li {
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
-
+  font-weight: 700;
   html:not(.vertical-writing-recommended) & {
     font-variant-east-asian: proportional-width;
     font-variant-ligatures: common-ligatures;
@@ -200,7 +200,7 @@ a {
   text-decoration: none;
 
   &:visited {
-    color: darken($brand-color, 15%);
+    color: $brand-color-dark;
   }
 
   &:hover {
@@ -246,8 +246,6 @@ code {
   font-feature-settings: "zero";
 
   font-size: 15px;
-  border: 1px solid $grey-color;
-  border-radius: 3px;
   background-color: $grey-color-light;
 }
 

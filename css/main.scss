@@ -24,11 +24,12 @@ $base-line-height: 1.5;
 
 $spacing-unit:     30px;
 
-$text-color:       #111;
-$background-color: #fdfdfd;
-$brand-color:      #b2243c; // DIC-N725
+$text-color:       #000;
+$background-color: #fff;
+$brand-color:      #658DC6; // PANTONE 16-4032 TCX Provence
+$brand-color-dark: #0F4C81; // PANTONE 19-4052 TCX Classic Blue
 
-$grey-color:       #828282;
+$grey-color:       #84898C; // PANTONE 17-4405 TCX Monument
 $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
 
@@ -59,7 +60,6 @@ $on-laptop:        800px;
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
-        "reset",
         "base",
         "layout",
         "syntax-highlighting"
