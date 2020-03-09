@@ -5,7 +5,7 @@ tags:
 - mozilla
 - configuration mania
 date: '2017-10-26T00:22:13+09:00'
-last_modified_at: '2017-10-28T23:40:21+09:00'
+last_modified_at: '2020-03-10T00:10:34+09:00'
 excerpt_separator: "<!--more-->"
 ---
 <p>
@@ -9534,7 +9534,7 @@ Tip: It is possible to copy easily the preference name from the right-click cont
 window.addEventListener("load", function () {
   "use strict";
 
-  Array.forEach(document.querySelectorAll(".confmania_pref_list *[data-fx-pref]"), function (v) {
+  document.querySelectorAll(".confmania_pref_list *[data-fx-pref]").forEach(function (v) {
     var unique_str = v.getAttribute("data-fx-pref").replace(/[^0-9a-z_]/ig, "_");
     var contextmenu_id = "confmania_pref_list_menu_" + unique_str;
     v.setAttribute("contextmenu", contextmenu_id);
@@ -9594,13 +9594,13 @@ window.addEventListener("load", function () {
     console.log(arguments);
     window.open("https://dxr.mozilla.org/mozilla-central/search?q="+encodeURI(listitem.getAttribute("data-fx-pref")));
   }
-  Array.forEach(document.querySelectorAll(".confmania_pref_list_menu_copy"), function (v) {
+  document.querySelectorAll(".confmania_pref_list_menu_copy").forEach(function (v) {
     v.addEventListener("click", confmania_pref_list_menu_copy_handler, false);
   });
-  Array.forEach(document.querySelectorAll(".confmania_pref_list_menu_mozkb"), function (v) {
+  document.querySelectorAll(".confmania_pref_list_menu_mozkb").forEach(function (v) {
     v.addEventListener("click", confmania_pref_list_menu_mozkb_handler, false);
   });
-  Array.forEach(document.querySelectorAll(".confmania_pref_list_menu_dxr"), function (v) {
+  document.querySelectorAll(".confmania_pref_list_menu_dxr").forEach(function (v) {
     v.addEventListener("click", confmania_pref_list_menu_dxr_handler, false);
   });
 });
