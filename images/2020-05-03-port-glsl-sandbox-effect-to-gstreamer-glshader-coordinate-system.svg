@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 177.96 48.722" height="184.144" width="672.604">
+  <defs>
+    <linearGradient id="a">
+      <stop offset="0" stop-color="#0ff"/>
+      <stop offset="1" stop-color="#ff0"/>
+    </linearGradient>
+    <linearGradient xlink:href="#a" id="b" x1="0" y1="0" x2="40" y2="30" gradientUnits="userSpaceOnUse"/>
+    <linearGradient xlink:href="#a" id="d" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="40" y2="30" gradientTransform="translate(79.375 -30)"/>
+    <marker refY="0" refX="0" orient="auto" id="c" overflow="visible">
+      <path d="M-10 0l-4 4L0 0l-14-4z" fill-rule="evenodd" stroke="#000" stroke-width=".8pt"/>
+    </marker>
+  </defs>
+  <g transform="translate(6.344 9.27)">
+    <path opacity=".8" fill="url(#b)" stroke="#000" stroke-width=".16" d="M0 0h40v30H0z"/>
+    <path stroke-width=".265" d="M0 0h40" fill="none" stroke="#000" marker-end="url(#c)"/>
+    <text style="line-height:125%" x="40.973" y="1.076" font-style="italic" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" stroke-width=".265">
+      x
+    </text>
+    <path stroke-width=".265" d="M0 0v30" fill="none" stroke="#000" marker-end="url(#c)"/>
+    <text y="33.547" x="-.789" style="line-height:125%" font-style="italic" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" stroke-width=".265">
+      y
+    </text>
+    <text style="line-height:125%" x="41.544" y="33.547" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" stroke-width=".265">
+      (width, height)
+    </text>
+    <circle r="1" cy="30" cx="40"/>
+    <text y="16.049" x="20.003" style="line-height:125%;text-align:center" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" text-anchor="middle" stroke-width=".265">
+      glshader
+    </text>
+  </g>
+  <g transform="translate(6.344 9.27)">
+    <path transform="scale(1 -1)" opacity=".8" fill="url(#d)" stroke="#000" stroke-width=".16" d="M79.375-30h40V0h-40z"/>
+    <path stroke-width=".265" d="M79.375 30.163h40" fill="none" stroke="#000" marker-end="url(#c)"/>
+    <text y="31.239" x="120.348" style="line-height:125%" font-style="italic" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" stroke-width=".265">
+      x
+    </text>
+    <path stroke-width=".265" d="M79.375 30.08v-30" fill="none" stroke="#000" marker-end="url(#c)"/>
+    <text style="line-height:125%" x="78.586" y="-2.437" font-style="italic" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" stroke-width=".265">
+      y
+    </text>
+    <circle cx="119.375" r="1"/>
+    <text y="3.384" x="121.448" style="line-height:125%" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" stroke-width=".265">
+      (resolution.x, resolution.y)
+    </text>
+    <text style="line-height:125%;text-align:center" x="99.378" y="16.049" font-weight="400" font-size="3.969" font-family="serif" letter-spacing="0" word-spacing="0" text-anchor="middle" stroke-width=".265">
+      GLSLSandbox
+    </text>
+  </g>
+</svg>

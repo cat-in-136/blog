@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="956.853" height="255.536" viewBox="0 0 253.167 67.611">
+  <g font-family="monospace">
+    <g class="cluster" transform="matrix(.35278 0 0 .35278 -148.934 74.318)">
+      <path d="M588-87.66h370c6 0 12-6 12-12v-90c0-6-6-12-12-12H588c-6 0-12 6-12 12v90c0 6 6 12 12 12" stroke="#000" fill="#afa"/>
+      <text font-size="8" y="-191.261" x="773" text-anchor="middle">
+        GstGLFilterShader
+      </text>
+      <text font-size="8" y="-182.261" x="773" text-anchor="middle">
+        glfiltershader0
+      </text>
+      <text font-size="8" y="-173.261" x="773" text-anchor="middle">
+        [-]
+      </text>
+      <text font-size="8" y="-164.261" x="773" text-anchor="middle">
+        parent=(GstPipeline) pipeline0
+      </text>
+      <text font-size="8" y="-155.261" x="773" text-anchor="middle">
+        qos=TRUE
+      </text>
+      <text font-size="8" y="-146.261" x="773" text-anchor="middle">
+        fragment=&quot;#version 100\n#ifdef GL_ES\nprecision mediump float;\n#endif\nvarying …
+      </text>
+    </g>
+    <g class="node" transform="matrix(.35278 0 0 .35278 -148.934 74.318)">
+      <path stroke="#000" fill="#aaf" d="M693-103.66h54v-20h-54z"/>
+      <text font-size="9" y="-116.461" x="720" text-anchor="middle">
+        sink
+      </text>
+      <text font-size="9" y="-106.461" x="720" text-anchor="middle">
+        [-][bFb]
+      </text>
+    </g>
+    <g class="node" transform="matrix(.35278 0 0 .35278 -148.934 74.318)">
+      <path stroke="#000" fill="#faa" d="M798-103.66h54v-20h-54z"/>
+      <text font-size="9" y="-116.461" x="825" text-anchor="middle">
+        src
+      </text>
+      <text font-size="9" y="-106.461" x="825" text-anchor="middle">
+        [-][bFb]
+      </text>
+    </g>
+    <path d="M151.677 34.22h94.379" stroke="#000" fill="none" stroke-width=".353"/>
+    <path stroke="#000" d="M246.106 35.456v-2.47l3.527 1.235z" stroke-width=".35278"/>
+    <text font-size="3.175" y="193.96" x="242.586" text-anchor="middle" stroke-width=".353" transform="translate(-.113 -160.727)">
+      
+    </text>
+    <text font-size="2.117" y="197.7" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      video/x-raw(memory:GLMemory)
+    </text>
+    <text font-size="2.117" y="200.169" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      format: RGBA
+    </text>
+    <text font-size="2.117" y="202.639" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      width: [ 1, 2147483647 ]
+    </text>
+    <text font-size="2.117" y="205.108" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      height: [ 1, 2147483647 ]
+    </text>
+    <text font-size="2.117" y="207.578" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      framerate: [ 0/1, 2147483647/1 ]
+    </text>
+    <text font-size="2.117" y="210.047" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      texture-target: 2D
+    </text>
+    <text font-size="2.117" y="212.516" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      video/x-raw(ANY)
+    </text>
+    <text font-size="2.117" y="214.986" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      format: RGBA
+    </text>
+    <text font-size="2.117" y="217.455" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      width: [ 1, 2147483647 ]
+    </text>
+    <text font-size="2.117" y="219.925" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      height: [ 1, 2147483647 ]
+    </text>
+    <text font-size="2.117" y="222.394" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      framerate: [ 0/1, 2147483647/1 ]
+    </text>
+    <text font-size="2.117" y="224.864" x="195.534" stroke-width=".353" transform="translate(-.113 -160.727)">
+      texture-target: 2D
+    </text>
+    <path fill="none" stroke="#000" d="M3 34.22h88.897" stroke-width=".353"/>
+    <path stroke="#000" d="M92.008 35.456v-2.47l3.528 1.235z" stroke-width=".35278"/>
+    <text text-anchor="middle" x="5.166" y="193.96" font-size="3.175" stroke-width=".353" transform="translate(-.113 -160.727)">
+      
+    </text>
+    <text x="5.338" y="197.7" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      video/x-raw(ANY)
+    </text>
+    <text x="5.338" y="200.169" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      format: RGBA
+    </text>
+    <text x="5.338" y="202.639" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      width: [ 1, 2147483647 ]
+    </text>
+    <text x="5.338" y="205.108" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      height: [ 1, 2147483647 ]
+    </text>
+    <text x="5.338" y="207.578" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      framerate: [ 0/1, 2147483647/1 ]
+    </text>
+    <text x="5.338" y="210.047" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      texture-target: 2D
+    </text>
+    <text x="5.338" y="212.516" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      video/x-raw(memory:GLMemory)
+    </text>
+    <text x="5.338" y="214.986" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      format: RGBA
+    </text>
+    <text x="5.338" y="217.455" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      width: [ 1, 2147483647 ]
+    </text>
+    <text x="5.338" y="219.925" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      height: [ 1, 2147483647 ]
+    </text>
+    <text x="5.338" y="222.394" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      framerate: [ 0/1, 2147483647/1 ]
+    </text>
+    <text x="5.338" y="224.864" font-size="2.117" stroke-width=".353" transform="translate(-.113 -160.727)">
+      texture-target: 2D
+    </text>
+  </g>
+</svg>
