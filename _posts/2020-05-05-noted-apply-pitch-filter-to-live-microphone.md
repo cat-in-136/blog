@@ -5,7 +5,9 @@ tags:
 - gstreamer
 - linux
 - pulseaudio
+- audio
 date: '2020-05-05T18:12:34+09:00'
+last_modified_at: '2020-10-04T14:16:29+09:00'
 ---
 
 ### TL;DR
