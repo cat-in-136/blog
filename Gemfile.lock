@@ -19,7 +19,7 @@ GEM
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     imagesize (0.1.1)
-    jekyll (4.0.0)
+    jekyll (4.0.1)
       addressable (~> 2.4)
       colorator (~> 1.0)
       em-websocket (~> 0.5)
@@ -55,15 +55,13 @@ GEM
     mercenary (0.3.6)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
-    public_suffix (4.0.4)
+    public_suffix (4.0.5)
     rake (13.0.1)
     rb-fsevent (0.10.4)
-    rb-gsl (1.16.0.6)
-      gsl
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rexml (3.2.4)
-    rouge (3.18.0)
+    rouge (3.19.0)
     safe_yaml (1.0.5)
     sassc (2.3.0)
       ffi (~> 1.9)
@@ -72,7 +70,7 @@ GEM
       tins (~> 1.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    tins (1.24.1)
+    tins (1.25.0)
       sync
     unicode-display_width (1.7.0)
 
@@ -81,18 +79,18 @@ PLATFORMS
 
 DEPENDENCIES
   classifier-reborn
+  gsl
   imagesize
-  jekyll (~> 4.0.0)
+  jekyll (~> 4.0.1)
   jekyll-archives
   jekyll-paginate-v2
   liquid-c
   rake
-  rb-gsl (~> 1.16)
   term-ansicolor
   tzinfo-data
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.7.1p83
 
 BUNDLED WITH
-   2.0.2
+   2.1.4

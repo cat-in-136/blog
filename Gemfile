@@ -9,7 +9,7 @@ ruby RUBY_VERSION
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", "~> 4.0.0"
+gem "jekyll", "~> 4.0.1"
 gem "liquid-c" # to speed up liquid parsing
 
 # If you have any plugins, put them here!
@@ -22,7 +22,7 @@ end
 gem "imagesize"
 
 group :lsi do
-  gem 'rb-gsl', '~> 1.16'
+  gem 'gsl'
   gem 'classifier-reborn'
 end
 
