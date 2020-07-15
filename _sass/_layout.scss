@@ -140,10 +140,8 @@
 
       .post-thumb {
         display: block;
+        object-fit: contain;
         height: 5em;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
         margin: auto;
       }
       .post-thumb[data-image-path] {
