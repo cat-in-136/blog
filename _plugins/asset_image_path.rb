@@ -61,8 +61,8 @@ module Jekyll
         File.open(path, 'r') do |f|
           f.flock(File::LOCK_SH)
           imgsize = ImageSize.new(f)
-          width = imgsize.get_width
-          height = imgsize.get_height
+          width = imgsize.width
+          height = imgsize.height
         end
       end
 
@@ -98,6 +98,7 @@ module Jekyll
             @img['height'] = height.to_s
           end
         end
+        @img['loading'] = 'lazy' unless @img['width'].nil? || @img['height'].nil?
 
         # srcset
         if @img['src'] =~ /\.jpg$/
