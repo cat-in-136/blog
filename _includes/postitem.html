@@ -4,7 +4,7 @@
       <span class="post-meta">{{ post.date | date: "%F" }}</span>
       <span class="post-title">{{ post.title | escape_once }}</span>
       {%- if post.thumbnail -%}{%- unless page.vertical-writing -%}
-      <span class="post-thumb" data-image-path="{{ post.thumbnail | liquify | escape_url }}"></span>
+      <img class="post-thumb" src="{{ post.thumbnail | liquify | escape_url }}" loading="lazy" alt="thumbnail" />
       {%- endunless -%}{%- endif -%}
     </a>
   </li>

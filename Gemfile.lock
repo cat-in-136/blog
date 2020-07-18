@@ -18,7 +18,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
-    imagesize (0.1.1)
+    image_size (2.0.2)
     jekyll (4.0.1)
       addressable (~> 2.4)
       colorator (~> 1.0)
@@ -80,7 +80,7 @@ PLATFORMS
 DEPENDENCIES
   classifier-reborn
   gsl
-  imagesize
+  image_size (~> 2.0)
   jekyll (~> 4.0.1)
   jekyll-archives
   jekyll-paginate-v2

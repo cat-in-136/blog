@@ -19,7 +19,7 @@ group :jekyll_plugins do
   gem "jekyll-archives"
 end
 
-gem "imagesize"
+gem 'image_size', '~> 2.0'
 
 group :lsi do
   gem 'gsl'
