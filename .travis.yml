@@ -7,7 +7,7 @@ addons:
     - libgsl-dev
 cache: bundler
 rvm:
-- 2.5
+- 2.7
 before_install:
 - gem install bundler --no-document
 before_script:
