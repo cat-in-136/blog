@@ -2,7 +2,6 @@
 layout: default
 ---
 {%- assign canonical = page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url -%}
-{%- assign canonical = page.url | replace:'index.html','' | prepend: site.baseurl | prepend: "https://cat-in-136.github.io" -%}
 <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="{{ page.url }}" itemprop="url">{{ page.title | escape }}</a></h1>
@@ -48,13 +47,6 @@ layout: default
       <div id="disqus_thread"></div>
       <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
       <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
-    <!--
-      <span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2013/01/js.html">First article</span>
-      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
-    <script type="application/javascript" src="https://catin136blog.disqus.com/embed.js" defer="defer" async="async"></script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    -->
     </details>
   </footer>
 </article>
