@@ -7,6 +7,7 @@ tags:
 - Reverse engineering
 - Gadget
 date: '2020-07-18T21:17:33+09:00'
+last_modified_at: '2020-08-08T11:13:31+09:00'
 ---
 
 ## General informations
@@ -89,9 +90,10 @@ Message offset/length coding:
          ^^ - Message length (0 indicats "disabled")
 ```
 
-### Data frames/messages(3rd-15th reports):
+### Data frames/messages(3rd-14th reports):
 
-Each report corresponds to each line.
+(When the total sum of message length is smaller than or equals to 64,)
+each report corresponds to each line.
 The last report is dummy and ignored. Because the LED is not 12-line but 11-line.
 
 The 1st bit (MSB) of the 1st byte corresponds to most left pixel, and
@@ -112,17 +114,24 @@ For example, when 1st message length is set to 1 and 2nd message offset is set t
 
 ...
 
-11th line (14th report)
+11th line (13th report)
   11 22 33 00 00 ...
   ^^ --------------- 11th line, 1st message
      ^^^^^ --------- 11th line, 2nd message
 
-dummy line (15th report)
+dummy line (14th report)
   00 00 00 ...
   ^^^^^^^^ --- ignored
 ```
 
-The case that total sum of message length is larger than 64 is FFS.
+When the total sum of message length is larger than 64, the message seem to be simply segmented to multiple reports in natural order.
+
+For example, the total sum of message length is larger than 64 and smaller than 128,
+3rd report corresponds to first 64 bytes of the first line,
+and 4th report to subsequent bytes of the first line.
+5th report to first 64 bytes of the second line,
+and 6th report to subsequent bytes of the second line...
+Note that multiple dummy reports (25th and 26th reports in this example) are required for dummy line.
 
 ## See also
 
