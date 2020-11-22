@@ -4,8 +4,6 @@ require 'term/ansicolor'
 
 posts_dir = '_posts'
 drafts_dir = '_drafts'
-deploy_dir = '_deploy'
-deploy_branch = 'master'
 
 jekyll_rb = Pathname.new(File.join(Gem.bindir, 'jekyll')).relative_path_from(Pathname.pwd).to_path
 
@@ -109,16 +107,6 @@ task :touch_post, :path do |t, args|
   end
 end
 
-desc "Setup for deployment"
-task :setup, :deploy_site do |t, args|
-  raise 'deploy_site is not specified' unless args.deploy_site
-
-  if File.exists?(deploy_dir)
-    remove_entry_secure(deploy_dir, :force => true)
-  end
-  ok_failed system "git clone \'#{args.deploy_site}\' \'#{deploy_dir}\'"
-end
-
 desc "Validates _site/"
 task :validate do
   require 'rexml/document'
@@ -136,33 +124,6 @@ task :validate do
   end
   puts "#{Term::ANSIColor::green}OK:#{ok_count} #{Term::ANSIColor::red}NG:#{ng_count}#{Term::ANSIColor::clear}\n"
   raise 'Not valid' if ng_count > 0
-end
-
-desc "Deploy to github.io"
-task :deploy do
-  #Rake::Task[:generate].execute
-
-  cd "#{deploy_dir}" do
-    puts "git pull in #{deploy_dir}... "
-    ok_failed system "git pull origin \'#{deploy_branch}\'"
-  end
-
-  puts "\nCopy to _site/ to #{deploy_dir}... "
-  ok_failed system("rsync -a --delete --exclude .git _site/ \'#{deploy_dir}\'")
-
-  if ENV['TRAVIS_BRANCH'] == 'master'
-    cd "#{deploy_dir}" do
-      FileUtils.touch '.nojekyll' unless File.exists?('.nojekyll')
-
-      message = "Site updated at #{Time.now} (#{Time.now.utc})"
-      puts "Commiting: #{message}"
-
-      ok_failed system("git add -A")
-      ok_failed system("git commit -m \"#{message}\"")
-      ok_failed system("git push origin \'#{deploy_branch}\'")
-    end
-  end
-  
 end
 
 def ok_failed(condition)

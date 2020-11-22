@@ -1,0 +1,52 @@
+name: Build Blog
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        path: ./_deploy
+        repository: cat-in-136/cat-in-136.github.io
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        persist-credentials: true
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+    - name: Install GSL
+      run: sudo apt-get install libgslcblas0 libgsl-dev -y
+
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: ${{ runner.os }}-gems-
+    - name: Install dependencies
+      run: bundle install --path=vendor/bundle
+
+    - name: Generate document
+      run: bundle exec rake generate
+    - name: Validate generated contents
+      run: bundle exec rake validate
+
+    - run: |
+        rsync -a --delete --exclude .git _site/ _deploy/
+        cd _deploy
+        [[ -f .nojekyll ]] || touch .nojekyll
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        external_repository: cat-in-136/cat-in-136.github.io
+        publish_branch: master
+        publish_dir: ./_deploy
