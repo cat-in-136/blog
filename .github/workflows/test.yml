@@ -1,0 +1,35 @@
+name: Test of Building Blog
+
+on:
+  push:
+    branches-ignore: [master]
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+    - name: Install GSL
+      run: sudo apt-get install libgslcblas0 libgsl-dev -y
+
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: ${{ runner.os }}-gems-
+    - name: Install dependencies
+      run: bundle install --path=vendor/bundle
+
+    - name: Generate document
+      run: bundle exec rake generate
+    - name: Validate generated contents
+      run: bundle exec rake validate
