@@ -2,7 +2,7 @@
 layout: post
 title: Use Marionette to obtain Firefox internal information easily
 date: '2019-10-20T12:52:16+09:00'
-tags: firefox mozilla
+tags: firefox mozilla webdriver
 ---
 I've been tracking updates/differences in Firefox default settings [since around 2010]({% post_url 2010-08-22-diff-of-firefox4-default-preference %}).
 
