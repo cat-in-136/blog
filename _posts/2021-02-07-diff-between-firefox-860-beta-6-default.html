@@ -1,0 +1,490 @@
+---
+layout: post
+title: Diff between firefox 86.0 beta 6 default preference and firefox 85.0.1
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+date: '2021-02-07T12:43:39+09:00'
+---
+
+<p>
+This is difference between the default preference of Firefox 86.0 beta 6 and one of 85.0.1.
+This diff table is generated with my small script <a href="https://github.com/cat-in-136/firefox-prefjs-surveyer">firefox-prefjs-surveyer</a>.
+</p>
+
+<div>
+<table class="diff_firefox86_pref_diff">
+<caption>Preference difference</caption>
+<thead>
+<tr><td>Pref</td><td>Firefox 85.0.1</td><td>Firefox 86.0 beta 6</td></tr>
+</thead>
+    <tbody>
+      <tr>
+        <td>app.<wbr />releaseNotesURL</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />releaseNotesURL.<wbr />aboutDialog</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />channel</td>
+        <td>release</td>
+        <td>beta</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />details</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/notes</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta/notes</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />manual</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>apz.<wbr />relative-update.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />contentblocking.<wbr />features.<wbr />strict</td>
+        <td>tp,<wbr />tpPrivate,<wbr />cookieBehavior4,<wbr />cm,<wbr />fp,<wbr />stp</td>
+        <td>tp,<wbr />tpPrivate,<wbr />cookieBehavior4,<wbr />cm,<wbr />fp,<wbr />stp,<wbr />lvl2</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />defaultbrowser.<wbr />notificationbar</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />display.<wbr />always_<wbr />show_<wbr />rings_<wbr />after_<wbr />key_<wbr />focus</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />engagement.<wbr />downloads-button.<wbr />has-used</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />engagement.<wbr />fxa-toolbar-menu-button.<wbr />has-used</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />engagement.<wbr />home-button.<wbr />has-used</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />engagement.<wbr />sidebar-button.<wbr />has-used</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />fixup.<wbr />alternate.<wbr />protocol</td>
+        <td class="undefined">undefined</td>
+        <td>https</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />customizationMenu.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />improvesearch.<wbr />topSite<wbr />Search<wbr />Shortcuts.<wbr />searchEngines</td>
+        <td></td>
+        <td>google,<wbr />amazon</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />newNewtab<wbr />Experience.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />telemetry.<wbr />ut.<wbr />events</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />proton.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />tabs.<wbr />tooltips<wbr />Show<wbr />Pid</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />toolbars.<wbr />bookmarks.<wbr />2h2020</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />toolbars.<wbr />bookmarks.<wbr />show<wbr />Other<wbr />Bookmarks</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />ime<wbr />Composition<wbr />Closes<wbr />Panel</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />shortcuts.<wbr />bookmarks</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />shortcuts.<wbr />history</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />shortcuts.<wbr />tabs</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />suggest.<wbr />engines</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />localOneOffs</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />tabToComplete</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>devtools.<wbr />debugger.<wbr />features.<wbr />watchpoints</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />storage.<wbr />test.<wbr />forceLegacyActors</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />delay.<wbr />block_<wbr />external_<wbr />protocol_<wbr />in_<wbr />iframes.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />input_<wbr />events.<wbr />beforeinput.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />menuitem.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />storage.<wbr />next_<wbr />gen</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />window.<wbr />content.<wbr />untrusted.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webcompat-reporter.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>geo.<wbr />provider.<wbr />network.<wbr />compare.<wbr />url</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%</td>
+      </tr>
+
+      <tr>
+        <td>geo.<wbr />provider.<wbr />network.<wbr />url</td>
+        <td class="uri">https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%</td>
+        <td class="uri">https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%</td>
+      </tr>
+
+      <tr>
+        <td>gfx.<wbr />e10s.<wbr />font-list.<wbr />shared</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />allow-partial-present-buffer-age</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>javascript.<wbr />options.<wbr />warp</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />conic-gradient.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />css.<wbr />focus-visible.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />display-list.<wbr />improve-fragmentation</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />dynamic-reflow-roots.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />peerconnection.<wbr />dtls.<wbr />version.<wbr />min</td>
+        <td>770</td>
+        <td>771</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />peerconnection.<wbr />mtransport_<wbr />process</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />rdd-ffvpx.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />rdd-retryonfailure.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />rdd-theora.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />rdd-vpx.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>messaging-system.<wbr />rsexperimentloader.<wbr />collection_<wbr />id</td>
+        <td class="undefined">undefined</td>
+        <td>nimbus-desktop-experiments</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />accept</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />http3.<wbr />backup_<wbr />timer_<wbr />delay</td>
+        <td class="undefined">undefined</td>
+        <td>100</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />preload</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />process.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>network.<wbr />security.<wbr />esni.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>permissions.<wbr />isolateBy.<wbr />private<wbr />Browsing</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>print.<wbr />pages_<wbr />per_<wbr />sheet.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>print.<wbr />tab_<wbr />modal.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />annotate_<wbr />channels.<wbr />strict_<wbr />list.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />partition.<wbr />network_<wbr />state</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />restrict<wbr />3rd<wbr />party<wbr />storage.<wbr />partitioned<wbr />Hosts</td>
+        <td class="dump">accounts.google.com/o/oauth2/</td>
+        <td class="dump">accounts.google.com/o/oauth2/,d35nw2lg0ahg0v.cloudfront.net/,datastudio.google.com/embed/reporting/,d3qlaywcwingl6.cloudfront.net/</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>security.<wbr />disallow_<wbr />non_<wbr />local_<wbr />system<wbr />principal_<wbr />in_<wbr />tests</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />intermediate_<wbr />preloading_<wbr />healer.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />pki.<wbr />distrust_<wbr />ca_<wbr />policy</td>
+        <td>2</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />remote_<wbr />settings.<wbr />crlite_<wbr />filters.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />sync.<wbr />engine.<wbr />bookmarks.<wbr />validation.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />sync.<wbr />engine.<wbr />passwords.<wbr />validation.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />browser.<wbr />urlbar.<wbr />suggest.<wbr />engines</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />telemetry.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />zoomManager.<wbr />zoomValues</td>
+        <td>.<wbr />3,.<wbr />5,.<wbr />67,.<wbr />8,.<wbr />9,<wbr />1,<wbr />1.<wbr />1,<wbr />1.<wbr />2,<wbr />1.<wbr />33,<wbr />1.<wbr />5,<wbr />1.<wbr />7,<wbr />2,<wbr />2.<wbr />4,<wbr />3</td>
+        <td>.<wbr />3,.<wbr />5,.<wbr />67,.<wbr />8,.<wbr />9,<wbr />1,<wbr />1.<wbr />1,<wbr />1.<wbr />2,<wbr />1.<wbr />33,<wbr />1.<wbr />5,<wbr />1.<wbr />7,<wbr />2,<wbr />2.<wbr />4,<wbr />3,<wbr />4,<wbr />5</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />titlebar-x11-use-shape-mask</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>zoom.<wbr />maxPercent</td>
+        <td>300</td>
+        <td>500</td>
+      </tr>
+
+    </tbody>
+</table>
+</div>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox86_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox86_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox86_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox86_pref_diff td.json,
+table.diff_firefox86_pref_diff td.uri,
+table.diff_firefox86_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox86_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox86_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox86_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox86_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox86_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox86_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
