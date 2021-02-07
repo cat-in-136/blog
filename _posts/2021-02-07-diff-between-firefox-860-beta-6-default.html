@@ -6,6 +6,7 @@ tags:
 - pref diff
 - mozilla
 date: '2021-02-07T12:43:39+09:00'
+last_modified_at: '2021-02-07T12:49:07+09:00'
 ---
 
 <p>
@@ -20,15 +21,33 @@ This diff table is generated with my small script <a href="https://github.com/ca
 <tr><td>Pref</td><td>Firefox 85.0.1</td><td>Firefox 86.0 beta 6</td></tr>
 </thead>
     <tbody>
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />bool</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />integer</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />string</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
       <tr>
         <td>app.<wbr />releaseNotesURL</td>
         <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
         <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
       </tr>
 
-      <tr class="newkey">
+      <tr>
         <td>app.<wbr />releaseNotesURL.<wbr />aboutDialog</td>
-        <td class="undefined">undefined</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
         <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
       </tr>
 
@@ -50,16 +69,34 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta</td>
       </tr>
 
-      <tr class="oldkey">
-        <td>apz.<wbr />relative-update.<wbr />enabled</td>
-        <td>true</td>
+      <tr class="newkey">
+        <td>apz.<wbr />gtk.<wbr />touchpad_<wbr />pinch.<wbr />enabled</td>
         <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />popups.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />contentblocking.<wbr />cfr-milestone.<wbr />milestones</td>
+        <td class="json">[1000, 5000, 10000, 25000, 50000, 100000, 500000]</td>
+        <td class="json">[1000, 5000, 10000, 25000, 50000, 100000, 250000, 314159, 500000, 750000, 1000000, 1250000, 1500000, 1750000, 2000000, 2250000, 2500000, 8675309]</td>
       </tr>
 
       <tr>
         <td>browser.<wbr />contentblocking.<wbr />features.<wbr />strict</td>
-        <td>tp,<wbr />tpPrivate,<wbr />cookieBehavior4,<wbr />cm,<wbr />fp,<wbr />stp</td>
         <td>tp,<wbr />tpPrivate,<wbr />cookieBehavior4,<wbr />cm,<wbr />fp,<wbr />stp,<wbr />lvl2</td>
+        <td>tp,<wbr />tpPrivate,<wbr />cookieBehavior5,<wbr />cm,<wbr />fp,<wbr />stp,<wbr />lvl2</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />contentblocking.<wbr />state-partitioning.<wbr />mvp.<wbr />ui.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
       </tr>
 
       <tr>
@@ -68,58 +105,40 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td>true</td>
       </tr>
 
+      <tr class="oldkey">
+        <td>browser.<wbr />download.<wbr />hide_<wbr />plugins_<wbr />without_<wbr />extensions</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />download.<wbr />show_<wbr />plugins_<wbr />in_<wbr />list</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
       <tr class="newkey">
-        <td>browser.<wbr />display.<wbr />always_<wbr />show_<wbr />rings_<wbr />after_<wbr />key_<wbr />focus</td>
+        <td>browser.<wbr />engagement.<wbr />ctrlTab.<wbr />has-used</td>
         <td class="undefined">undefined</td>
         <td>false</td>
       </tr>
 
       <tr class="newkey">
-        <td>browser.<wbr />engagement.<wbr />downloads-button.<wbr />has-used</td>
+        <td>browser.<wbr />engagement.<wbr />library-button.<wbr />has-used</td>
         <td class="undefined">undefined</td>
         <td>false</td>
       </tr>
 
       <tr class="newkey">
-        <td>browser.<wbr />engagement.<wbr />fxa-toolbar-menu-button.<wbr />has-used</td>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />discoverystream.<wbr />spocs-endpoint-query</td>
         <td class="undefined">undefined</td>
-        <td>false</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />engagement.<wbr />home-button.<wbr />has-used</td>
-        <td class="undefined">undefined</td>
-        <td>false</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />engagement.<wbr />sidebar-button.<wbr />has-used</td>
-        <td class="undefined">undefined</td>
-        <td>false</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />fixup.<wbr />alternate.<wbr />protocol</td>
-        <td class="undefined">undefined</td>
-        <td>https</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />customizationMenu.<wbr />enabled</td>
-        <td class="undefined">undefined</td>
-        <td>false</td>
-      </tr>
-
-      <tr>
-        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />improvesearch.<wbr />topSite<wbr />Search<wbr />Shortcuts.<wbr />searchEngines</td>
         <td></td>
-        <td>google,<wbr />amazon</td>
       </tr>
 
       <tr class="newkey">
-        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />newNewtab<wbr />Experience.<wbr />enabled</td>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />new<wbr />Newtab<wbr />Experience.<wbr />colors</td>
         <td class="undefined">undefined</td>
-        <td>false</td>
+        <td>#0090ED,<wbr />#FF4F5F,<wbr />#2AC3A2,<wbr />#FF7139,<wbr />#A172FF,<wbr />#FFA437,<wbr />#FF2A8A</td>
       </tr>
 
       <tr>
@@ -128,86 +147,92 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td>true</td>
       </tr>
 
-      <tr class="newkey">
-        <td>browser.<wbr />proton.<wbr />enabled</td>
-        <td class="undefined">undefined</td>
-        <td>false</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />tabs.<wbr />tooltips<wbr />Show<wbr />Pid</td>
-        <td class="undefined">undefined</td>
-        <td>false</td>
-      </tr>
-
       <tr>
-        <td>browser.<wbr />toolbars.<wbr />bookmarks.<wbr />2h2020</td>
+        <td>browser.<wbr />partnerlink.<wbr />attributionURL</td>
+        <td class="uri">https://topsites.services.mozilla.com/cid/amzn_2020_a1</td>
+        <td class="uri">https://topsites.services.mozilla.com/cid/</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />partnerlink.<wbr />campaign.<wbr />topsites</td>
+        <td class="undefined">undefined</td>
+        <td>amzn_2020_a1</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />ssb.<wbr />enabled</td>
         <td>false</td>
-        <td>true</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />toolbars.<wbr />bookmarks.<wbr />show<wbr />Other<wbr />Bookmarks</td>
-        <td class="undefined">undefined</td>
-        <td>true</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />urlbar.<wbr />ime<wbr />Composition<wbr />Closes<wbr />Panel</td>
-        <td class="undefined">undefined</td>
-        <td>true</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />urlbar.<wbr />shortcuts.<wbr />bookmarks</td>
-        <td class="undefined">undefined</td>
-        <td>true</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />urlbar.<wbr />shortcuts.<wbr />history</td>
-        <td class="undefined">undefined</td>
-        <td>true</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />urlbar.<wbr />shortcuts.<wbr />tabs</td>
-        <td class="undefined">undefined</td>
-        <td>true</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>browser.<wbr />urlbar.<wbr />suggest.<wbr />engines</td>
-        <td class="undefined">undefined</td>
-        <td>true</td>
-      </tr>
-
-      <tr class="oldkey">
-        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />localOneOffs</td>
-        <td>true</td>
-        <td class="undefined">undefined</td>
-      </tr>
-
-      <tr class="oldkey">
-        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />tabToComplete</td>
-        <td>true</td>
-        <td class="undefined">undefined</td>
-      </tr>
-
-      <tr class="oldkey">
-        <td>devtools.<wbr />debugger.<wbr />features.<wbr />watchpoints</td>
-        <td>true</td>
         <td class="undefined">undefined</td>
       </tr>
 
       <tr class="newkey">
-        <td>devtools.<wbr />storage.<wbr />test.<wbr />forceLegacyActors</td>
+        <td>browser.<wbr />tabs.<wbr />remote.<wbr />use<wbr />Origin<wbr />Attributes<wbr />InRemoteType</td>
         <td class="undefined">undefined</td>
         <td>false</td>
       </tr>
 
+      <tr class="oldkey">
+        <td>browser.<wbr />tabs.<wbr />tooltips<wbr />Show<wbr />Pid</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
       <tr class="newkey">
-        <td>dom.<wbr />delay.<wbr />block_<wbr />external_<wbr />protocol_<wbr />in_<wbr />iframes.<wbr />enabled</td>
+        <td>browser.<wbr />tabs.<wbr />tooltips<wbr />Show<wbr />Pid<wbr />And<wbr />Activeness</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />disable<wbr />OneOffs<wbr />Horizontal<wbr />Key<wbr />Navigation</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />oneOffs<wbr />Refresh</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />restyle<wbr />Browsing<wbr />History<wbr />AsSearch</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>canvas.<wbr />create<wbr />Conic<wbr />Gradient.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />command-button-errorcount.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>docshell.<wbr />shistory.<wbr />bfcache.<wbr />allow_<wbr />unload_<wbr />listeners</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>docshell.<wbr />shistory.<wbr />bfcache.<wbr />require_<wbr />no_<wbr />opener</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />events.<wbr />offset-in-svg-relative-to-svg-root</td>
         <td class="undefined">undefined</td>
         <td>true</td>
       </tr>
@@ -219,9 +244,15 @@ This diff table is generated with my small script <a href="https://github.com/ca
       </tr>
 
       <tr class="newkey">
-        <td>dom.<wbr />menuitem.<wbr />enabled</td>
+        <td>dom.<wbr />input_<wbr />events.<wbr />can<wbr />Suspend<wbr />InBCG.<wbr />enabled</td>
         <td class="undefined">undefined</td>
         <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />popup_<wbr />allowed_<wbr />events</td>
+        <td>change click dblclick auxclick mouseup pointerup notificationclick reset submit touchend contextmenu</td>
+        <td>change click dblclick auxclick mousedown mouseup pointerdown pointerup notificationclick reset submit touchend contextmenu</td>
       </tr>
 
       <tr>
@@ -236,10 +267,58 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td>false</td>
       </tr>
 
+      <tr class="oldkey">
+        <td>extensions.<wbr />content_<wbr />script_<wbr />csp.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>extensions.<wbr />content_<wbr />script_<wbr />csp.<wbr />report_<wbr />only</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />supported<wbr />Countries</td>
+        <td>US</td>
+        <td>US,<wbr />CA</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />get.<wbr />url</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v3/addons/search/?guid=%IDS%&amp;lang=%LOCALE%</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v4/addons/search/?guid=%IDS%&amp;lang=%LOCALE%</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />langpacks.<wbr />url</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v3/addons/language-tools/?app=firefox&amp;type=language&amp;appversion=%VERSION%</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v4/addons/language-tools/?app=firefox&amp;type=language&amp;appversion=%VERSION%</td>
+      </tr>
+
       <tr>
         <td>extensions.<wbr />webcompat-reporter.<wbr />enabled</td>
         <td>false</td>
         <td>true</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webextensions.<wbr />base-content-security-policy</td>
+        <td class="dump">script-src &#x27;self&#x27; https://* moz-extension: blob: filesystem: &#x27;unsafe-eval&#x27; &#x27;unsafe-inline&#x27;; object-src &#x27;self&#x27; https://* moz-extension: blob: filesystem:;</td>
+        <td class="dump">script-src &#x27;self&#x27; https://* http://localhost:* http://127.0.0.1:* moz-extension: blob: filesystem: &#x27;unsafe-eval&#x27; &#x27;unsafe-inline&#x27;; object-src &#x27;self&#x27; moz-extension: blob: filesystem:;</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />webextensions.<wbr />base-content-security-policy.<wbr />v3</td>
+        <td class="undefined">undefined</td>
+        <td class="dump">script-src &#x27;self&#x27; http://localhost:* http://127.0.0.1:*; object-src &#x27;self&#x27;;</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>extensions.<wbr />webextensions.<wbr />tabhide.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
       </tr>
 
       <tr class="newkey">
@@ -254,6 +333,12 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td class="uri">https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%</td>
       </tr>
 
+      <tr class="newkey">
+        <td>gfx.<wbr />bundled-fonts.<wbr />activate</td>
+        <td class="undefined">undefined</td>
+        <td>-1</td>
+      </tr>
+
       <tr>
         <td>gfx.<wbr />e10s.<wbr />font-list.<wbr />shared</td>
         <td>false</td>
@@ -261,27 +346,117 @@ This diff table is generated with my small script <a href="https://github.com/ca
       </tr>
 
       <tr class="newkey">
-        <td>gfx.<wbr />webrender.<wbr />allow-partial-present-buffer-age</td>
+        <td>gfx.<wbr />font_<wbr />rendering.<wbr />fallback.<wbr />async</td>
         <td class="undefined">undefined</td>
         <td>true</td>
       </tr>
 
-      <tr class="oldkey">
-        <td>javascript.<wbr />options.<wbr />warp</td>
-        <td>true</td>
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />debug.<wbr />force-picture-invalidation</td>
         <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />software.<wbr />d3d11.<wbr />upload-mode</td>
+        <td class="undefined">undefined</td>
+        <td>2</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />svg-images</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>image.<wbr />avif.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
       </tr>
 
       <tr class="oldkey">
-        <td>layout.<wbr />css.<wbr />conic-gradient.<wbr />enabled</td>
-        <td>true</td>
+        <td>javascript.<wbr />options.<wbr />ion.<wbr />full.<wbr />threshold</td>
+        <td>100000</td>
         <td class="undefined">undefined</td>
       </tr>
 
       <tr>
-        <td>layout.<wbr />css.<wbr />focus-visible.<wbr />enabled</td>
-        <td>false</td>
+        <td>javascript.<wbr />options.<wbr />off_<wbr />thread_<wbr />parse_<wbr />global</td>
         <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />autofill.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />file-selector-button.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />image-set.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />moz-any-is-is.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />moz-focus-outer.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-decoration-skip-ink.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-decoration-thickness.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-justify.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-underline-offset.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-underline-position.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />unknown-webkit-pseudo-element</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />xul-tree-pseudos.<wbr />content.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
       </tr>
 
       <tr>
@@ -308,52 +483,34 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td>true</td>
       </tr>
 
+      <tr class="newkey">
+        <td>media.<wbr />videocontrols.<wbr />keyboard-tab-to-all-controls</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
       <tr>
-        <td>media.<wbr />rdd-ffvpx.<wbr />enabled</td>
+        <td>media.<wbr />videocontrols.<wbr />picture-in-picture.<wbr />allow-multiple</td>
         <td>false</td>
         <td>true</td>
       </tr>
 
       <tr class="newkey">
-        <td>media.<wbr />rdd-retryonfailure.<wbr />enabled</td>
+        <td>network.<wbr />cache.<wbr />frecency_<wbr />array_<wbr />check_<wbr />enabled</td>
         <td class="undefined">undefined</td>
         <td>true</td>
       </tr>
 
-      <tr>
-        <td>media.<wbr />rdd-theora.<wbr />enabled</td>
-        <td>false</td>
+      <tr class="oldkey">
+        <td>network.<wbr />http.<wbr />spdy.<wbr />bug1556491</td>
         <td>true</td>
+        <td class="undefined">undefined</td>
       </tr>
 
-      <tr>
-        <td>media.<wbr />rdd-vpx.<wbr />enabled</td>
-        <td>false</td>
+      <tr class="oldkey">
+        <td>network.<wbr />http.<wbr />spdy.<wbr />bug1563695</td>
         <td>true</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>messaging-system.<wbr />rsexperimentloader.<wbr />collection_<wbr />id</td>
         <td class="undefined">undefined</td>
-        <td>nimbus-desktop-experiments</td>
-      </tr>
-
-      <tr class="newkey">
-        <td>network.<wbr />http.<wbr />accept</td>
-        <td class="undefined">undefined</td>
-        <td></td>
-      </tr>
-
-      <tr class="newkey">
-        <td>network.<wbr />http.<wbr />http3.<wbr />backup_<wbr />timer_<wbr />delay</td>
-        <td class="undefined">undefined</td>
-        <td>100</td>
-      </tr>
-
-      <tr>
-        <td>network.<wbr />preload</td>
-        <td>false</td>
-        <td>true</td>
       </tr>
 
       <tr>
@@ -362,21 +519,21 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td>true</td>
       </tr>
 
-      <tr class="oldkey">
-        <td>network.<wbr />security.<wbr />esni.<wbr />enabled</td>
-        <td>false</td>
+      <tr class="newkey">
+        <td>pdfjs.<wbr />enableScripting</td>
         <td class="undefined">undefined</td>
-      </tr>
-
-      <tr>
-        <td>permissions.<wbr />isolateBy.<wbr />private<wbr />Browsing</td>
         <td>false</td>
-        <td>true</td>
       </tr>
 
       <tr class="newkey">
-        <td>print.<wbr />pages_<wbr />per_<wbr />sheet.<wbr />enabled</td>
+        <td>pdfjs.<wbr />viewerCssTheme</td>
         <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>permissions.<wbr />isolateBy.<wbr />privateBrowsing</td>
+        <td>false</td>
         <td>true</td>
       </tr>
 
@@ -393,19 +550,37 @@ This diff table is generated with my small script <a href="https://github.com/ca
       </tr>
 
       <tr>
-        <td>privacy.<wbr />partition.<wbr />network_<wbr />state</td>
+        <td>privacy.<wbr />window.<wbr />name.<wbr />update.<wbr />enabled</td>
         <td>false</td>
         <td>true</td>
       </tr>
 
-      <tr>
-        <td>privacy.<wbr />restrict<wbr />3rd<wbr />party<wbr />storage.<wbr />partitioned<wbr />Hosts</td>
-        <td class="dump">accounts.google.com/o/oauth2/</td>
-        <td class="dump">accounts.google.com/o/oauth2/,d35nw2lg0ahg0v.cloudfront.net/,datastudio.google.com/embed/reporting/,d3qlaywcwingl6.cloudfront.net/</td>
+      <tr class="newkey">
+        <td>prompts.<wbr />contentPromptSubDialog</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>prompts.<wbr />tab_<wbr />modal.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
       </tr>
 
       <tr class="newkey">
-        <td>security.<wbr />disallow_<wbr />non_<wbr />local_<wbr />system<wbr />principal_<wbr />in_<wbr />tests</td>
+        <td>remote.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>remote.<wbr />force-local</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>security.<wbr />disallow_<wbr />non_<wbr />local_<wbr />systemprincipal_<wbr />in_<wbr />tests</td>
         <td class="undefined">undefined</td>
         <td>false</td>
       </tr>
@@ -416,16 +591,34 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td>true</td>
       </tr>
 
-      <tr class="oldkey">
-        <td>security.<wbr />pki.<wbr />distrust_<wbr />ca_<wbr />policy</td>
-        <td>2</td>
-        <td class="undefined">undefined</td>
+      <tr>
+        <td>security.<wbr />osclientcerts.<wbr />autoload</td>
+        <td>false</td>
+        <td>true</td>
       </tr>
 
       <tr>
         <td>security.<wbr />remote_<wbr />settings.<wbr />crlite_<wbr />filters.<wbr />enabled</td>
         <td>false</td>
         <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />ssl.<wbr />errorReporting.<wbr />automatic</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />ssl.<wbr />errorReporting.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />ssl.<wbr />errorReporting.<wbr />url</td>
+        <td class="uri">https://incoming.telemetry.mozilla.org/submit/sslreports/</td>
+        <td class="undefined">undefined</td>
       </tr>
 
       <tr class="newkey">
@@ -440,10 +633,10 @@ This diff table is generated with my small script <a href="https://github.com/ca
         <td>true</td>
       </tr>
 
-      <tr class="newkey">
-        <td>services.<wbr />sync.<wbr />prefs.<wbr />sync.<wbr />browser.<wbr />urlbar.<wbr />suggest.<wbr />engines</td>
-        <td class="undefined">undefined</td>
+      <tr class="oldkey">
+        <td>svg.<wbr />transform-box.<wbr />enabled</td>
         <td>true</td>
+        <td class="undefined">undefined</td>
       </tr>
 
       <tr>
@@ -453,21 +646,21 @@ This diff table is generated with my small script <a href="https://github.com/ca
       </tr>
 
       <tr>
-        <td>toolkit.<wbr />zoomManager.<wbr />zoomValues</td>
-        <td>.<wbr />3,.<wbr />5,.<wbr />67,.<wbr />8,.<wbr />9,<wbr />1,<wbr />1.<wbr />1,<wbr />1.<wbr />2,<wbr />1.<wbr />33,<wbr />1.<wbr />5,<wbr />1.<wbr />7,<wbr />2,<wbr />2.<wbr />4,<wbr />3</td>
-        <td>.<wbr />3,.<wbr />5,.<wbr />67,.<wbr />8,.<wbr />9,<wbr />1,<wbr />1.<wbr />1,<wbr />1.<wbr />2,<wbr />1.<wbr />33,<wbr />1.<wbr />5,<wbr />1.<wbr />7,<wbr />2,<wbr />2.<wbr />4,<wbr />3,<wbr />4,<wbr />5</td>
+        <td>webgl.<wbr />disable-fail-if-major-performance-caveat</td>
+        <td>false</td>
+        <td>true</td>
       </tr>
 
       <tr class="newkey">
-        <td>widget.<wbr />titlebar-x11-use-shape-mask</td>
+        <td>widget.<wbr />remote-look-and-feel</td>
         <td class="undefined">undefined</td>
-        <td>false</td>
+        <td>true</td>
       </tr>
 
       <tr>
-        <td>zoom.<wbr />maxPercent</td>
-        <td>300</td>
-        <td>500</td>
+        <td>widget.<wbr />wayland_<wbr />vsync.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
       </tr>
 
     </tbody>
