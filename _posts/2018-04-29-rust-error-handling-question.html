@@ -4,6 +4,7 @@ title: rustのエラー処理と疑問符演算子
 tags:
 - rustlang
 date: '2018-04-29T20:14:03+09:00'
+last_modified_at: '2021-02-14T12:47:58+09:00'
 ---
 
 <p>
@@ -420,6 +421,43 @@ fn main() {
     };
 }
 {% endhighlight %}
+
+<h3>エラー構造体の<code>From</code>などのトレイトを定義するのが面倒</h3>
+
+<aside><p>(2021/02/14加筆)</p></aside>
+
+<p>
+エラー構造体のトレイトの内容は機械的な内容を書くだけで面倒である。
+これは過去にいろいろなcrateが出てきたが、純粋にこの機械的な内容をderiveに任せるのならば、
+<a href="https://crates.io/crates/thiserror">thiserror</a>が便利である。
+</p>
+
+{% highlight toml %}
+[dependencies]
+thiserror = "1"
+{% endhighlight %}
+
+<p>
+下記のように書けば、<code>CliError</code>に対して書いていたトレイトの定義はすべてなくなる。
+</p>
+
+{% highlight rust %}
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+enum CliError {
+    #[error(transparent)]
+    Io(#[from] io::Error),
+    #[error("file not specified")]
+    FileNotSpecified,
+}
+// 以下略
+{% endhighlight %}
+
+<p>
+<a href="https://crates.io/crates/anyhow">anyhow</a>というボックス化されたErrorを扱うcrateを使っても良い。
+が、基本形を単に簡単にするという意味ではthiserrorがまさにその用途であるため、thiserrorをここで使用した。
+</p>
 
 <hr />
 
