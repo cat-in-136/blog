@@ -10,7 +10,7 @@ ruby RUBY_VERSION
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem 'jekyll', '~> 4.1'
+gem 'jekyll', '~> 4.2'
 gem 'liquid-c' # to speed up liquid parsing
 
 # If you have any plugins, put them here!
