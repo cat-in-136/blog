@@ -1,0 +1,247 @@
+---
+layout: post
+title: Clutter+GJS で時計を作ってみた
+author: cat_in_136
+tags:
+- clutter
+- gjs
+thumbnail: "{% asset_image_path 2021-04-19-clutter-gjs-dj-clock-screenshot.png %}"
+date: '2021-04-19T23:54:57+09:00'
+---
+<p>
+Gnome Shell (やそれからフォークされた Cinnamon など) の、アプレットなどの目に見える部品の多くは JavaScript で作られている。
+これは <a href="https://gitlab.gnome.org/GNOME/gjs/blob/master/doc/Home.md">GJS</a> なる Gnome の JavaScript バインディングをつかって書かれている。
+JavaScript から <a href="https://wiki.gnome.org/Projects/Clutter">Clutter</a>を叩いている。
+Clutter を介した描画処理自体は OpenGL を使って描画されるので高速に処理されることになっている。
+</p>
+
+<p>
+しかし、実際に触ったことはなかったので、お試しで時計をつくることで触ってみた。
+</p>
+
+<h3>時計仕様</h3>
+
+<p>
+時計は、現在時刻と、引数で指定した時刻の差分をリアルタイム表示することとした。
+また Clutter の OpenGL 描画を活かすために引数で指定した時刻の差分が60秒以下の場合は赤く点滅するようにした。
+</p>
+
+<p>
+これをつくる経緯としては、とあるライブのDJセットにて、現在時刻、ストップウォッチ（開始からの時間）、カウントダウン（終了までの残り時間）
+の3段表示のデジタルクロックを見かけたことである。
+そして、これは普通にDJとか関係なく便利そうだと思ったことにある。
+その動画は今は見つからなくなってしまったが、HTML上で再現するとおおよそ下記のようになる：
+</p>
+
+<figure>
+<div>
+<div id="dj_clock_demo">
+  <div id="dj_clock_demo_dark">88:88:88.88<br />88:88:88.88<br />88:88:88.88</div>
+  <div id="dj_clock_demo_light">01:23:45.78<br />00:00:00.00<br />02:00:00.00</div>
+</div>
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+@font-face {
+  /* https://www.keshikan.net/fonts.html */
+  font-family: "DSEG7Modern-Regular";
+  src: url("{% asset_image_path 2021-04-19-DSEG7Modern-Regular.woff2 %}") format("woff2");
+}
+
+#dj_clock_demo {
+  position: relative;
+  height: 4.5em;
+
+  font-family: "DSEG7Modern-Regular";
+  font-size: xx-large;
+  border: solid 5px #fff;
+  padding: 0.25em;
+  background: #000;
+}
+#dj_clock_demo > div {
+  position: absolute;
+  top: 0.25em;
+  width: 100%;
+  text-align: center;
+}
+
+#dj_clock_demo_dark {
+  user-select: none;
+  color: #333;
+}
+#dj_clock_demo_light {
+  color: #eef;
+  text-shadow: 0 0 5px #00f, 0 0 5px #00f, 0 0 5px #00f, 0 0 5px #00f;
+}
+
+/* ]]><!-- */ --></style>
+<script type="application/javascript"><!-- /* --><![CDATA[ *///
+window.addEventListener("DOMContentLoaded", function() {
+  "use strict";
+  const startDate = Date.now();
+  const endDate = startDate + 2 * 60 * 60 * 1000;
+  const elem = document.getElementById("dj_clock_demo_light");
+  const updateClock = function () {
+    const str = [];
+    const now = Date.now();
+    const nowDate = new Date(now);
+
+    str.push(
+      nowDate.getHours().toString().padStart(2, "0") +
+      ":" +
+      nowDate.getMinutes().toString().padStart(2, "0") +
+      ":" +
+      nowDate.getSeconds().toString().padStart(2, "0") +
+      "." +
+      ((nowDate.getMilliseconds() / 10) | 0).toString().padStart(2, "0")
+    );
+
+    for (const origin of [startDate, endDate]) {
+      const diff = Math.abs(now - origin);
+
+      const centseconds = ((Math.abs(diff) / 10) | 0)% 100;
+      const seconds = ((Math.abs(diff) / 1000) | 0) % 60;
+      const minutes = ((Math.abs(diff) / 60000) | 0) % 60;
+      const hours = ((Math.abs(diff) / 3600000) | 0) % 24;
+
+      str.push(
+        hours.toString().padStart(2, "0") +
+        ":" +
+        minutes.toString().padStart(2, "0") +
+        ":" +
+        seconds.toString().padStart(2, "0") +
+        "." +
+        centseconds.toString().padStart(2, "0")
+      );
+    }
+    elem.innerHTML = str.join("<br />");
+
+    window.requestAnimationFrame(updateClock);
+  };
+  updateClock();
+}, false);
+/* ]]><!-- */ --></script>
+</div>
+<figcaption>デジタルクロックの再現図</figcaption>
+</figure>
+
+<h3>成果物</h3>
+
+<p>
+<a href="https://gist.github.com/cat-in-136/64759185fc206fa4c8cdf49ec4de361e">https://gist.github.com/cat-in-136/64759185fc206fa4c8cdf49ec4de361e</a>
+</p>
+
+<p><code>gjs</code>をインタプリタとして実行する。shebang (<code>#!</code>)も指定しているので実行権限を付与して実行しても良い。</p>
+
+<pre><code>$ gjs path/to/djclock.js</code></pre>
+
+<figure>
+  <video controls="controls">
+    <source src="{% asset_image_path 2021-04-19-clutter-gjs-dj-clock-screencapture.mp4 %}" type="video/mp4" />
+    <p>
+      {% asset_image_tag 2021-04-19-clutter-gjs-dj-clock-screenshot.png %}
+    </p>
+  </video>
+  <figcaption>djclock screen capture</figcaption>
+</figure>
+
+<h3>メモ</h3>
+
+<p>
+<code>Clutter.Stage</code>がメインウィンドウである。
+</p>
+
+{% highlight javascript %}
+const stage = new Clutter.Stage({
+  title: "djclock",
+  layout_manager: new Clutter.BoxLayout(),
+  user_resizable: true,
+  x_expand: true,
+  y_expand: true,
+  background_color: Clutter.Color.from_string("#000")[1],
+});
+stage.set_size(256, (1+TIMES.length)*24);
+stage.connect("destroy", () => Clutter.main_quit());
+{% endhighlight %}
+
+<p>
+Clutter自体は簡素な部品と簡素なレイアウトマネージャがあるため、簡単な配置はこれで十分である。
+ボタンなど高級な部品は提供されていないので、そういうのが必要なときは何らかの方法で頑張る必要があるが、
+今回はテキストを表示するだけであるのでこれで十分である。
+</p>
+
+{% highlight javascript %}
+const box = new Clutter.Box({
+  layout_manager: new Clutter.BoxLayout({
+    orientation: Clutter.Orientation.VERTICAL,
+    spacing: 2,
+  }),
+  x_expand: true,
+});
+stage.add_child(box);
+
+const time_current = new Clutter.Text({
+  x_expand: true,
+  text: '...',
+  color: Clutter.Color.from_string("#fff")[1],
+});
+box.add_child(time_current);
+{% endhighlight %}
+
+<p>
+点滅アニメーションは予めアニメーションを登録して、それを<code>Clutter.Text</code>にセットすればよい。
+点滅処理自体はClutter自身が面倒を見る。ここはCSS Animation的な思想に近い。
+</p>
+
+{% highlight javascript %}
+const pt_60sec_before = new Clutter.PropertyTransition({ property_name: 'background-color' });
+pt_60sec_before.set_from(Clutter.Color.from_string("#000")[1]);
+pt_60sec_before.set_from(Clutter.Color.from_string("#800")[1]);
+pt_60sec_before.set_progress_mode(Clutter.AnimationMode.LINEAR);
+const tg_60sec_before = new Clutter.TransitionGroup();
+tg_60sec_before.set_duration(1000);
+tg_60sec_before.set_repeat_count(-1);
+tg_60sec_before.add_transition(pt_60sec_before);
+const TG_NAME_60SEC_BEFORE = "60sec-before";
+
+// ...snip...
+
+times_dj[i].remove_all_transitions();
+times_dj[i].add_transition(TG_NAME_30SEC_BEFORE, tg_30sec_before);
+{% endhighlight %}
+
+<p>
+その他はClutterに関係ない純粋なJavaScriptの知識で解せる内容ではあるが、
+SpiderMonkey由来ということもあり普通にモダンなJavaScriptがかけるというのはいいことだ。
+2011年のGnome Shell登場時はまだ使えない文法も多かったはずで、かなり面倒くさい書き方をしていたのではないかと想像する。
+</p>
+
+{% highlight javascript %}
+const text = [
+  (diff < 0)? "-" : "+",
+  (days != 0)? `${days} ` : "",
+  `${hours}`.padStart(2, "0"),
+  ":",
+  `${minutes}`.padStart(2, "0"),
+  ":",
+  `${seconds}`.padStart(2, "0"),
+  ".",
+  `${microseconds}`.padStart(6, "0"),
+].join("");
+times_dj[i].set_text(text);
+{% endhighlight %}
+
+<p>
+あとClutterの情報は日本語はもちろん英語も資料はすくない。
+Gnome Shellの拡張に関する文献とClutterのAPIを参考するのが一番近道だ。
+<a href="https://fut-nis.hatenadiary.jp/">ふとしのブログ</a>にいくつか記事があって参考になるが、
+ソースコードが古いので手を加える必要がある。
+</p>
+
+<h3>参考文献</h3>
+
+<ul>
+  <li><a href="https://wiki.gnome.org/Attic/GnomeShell/Extensions/StepByStepTutorial">Attic/GnomeShell/Extensions/StepByStepTutorial - GNOME Wiki!</a></li>
+  <li><a href="https://developer.gnome.org/clutter/stable/index.html">Clutter Reference Manual: Clutter Reference Manual</a></li>
+  <li><a href="https://fut-nis.hatenadiary.jp/entry/20121008/1349660492">ClutterLayout を使ってみる - ふとしのブログ</a></li>
+  <li><a href="https://gihyo.jp/admin/serial/01/ubuntu-recipe/0492">第492回　GNOME Shellの拡張機能を作ってみよう：Ubuntu Weekly Recipe｜gihyo.jp … 技術評論社</a></li>
+  <li><a href="https://www.keshikan.net/fonts.html">7セグ・14セグフォント 「DSEG」</a></li>
+</ul>
