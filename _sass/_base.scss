@@ -25,11 +25,13 @@ body {
   font-family: $base-font-family;
   font-size: $base-font-size;
   line-height: $base-line-height;
-  color: $text-color;
-  background-color: $background-color;
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizelegibility;
   font-kerning: normal;
+
+  color: $text-color;
+  background-color: $background-color;
+  accent-color: $brand-color-dark;
 }
 
 /**
