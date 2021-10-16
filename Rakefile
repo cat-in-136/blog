@@ -109,13 +109,19 @@ end
 
 desc "Validates _site/"
 task :validate do
-  require 'rexml/document'
+  require 'rexml/parsers/streamparser'
+  require 'rexml/streamlistener'
+
+  class NullStreamListener
+    include REXML::StreamListener
+  end
 
   ng_count = 0
   ok_count = 0
   Dir.glob('_site/**/*.html') do |file|
     begin
-      File.open(file, 'r') { |f| REXML::Document.new(f) }
+      l = NullStreamListener.new
+      File.open(file, 'r') { |f| REXML::Parsers::StreamParser.new(f, l).parse }
       ok_count = ok_count.succ
     rescue REXML::ParseException => ex
       puts "#{Term::ANSIColor::red}#{Term::ANSIColor::bold}NG#{Term::ANSIColor::clear} #{file}(#{ex.line}:#{ex.position}): #{ex.message.split(/\n/).first}\n"
