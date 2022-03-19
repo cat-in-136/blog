@@ -20,7 +20,7 @@ group :jekyll_plugins do
   gem 'jekyll-paginate-v2'
 end
 
-gem 'image_size', '~> 2.1'
+gem 'image_size', '~> 3.0'
 
 group :lsi do
   gem 'gsl'
