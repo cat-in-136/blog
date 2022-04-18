@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/SciRuby/rb-gsl.git
+  revision: 103a3e1941e220befd037e0f4289a82c551ae250
+  ref: 103a3e1
+  specs:
+    gsl (2.1.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -6,7 +13,7 @@ GEM
     classifier-reborn (2.2.0)
       fast-stemmer (~> 1.0)
     colorator (1.1.0)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.1.10)
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
@@ -14,7 +21,6 @@ GEM
     fast-stemmer (1.0.2)
     ffi (1.15.5)
     forwardable-extended (2.6.0)
-    gsl (2.1.0.3)
     http_parser.rb (0.8.0)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
@@ -42,7 +48,7 @@ GEM
       sassc (> 2.0.1, < 3.0)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
-    kramdown (2.3.2)
+    kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
@@ -55,7 +61,7 @@ GEM
     mercenary (0.4.0)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
-    public_suffix (4.0.6)
+    public_suffix (4.0.7)
     rake (13.0.6)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
@@ -70,16 +76,17 @@ GEM
       tins (~> 1.0)
     terminal-table (2.0.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    tins (1.31.0)
+    tins (1.31.1)
       sync
     unicode-display_width (1.8.0)
+    webrick (1.7.0)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   classifier-reborn
-  gsl
+  gsl!
   image_size (~> 3.0)
   jekyll (~> 4.2)
   jekyll-archives
@@ -87,10 +94,13 @@ DEPENDENCIES
   liquid-c
   rake
   term-ansicolor
+  tzinfo (~> 1.2)
   tzinfo-data
+  wdm (~> 0.1.1)
+  webrick
 
 RUBY VERSION
-   ruby 2.7.4p191
+   ruby 3.1.1p18
 
 BUNDLED WITH
-   2.1.4
+   2.3.7
