@@ -4,6 +4,7 @@ title: 'Note: Directory Layout of library for unit testing with PlatformIO'
 author: cat_in_136
 tags:
 - platformio
+- embedded
 date: '2022-01-16T11:16:27+09:00'
 last_modified_at: '2022-01-16T16:06:28+09:00'
 ---
