@@ -24,7 +24,7 @@ GEM
     http_parser.rb (0.8.0)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
-    image_size (3.0.1)
+    image_size (3.0.2)
     jekyll (4.2.2)
       addressable (~> 2.4)
       colorator (~> 1.0)
@@ -67,7 +67,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rexml (3.2.5)
-    rouge (3.28.0)
+    rouge (3.29.0)
     safe_yaml (1.0.5)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -100,7 +100,7 @@ DEPENDENCIES
   webrick
 
 RUBY VERSION
-   ruby 3.1.1p18
+   ruby 3.1.2p20
 
 BUNDLED WITH
    2.3.7
