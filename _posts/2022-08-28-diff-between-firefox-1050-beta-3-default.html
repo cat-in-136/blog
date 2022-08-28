@@ -1,0 +1,741 @@
+---
+layout: post
+title: Diff between firefox 105.0 beta 3 default preference and firefox 104.0
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+date: '2022-08-28T14:36:42+09:00'
+---
+<p>
+This is difference between the default preference of Firefox 105.0 beta 3 and one of 104.0.
+This diff table is generated with my small script <a href="https://github.com/cat-in-136/firefox-prefjs-surveyer">firefox-prefjs-surveyer</a>.
+</p>
+
+<div>
+<table class="diff_firefox105_pref_diff">
+<caption>Preference difference</caption>
+<thead>
+<tr><td>Pref</td><td>Firefox 104.0</td><td>Firefox 105.0 beta 3</td></tr>
+</thead>
+    <tbody>
+      <tr class="oldkey">
+        <td>accessibility.<wbr />indicator.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>accessibility.<wbr />support.<wbr />url</td>
+        <td class="uri">https://support.mozilla.org/%LOCALE%/kb/accessibility-services</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />bool</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />integer</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />string</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL.<wbr />aboutDialog</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />channel</td>
+        <td>release</td>
+        <td>beta</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />details</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/notes</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta/notes</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />manual</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>apz.<wbr />gtk.<wbr />kinetic_<wbr />scroll.<wbr />delta_<wbr />mode</td>
+        <td>0</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>apz.<wbr />gtk.<wbr />kinetic_<wbr />scroll.<wbr />page_<wbr />delta_<wbr />mode_<wbr />multiplier</td>
+        <td>1.<wbr />0</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>apz.<wbr />gtk.<wbr />kinetic_<wbr />scroll.<wbr />pixel_<wbr />delta_<wbr />mode_<wbr />multiplier</td>
+        <td>40.<wbr />0</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>apz.<wbr />gtk.<wbr />pangesture.<wbr />delta_<wbr />mode</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>apz.<wbr />gtk.<wbr />pangesture.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>apz.<wbr />gtk.<wbr />pangesture.<wbr />page_<wbr />delta_<wbr />mode_<wbr />multiplier</td>
+        <td class="undefined">undefined</td>
+        <td>1.<wbr />0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>apz.<wbr />gtk.<wbr />pangesture.<wbr />pixel_<wbr />delta_<wbr />mode_<wbr />multiplier</td>
+        <td class="undefined">undefined</td>
+        <td>40.<wbr />0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>apz.<wbr />max_<wbr />zoom</td>
+        <td class="undefined">undefined</td>
+        <td>10.<wbr />0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>apz.<wbr />min_<wbr />zoom</td>
+        <td class="undefined">undefined</td>
+        <td>0.<wbr />25</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />pinch_<wbr />lock.<wbr />buffer_<wbr />max_<wbr />age</td>
+        <td>50</td>
+        <td>80</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />pinch_<wbr />lock.<wbr />mode</td>
+        <td>1</td>
+        <td>2</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />pinch_<wbr />lock.<wbr />scroll_<wbr />lock_<wbr />threshold</td>
+        <td>0.<wbr />03125</td>
+        <td>0.<wbr />0625</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />browser.<wbr />firefoxView.<wbr />featureTour</td>
+        <td>default, default, true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />cache.<wbr />offline.<wbr />enable</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />firefox-view.<wbr />feature-tour</td>
+        <td class="undefined">undefined</td>
+        <td class="json">{&quot;message&quot;:&quot;FIREFOX_VIEW_FEATURE_TOUR&quot;,&quot;screen&quot;:&quot;&quot;,&quot;complete&quot;:true}</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />telemetry.<wbr />ut.<wbr />events</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />opaque<wbr />ResponseBlocking.<wbr />synthetic<wbr />Browsing<wbr />Context</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />opaque<wbr />ResponseBlocking.<wbr />synthetic<wbr />Browsing<wbr />Context.<wbr />filter</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />places.<wbr />sponsoredSession.<wbr />timeoutSecs</td>
+        <td class="undefined">undefined</td>
+        <td>3600</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />privatebrowsing.<wbr />enable-new-logo</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />promo.<wbr />pin.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />swipe.<wbr />navigation-icon-move-distance</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />tabs.<wbr />unloadOnLowMemory</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />quickactions.<wbr />showPrefs</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />shortcuts.<wbr />quickactions</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />suggest.<wbr />quickactions</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>cookiebanners.<wbr />cookieInjector.<wbr />defaultExpiryRelative</td>
+        <td class="undefined">undefined</td>
+        <td>31536000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>cookiebanners.<wbr />cookieInjector.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>cookiebanners.<wbr />listService.<wbr />logLevel</td>
+        <td class="undefined">undefined</td>
+        <td>Error</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>cookiebanners.<wbr />service.<wbr />mode</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>devtools.<wbr />browsertoolbox.<wbr />fission</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>devtools.<wbr />browsertoolbox.<wbr />scope</td>
+        <td>everything</td>
+        <td>parent-process</td>
+      </tr>
+
+      <tr>
+        <td>docshell.<wbr />shistory.<wbr />bfcache.<wbr />ship_<wbr />allow_<wbr />beforeunload_<wbr />listeners</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />abort_<wbr />script_<wbr />on_<wbr />child_<wbr />shutdown</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />document.<wbr />edit_<wbr />command.<wbr />contentReadOnly.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />document.<wbr />edit_<wbr />command.<wbr />decreasefontsize.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />document.<wbr />edit_<wbr />command.<wbr />gethtml.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />document.<wbr />edit_<wbr />command.<wbr />heading.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />document.<wbr />edit_<wbr />command.<wbr />increasefontsize.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />document.<wbr />edit_<wbr />command.<wbr />insertBrOnReturn.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />document.<wbr />edit_<wbr />command.<wbr />readonly.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />bottom</td>
+        <td>300.<wbr />0</td>
+        <td>100.<wbr />0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />bottom.<wbr />percentage</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />left</td>
+        <td>300.<wbr />0</td>
+        <td>100.<wbr />0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />left.<wbr />percentage</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />right</td>
+        <td>300.<wbr />0</td>
+        <td>100.<wbr />0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />right.<wbr />percentage</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />top</td>
+        <td>300.<wbr />0</td>
+        <td>100.<wbr />0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />image-lazy-loading.<wbr />root-margin.<wbr />top.<wbr />percentage</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />ipc.<wbr />process<wbr />Priority<wbr />Manager.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />mozCurrentTransform.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />security.<wbr />sanitizer.<wbr />logging</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />security.<wbr />sanitizer.<wbr />rewrite_<wbr />no_<wbr />bounty</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />text-recognition.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />webidl.<wbr />crosscontext_<wbr />hasinstance.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />webmidi.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />InstallTrigger.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />content_<wbr />web_<wbr />accessible.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webcompat-reporter.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>geo.<wbr />provider.<wbr />network.<wbr />url</td>
+        <td class="uri">https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%</td>
+        <td class="uri">https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />font_<wbr />rendering.<wbr />colr_<wbr />v1.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>gfx.<wbr />offscreencanvas.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>html5.<wbr />inert.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>javascript.<wbr />options.<wbr />dynamicImport</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />balanced_<wbr />heap_<wbr />limits</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />heap_<wbr />growth_<wbr />factor</td>
+        <td class="undefined">undefined</td>
+        <td>40</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />spectre.<wbr />disable_<wbr />for_<wbr />isolated_<wbr />content</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />aspect-ratio.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />css.<wbr />computed-style.<wbr />styles-outside-flat-tree</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />emulate-moz-box-with-flex</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />css.<wbr />font-loading-api.<wbr />workers.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />font-tech.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />moz-box-flexbox-emulation.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />nan-inf.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />xul-box-display-values.<wbr />content.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />xul-display-values.<wbr />content.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />dynamic-reflow-roots.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>mathml.<wbr />deprecated_<wbr />menclose_<wbr />notation_<wbr />radical.<wbr />disabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>mathml.<wbr />deprecated_<wbr />style_<wbr />attributes.<wbr />disabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>mathml.<wbr />mathsize_<wbr />names.<wbr />disabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />videocontrols.<wbr />picture-in-picture.<wbr />improved-video-controls.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />webrtc.<wbr />platformencoder.<wbr />sw_<wbr />mft</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />cache.<wbr />frecency_<wbr />array_<wbr />check_<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />cache.<wbr />shutdown_<wbr />purge_<wbr />folder_<wbr />wait_<wbr />seconds</td>
+        <td class="undefined">undefined</td>
+        <td>10</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />cache.<wbr />shutdown_<wbr />purge_<wbr />in_<wbr />background_<wbr />task</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />cookie.<wbr />sameSite.<wbr />laxByDefault</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />cookie.<wbr />sameSite.<wbr />none<wbr />Requires<wbr />Secure</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />jar.<wbr />record_<wbr />failure_<wbr />reason</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />predictor.<wbr />enable-prefetch</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>pdfjs.<wbr />annotationEditorMode</td>
+        <td>-1</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />annotate_<wbr />channels.<wbr />strict_<wbr />list.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>privacy.<wbr />partition.<wbr />always_<wbr />partition_<wbr />third_<wbr />party_<wbr />non_<wbr />cookie_<wbr />storage.<wbr />exempt_<wbr />sessionstorage</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />partition.<wbr />serviceWorkers</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />block_<wbr />fileuri_<wbr />script_<wbr />with_<wbr />wrong_<wbr />mime</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>security.<wbr />csp.<wbr />script-src-attr-elem.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>security.<wbr />csp.<wbr />style-src-attr-elem.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>security.<wbr />disallow_<wbr />non_<wbr />local_<wbr />systemprincipal_<wbr />in_<wbr />tests</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />remote_<wbr />settings.<wbr />crlite_<wbr />filters.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />sync.<wbr />engine.<wbr />bookmarks.<wbr />validation.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />sync.<wbr />engine.<wbr />passwords.<wbr />validation.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>services.<wbr />sync.<wbr />syncedTabs.<wbr />syncDelay<wbr />After<wbr />TabChange</td>
+        <td>0</td>
+        <td>5000</td>
+      </tr>
+
+      <tr>
+        <td>svg.<wbr />embedder-prefers-color-scheme.<wbr />content.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />telemetry.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>webgl.<wbr />fake-verts.<wbr />max</td>
+        <td class="undefined">undefined</td>
+        <td>10000000</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>webgl.<wbr />renderer-string-override</td>
+        <td></td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>webgl.<wbr />vendor-string-override</td>
+        <td></td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>widget.<wbr />disable-swipe-tracker</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+    </tbody>
+</table>
+</div>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox105_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox105_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox105_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox105_pref_diff td.json,
+table.diff_firefox105_pref_diff td.uri,
+table.diff_firefox105_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox105_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox105_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox105_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox105_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox105_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox105_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
