@@ -1,17 +1,11 @@
-GIT
-  remote: https://github.com/SciRuby/rb-gsl.git
-  revision: 103a3e1941e220befd037e0f4289a82c551ae250
-  ref: 103a3e1
-  specs:
-    gsl (2.1.0.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
-    classifier-reborn (2.2.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
+    classifier-reborn (2.3.0)
       fast-stemmer (~> 1.0)
+      matrix (~> 0.4)
     colorator (1.1.0)
     concurrent-ruby (1.1.10)
     em-websocket (0.5.3)
@@ -22,24 +16,25 @@ GEM
     ffi (1.15.5)
     forwardable-extended (2.6.0)
     http_parser.rb (0.8.0)
-    i18n (1.10.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    image_size (3.0.2)
-    jekyll (4.2.2)
+    image_size (3.2.0)
+    jekyll (4.3.1)
       addressable (~> 2.4)
       colorator (~> 1.0)
       em-websocket (~> 0.5)
       i18n (~> 1.0)
-      jekyll-sass-converter (~> 2.0)
+      jekyll-sass-converter (>= 2.0, < 4.0)
       jekyll-watch (~> 2.0)
-      kramdown (~> 2.3)
+      kramdown (~> 2.3, >= 2.3.1)
       kramdown-parser-gfm (~> 1.0)
       liquid (~> 4.0)
-      mercenary (~> 0.4.0)
+      mercenary (>= 0.3.6, < 0.5)
       pathutil (~> 0.9)
-      rouge (~> 3.0)
+      rouge (>= 3.0, < 5.0)
       safe_yaml (~> 1.0)
-      terminal-table (~> 2.0)
+      terminal-table (>= 1.8, < 4.0)
+      webrick (~> 1.7)
     jekyll-archives (2.2.1)
       jekyll (>= 3.6, < 5.0)
     jekyll-paginate-v2 (3.0.0)
@@ -58,27 +53,31 @@ GEM
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    matrix (0.4.2)
     mercenary (0.4.0)
+    numo-linalg (0.1.7)
+      numo-narray (>= 0.9.1.4)
+    numo-narray (0.9.2.1)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
-    public_suffix (4.0.7)
+    public_suffix (5.0.0)
     rake (13.0.6)
-    rb-fsevent (0.11.1)
+    rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rexml (3.2.5)
-    rouge (3.29.0)
+    rouge (4.0.0)
     safe_yaml (1.0.5)
     sassc (2.4.0)
       ffi (~> 1.9)
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
-    terminal-table (2.0.0)
-      unicode-display_width (~> 1.1, >= 1.1.1)
-    tins (1.31.1)
+    terminal-table (3.0.2)
+      unicode-display_width (>= 1.1.1, < 3)
+    tins (1.32.1)
       sync
-    unicode-display_width (1.8.0)
+    unicode-display_width (2.3.0)
     webrick (1.7.0)
 
 PLATFORMS
@@ -86,15 +85,17 @@ PLATFORMS
 
 DEPENDENCIES
   classifier-reborn
-  gsl!
+  http_parser.rb (~> 0.6.0)
   image_size (~> 3.0)
-  jekyll (~> 4.2)
+  jekyll (~> 4.3)
   jekyll-archives
   jekyll-paginate-v2
   liquid-c
+  numo-linalg
+  numo-narray
   rake
   term-ansicolor
-  tzinfo (~> 1.2)
+  tzinfo (>= 1, < 3)
   tzinfo-data
   wdm (~> 0.1.1)
   webrick

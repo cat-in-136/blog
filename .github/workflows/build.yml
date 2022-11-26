@@ -22,8 +22,8 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1
-    - name: Install GSL
-      run: sudo apt-get install libgslcblas0 libgsl-dev -y
+    - name: Install LAPACKE and OpenBLAS
+      run: sudo apt-get install liblapacke-dev libopenblas-dev -y
 
     - name: Cache
       uses: actions/cache@v2
