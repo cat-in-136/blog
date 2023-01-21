@@ -6,6 +6,7 @@ tags:
 - luks
 - linux
 - dracut
+last_modified_at: '2023-01-21T09:09:01+09:00'
 ---
 
 ずっとわからなかった、 Fedora Linux における LUKS パーティションを起動時にパスフレーズ入力を省く方法がやっとわかった。
@@ -90,8 +91,15 @@ initramfs の実体は、 `/boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img` とい�
 これも起動後の通常の場合と同じ
 
 ```
-boot   UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /boot/keyfile-xxxxx    luks,timeout=10s
+root   UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /boot/keyfile-xxxxx    luks,timeout=10,discard
 ```
+
+ここでSSDの場合は上記のように `discard` と設定して discard/TRIM を有効してもよい。
+論理ボリュームがその基底となる物理ボリュームの領域をもはや使用しなくなるとその物理ボリュームに discard 要求が飛ぶため、
+開放されたブロック情報という形でデータが漏洩する可能性が僅かにあるためセキュリティ的な事情から暗号化ストレージでは有効にすべきではない、
+という意見がある。([Milan Broz's blog: TRIM & dm-crypt ... problems?](http://asalor.blogspot.com/2011/08/trim-dm-crypt-problems.html)に詳しい)
+しかしながら、いま暗号化鍵は金庫の前に置かれている状態であり、このような攻撃ができている場合には暗号化鍵を取得できている状態であるから、
+このセキュリティリスクはもはや考慮する必要性がない。純粋に discard/TRIM を有効にするかしないかだけを考えて決めればよい。
 
 initramfs イメージファイルは dracut で作られる。 dracut にキーファイルも initramfs に含めるようにする。
 
