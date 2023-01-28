@@ -1,0 +1,897 @@
+---
+layout: post
+title: 二次方程式の虚数解の可視化
+author: cat_in_136
+tags:
+- チラシの裏
+- math
+date: '2023-01-29T07:47:31+09:00'
+---
+
+<p>
+  二次方程式
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:100%">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+              <mrow>
+                <mi>a</mi>
+                <msup>
+                  <mi>x</mi>
+                  <mn>2</mn>
+                </msup>
+                <mo>+</mo>
+                <mi>b</mi>
+                <mi>x</mi>
+                <mo>+</mo>
+                <mi>c</mi>
+                <mo>=</mo>
+                <mn>0</mn>
+              </mrow>
+              <annotation encoding="application/x-tex">ax^2 + bx + c = 0</annotation>
+            </semantics>
+          </math>
+        </td>
+        <td>(1.1)</td>
+      </tr>
+    </tbody>
+  </table>
+  の解は、下記の公式であたえられる
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:100%">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+              <mrow>
+                <mi>x</mi>
+                <mo>=</mo>
+                <mrow>
+                  <mfrac>
+                    <mrow>
+                      <mo>−</mo>
+                      <mi>b</mi>
+                      <mo>±</mo>
+                      <msqrt>
+                        <msup>
+                          <mi>b</mi>
+                          <mn>2</mn>
+                        </msup>
+                        <mo>−</mo>
+                        <mn>4</mn>
+                        <mi>a</mi>
+                        <mi>c</mi>
+                      </msqrt>
+                    </mrow>
+                    <mrow>
+                      <mn>2</mn>
+                      <mi>a</mi>
+                    </mrow>
+                  </mfrac>
+                </mrow>
+              </mrow>
+              <annotation encoding="application/x-tex">x = {-b \pm \sqrt{b^2-4ac} \over 2a}</annotation>
+            </semantics>
+          </math>
+        </td>
+        <td>(1.2)</td>
+      </tr>
+    </tbody>
+  </table>
+  ここで、判別式(discriminant)とよばれるルートの中身
+  <math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>b</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>a</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">b^2-4ac</annotation></semantics></math>
+  の値が負になるとき、実数解を持たない。これを複素数を導入することで判別式が負になるときも解（虚数解）が与えられる。
+</p>
+<p>
+ここで登場する二乗すると-1になる虚数単位<i>i</i>はしばしば高校の数学教師は存在しないと言ったりするがそれはナンセンスな話である。
+</p>
+<blockquote>
+  <div>
+  アイは院のサロンで、数人の院生と共に教授と話していた。何の流れだったか、 存在、非存在の話になった。アイが教授に高校時代、数学教師(アテネだ!)から「この世界にアイは存在しません」と聞いた、という話をしたとき、彼は、<br/>
+  「そんなことを言う数学教師はばかだ。」<br/>
+  そう吐き捨てた。一緒にいた院生は首を振り、アイが無駄な話を始めた、というような顔をした。<br/>
+  「それを言うなら負の数だってない。整数だってないよ。ゼロだってインド人が作るまではなかったんだから。でもあるだろ? ぼんやりあったもの、あった方がいいものを形にするのが数学なんだから。」
+  </div>
+  <cite>―― 西加南子『i』ポプラ社、2016年</cite>
+</blockquote>
+<p>
+実際には実数を表した数直線（実軸; real axis）と90度をなす新たな数直線（虚軸; imaginary axis）を導入した虚数平面（complex plane）として目に見える=存在する形で扱うことができる。（だから、<strong>実軸上には</strong>存在しないといった言い方ならば理にかなっている。）
+</p>
+<p>
+  そこで本稿では、しばしば存在しないと言われてしまう虚数解について、実際に存在を目で見ることによって確認したい。
+</p>
+<p>
+  二次方程式の虚数解の図示やネット上に数多あって、例えば下記のようなページがある。
+</p>
+<ul>
+  <li>
+    <a href="http://toretate.fc2web.com/bgmath/2009/rootofquadreq/09090704.html">2次方程式の解を目で見る</a>
+  </li>
+  <li>
+    <a href="https://amk86g18nx2l.blog.fc2.com/blog-entry-50.html">虚数解はどこにあるか（1） | しろくま手帳</a>
+  </li>
+  <li>
+    <a href="http://izumi-math.jp/M_Sanae/cplx/cplx.html">虚数解のイメージ化</a>
+  </li>
+</ul>
+<p>
+  ただいずれも図を描くためのコードは公開されておらず読者がプログラミングをする必要がある。
+  本稿ではすべての図について、 gnuplot のコードを付けた。
+  また、グラフの概形について考察も掘り下げる。
+</p>
+<h3>複素解析でよくある可視化</h3>
+<h4>domain coloring の導入</h4>
+<p>
+複素関数を素直にグラフで図示しようとすると、関数の引数の実軸・虚軸、関数値の実軸・虚軸の合計4軸必要となり、現実的に表現できない。
+そこで複素解析学(complex analysis)では、関数値の偏角を色相(hue)にマッピングして表すことで、この図示の困難を克服することがしばしば行われる（domain coloringと呼ばれる）。
+</p>
+
+<p>
+  例えば
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+    <mrow>
+      <mi>f</mi>
+      <mo stretchy="false">(</mo>
+      <mi>x</mi>
+      <mo stretchy="false">)</mo>
+      <mo>=</mo>
+      <mi>x</mi>
+    </mrow>
+    <annotation encoding="application/x-tex">f(x)=x</annotation>
+    </semantics>
+  </math>
+  をこの方式で表すと下記のようになる。
+</p>
+
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-identical_color.png %}
+  <figcaption>Fig-1.1 f(x)=x</figcaption>
+</figure>
+
+<aside>
+<details>
+<summary>上図を出力するための gnuplot のコード</summary>
+<pre><code>#!/usr/bin/gnuplot
+set cbrange [-pi:pi]
+set cbtics ("-π" -pi, "0" 0, "π" pi)
+set pm3d corners2color c1
+set palette defined ( 0 0 1 1, 1 1 1 1 )
+set isosamples 100, 100
+
+set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 )
+#set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1)
+
+set xlabel "real"
+set ylabel "imag"
+set nokey
+
+set isosamples 512, 512
+set size square
+
+I = {0,1}
+f(x) = x
+
+splot '++' using 1:2:(abs(f(x+I*y))):(arg(f(x+I*y))) with pm3d
+</code></pre>
+</details>
+</aside>
+
+<p>
+  グラフ上の上方向の高さは絶対値を使っているので、まんなかの 0 がグラフの視覚的に最も低い場所になる。
+  偏角を確認するために、この三次元グラフの真上から覗くと下図のようになる。
+</p>
+
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-identical_color_2d.png %}
+  <figcaption>Fig-1.2 argument of f(x)=x</figcaption>
+</figure>
+<aside>
+<details>
+<summary>上図を出力するための gnuplot のコード</summary>
+<pre><code>#!/usr/bin/gnuplot
+
+set cbrange [-pi:pi]
+set cbtics ("-π" -pi, "0" 0, "π" pi)
+set pm3d corners2color c1
+set palette defined ( 0 0 1 1, 1 1 1 1 )
+set isosamples 100, 100
+
+set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 )
+#set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1)
+
+set xlabel "real"
+set ylabel "imag"
+set nokey
+
+set isosamples 512, 512
+set size square
+set xrange [-5:5]
+set yrange [-5:5]
+set view map
+
+I = {0,1}
+f(x) = x
+
+splot '++' using 1:2:(abs(f(x+I*y))):(arg(f(x+I*y))) with pm3d
+pause -1
+
+</code></pre>
+</details>
+</aside>
+
+<p>
+  1 は偏角 0 度なので赤、虚数単位 i は偏角 90 度なので緑、-1 は 180 度で水色、-i は 270 度で青紫色、のように表示される。
+  複素解析では複素関数の関数値が0となる点をゼロ点 (zero) と呼ばれるが、domain coloring ではゼロ点の近傍は半時計回りに色相が変化するような絵面になる。
+</p>
+
+<h4>二次関数の domain coloring 表示</h4>
+
+<p>
+  二次関数を解析するにあたり、簡単のため下記の関数で考えるものとする。
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:100%">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+              <mrow>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>x</mi>
+                <mo stretchy="false">)</mo>
+                <mo>=</mo>
+                <msup>
+                  <mi>x</mi>
+                  <mn>2</mn>
+                </msup>
+                <mo>+</mo>
+                <mi>h</mi>
+              </mrow>
+              <annotation encoding="application/x-tex">f(x)=x^2+h</annotation>
+            </semantics>
+          </math>
+        </td>
+        <td>(1.3)</td>
+      </tr>
+    </tbody>
+  </table>
+  この(1.3)に対して
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>x</mi>
+        <mo accent="false" stretchy="false">&#x2192;</mo>
+        <mi>x</mi>
+        <mo>&#x2212;</mo>
+        <mfrac>
+          <mrow>
+            <mo>&#x2212;</mo>
+            <mi>b</mi>
+          </mrow>
+          <mrow>
+            <mn>2</mn>
+            <mi>a</mi>
+          </mrow>
+        </mfrac>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo accent="false" stretchy="false">&#x2192;</mo>
+        <msup>
+          <mi>a</mi>
+          <mrow>
+            <mo>&#x2212;</mo>
+            <mn>1</mn>
+          </mrow>
+        </msup>
+        <mrow>
+          <mo>(</mo>
+          <mi>y</mi>
+          <mo>&#x2212;</mo>
+          <mrow>
+            <mo>(</mo>
+            <mi>c</mi>
+            <mo>&#x2212;</mo>
+            <mi>a</mi>
+            <msup>
+              <mrow>
+                <mo>(</mo>
+                <mfrac>
+                  <mrow>
+                    <mo>&#x2212;</mo>
+                    <mi>b</mi>
+                  </mrow>
+                  <mrow>
+                    <mn>2</mn>
+                    <mi>a</mi>
+                  </mrow>
+                </mfrac>
+                <mo>)</mo>
+              </mrow>
+              <mn>2</mn>
+            </msup>
+            <mo>&#x2212;</mo>
+            <mi>h</mi>
+            <mi>a</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>)</mo>
+        </mrow>
+      </mrow>
+      <annotation encoding="application/x-tex">x \to x - \frac{-b}{2a}, y \to a^{-1} \left(y-\left(c-a\left(\frac{-b}{2a}\right)^2-ha\right)\right)</annotation>
+    </semantics>
+  </math>
+  という操作を行うと、(1.1)の左辺と同じになる。
+  すなわち(1.3)から x 軸方向への平行移動、y軸方向への平行移動および拡大縮小操作を組み合わせることで(1.1)の左辺が求められる。
+  だから(1.3)を考えて、後はこれを水平移動および拡大縮小操作を施されたものとして考えれば良い。
+</p>
+
+<p>
+  (1.3)がゼロとなる方程式の解は h &lt; 0 のとき実数解を2個持ち、 h = 0 のとき x = 0 で重解となり、 h &gt; 0 のとき虚数解を 2 個持つ。
+  h を替えることによって変わってくるのだが、この変化を視覚的にみるために、 h を -10 から 10 に変えて Fig-1.1, 1.2 と同様にプロットした。
+</p>
+
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-double_root_color_anim_pm3d.gif %}
+  <figcaption>Fig-1.3 f(x)=x^2+h</figcaption>
+</figure>
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-double_root_color_anim_pm2d.gif %}
+  <figcaption>Fig-1.4 argument of f(x)=x^2+h</figcaption>
+</figure>
+<aside>
+<details>
+<summary>上図を出力するための gnuplot のコード</summary>
+<pre><code>#!/usr/bin/gnuplot
+
+set cbrange [-pi:pi]
+set cbtics ("-π" -pi, "0" 0, "π" pi)
+set pm3d corners2color c1
+set palette defined ( 0 0 1 1, 1 1 1 1 )
+set isosamples 100, 100
+
+set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 )
+#set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1)
+
+set xlabel "real"
+set ylabel "imag"
+set nokey
+
+I = {0,1}
+f(x,h) = x**2 + h
+
+set terminal gif animate delay 10
+set output "double_root_color_anim_pm3d.gif"
+set zrange [0:60]
+
+do for [h=-10:10]{
+  set label 1 sprintf("h=%d", h) at screen 0.1,0.1 left
+  splot '++' using 1:2:(abs(f(x+I*y, h))):(arg(f(x+I*y, h))) with pm3d
+  #pause -1
+}
+
+set output
+unset zrange
+
+set isosamples 512, 512
+set size square
+set view map
+
+set terminal gif animate delay 10
+set output "double_root_color_anim_pm2d.gif"
+
+do for [h=-10:10]{
+  set label 1 sprintf("h=%d", h) at screen 0.1,0.1 left
+  splot arg(f(x+I*y, h)) with pm3d
+  #pause -1
+}
+
+set output
+</code></pre>
+</details>
+</aside>
+
+<p>
+  hを変えていくことでゼロ点が実軸上と虚軸上を動いていく様子がわかる。
+  h = 0 を境目に実軸と虚軸が入れ替わったような対称的な様子がわかる。
+</p>
+
+<p>
+  このようにして domain coloring の色相が周回する場所という形で二次方程式の解の場所を確認することができた。
+  これで複素解析学の意味では「関数グラフの概形を見た」「虚数解を見た」と言える。
+  が、h を変える、すなわち関数値を実軸方向に増減させると、なぜこうなるのか?がいまいちわからない。
+  したがって、他の表示の仕方で概形を眺めたほうが良かろう。
+</p>
+
+<h2>実部と虚部でそれぞれ見る</h2>
+
+<h3>実部</h3>
+
+<p>
+  (1.3)の実部を計算する。
+  (1.3)に
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>x</mi>
+        <mo>=</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>b</mi>
+        <mi>i</mi>
+      </mrow>
+      <annotation encoding="application/x-tex">x=a+bi</annotation>
+    </semantics>
+  </math>
+  を代入すると
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:100%">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+              <mrow>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>x</mi>
+                <mo stretchy="false">)</mo>
+                <mo>=</mo>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+                <mi>i</mi>
+                <mo stretchy="false">)</mo>
+                <mo>=</mo>
+                <mo stretchy="false">(</mo>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+                <mi>i</mi>
+                <msup>
+                  <mo stretchy="false">)</mo>
+                  <mn>2</mn>
+                </msup>
+                <mo>+</mo>
+                <mi>h</mi>
+                <mo>=</mo>
+                <mo stretchy="false">(</mo>
+                <msup>
+                  <mi>a</mi>
+                  <mn>2</mn>
+                </msup>
+                <mo>&#x2212;</mo>
+                <msup>
+                  <mi>b</mi>
+                  <mn>2</mn>
+                </msup>
+                <mo>+</mo>
+                <mi>h</mi>
+                <mo stretchy="false">)</mo>
+                <mo>+</mo>
+                <mn>2</mn>
+                <mi>a</mi>
+                <mi>b</mi>
+                <mi>i</mi>
+              </mrow>
+              <annotation encoding="application/x-tex">f(x)=f(a+bi)=(a+bi)^2+h=(a^2-b^2+h)+2abi</annotation>
+            </semantics>
+          </math>
+        </td>
+        <td>(1.4)</td>
+      </tr>
+    </tbody>
+  </table>
+  よって実部は
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:100%">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+              <mrow>
+                <mi>Re</mi>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+                <mi>i</mi>
+                <mo stretchy="false">)</mo>
+                <mo>=</mo>
+                <msup>
+                  <mi>a</mi>
+                  <mn>2</mn>
+                </msup>
+                <mo>&#x2212;</mo>
+                <msup>
+                  <mi>b</mi>
+                  <mn>2</mn>
+                </msup>
+                <mo>+</mo>
+                <mi>h</mi>
+              </mrow>
+              <annotation encoding="application/x-tex">\operatorname{Re} f(a+bi)=a^2-b^2+h</annotation>
+            </semantics>
+          </math>
+        </td>
+        <td>(1.5)</td>
+      </tr>
+    </tbody>
+  </table>
+  であり双曲放物面(hyperbolic paraboloid)となる。 h=0 のときの概形を下図に示す。
+</p>
+
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-double_root_real_zero.svg %}
+  <figcaption>Fig-1.5 Re (x^2)</figcaption>
+</figure>
+<aside>
+<details>
+<summary>上図を出力するための gnuplot のコード</summary>
+<pre><code>#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set xlabel "real"
+set ylabel "imag"
+unset key
+
+I = {0,1}
+f(x) = x**2
+
+splot real(f(x+I*y)), \
+    [-10:10] "++" u ($1):(0):(f($1)) w l ls 2, \
+    [-10:10] "++" u (0):($1):(-f(-$1)) w l ls 3
+
+pause -1
+</code></pre>
+</details>
+</aside>
+
+<p>
+  xが実軸上(b=0)のとき、自明ではあるが
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>a</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <msup>
+          <mi>a</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>+</mo>
+        <mi>h</mi>
+      </mrow>
+      <annotation encoding="application/x-tex">f(a)=a^2+h</annotation>
+    </semantics>
+  </math>
+  と下に凸となる放物線となる。
+  xが虚軸上(a=0)のとき、
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>b</mi>
+        <mi>i</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mo>&#x2212;</mo>
+        <msup>
+          <mi>b</mi>
+          <mn>2</mn>
+        </msup>
+        <mo>+</mo>
+        <mi>h</mi>
+      </mrow>
+      <annotation encoding="application/x-tex">f(bi)=-b^2+h</annotation>
+    </semantics>
+  </math>
+  と上に凸となる放物線となる。
+  実軸上と虚軸上の場合の概形も上図に描き足した。
+  それぞれ緑色と水色で示した線である。
+  緑色の放物線を水色の放物線に沿って並行移動することでこの双曲放物面を形作ることができる。
+</p>
+
+<p>
+  また対称性に関して、
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>x</mi>
+        <mo accent="false" stretchy="false">&#x2192;</mo>
+        <mo>&#x2212;</mo>
+        <mi>i</mi>
+        <mi>x</mi>
+      </mrow>
+      <annotation encoding="application/x-tex"> x \to - i x</annotation>
+    </semantics>
+  </math>
+  と置き換えると同じ値になることからわかるとおり、グラフの実部と虚部を入れ替えて上下反転（関数値を-1倍）すると同じ概形となる。
+  このとき前述の緑色と水色で示した放射線は外見上入れ替わるような感じになる。
+</p>
+
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-double_root_real_zero_rotate_anim.gif %}
+  <figcaption>Fig-1.6 symmetry of Re (x^2)</figcaption>
+</figure>
+<aside>
+<details>
+<summary>上図を出力するための gnuplot のコード</summary>
+<pre><code>#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set xlabel "real"
+set ylabel "imag"
+unset key
+
+I = {0,1}
+f(x) = x**2
+
+splot real(f(x+I*y)), \
+    [-10:10] "++" u ($1):(0):(f($1)) w l ls 2, \
+    [-10:10] "++" u (0):($1):(-f(-$1)) w l ls 3
+
+pause -1
+</code></pre>
+</details>
+</aside>
+
+<h3>虚部</h3>
+
+<p>
+  (1.3)の虚部は(1.4)より、
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:100%">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+              <mrow>
+                <mi>Im</mi>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+                <mi>i</mi>
+                <mo stretchy="false">)</mo>
+                <mo>=</mo>
+                <mn>2</mn>
+                <mi>a</mi>
+                <mi>b</mi>
+              </mrow>
+              <annotation encoding="application/x-tex"> \operatorname{Im} f(a+bi)=2ab </annotation>
+            </semantics>
+          </math>
+        </td>
+        <td>(1.6)</td>
+      </tr>
+    </tbody>
+  </table>
+  この概形は下図のようになる。
+</p>
+
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-double_root_imag_zero.svg %}
+  <figcaption>Fig-1.6 Im (x^2)</figcaption>
+</figure>
+<aside>
+<details>
+<summary>上図を出力するための gnuplot のコード</summary>
+<pre><code>#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set xlabel "real"
+set ylabel "imag"
+unset key
+
+I = {0,1}
+f(x) = x**2
+
+splot imag(f(x+I*y)), "-" w l
+0 -10 0
+0 +10 0
+
+
+-10 0 0
++10 0 0
+e
+
+pause -1
+</code></pre>
+</details>
+</aside>
+
+<p>
+  ここで(1.6)式には h が出てこず、 h がどんな値であっても一定である。
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mrow>
+      <annotation encoding="application/x-tex">f(x)=0</annotation>
+    </semantics>
+  </math>
+  のためには
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>Rm</mi>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mrow>
+      <annotation encoding="application/x-tex">\operatorname{Rm} f(x)=0</annotation>
+    </semantics>
+  </math>
+  かつ
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>Im</mi>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mrow>
+      <annotation encoding="application/x-tex">\operatorname{Im} f(x)=0</annotation>
+    </semantics>
+  </math>
+  であるから、この虚部(1.6)が 0 で、かつ実部の双曲放物面(1.5)が 0 になるものを探せば良い。
+  (1.6)が 0 となるのは、
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>a</mi>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mrow>
+      <annotation encoding="application/x-tex">a=0</annotation>
+    </semantics>
+  </math>
+  または
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <semantics>
+      <mrow>
+        <mi>b</mi>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mrow>
+      <annotation encoding="application/x-tex">b=0</annotation>
+    </semantics>
+  </math>
+  すなわち実軸と虚軸になる。
+</p>
+
+<p>
+  なので(1.5)の実軸と虚軸において 0 になる点を探せば良い。
+  Fig-1.5 で示した緑色の放物線を水色の放物線が h によってどう変わるかを見れば良い。
+</p>
+
+<h3>解の位置</h3>
+
+<p>
+  (1.5)の実軸と虚軸における双曲線、
+  Fig-1.5 の緑色の放物線を水色の放物線が h を -10 から 10 まで変えるとどのように変わるかを示したのが下図となる。
+</p>
+
+<figure>
+  {% asset_image_tag fitcontain 2023-01-29-double_root_shifting_anim.gif %}
+  <figcaption>Fig-1.7 x^2+h, h = -10,...,10</figcaption>
+</figure>
+<aside>
+<details>
+<summary>上図を出力するための gnuplot のコード</summary>
+<pre><code>#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set nokey
+
+I = {0,1}
+f(x,h) = x**2 + h
+
+set terminal gif animate delay 10
+set output "double_root_shifting_anim.gif"
+
+set grid
+
+do for [h=-10:10]{
+  set multiplot layout 2,2
+
+  set xrange [-10:10]
+  set yrange [-10:10]
+  set zrange [-130:130]
+  set xlabel "real"
+  set ylabel "imag"
+
+  set label 1 sprintf("h=%d", h) at screen 0.05,0.95 left
+
+  set view 60, 30, 1, 1
+  splot real(f(x+I*y,h)), \
+    [-10:10] "++" u ($1):(0):(f($1,h)) w l ls 2 lw 2, \
+    [-10:10] "++" u (0):($1):(-f(-$1,-h)) w l ls 3 lw 2
+  set view 60, 30+90, 1, 1
+  replot
+
+  set xrange [-10:10]
+  set yrange [-130:130]
+  set xlabel "real"
+  set ylabel ""
+  plot real(f(x,h)) ls 2
+  set xlabel "imag"
+  set ylabel ""
+  plot real(-f(-x,-h)) ls 3
+
+  #pause -1
+
+  unset multiplot
+}
+
+set output
+</code></pre>
+</details>
+</aside>
+
+<p>
+  h &lt; 0 では実軸上の放物線（緑色）が 0 となる点が 2 つあって、これが実数解である。
+  h &gt; 0 では虚軸上の放物線（水色）が 0 となる点が 2 つあって、これが虚数解である。
+  h = 0 では両者の共通となるところとして重解となっている。
+</p>
+
+<p>
+  domain coloring での図示とちがって、 h を上下に動かすことによって解がどのように決まるかを視覚的に示すことができた。
+  虚数解を視覚的に存在することを図で確認することができた。
+</p>
+
+<h3>参考文献</h3>
+<ul>
+  <li>
+    <a href="http://toretate.fc2web.com/bgmath/2009/rootofquadreq/09090704.html">2次方程式の解を目で見る</a>,
+  </li>
+  <li>
+    <a href="https://amk86g18nx2l.blog.fc2.com/blog-entry-50.html">虚数解はどこにあるか（1） | しろくま手帳</a>
+  </li>
+  <li>
+    早苗雅史,
+    <a href="http://izumi-math.jp/M_Sanae/cplx/cplx.html">虚数解のイメージ化</a>
+    北海道算数数学教育会 高等学校部会研究部 数学のいずみ
+  </li>
+  <li>
+    <a href="http://www.gnuplot.info/docs/loc1331.html">Complex values</a>,
+    gnuplot document
+  </li>
+  <li>
+    <a href="http://takeno.iee.niit.ac.jp/~foo/gp-jman/data/current/20211223/gnuplot-ja-div/node52.html">17.1 複素数値 (Complex values)</a>
+    (gnuplot document の和訳)
+  </li>
+  <li>
+    <a href="https://mathrelish.com/mathematics/singularity-in-complex-analysis">複素解析での特異点とは - ヴィジュアルな色相環を用いたプロットを通して | Math Relish</a>
+  </li>
+  <li>
+    Yusuke Sakane,
+    <a href="http://www4.math.sci.osaka-u.ac.jp/~sakane/shudaibetu/hyperbolic_paraboloid2.html">双曲放物面２</a>, ベジエ曲線とベジエ曲面
+  </li>
+</ul>
+
+<script type="application/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=MML_CHTML"></script>
