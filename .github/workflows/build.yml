@@ -10,29 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
       with:
         path: ./_deploy
         repository: cat-in-136/cat-in-136.github.io
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         persist-credentials: true
 
+    - name: Install LAPACKE and OpenBLAS
+      run: sudo apt-get install liblapacke-dev libopenblas-dev -y
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1
-    - name: Install LAPACKE and OpenBLAS
-      run: sudo apt-get install liblapacke-dev libopenblas-dev -y
-
-    - name: Cache
-      uses: actions/cache@v3
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: ${{ runner.os }}-gems-
-    - name: Install dependencies
-      run: bundle install --path=vendor/bundle
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
     - name: Generate document
       run: bundle exec rake generate
