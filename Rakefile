@@ -71,7 +71,7 @@ end
 
 desc "Update datetime in a given post"
 task :touch_post, :path do |t, args|
-  abort("File not found: #{args.path}") unless File.exists?(args.path)
+  abort("File not found: #{args.path}") unless File.exist?(args.path)
 
   formatter_str = "---\n"
   postbody = ''
