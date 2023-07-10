@@ -6,7 +6,7 @@ tags:
 - logo
 - train and rails
 date: 2015-09-06 01:35:35.000000000 +09:00
-last_modified_at: '2016-11-18T15:10:10+09:00'
+last_modified_at: '2023-07-10T21:41:31+09:00'
 thumbnail: "{% asset_image_path 201509_trta_emblem_design_analysis.svg %}"
 ---
 <p>
@@ -28,16 +28,20 @@ thumbnail: "{% asset_image_path 201509_trta_emblem_design_analysis.svg %}"
 <p>
 なので容易に作図できるはずなのだが、円のサイズ比率などがいろいろと不明なので、
 けっきょく正しい団章を描くことはかなわなかった。
+<ins>
+<a href="{% post_url 2023-07-10-trta-emblem-design-spec %}">後日、サイズ比率などが判明した</a>。
+円のサイズの比率は 17:11 。切り込み幅は 1/7 であるので、それを元に作図できる。
+</ins>
 </p>
 
 <form id="trta-emblem-control" onsubmit="return false;" style="display: block; margin: auto; text-align: center;">
   <div>
   <label for="trta-emblem-control-outer-circle">外円半径</label>
-  <input id="trta-emblem-control-outer-circle" type="range" min="0" max="100" value="80" />
+  <input id="trta-emblem-control-outer-circle" type="range" min="0" max="100" value="85" />
   </div>
   <div>
   <label for="trta-emblem-control-inner-circle">内円半径</label>
-  <input id="trta-emblem-control-inner-circle" type="range" min="0" max="100" value="50" />
+  <input id="trta-emblem-control-inner-circle" type="range" min="0" max="100" value="55" />
   </div>
   <div>
   <label for="trta-emblem-control-blank">切込幅</label>
@@ -45,13 +49,12 @@ thumbnail: "{% asset_image_path 201509_trta_emblem_design_analysis.svg %}"
   </div>
 </form>
 <figure id="trta-emblem-figure" style="display: block; margin: auto; text-align: center; font-size: smaller;">
-<svg xmlns="http://www.w3.org/2000/svg" width="256px" height="256px" viewBox="0 0 256 256">
-  <rect x="0" y="0" width="256" height="256" style="fill: #fff;"></rect>
-  <circle id="trta-emblem-outer-circle" cx="128" cy="128" r="80" style="fill: #e70012;"></circle>
-  <circle id="trta-emblem-inner-circle" cx="128" cy="128" r="50" style="fill: #fff;"></circle>
-  <polygon id="trta-emblem-polygon" points="71.4314575050762,71.4314575050762 -0.13708498984760809,143 183.71067811865476,143 163.35533905932738,184.5685424949238 184.5685424949238,184.5685424949238 256.1370849898476,113 72.28932188134524,113 92.64466094067262,71.4314575050762" style="fill: #e70012;"></polygon>
-  <rect id="trta-emblem-blank-topright" x="128" y="103" width="128" height="10" style="fill: #fff;"></rect>
-  <rect id="trta-emblem-blank-bottomleft" x="0" y="143" width="128" height="10" style="fill: #fff;"></rect>
+<svg xmlns="http://www.w3.org/2000/svg" width="320px" height="256px" viewBox="0 0 320 256"> <rect x="0" y="0" width="320" height="256" style="fill: #fff;"></rect>
+  <circle id="trta-emblem-outer-circle" cx="160" cy="128" r="85" style="fill: #e70012;"></circle>
+  <circle id="trta-emblem-inner-circle" cx="160" cy="128" r="55" style="fill: #fff;"></circle>
+  <polygon id="trta-emblem-polygon" points="99.89592359914346,67.89592359914346 24.791847198286916,143 222.78174593052023,143 198.89087296526012,188.10407640085654 220.10407640085654,188.10407640085654 295.2081528017131,113 97.21825406947977,113 121.10912703473988,67.89592359914346" style="fill: #e70012;"></polygon>
+  <rect id="trta-emblem-blank-topright" x="160" y="99" width="160" height="14" style="fill: #fff;"></rect>
+  <rect id="trta-emblem-blank-bottomleft" x="0" y="143" width="160" height="14" style="fill: #fff;"></rect>
 </svg>
 </figure>
 <script type="text/javascript">
@@ -72,7 +75,7 @@ thumbnail: "{% asset_image_path 201509_trta_emblem_design_analysis.svg %}"
     var ri = Math.min(parseFloat(oInnerCircle.value), ro);
     var w = ro - ri;
     var d = Math.min(parseFloat(oBlank.value), ri - w/2);
-    var cx = 128;
+    var cx = 160;
     var cy = 128;
 
     oSVGOuterCircle.setAttribute("r", ro);

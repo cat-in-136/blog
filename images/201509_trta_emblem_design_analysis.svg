@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" width="256px" height="256px" viewBox="0 0 256 256">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" width="320px" height="256px" viewBox="0 0 320 256">
   <title>TRTA Emblem Design Analysis</title>
   <metadata>
     <rdf:RDF>
@@ -14,30 +14,29 @@
     </rdf:RDF>
   </metadata>
   <g>
-    <rect x="0" y="0" width="256" height="256" style="fill: #fff;" />
-    <circle cx="128" cy="128" r="49" style="fill: #e70012;" />
-    <circle cx="128" cy="128" r="35" style="fill: #fff;" />
-    <polygon points="93.35176772185918,93.35176772185918 51.70353544371834,135 170.49747468305833,135 152.74873734152916,162.64823227814082 162.64823227814082,162.64823227814082 204.29646455628165,121 85.50252531694167,121 103.25126265847084,93.35176772185918" style="fill: #e70012;" />
-    <rect x="128" y="112" width="128" height="9" style="fill: #fff;" />
-    <rect x="0" y="135" width="128" height="9" style="fill: #fff;" />
+  <circle id="trta-emblem-outer-circle" cx="160" cy="128" r="85" style="fill: #e70012;"></circle>
+  <circle id="trta-emblem-inner-circle" cx="160" cy="128" r="55" style="fill: #fff;"></circle>
+  <polygon id="trta-emblem-polygon" points="99.89592359914346,67.89592359914346 24.791847198286916,143 222.78174593052023,143 198.89087296526012,188.10407640085654 220.10407640085654,188.10407640085654 295.2081528017131,113 97.21825406947977,113 121.10912703473988,67.89592359914346" style="fill: #e70012;"></polygon>
+  <rect id="trta-emblem-blank-topright" x="160" y="99" width="160" height="14" style="fill: #fff;"></rect>
+  <rect id="trta-emblem-blank-bottomleft" x="0" y="143" width="160" height="14" style="fill: #fff;"></rect>
   </g>
   <g>
-    <polygon points="93.35176772185918,93.35176772185918 51.70353544371834,135 135,135" style="fill: #0ff; opacity: 0.5;" /> 
-    <polygon points="162.64823227814082,162.64823227814082 204.29646455628165,121 121,121" style="fill: #f0f; opacity: 0.5;" /> 
+    <polygon points="99.89592359914346,67.89592359914346 24.791847198286916,143 175,143" style="fill: #0ff; opacity: 0.5;"/>
+    <polygon points="220.10407640085654,188.10407640085654 295.2081528017131,113 145,113" style="fill: #f0f; opacity: 0.5;"/>
 
-    <text x="93" y="83" style="fill: #000; font-size: 14px; font-family: serif;">A</text>
-    <circle cx="93.35176772185918" cy="93.35176772185918" r="4" style="fill: #000;" />
-    <text x="162" y="180" style="fill: #000; font-size: 14px; font-family: serif;">A&#8242;</text>
-    <circle cx="162.64823227814082" cy="162.64823227814082" r="4" style="fill: #000;" />
+    <text x="77" y="62" style="font-size:14px;font-family:serif;fill:#000000">A</text>
+    <circle cx="99.89592359914346" cy="67.89592359914346" r="4" style="fill: #000;"/>
+    <text x="226" y="207" style="font-size:14px;font-family:serif;fill:#000000">A′</text>
+    <circle cx="220.10407640085654" cy="188.10407640085654" r="4" style="fill: #000;"/>
 
-    <text x="40" y="135" style="fill: #000; font-size: 14px; font-family: serif;">B</text>
-    <circle cx="51.70353544371834" cy="135" r="4" style="fill: #000;" />
-    <text x="210" y="121" style="fill: #000; font-size: 14px; font-family: serif;">B&#8242;</text>
-    <circle cx="204.29646455628165" cy="121" r="4" style="fill: #000;" />
+    <text x="25" y="164" style="font-size:14px;font-family:serif;fill:#000000">B</text>
+    <circle cx="24.791847198286916" cy="143" r="4" style="fill: #000;"/>
+    <text x="290" y="97" style="font-size:14px;font-family:serif;fill:#000000">B′</text>
+    <circle cx="295.2081528017131" cy="113" r="4" style="fill: #000;"/>
 
-    <text x="125" y="152" style="fill: #000; font-size: 14px; font-family: serif;">C</text>
-    <circle cx="135" cy="135" r="4" style="fill: #000;" />
-    <text x="120" y="115" style="fill: #000; font-size: 14px; font-family: serif;">C&#8242;</text>
-    <circle cx="121" cy="121" r="4" style="fill: #000;" />
+    <text x="159" y="158" style="font-size:14px;font-family:serif;fill:#000000">C</text>
+    <circle cx="175" cy="143" r="4" style="fill: #000;"/>
+    <text x="140" y="102" style="font-size:14px;font-family:serif;fill:#000000">C′</text>
+    <circle cx="145" cy="113" r="4" style="fill: #000;"/>
   </g>
 </svg>
