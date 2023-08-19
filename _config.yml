@@ -3,6 +3,8 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://cat-in-136.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 twitter_username: cat_in_136
+mastodon_username: "@cat_in_136@mastodon.social"
+mastodon_url: https://mastodon.social/@cat_in_136
 github_username: cat-in-136
 source_repo_name: cat-in-136/blog
 source_repo_branch: master
