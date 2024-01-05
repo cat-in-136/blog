@@ -25,14 +25,20 @@ $long-line-height: 1.75;
 
 $spacing-unit:     30px;
 
-$text-color:       #000;
-$background-color: #fff;
-$brand-color:      #658DC6; // PANTONE 16-4032 TCX Provence
-$brand-color-dark: #0F4C81; // PANTONE 19-4052 TCX Classic Blue
+$text-color:       #333;
+$background-color: #F9F9F9;
+$primary-color:    #FFC107;
+$accent-color:     #03A9F4;
+$alt-color:        #FF5252;
 
-$grey-color:       #84898C; // PANTONE 17-4405 TCX Monument
-$grey-color-light: lighten($grey-color, 40%);
-$grey-color-dark:  darken($grey-color, 25%);
+
+$grey-color:       #c6c6c6;
+$grey-color-light: #efefef;
+$grey-color-dark:  #5c5c5c;
+
+$link-color:          $accent-color;
+$active-link-color:   $alt-color;
+$visited-link-color:  darken($accent-color, 25%);
 
 $on-palm:          600px;
 $on-laptop:        800px;
