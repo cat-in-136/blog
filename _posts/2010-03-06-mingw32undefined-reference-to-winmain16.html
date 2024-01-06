@@ -7,7 +7,7 @@ tags:
 - win32api
 - mingw
 - windows
-last_modified_at: '2013-11-23T22:32:35.476+09:00'
+last_modified_at: '2024-01-06T11:36:32+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1152977030881492731
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/03/mingw32undefined-reference-to-winmain16.html
 ---
@@ -22,9 +22,11 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
     return 0;
 }
 {% endhighlight %}
-<pre style="background-color: #000; color: #fff; overflow: auto; padding: 2px;"><code>$ gcc -o foobar.exe foobar.c -D_UNICODE -DUNICODE -mwindows -lmingw32 -lkernel32
+{% highlight console %}
+$ gcc -o foobar.exe foobar.c -D_UNICODE -DUNICODE -mwindows -lmingw32 -lkernel32
+$
 /usr/i686-pc-mingw32/sys-root/mingw/lib/libmingw32.a(main.o):(.text+0xd2): undefined reference to `WinMain@16'
-$ </code></pre>
+{% endhighlight %}
 <p>
 解決策は<strong><code>int main(int, char**)</code>を定義するべし</strong>。これはぐぐれば比較的容易に発見可能。では、なぜか?という点の解説は日本語のページにはあまりないようだ。
 </p>
@@ -32,8 +34,10 @@ $ </code></pre>
 <p>
 コンパイルオプションから<code>-D_UNICODE -DUNICODE</code>を抜くとANSI版でコンパイルされる。このとき問題なくコンパイルされ、（Unicode対応していない点を除いて）正常に動作する。
 </p>
-<pre style="background-color: #000; color: #fff; overflow: auto; padding: 2px;"><code>$ gcc -o foobar.exe foobar.c -mwindows -lmingw32 -lkernel32
-$ </code></pre>
+{% highlight console %}
+$ gcc -o foobar.exe foobar.c -mwindows -lmingw32 -lkernel32
+$
+{% endhighlight %}
 <p>
 このコンパイルオプションとき、<code>TCHAR</code>は<code>CHAR</code>に、<code>_tWinMain</code>関数は<code>WinMain</code>関数とみなされる。これは<code>tchar.h</code>での単純な<code>#define</code>で実現されている。
 </p>

@@ -5,7 +5,7 @@ author: cat_in_136
 tags:
 - mozilla
 date: '2014-11-16T23:04:54+09:00'
-last_modified_at: '2014-11-16T23:04:54+09:00'
+last_modified_at: '2024-01-06T11:36:38+09:00'
 ---
 <p>This post describes how to create a JavaScript XPCOM component
 on bootstrapped (restartless) addon.</p>
@@ -19,11 +19,10 @@ on bootstrapped (restartless) addon.</p>
       <li>If you have Visual Studio, you may use <a href="http://msdn.microsoft.com/library/ms241442(v=vs.80).aspx"><code>guidgen</code></a>.</li>
       <li>
         <p>On linux, you may use <code>uuidgen</code>(1).</p>
-
-	<pre style="background-color: #000; color: #fff;"><code>% uuidgen
+{% highlight console %}
+$ uuidgen
 22e1de77-790a-4a78-9ed4-8a8fca8c9f0f
-% 
-</code></pre>
+{% endhighlight %}
       </li>
     </ul>
   </li>
@@ -35,9 +34,9 @@ const Cc = Components.classes;
 const Ci = Components.interfaces;
 const Cu = Components.utils;
 const Cr = Components.results;
-    
+
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-    
+
 function ComponentFooBar() { }
 ComponentFooBar.prototype = {
   classDescription: "foobar class",

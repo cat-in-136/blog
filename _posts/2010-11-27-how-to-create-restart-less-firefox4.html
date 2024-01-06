@@ -5,9 +5,10 @@ date: '2010-11-27T00:31:00.143+09:00'
 author: cat_in_136
 tags:
 - mozilla
-last_modified_at: '2014-11-10T00:02:32+09:00'
-thumbnail: '{% asset_image_path traditional-addons-are-required-browser-restart.png
-  %}'
+- firefox
+last_modified_at: '2024-01-06T11:36:33+09:00'
+thumbnail: "{% asset_image_path traditional-addons-are-required-browser-restart.png
+  %}"
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-331318788672446259
 blogger_orig_url: http://cat-in-136.blogspot.com/2010/11/how-to-create-restart-less-firefox4.html
 ---
@@ -110,10 +111,12 @@ Above code is very very simple. bootstrap.js in the general bootstrapped extensi
 <p>
 All you have to do is compress the files.
 </p>
-<pre style="background-color: #000; color: #fff">% zip -9r ../bootstraptest.xpi *
+{% highlight console %}
+$ zip -9r ../bootstraptest.xpi *
   adding: bootstrap.js (deflated 66%)
   adding: install.rdf (deflated 54%)
-% </pre>
+$
+{% endhighlight %}
 <p>
 Open the XPI file to install. As soon as it is installed, a following dialog is displayed.
 </p>

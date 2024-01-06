@@ -6,7 +6,7 @@ author: cat_in_136
 tags:
 - howto
 - c-language
-last_modified_at: '2014-04-27T23:32:00.088+09:00'
+last_modified_at: '2024-01-06T11:36:37+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-5300366015909406766
 blogger_orig_url: http://cat-in-136.blogspot.com/2014/04/c-struct-with-doxygen-xml.html
 ---
@@ -17,24 +17,27 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2014/04/c-struct-with-doxygen-x
 
 <h4>使い方</h4>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>doxygen -g</kbd>
-</samp></pre>
+{% highlight console %}
+$ doxygen -g
+{% endhighlight %}
 
 <p>で生成された Doxyfile ないしすでにある Doxyfile において
 <code>GENERATE_XML</code> を <code>YES</code> にして、</p>
 
-<pre><code># If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
+{% highlight config %}
+# If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
 # captures the structure of the code including all documentation.
 # The default value is: NO.
 
-GENERATE_XML           = <ins>YES</ins>
-</code></pre>
+GENERATE_XML           = YES
+{% endhighlight %}
 
 <p>ドキュメントをつくるように doxygen を実行すると xml が出力される。
 html 出力などほかの出力も有効にしているならば、一緒に出力される。</p>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ doxygen Doxyfile
-</samp></pre>
+{% highlight console %}
+$ doxygen Doxyfile
+{% endhighlight %}
 
 <h4>具体例</h4>
 
@@ -62,9 +65,10 @@ typedef struct _Foo {
 
 <p>doxygen の実行</p>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>ls</kbd>
+{% highlight console %}
+$ ls
 foobar.h
-$ <kbd>doxygen -g</kbd>
+$ doxygen -g
 
 
 Configuration file 'Doxyfile' created.
@@ -75,15 +79,15 @@ Now edit the configuration file and enter
 
 to generate the documentation for your project
 
-$ <kbd>vi Doxyfile</kbd>
-$ <kbd>doxygen Doxyfile</kbd>
+$ vi Doxyfile
+$ doxygen Doxyfile
 (略)
-$ <kbd>ls -F</kbd>
+$ ls -F
 Doxyfile  foobar.h  html/  latex/  xml/
-$ <kbd>ls -F xml</kbd>
+$ ls -F xml
 combine.xslt  foobar_8h.xml  index.xsd        union__Bar.xml
 compound.xsd  index.xml      struct__Foo.xml
-</samp></pre>
+{% endhighlight %}
 
 <p>構造体 <code>struct _Foo</code> の構造を見るには <code>struct__Foo.xml</code> を見るという風な単純な構造となっている：</p>
 
@@ -245,13 +249,14 @@ end
 
 <p>列挙体が扱えないことが残念なことこの上ない。</p>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>ruby doxy_struct_xml_to_json.rb</kbd>
+{% highlight console %}
+$ ruby doxy_struct_xml_to_json.rb
 Usage: ruby doxy_struct_xml_to_json.rb struct_id
-struct_id: struct__Foo  union__Bar  
+struct_id: struct__Foo  union__Bar
 
-$ <kbd>ruby doxy_struct_xml_to_json.rb struct__Foo</kbd>
+$ ruby doxy_struct_xml_to_json.rb struct__Foo
 {"id":"struct__Foo","name":"_Foo","members":[{"name":"bartype","type":"BarType"},{"name":"bar","type":"Bar","type_data":{"id":"union__Bar","name":"_Bar","members":[{"name":"a","type":"uint"},{"name":"b[NUM_B]","type":"uint"}]}}]}
-</samp></pre>
+{% endhighlight %}
 
 <h4>参考文献</h4>
 

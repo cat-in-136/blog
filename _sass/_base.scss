@@ -267,15 +267,21 @@ pre {
   }
 
   // prefer rouge syntax highlight and custom style
-  .highlight > &, .highlight > & > code,
+  .highlight &, .highlight & > code,
   &[style], &[style] > code, & > code[style] {
     background-color: transparent;
+  }
+  .highlight & {
+    margin: 0;
   }
 
   // legacy highlight
   &.terminal, &.prompt {
     background-color: $grey-color-dark;
     color: #fff;
+    > code {
+      background-color: transparent;
+    }
   }
 }
 
