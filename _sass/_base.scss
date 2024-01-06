@@ -264,11 +264,25 @@ pre {
   > code {
     border: 0;
     padding: 0;
-    background-color: inherit;
-    color: inherit;
+  }
+
+  // prefer rouge syntax highlight and custom style
+  .highlight > &, .highlight > & > code,
+  &[style], &[style] > code, & > code[style] {
+    background-color: transparent;
+  }
+
+  // legacy highlight
+  &.terminal, &.prompt {
+    background-color: $grey-color-dark;
+    color: #fff;
   }
 }
 
+.highlight {
+    text-align: start;
+    @extend %vertical-rhythm;
+}
 
 
 /**
