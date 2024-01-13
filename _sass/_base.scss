@@ -264,6 +264,7 @@ pre {
   > code {
     border: 0;
     padding: 0;
+    background-color: transparent;
   }
 
   // prefer rouge syntax highlight and custom style
@@ -273,15 +274,6 @@ pre {
   }
   .highlight & {
     margin: 0;
-  }
-
-  // legacy highlight
-  &.terminal, &.prompt {
-    background-color: $grey-color-dark;
-    color: #fff;
-    > code {
-      background-color: transparent;
-    }
   }
 }
 

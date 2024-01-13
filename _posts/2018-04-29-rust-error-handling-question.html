@@ -44,9 +44,11 @@ fn main() {
 例えば引数を指定しないと下記のように異常終了する。
 </p>
 
-<pre class="terminal">% target/debug/foobar
-<samp>thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', /builddir/build/BUILD/rustc-1.25.0-src/src/liballoc/vec.rs:1551:10
-note: Run with `RUST_BACKTRACE=1` for a backtrace.</samp></pre>
+{% highlight console %}
+$ target/debug/foobar
+thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', /builddir/build/BUILD/rustc-1.25.0-src/src/liballoc/vec.rs:1551:10
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+{% endhighlight %}
 
 <p>
 現代的な言語ではこれの対処をかんたんに書くことができる。

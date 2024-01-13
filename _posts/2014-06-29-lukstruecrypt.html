@@ -9,7 +9,7 @@ tags:
 - linux
 - howto
 - security
-last_modified_at: '2024-01-06T11:36:38+09:00'
+last_modified_at: '2024-01-13T15:14:19+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7186359417273335878
 blogger_orig_url: http://cat-in-136.blogspot.com/2014/06/lukstruecrypt.html
 ---
@@ -31,28 +31,32 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2014/06/lukstruecrypt.html
 <p>まず仮想ドライブファイルとなるファイルを作る。
 仮に 1G byte で作るのならば…</p>
 
-<pre class="prompt"><samp>% dd if=/dev/zero of=/path/to/foobar.img bs=1k count=1M
-</samp></pre>
+{% highlight console %}
+$ dd if=/dev/zero of=/path/to/foobar.img bs=1k count=1M
+{% endhighlight %}
 
 <p>ファイルを置く場所が ext4 などならば fallocate(1) を使って作ってもよい。</p>
 
-<pre class="prompt"><samp>% fallocate -l 1G /path/to/foobar.img
-</samp></pre>
+{% highlight console %}
+$ fallocate -l 1G /path/to/foobar.img
+{% endhighlight %}
 
 <p>なお本手法ではディスクイメージをそのまま扱う都合上、
 可変ドライブに対応しない（対応できない）。
 どうしてもというのならば、スパースファイルでも使えばよいと思う。</p>
 
-<pre class="prompt"><samp>% touch /path/to/foobar.img
-% truncate -s 1G /path/to/foobar.img
-</samp></pre>
+{% highlight console %}
+$ touch /path/to/foobar.img
+$ truncate -s 1G /path/to/foobar.img
+{% endhighlight %}
 
 <h5>暗号化仮想ドライブの構築</h5>
 
 <p>仮想ドライブファイルをループデバイスに割り当てる。</p>
 
-<pre class="prompt"><samp># losetup /dev/loop0 /path/to/foobar.img
-</samp></pre>
+{% highlight console %}
+# losetup /dev/loop0 /path/to/foobar.img
+{% endhighlight %}
 
 <p>ここでは /dev/loop0 を使っているが
 また、 /dev/loop* が起動時に生成されない環境の場合は、
@@ -62,7 +66,8 @@ mknod(1) を使って予めループデバイスを作成しておくこと。</
 LUKS の暗号化の設定をする。
 下の例ではデフォルト設定で行っている。</p>
 
-<pre class="prompt"><samp># cryptsetup luksFormat /dev/loop0
+{% highlight console %}
+# cryptsetup luksFormat /dev/loop0
 WARNING!
 ========
 This will overwrite data on /dev/loop0 irrevocably.
@@ -71,16 +76,17 @@ Are you sure? (Type uppercase yes): <kbd>YES</kbd>
 Enter passphrase: 
 Verify passphrase: 
 # 
-</samp></pre>
+{% endhighlight %}
 
 <p>次に /dev/mapper/foobar にデバイスマッピングしてから、
 ファイルシステムを構築する。
 この例ではファイルシステムとして ext4 を使っている。</p>
 
-<pre class="prompt"><samp># cryptsetup luksOpen /dev/loop0 foobar
+{% highlight console %}
+# cryptsetup luksOpen /dev/loop0 foobar
 Enter passphrase for /path/to/foobar.img:
 # mkfs.ext4 /dev/mapper/foobar
-</samp></pre>
+{% endhighlight %}
 
 <h5>暗号化仮想ドライブのマウント/アンマウント</h5>
 
@@ -89,27 +95,30 @@ Enter passphrase for /path/to/foobar.img:
 
 <p>なおパーミッションなどをこの段階で設定をしておくといいかもしれない。</p>
 
-<pre class="prompt"><samp># mkdir /mnt/foobar
+{% highlight console %}
+# mkdir /mnt/foobar
 # mount /dev/mapper/foobar /mnt/foobar
 # chown 500:500 /mnt/foobar
 # umount /mnt/foobar
 # rmdir /mnt/foobar
-</samp></pre>
+{% endhighlight %}
 
 <h5>暗号化仮想ドライブの開放</h5>
 
 <p>LUKSの開放、ループデバイスの割り当て解除の順番で行う：</p>
 
-<pre class="prompt"><samp># cryptsetup luksClose foobar
+{% highlight console %}
+# cryptsetup luksClose foobar
 # losetup -d /dev/loop0
-</samp></pre>
+{% endhighlight %}
 
 <h4>日常使い</h4>
 
 <p>ループデバイスへの割り当てはコマンドラインで行う必要がある：</p>
 
-<pre class="prompt"><samp># losetup /dev/loop0 /path/to/foobar.img
-</samp></pre>
+{% highlight console %}
+# losetup /dev/loop0 /path/to/foobar.img
+{% endhighlight %}
 
 <p>こうした時点で各種 gtk アプリ (厳密には GIO サブシステム) からはドライブと
 認識されているので、
@@ -120,19 +129,21 @@ USB メモリのような操作感でマウントして使える。
 
 <p>なおコマンドラインでマウントするには下記のとおりとなる。</p>
 
-<pre class="prompt"><samp># losetup /dev/loop0 /path/to/foobar.img
+{% highlight console %}
+# losetup /dev/loop0 /path/to/foobar.img
 # cryptsetup luksOpen /dev/loop0 foobar
 # mkdir /mnt/foobar
 # mount /dev/mapper/foobar /mnt/foobar
-</samp></pre>
+{% endhighlight %}
 
 <p>アンマウントは下記のとおりとなる。</p>
 
-<pre class="prompt"><samp># umount /mnt/foobar
+{% highlight console %}
+# umount /mnt/foobar
 # rmdir /mnt/foobar
 # cryptsetup luksClose foobar
 # losetup -d /dev/loop0
-</samp></pre>
+{% endhighlight %}
 
 <h4>ドライブ拡張</h4>
 
@@ -143,12 +154,13 @@ USB メモリのような操作感でマウントして使える。
 
 <p>以下は2G byteに増量する例。</p>
 
-<pre class="prompt"><samp>% truncate -s 2G /path/to/foobar.img
-% su
+{% highlight console %}
+$ truncate -s 2G /path/to/foobar.img
+$ su
 # losetup /dev/loop0 /path/to/foobar.img
 # cryptsetup luksOpen /dev/loop0 foobar
 # resize2fs /dev/mapper/foobar
-</samp></pre>
+{% endhighlight %}
 
 <h4>参考文献</h4>
 

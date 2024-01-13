@@ -4,25 +4,28 @@ title: pango-view と OTF font features
 author: cat_in_136
 tags: font 変体かな howto
 date: '2016-04-09T12:32:37+09:00'
-thumbnail: "{% asset_image_path 201604_pango_view_otf_font_features_jis8903_render005.svg %}"
-last_modified_at: '2016-11-18T15:10:11+09:00'
+thumbnail: "{% asset_image_path 201604_pango_view_otf_font_features_jis8903_render005.svg
+  %}"
+last_modified_at: '2024-01-13T15:14:20+09:00'
 ---
 
 <p>
 Pango の <code>pango-view(1)</code> で OTF font features を使う試み。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output 出力ファイル --font 'フォント' --text "..."
-</samp></pre>
+{% highlight console %}
+$ pango-view --output 出力ファイル --font 'フォント' --text "..."
+{% endhighlight %}
 
 <p>
 これで Pango でのレンダリング結果が保存される。
 （画面表示もされる。）
 </p>
 
-<pre class="prompt"><samp>% pango-view --output jis8903_render001.svg --font '機械彫刻用標準書体 24' --text '機械彫刻用標準書体'
-% pango-view --output jis8903_render002.svg --font '機械彫刻用 標準書体 24' --text 'きけんです。'
-</samp></pre>
+{% highlight console %}
+$ pango-view --output jis8903_render001.svg --font '機械彫刻用標準書体 24' --text '機械彫刻用標準書体'
+$ pango-view --output jis8903_render002.svg --font '機械彫刻用 標準書体 24' --text 'きけんです。'
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render001.svg %}
@@ -46,8 +49,9 @@ svg、pdf、ps といったベクタ画像でも出力可能。
 所謂 <a href="https://developer.gnome.org/pango/stable/PangoMarkupFormat.html">Pango Markup</a> が使える。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output jis8903_render003.svg --font '機械彫刻用標準書体 24' --markup --text '&lt;span color="#ff0000"&gt;きけん&lt;/span&gt;です。'
-</samp></pre>
+{% highlight console %}
+$ pango-view --output jis8903_render003.svg --font '機械彫刻用標準書体 24' --markup --text '<span color="#ff0000">きけん</span>です。'
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render003.svg %}
@@ -69,8 +73,9 @@ OTF には font feature があってタイポグラフィのオプション機�
 「き（支）」および「す（春）」を表示してみる。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output jis8903_render004.svg --font '機械彫刻用標準書体 24' --markup --text '&lt;span font_features="&amp;quot;ss06&amp;quot; on"&gt;きけんです。&lt;/span&gt;'
-</samp></pre>
+{% highlight console %}
+$ pango-view --output jis8903_render004.svg --font '機械彫刻用標準書体 24' --markup --text '<span font_features="&quot;ss06&quot; on">きけんです。</span>'
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render004.svg %}
@@ -82,8 +87,9 @@ OTF には font feature があってタイポグラフィのオプション機�
 Pango は正しくレンダリングしている模様。すごい。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output jis8903_render005.svg --font '機械彫刻用標準書体 24' --markup --text 'です。&lt;span font_features="ss11 on"&gt;です。&lt;/span&gt;&lt;span font_features="ss12 on"&gt;です。&lt;/span&gt;'
-</samp></pre>
+{% highlight console %}
+$ pango-view --output jis8903_render005.svg --font '機械彫刻用標準書体 24' --markup --text 'です。<span font_features="ss11 on">です。</span><span font_features="ss12 on">です。</span>'
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_otf_font_features_jis8903_render005.svg %}
