@@ -31,7 +31,7 @@ body {
 
   color: $text-color;
   background-color: $background-color;
-  accent-color: $brand-color-dark;
+  accent-color: $accent-color;
 }
 
 /**
@@ -124,8 +124,8 @@ img {
  * Figures
  */
 figure {
-  border: 1px solid $grey-color-light;
   margin: 1em auto 1em auto;
+  background-color: #fff;
   padding: 2px;
   text-align: center;
 
@@ -198,16 +198,15 @@ h1, h2, h3, h4, h5, h6 {
  * Links
  */
 a {
-  color: $brand-color;
-  text-decoration: none;
+  color: $link-color;
+  text-decoration: underline;
 
   &:visited {
-    color: $brand-color-dark;
+    color: $visited-link-color;
   }
 
   &:hover {
-    color: $text-color;
-    text-decoration: underline;
+    color: $active-link-color;
   }
 }
 
@@ -215,8 +214,10 @@ a {
  * Blockquotes
  */
 blockquote {
-  color: $grey-color-dark;
-  border-left: 4px solid $grey-color-light;
+  color: $text-color;
+  background-color: $grey-color-light;
+  border-left: 4px solid $primary-color;
+  padding: calc($spacing-unit / 12);
   padding-left: calc($spacing-unit / 2);
   //font-size: 18px;
   //letter-spacing: -1px;
@@ -224,9 +225,10 @@ blockquote {
 
   @include vertical-writing {
     html.vertical-writing-recommended & {
-      border-left: auto none;
-      border-top: 4px solid $grey-color-light;
-      padding: calc($spacing-unit/2) inherit inherit inherit;
+      border-left: 0px;
+      border-top: 4px solid $primary-color;
+      padding: calc($spacing-unit / 12);
+      padding-top: calc($spacing-unit/2);
     }
   }
 
@@ -262,11 +264,23 @@ pre {
   > code {
     border: 0;
     padding: 0;
-    background-color: inherit;
-    color: inherit;
+    background-color: transparent;
+  }
+
+  // prefer rouge syntax highlight and custom style
+  .highlight &, .highlight & > code,
+  &[style], &[style] > code, & > code[style] {
+    background-color: transparent;
+  }
+  .highlight & {
+    margin: 0;
   }
 }
 
+.highlight {
+    text-align: start;
+    @extend %vertical-rhythm;
+}
 
 
 /**

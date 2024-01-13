@@ -4,6 +4,7 @@ title: 新年の挨拶（とウェブフォント）
 vertical-writing: true
 tags: font webfont html 縦書き
 date: '2018-01-01T01:41:08+09:00'
+last_modified_at: '2024-01-13T15:14:21+09:00'
 ---
 <style type="text/css" scoped="scoped"><!-- /* --><![CDATA[ /* */
 @font-face {
@@ -169,9 +170,10 @@ Google Chrome も私が作成したフォントでは GSUB がうまく働かな
 OpenType をそのままだと容量上非効率なのでウェブフォントに特化した WOFF あるいは WOFF2 が推奨される。
 ttx だと必要な python パッケージさえ入っていればそのまま出力できた。
 </p>
-<pre class="console"><samp>% ttx -q --flavor woff2 Gantan2018CatIn136.ttx
-% ttx -q --flavor woff --with-zopfli Gantan2018CatIn136.ttx
-</samp></pre>
+{% highlight console %}
+$ ttx -q --flavor woff2 Gantan2018CatIn136.ttx
+$ ttx -q --flavor woff --with-zopfli Gantan2018CatIn136.ttx
+{% endhighlight %}
 <p>
 WOFF2 の方がサイズ的に有利なのでそちらの方を使うのが好ましい。
 だが <a href="https://caniuse.com/#search=woff2">WOFF2 に対応していないブラウザ</a>もいまだ生き残っているため WOFF も作成した。

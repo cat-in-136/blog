@@ -1,10 +1,11 @@
 ---
 layout: post
 title: "【担当者さん必見】メンバーみんなで日程調整ができる「Scheduling Poll」プラグイン登場！"
-thumbnail: '{% asset_image_path 201511_redmine_scheduling_polls_ticket_vote.png %}'
+thumbnail: "{% asset_image_path 201511_redmine_scheduling_polls_ticket_vote.png %}"
 author: cat_in_136
 tags: redmine howto チラシの裏
 date: '2015-11-30T23:48:32+09:00'
+last_modified_at: '2024-01-13T15:14:19+09:00'
 ---
 <p>
 もうすぐ12月。そろそろ忘年会や新年会の予定が入る頃ではないでしょうか？
@@ -22,11 +23,12 @@ redmineのプラグイン「<a href="https://github.com/cat-in-136/redmine_sched
 <p>
 まず git clone と migrate してインストールしましょう！
 </p>
-<pre class="terminal">% cd plugins
-% git clone https://github.com/cat-in-136/redmine_scheduling_poll.git
-% cd ..
-% bundle exec rake redmine:plugins:migrate RAILS_ENV=production
-</pre>
+{% highlight console %}
+$ cd plugins
+$ git clone https://github.com/cat-in-136/redmine_scheduling_poll.git
+$ cd ..
+$ bundle exec rake redmine:plugins:migrate RAILS_ENV=production
+{% endhighlight %}
 <p>
 管理者さんは、プロジェクトに対して「Scheduling polls」を有効にしましょう。
 </p>

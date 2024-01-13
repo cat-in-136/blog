@@ -4,7 +4,7 @@ title: pango で縦書きとその能力
 author: cat_in_136
 tags: font 縦書き howto 変体かな
 date: '2016-04-23T03:00:34+09:00'
-last_modified_at: '2018-11-04T23:12:48+09:00'
+last_modified_at: '2024-01-13T15:14:20+09:00'
 thumbnail: "{% asset_image_path 201604_pango_view_vertical_writing_sagabon_render002.svg
   %}"
 vertical-writing: true
@@ -17,8 +17,9 @@ Pango の gravity 指定で縦書きが実現できる。
 <code>pango-view(1)</code>だと、<code>--gravity east</code> オプション設定を指定すれば良い。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output ipapgothic_render01.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east
-</samp></pre>
+{% highlight console %}
+$ pango-view --output ipapgothic_render01.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_vertical_writing_ipapgothic_render01.svg %}
@@ -30,8 +31,9 @@ Pango の gravity 指定で縦書きが実現できる。
 90度回転させることで文字の進行方向を鉛直方向に変える。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output ipapgothic_render02.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east --rotate -90
-</samp></pre>
+{% highlight console %}
+$ pango-view --output ipapgothic_render02.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east --rotate -90
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_vertical_writing_ipapgothic_render02.svg %}
@@ -59,8 +61,9 @@ Pango の gravity 指定で縦書きが実現できる。
 なお、この連綿では、「と」および「か」が変体かな「と（登）」および「か（可）」となっている。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output sagabon_render001.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text '&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;' --gravity east --rotate -90
-</samp></pre>
+{% highlight console %}
+$ pango-view --output sagabon_render001.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text '<span font_features="&quot;liga&quot; on">いとおかし</span>' --gravity east --rotate -90
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_vertical_writing_sagabon_render001.svg %}
@@ -71,8 +74,9 @@ Pango の gravity 指定で縦書きが実現できる。
 ただし、複雑なタグを使うと文字が崩れるようだ。(Pango 1.38現在)
 </p>
 
-<pre class="prompt"><samp>% pango-view --output sagabon_render002.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text 'いとおかし　&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;' --gravity east --rotate -90
-</samp></pre>
+{% highlight console %}
+$ pango-view --output sagabon_render002.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text 'いとおかし　<span font_features="&quot;liga&quot; on">いとおかし</span>' --gravity east --rotate -90
+{% endhighlight %}
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 {% asset_image_object_tag 201604_pango_view_vertical_writing_sagabon_render002.svg %}

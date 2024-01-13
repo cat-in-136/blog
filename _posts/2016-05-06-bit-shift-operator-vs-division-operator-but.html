@@ -4,6 +4,7 @@ title: ビットシフトと割り算はどっちが良いか、とはいうけ�
 author: cat_in_136
 tags: c-language clang チラシの裏
 date: '2016-05-06T23:18:26+09:00'
+last_modified_at: '2024-01-13T15:14:21+09:00'
 ---
 <p>
 2の累乗の積または商は、ビットシフトで容易に書換可能だが、
@@ -42,8 +43,9 @@ If <code>E1</code> has a signed type and a negative value, the resulting value i
 ひとまず clang が吐き出す中間言語―― LLIR をみてみる。
 </p>
 
-<pre class="console"><samp>% clang -c -S -emit-llvm hoge.c
-% </samp></pre>
+{% highlight console %}
+$ clang -c -S -emit-llvm hoge.c
+{% endhighlight %}
 
 {% highlight llvm %}
 ; Function Attrs: nounwind uwtable
@@ -90,8 +92,9 @@ clang は LLVM IR によりプロセッサに独立したレベルでの最適�
 これを行った結果どのように最適化されるか見てみよう。
 </p>
 
-<pre class="console"><samp>% clang -c -S -emit-llvm hoge.c -O
-% </samp></pre>
+{% highlight console %}
+$ clang -c -S -emit-llvm hoge.c -O
+{% endhighlight %}
 
 {% highlight llvm %}
 ; Function Attrs: nounwind optsize readnone uwtable
@@ -128,8 +131,9 @@ define i32 @shiftdiv2ui(i32 %x) #0 {
 なお、アーキテクチャは x86_64 である。
 </p>
 
-<pre class="console"><samp>% clang -c -S hoge.c -O
-% </samp></pre>
+{% highlight console %}
+$ clang -c -S hoge.c -O
+{% endhighlight %}
 
 {% highlight nasm %}
 	.globl	div2ui

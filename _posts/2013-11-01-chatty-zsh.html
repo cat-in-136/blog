@@ -5,8 +5,8 @@ date: '2013-11-01T00:30:00.000+09:00'
 author: cat_in_136
 tags:
 - zsh
-last_modified_at: '2014-11-10T00:02:37+09:00'
-thumbnail: '{% asset_image_path zle-chatty.png %}'
+last_modified_at: '2024-01-13T15:21:15+09:00'
+thumbnail: "{% asset_image_path zle-chatty.png %}"
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-994045954562817831
 blogger_orig_url: http://cat-in-136.blogspot.com/2013/11/chatty-zsh.html
 ---
@@ -40,15 +40,16 @@ chatty はユーザが入力した文字列に応じて端末のタイトルバ�
 
 <p>例えば、<a href="http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Special-Widgets" title="'The Z Shell Manual' sub-clause 18.5.1 Special Widgets">zsh のマニュアルのZLEの章</a>にあるように下記のようにすると、</p>
 
-<pre class="pretty-print"><code>zle-isearch-update() { zle -M "Line $HISTNO"; }
+{% highlight zsh %}
+zle-isearch-update() { zle -M "Line $HISTNO"; }
 zle -N zle-isearch-update
 zle-isearch-exit() { zle -M ""; }
 zle -N zle-isearch-exit
-</code></pre>
+{% endhighlight %}
 
 <p>インクリメンタルサーチ時に下に行数<code>"Line $HISTNO"</code>が表示される。</p>
 
-<pre style="padding: 2px; background-color: #000; color: #fff;"><code>[cat@localhost /tmp]$ <u>net</u>stat -altup
+<pre class="terminal"><code>[cat@localhost /tmp]$ <u>net</u>stat -altup
 bck-i-search: net_
 Line 284
 </code></pre>
@@ -169,16 +170,18 @@ chatty-on "$@"
 
 <p>使い方は <code>chatty-on</code> というファイル名で <code>/usr/share/zsh/site-functions</code> (などの<code>$fpath</code>が通っているフォルダ)に置いた上で、下記を実行する。</p>
 
-<pre style="padding: 2px; background-color: #000; color: #fff;"><code>% autoload chatty-on
-% chatty-on
-</code></pre>
+{% highlight console %}
+$ autoload chatty-on
+$ chatty-on
+{% endhighlight %}
 
 <p>ただし、お試しとして使うために <code>$fpath</code>が通っているフォルダに置きたくない場合は、
 下記でもよい。</p>
 
-<pre style="padding: 2px; background-color: #000; color: #fff;"><code>% source /path/to/chatty-on
-% chatty-on
-</code></pre>
+{% highlight console %}
+$ source /path/to/chatty-on
+$ chatty-on
+{% endhighlight %}
 
 <h3>参考文献</h3>
 
@@ -187,3 +190,6 @@ chatty-on "$@"
 </ul>
 
 
+<style type="text/css" scoped="scoped"><!--
+pre.terminal { background-color: #000; color: #fff; }
+--></style>

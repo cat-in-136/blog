@@ -7,12 +7,12 @@ tags:
 - チラシの裏
 - clang
 - c-language
-last_modified_at: '2014-04-27T12:03:19.122+09:00'
+last_modified_at: '2024-01-06T11:36:36+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-1361271518120904387
 blogger_orig_url: http://cat-in-136.blogspot.com/2012/12/llvm-clangast.html
 ---
 
-<blockquote cite="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf" style="padding: 1em; background-color: #eee; box-shadow: 3px 3px 10px #888;">
+<blockquote cite="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf">
   <p>Clang is not just a great compiler...</p>
   <p style="text-align: right;">-- <a href="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf" title="libclang: Thinking Beyond the Compiler">Doug Gregor, <em style="font-weight: light; font-style: italic;">Apple Inc.</em></a></p>
 </blockquote>
@@ -25,14 +25,16 @@ blogger_orig_url: http://cat-in-136.blogspot.com/2012/12/llvm-clangast.html
 
 <h4>昔は XML で構文木を吐き出す機能があったらしい</h4>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -cc1 -ast-print-xml source.c
-</code></pre>
+{% highlight console %}
+$ clang -cc1 -ast-print-xml source.c
+{% endhighlight %}
 
 <p>今のバージョンは <code>-ast-print-xml</code> オプションはない。
 <code>-emit-ast</code> で我慢しろ、らしい。</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
-</code></pre>
+{% highlight console %}
+$ clang -emit-ast source.c
+{% endhighlight %}
 
 <p>これで生成される <code>source.ast</code> ファイルがバイナリ形式だから困ったものである。</p>
 
@@ -83,15 +85,17 @@ int main(int argc, char *argv[])
 <p>なお、コンパイルは以下のように。
 (Clang でコンパイルしたかったが、なんかうまくリンクが通らなかったので GCC でやった。)</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% g++ -o astana astana.cpp -L/usr/lib64/llvm -lclang
-</code></pre>
+{% highlight console %}
+$ g++ -o astana astana.cpp -L/usr/lib64/llvm -lclang
+{% endhighlight %}
 
 <p>ちなみに使い方は、引数に ast ファイルを渡してやる。
 つまり、全体的な使い方としては以下のようになる。</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
-% astana source.ast &gt; source.txt
-</code></pre>
+{% highlight console %}
+$ clang -emit-ast source.c
+$ astana source.ast > source.txt
+{% endhighlight %}
 
 <h4>ちょっとした XML を吐こうとすると</h4>
 
@@ -212,9 +216,10 @@ astana: astana.cpp
 
 <p>使い方は、前のと同じく</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
-% astana source.ast &gt; source.xml
-</code></pre>
+{% highlight console %}
+$ clang -emit-ast source.c
+$ astana source.ast > source.xml
+{% endhighlight %}
 
 <p>しかし、さすがに自力で XML を吐こうとするとメンドイ。
 これでも表示項目足りないくらいだし。</p>

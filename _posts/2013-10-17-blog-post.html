@@ -6,7 +6,7 @@ author: cat_in_136
 tags:
 - exif
 - チラシの裏
-last_modified_at: '2013-10-17T00:45:06.438+09:00'
+last_modified_at: '2024-01-06T11:36:36+09:00'
 blogger_id: tag:blogger.com,1999:blog-5670234897870215734.post-7884184549836108369
 blogger_orig_url: http://cat-in-136.blogspot.com/2013/10/blog-post.html
 ---
@@ -21,9 +21,10 @@ EXIF のどのタグに乗っかるのかはメーカーというかカメラに
 EXIF の最近の規格だと LensMake(A433.H),LensModel(A434.H),LensSerialNumber(A435.H) なるものがあって、それで見れる。
 例えば、exiv2(1) を使って、下記コマンドで簡単に見れる。（ 出力は Canon EF 85mm f/1.2L II の場合 ）
 </p>
-<pre style="padding: 2px; background-color: #000; color: #fff;">% exiv2 -g Exif.Photo.LensModel FOOBAR00000.jpg
+{% highlight console %}
+$ exiv2 -g Exif.Photo.LensModel FOOBAR00000.jpg
 Exif.Photo.LensModel                         Ascii      21  EF85mm f/1.2L II USM
-</pre>
+{% endhighlight %}
 <p>
 カメラに依るが Make Note にしか載っていないものでも exiv2 が対応していれば見ることができる。
 ただ<code>Exif.Canon.LensModel</code>といったようにキー (Exiv2 key)を適切なものに変える必要が有る。
@@ -70,8 +71,9 @@ done
 そう、撮影日時のソートはだるいので ichigan_taihen.sh の外側で sort(1) をパイプで繋げてやっている。
 </p>
 
-<pre style="padding: 2px; background-color: #000; color: #fff;"> % path_to/ichigan_taihen.sh | sort -t, -k 2
-</pre>
+{% highlight console %}
+$ path_to/ichigan_taihen.sh | sort -t, -k 2
+{% endhighlight %}
 
 <p>
 あとは、眺めるだけ。
