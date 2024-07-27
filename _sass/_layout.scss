@@ -322,6 +322,12 @@
     caption {
       text-align: center;
     }
+
+    // HACK set to noborder to math table
+    &:has(tbody:only-child > tr:only-child > td:first-child .MathJax_Preview),
+    &:has(tbody:only-child > tr:only-child > td:first-child .MathJax_Preview) td {
+      border: none;
+    }
   }
 
   &:lang(ja) {
