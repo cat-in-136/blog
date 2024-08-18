@@ -19,7 +19,7 @@ group :jekyll_plugins do
   gem 'jekyll-paginate-v2'
 end
 
-gem 'image_size', '~> 3.0'
+gem 'fastimage', '~> 2.3'
 
 group :lsi do
   gem 'numo-narray'

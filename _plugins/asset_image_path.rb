@@ -2,13 +2,12 @@
 # Title: Simple Image Path URL expansion tag
 # Author: @cat_in_136
 #
-# Copyright (C) 2014 @cat_in_136
+# Copyright (C) 2014-2024 @cat_in_136
 #
 # Avarilable under MIT License <http://opensource.org/licenses/mit-license.php>
 #
 
-require 'image_size'
-require 'rexml/document'
+require 'fastimage'
 
 module Jekyll
   class AssetImagePathTag < Liquid::Tag
@@ -47,24 +46,8 @@ module Jekyll
     end
 
     def self.get_size(filename)
-      width = height = nil
       path = File.expand_path("../images/#{filename}", File.basename(__FILE__))
-      raise "File not found: '#{filename}'" unless File.exist?(path)
-      if (File.extname(path).downcase == '.svg')
-        File.open(path, 'r') do |f|
-          f.flock(File::LOCK_SH)
-          doc = REXML::Document.new(f)
-          width  = doc.root.attribute(:width).value.to_f.round  # "/*/@width"
-          height = doc.root.attribute(:height).value.to_f.round # "/*/@height"
-        end
-      else
-        File.open(path, 'r') do |f|
-          f.flock(File::LOCK_SH)
-          imgsize = ImageSize.new(f)
-          width = imgsize.width
-          height = imgsize.height
-        end
-      end
+      width, height = FastImage.size(path)
 
       [width, height]
     end
