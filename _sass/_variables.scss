@@ -1,0 +1,66 @@
+@use "sass:color";
+
+// Our variables
+$base-font-family: 'Fira Sans',
+                   'Source Han Sans',
+                   'Source Han Sans JP',
+                   'Noto Sans CJK',
+                   'Noto Sans CJK JP',
+                   'Yu Gothic',
+                   'YuGothic',
+                   'Hiragino Kaku Gothic Std',
+                   'HGPGothicE',
+                   sans-serif;
+$code-font-family: 'Fira Mono',
+                   //'Osaka-Mono',
+                   'Droid Sans Mono',
+                   monospace;
+$base-font-size:   16px;
+$small-font-size:  $base-font-size * 0.875;
+$base-line-height: 1.5;
+$long-line-height: 1.75;
+
+$spacing-unit:     30px;
+
+$text-color:       #333;
+$background-color: #F9F9F9;
+$primary-color:    #FFC107;
+$accent-color:     #03A9F4;
+$alt-color:        #FF5252;
+
+
+$grey-color:       #c6c6c6;
+$grey-color-light: #efefef;
+$grey-color-dark:  #5c5c5c;
+
+$link-color:          $accent-color;
+$active-link-color:   $alt-color;
+$visited-link-color:  color.adjust($accent-color, $lightness: -25%, $space: hsl);
+
+$on-palm:          600px;
+$on-laptop:        800px;
+
+// Vertical Writing
+@mixin vertical-writing {
+  @supports ((writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl)) {
+    @content;
+  }
+}
+
+// Using media queries with like this:
+// @include media-query($palm) {
+//     .wrapper {
+//         padding-right: $spacing-unit / 2;
+//         padding-left: $spacing-unit / 2;
+//     }
+// }
+@mixin media-query($device) {
+    @media screen and (max-width: $device) {
+        @content;
+    }
+}
+@mixin media-query-vertical($device) {
+    @media screen and (max-height: $device) {
+        @content;
+    }
+}
